@@ -516,7 +516,8 @@ function trainerPad(c, tier, accent, th) {
 // the UPGRADE board (TrainerBoard): big, on two chunky posts beside the pad, leaning back a little and turned to face
 // you as you stand on the pad (TrainerView writes LEVEL N > N+1, the price, +POWER/SEC on it); LevelPip1..4 on top
 function trainerBoard(c, tier, accent, th) {
-  const g = c.at([-MAT.X - 0.4, 0, -7.6], [0, -32, 0]);
+  // (turned 48 degrees toward the mat: square-on it stuck 2 studs out of the trainer's lot)
+  const g = c.at([-4.7, 0, -7.2], [0, -48, 0]);
   const W = 6.6, H = 4, y = 4.6;
   for (const x of [-W / 2 + 0.6, W / 2 - 0.6]) {
     g.box({ name: 'BoardPost', s: [1.1, y + H / 2 + 0.4, 1.1], p: [x, (y + H / 2 + 0.4) / 2, 0.7], c: th.post, m: th.postM || 'SmoothPlastic', studs: 'top', collide: true });
@@ -661,7 +662,7 @@ function trainer1(root) {
   E.palm(c, [3.4, 0, 13], 12.5, 77);
   E.bush(c, [0, 0, 11], 0.9, 12);
   // (the +X side is the lodge's: keep inside the lot there)
-  for (const [x, z, k, s] of [[-7.2, -12, 1.2, 3], [-7.2, 2, 1.2, 9], [5.6, 10, 0.8, 11], [-6.8, 12, 1, 5]]) E.fern(c, [x, 0, z], k, s);
+  for (const [x, z, k, s] of [[-6.6, -12, 1.1, 3], [-6.6, 2, 1.1, 9], [5.6, 10, 0.8, 11], [-6.8, 12, 1, 5]]) E.fern(c, [x, 0, z], k, s);
   return c;
 }
 
@@ -690,9 +691,9 @@ function trainer2(root) {
   targetPoint(c, [0, 3.4, TGT_Z - 0.3]);
   // the garden: a koi pond and a stone lantern on the mat, bamboo and a cherry tree round it
   raisedPond(c, [3.3, 0, -2.6], 2.6, 4.4, { koi: [[-0.4, -0.8, '#ff8a3a'], [0.3, 0.9, '#ffffff'], [0.2, -0.1, '#ff5a3a']], lilies: [[0.4, -1.4], [-0.3, 1.5]] });
-  stoneLantern(c, [-3.8, MAT.FLOOR, -3.4], '#ffd27a');
-  bamboo(c, [-7, 0, 6], 6, 8, 5);
-  bamboo(c, [-7.2, 0, -1], 4, 6, 9);
+  stoneLantern(c, [3.9, MAT.FLOOR, -6.6], '#ffd27a');
+  bamboo(c, [-6.6, 0, 6], 6, 8, 5);
+  bamboo(c, [-6.6, 0, -1], 4, 6, 9);
   blossomTree(c, [5, 0, 11], 7.5, 21, ['#ffb7d5', '#ff9ec4', '#ffc9de', '#f7a8c8']);
   blossomTree(c, [-5.2, 0, 13], 6, 33, ['#ffb7d5', '#ffc9de', '#ff9ec4']);
   for (const [x, z] of [[-1.4, 10], [1.8, 12.4], [-0.2, 14]]) E.rock(c, [x, 0, z], 0.8, Math.round(x * 10 + z));

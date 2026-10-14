@@ -141,12 +141,12 @@ local function refreshBoard(board: BasePart, b)
 	local function line(text: string, y: number, h: number, color: Color3?, color2: Color3?, max: number?)
 		return Kit.Text(root, text, { Size = UDim2.new(0.94, 0, h, 0), Position = UDim2.fromScale(0.5, y), AnchorPoint = Vector2.new(0.5, 0), Color = color, Color2 = color2, Stroke = 4, Shadow = 3, MaxSize = max or 44 })
 	end
-	local function pill(text: string, y: number, fill: Color3)
+	local function pill(text: string, y: number, fill: Color3, x: number?, w: number?)
 		local f = Instance.new("Frame")
 		f.Name = "Price"
 		f.AnchorPoint = Vector2.new(0.5, 0)
-		f.Position = UDim2.fromScale(0.5, y)
-		f.Size = UDim2.fromScale(0.62, 0.26)
+		f.Position = UDim2.fromScale(x or 0.5, y)
+		f.Size = UDim2.fromScale(w or 0.62, 0.26)
 		f.BackgroundColor3 = fill
 		f.Parent = root
 		Kit.Corner(f, 16)
@@ -163,7 +163,8 @@ local function refreshBoard(board: BasePart, b)
 			pill("FREE!", 0.47, C.Lime)
 		else
 			local can = profile and profile.Coins and profile.Coins >= nxt.Cost
-			pill("$" .. Config.FormatNumber(nxt.Cost), 0.47, can and C.Lime or C.Red)
+			pill("$" .. Config.FormatNumber(nxt.Cost), 0.47, can and C.Lime or C.Red, 0.3, 0.5)
+			pill("R$ " .. tostring(Config.Products.TrainerLevel.Price), 0.47, C.Purple, 0.76, 0.38)
 		end
 		line(string.format("+%s POWER/SEC", Config.FormatNumber(nxt.PerSec)), 0.79, 0.15, C.Cream, nil, 30)
 	elseif mine then
@@ -371,7 +372,13 @@ local function buildWindow()
 			Kit.Button(lc, { Text = "BEAT THE " .. (b and b.Name or "BOSS"), Icon = "Lock", Color = "Grey", Size = UDim2.new(1, -24, 0, 70), Position = UDim2.new(0, 12, 1, -14), AnchorPoint = Vector2.new(0, 1), ZIndex = 26, MaxText = 24, Disabled = true })
 		else
 			local label = free and "UPGRADE - FREE!" or ("UPGRADE  $" .. Config.FormatNumber(nxt.Cost))
-			Kit.Button(lc, { Text = label, Icon = "Power", Color = afford and "Yellow" or "Grey", Size = UDim2.new(1, -24, 0, 70), Position = UDim2.new(0, 12, 1, -14), AnchorPoint = Vector2.new(0, 1), ZIndex = 26, MaxText = 28, Shine = afford, OnClick = doUpgrade })
+			Kit.Button(lc, { Text = label, Icon = "Power", Color = afford and "Yellow" or "Grey", Size = UDim2.new(1, -132, 0, 70), Position = UDim2.new(0, 12, 1, -14), AnchorPoint = Vector2.new(0, 1), ZIndex = 26, MaxText = 28, Shine = afford, OnClick = doUpgrade })
+			-- or the next level for Robux (Config.Products.TrainerLevel)
+			local prod = Config.Products.TrainerLevel
+			Kit.Button(lc, { Text = "R$ " .. tostring(prod.Price), Color = "Purple", Size = UDim2.fromOffset(106, 70), Position = UDim2.new(1, -12, 1, -14), AnchorPoint = Vector2.new(1, 1), ZIndex = 26, MaxText = 22, OnClick = function()
+				if prod.Id == 0 then Kit.Toast("COMING SOON!", "Purple", "Gem") return end
+				game:GetService("MarketplaceService"):PromptProductPurchase(player, prod.Id)
+			end })
 		end
 	else
 		Kit.Text(lc, "MAX LEVEL!", { Size = UDim2.new(1, -24, 0, 44), Position = UDim2.fromOffset(12, 96), ZIndex = 25, Color = C.YellowHi, Color2 = C.Yellow, Stroke = 4, Shadow = 3, MaxSize = 44 })
@@ -535,30 +542,61 @@ local function dartBurst(at: Vector3, color: Color3)
 	task.delay(0.8, function() p:Destroy() end)
 end
 
-local function fireDart(plr: Player, target: BasePart, color: Color3)
+-- (2026-10-14 v2, the reference: a bright BEAM from your hand into the target, a flash at the muzzle, a burst and a
+-- shockwave ring where it lands - it used to be a little dart)
+local function fxPart(name: string, size: Vector3, cf: CFrame, color: Color3, shape: Enum.PartType?): Part
+	local p = Instance.new("Part")
+	p.Name = name
+	p.Anchored = true
+	p.CanCollide = false
+	p.CanQuery = false
+	p.CanTouch = false
+	p.CastShadow = false
+	p.Material = Enum.Material.Neon
+	p.Color = color
+	p.Size = size
+	p.CFrame = cf
+	if shape then p.Shape = shape end
+	p.Parent = Workspace
+	return p
+end
+local function handOf(plr: Player): Vector3?
+	local ch = plr.Character
+	if not ch then return nil end
+	local hand = ch:FindFirstChild("RightHand") or ch:FindFirstChild("Right Arm")
+	if hand and hand:IsA("BasePart") then return hand.Position end
 	local hrp = hrpOf(plr)
-	if not hrp then return end
-	local from = hrp.Position + hrp.CFrame.RightVector * 0.9 + Vector3.new(0, 1.2, 0)
-	local to = target.Position + Vector3.new((math.random() - 0.5) * 2.4, (math.random() - 0.5) * 2, 0)
-	local dart = Instance.new("Part")
-	dart.Name = "TrainDart"
-	dart.Anchored = true
-	dart.CanCollide = false
-	dart.CanQuery = false
-	dart.CanTouch = false
-	dart.CastShadow = false
-	dart.Material = Enum.Material.Neon
-	dart.Color = color
-	dart.Size = Vector3.new(0.3, 0.3, 1.6)
-	dart.CFrame = CFrame.lookAt(from, to)
-	dart.Parent = Workspace
+	return hrp and (hrp.Position + hrp.CFrame.RightVector * 0.9 + Vector3.new(0, 1.2, 0)) or nil
+end
+local function fireDart(plr: Player, target: BasePart, color: Color3)
+	local from = handOf(plr)
+	if not from then return end
+	local to = target.Position + Vector3.new((math.random() - 0.5) * 1.6, (math.random() - 0.5) * 1.4, 0)
 	local dist = (to - from).Magnitude
-	local tw = TweenService:Create(dart, TweenInfo.new(math.clamp(dist / 90, 0.15, 0.4), Enum.EasingStyle.Linear), { CFrame = CFrame.lookAt(to, to + (to - from).Unit) })
-	tw.Completed:Connect(function()
-		dart:Destroy()
-		dartBurst(to, color)
+	if dist < 1 then return end
+	local mid = CFrame.lookAt(from:Lerp(to, 0.5), to) * CFrame.Angles(0, math.rad(90), 0)
+	local hot = color:Lerp(Color3.new(1, 1, 1), 0.35)
+	-- the beam: a coloured shaft round a white core, thinning out as it fades
+	local beam = fxPart("TrainBeam", Vector3.new(dist, 0.55, 0.55), mid, hot, Enum.PartType.Cylinder)
+	beam.Transparency = 0.15
+	local core = fxPart("TrainBeamCore", Vector3.new(dist, 0.22, 0.22), mid, Color3.new(1, 1, 1), Enum.PartType.Cylinder)
+	local info = TweenInfo.new(0.26, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+	TweenService:Create(beam, info, { Transparency = 1, Size = Vector3.new(dist, 0.08, 0.08) }):Play()
+	TweenService:Create(core, info, { Transparency = 1, Size = Vector3.new(dist, 0.04, 0.04) }):Play()
+	-- the muzzle flash
+	local flash = fxPart("TrainFlash", Vector3.new(0.6, 0.6, 0.6), CFrame.new(from), Color3.new(1, 1, 1), Enum.PartType.Ball)
+	TweenService:Create(flash, TweenInfo.new(0.16), { Transparency = 1, Size = Vector3.new(1.6, 1.6, 1.6) }):Play()
+	-- the hit: a burst and a ring that opens toward you
+	dartBurst(to, hot)
+	local ring = fxPart("TrainRing", Vector3.new(0.12, 1, 1), CFrame.lookAt(to, from) * CFrame.Angles(0, math.rad(90), 0), hot, Enum.PartType.Cylinder)
+	ring.Transparency = 0.2
+	TweenService:Create(ring, TweenInfo.new(0.3, Enum.EasingStyle.Quad), { Transparency = 1, Size = Vector3.new(0.05, 4, 4) }):Play()
+	task.delay(0.35, function()
+		beam:Destroy()
+		core:Destroy()
+		flash:Destroy()
+		ring:Destroy()
 	end)
-	tw:Play()
 end
 
 -- the dummies wobble when hit: a small rock of the whole dummy model (client only)
@@ -608,7 +646,7 @@ local function stepTraining(now: number)
 		if target and now >= s.NextDart and not Cinema.Playing() then
 			s.NextDart = now + 0.55 + math.random() * 0.25
 			fireDart(plr, target :: BasePart, color)
-			task.delay(0.3, function() if machine.Parent then wobble(machine) end end)
+			if machine.Parent then wobble(machine) end
 		end
 	end
 end
@@ -660,18 +698,24 @@ local function popup(gain: number, reason: string?)
 	local hrp = hrpOf(player)
 	if not hrp then return end
 	local big = reason ~= nil
+	-- (the reference: a training tick's "+N" pops where your shots land, with the launcher beside it; a reward's
+	-- bigger "+N POWER" stays over your head)
+	local at: BasePart = hrp
+	local target = partIn(machineOf(myPlot()), "TargetPoint")
+	if not big and target and (target.Position - hrp.Position).Magnitude < 60 then at = target end
 	local bb = Instance.new("BillboardGui")
 	bb.Name = "TrainPop"
 	bb.AlwaysOnTop = true
 	bb.LightInfluence = 0
-	bb.Size = UDim2.fromOffset(big and 260 or 170, big and 70 or 52)
-	bb.StudsOffset = Vector3.new((math.random() - 0.5) * 2.4, 3.2, 0)
-	bb.Adornee = hrp
+	bb.Size = UDim2.fromOffset(big and 260 or 200, big and 70 or 56)
+	bb.StudsOffset = Vector3.new((math.random() - 0.5) * 2.4, at == hrp and 3.2 or 2.4, 0)
+	bb.Adornee = at
 	bb.MaxDistance = 120
 	bb.Parent = player:FindFirstChildOfClass("PlayerGui")
 	local col = big and C.YellowHi or accentOf(myLevel()):Lerp(Color3.new(1, 1, 1), 0.25)
 	local txt = "+" .. Config.FormatNumber(gain) .. (big and " POWER" or "")
-	local t = Kit.Text(bb, txt, { Size = UDim2.fromScale(1, 1), Color = col, Color2 = big and C.Yellow or nil, Stroke = big and 4 or 3, Shadow = 3, MaxSize = big and 46 or 36 })
+	local t = Kit.Text(bb, txt, { Size = UDim2.fromScale(big and 1 or 0.72, 1), Position = UDim2.fromScale(big and 0 or 0.28, 0), Color = col, Color2 = big and C.Yellow or nil, Stroke = big and 4 or 3, Shadow = 3, MaxSize = big and 46 or 36 })
+	if not big then Kit.Icon(t, "Launcher", { Size = UDim2.fromOffset(46, 46), Position = UDim2.new(0, -50, 0.5, 0), AnchorPoint = Vector2.new(0, 0.5), Rotation = -12 }) end
 	Kit.Pop(t :: Frame, 0.3)
 	local t0 = os.clock()
 	local life = big and 1.6 or 1.0

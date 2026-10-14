@@ -62211,7 +62211,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>3.5</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>3.5</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">7031339</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -62230,7 +62230,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>0.3</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>0.3</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">7031339</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -62249,7 +62249,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>3.5</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>3.5</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">7031339</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -62268,7 +62268,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>0.3</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>0.3</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">7031339</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -62287,7 +62287,7 @@
         <Properties>
           <string name="Name">TrainerBoard</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.2</X><Y>4.6</Y><Z>-7.6</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.7</X><Y>4.6</Y><Z>-7.2</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2106411</Color3uint8>
           <token name="Material">272</token>
           <Vector3 name="size"><X>6.6</X><Y>4</Y><Z>0.4</Z></Vector3>
@@ -62306,7 +62306,7 @@
         <Properties>
           <string name="Name">BoardFrame</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.31545</X><Y>4.56938</Y><Z>-7.41525</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.8619</X><Y>4.56938</Y><Z>-7.05422</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">9067059</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>7.4</X><Y>4.8</Y><Z>0.36</Z></Vector3>
@@ -62325,7 +62325,7 @@
         <Properties>
           <string name="Name">BoardTrim</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.43095</X><Y>6.98253</Y><Z>-7.2304</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.02388</X><Y>6.98253</Y><Z>-6.90838</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">9425231</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>7.5</X><Y>0.22</Y><Z>0.5</Z></Vector3>
@@ -62344,7 +62344,7 @@
         <Properties>
           <string name="Name">LevelPip1</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.01539</X><Y>7.40139</Y><Z>-8.09151</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-6.30959</X><Y>7.40139</Y><Z>-8.17286</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">9425231</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -62363,7 +62363,7 @@
         <Properties>
           <string name="Name">LevelPip2</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.99773</X><Y>7.40139</Y><Z>-7.45561</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.50663</X><Y>7.40139</Y><Z>-7.28109</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">9425231</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -62382,7 +62382,7 @@
         <Properties>
           <string name="Name">LevelPip3</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-5.98007</X><Y>7.40139</Y><Z>-6.81971</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.70367</X><Y>7.40139</Y><Z>-6.38931</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">9425231</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -62401,7 +62401,7 @@
         <Properties>
           <string name="Name">LevelPip4</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.96242</X><Y>7.40139</Y><Z>-6.1838</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.90072</X><Y>7.40139</Y><Z>-5.49754</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">9425231</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -62420,7 +62420,7 @@
         <Properties>
           <string name="Name">PipBar</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.49302</X><Y>7.09735</Y><Z>-7.13108</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.11092</X><Y>7.09735</Y><Z>-6.83001</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">7031339</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>5.61</X><Y>0.4</Y><Z>0.8</Z></Vector3>
@@ -67109,10 +67109,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-8.09436</X><Y>0.54</Y><Z>-11.89942</Z><R00>-0.11176</R00><R01>-0.55569</R01><R02>0.82384</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.99374</R20><R21>0.06249</R21><R22>-0.09265</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.41983</X><Y>0.495</Y><Z>-11.9078</Z><R00>-0.11176</R00><R01>-0.55569</R01><R02>0.82384</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.99374</R20><R21>0.06249</R21><R22>-0.09265</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">4168250</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67128,10 +67128,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-9.52534</X><Y>0.744</Y><Z>-11.73849</Z><R00>-0.11176</R00><R01>0.1383</R01><R02>0.98406</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.99374</R20><R21>-0.01555</R21><R22>-0.11067</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-8.73156</X><Y>0.682</Y><Z>-11.76028</Z><R00>-0.11176</R00><R01>0.1383</R01><R02>0.98406</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.99374</R20><R21>-0.01555</R21><R22>-0.11067</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67147,10 +67147,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.46499</X><Y>0.54</Y><Z>-11.1399</Z><R00>-0.95567</R00><R01>-0.16465</R01><R02>0.2441</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.29444</R20><R21>0.5344</R21><R22>-0.79229</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.84291</X><Y>0.495</Y><Z>-11.21157</Z><R00>-0.95567</R00><R01>-0.16465</R01><R02>0.2441</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.29444</R20><R21>0.5344</R21><R22>-0.79229</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67166,10 +67166,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.88898</X><Y>0.744</Y><Z>-9.76373</Z><R00>-0.95567</R00><R01>0.04098</R01><R02>0.29157</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.29444</R20><R21>-0.133</R21><R22>-0.94637</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.23157</X><Y>0.682</Y><Z>-9.95009</Z><R00>-0.95567</R00><R01>0.04098</R01><R02>0.29157</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.29444</R20><R21>-0.133</R21><R22>-0.94637</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67185,10 +67185,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.60977</X><Y>0.54</Y><Z>-11.32057</Z><R00>-0.75492</R00><R01>0.36673</R01><R02>-0.54369</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.65581</R20><R21>0.42215</R21><R22>-0.62586</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.05895</X><Y>0.495</Y><Z>-11.37719</Z><R00>-0.75492</R00><R01>0.36673</R01><R02>-0.54369</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.65581</R20><R21>0.42215</R21><R22>-0.62586</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">4168250</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67204,10 +67204,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-5.6654</X><Y>0.744</Y><Z>-10.23348</Z><R00>-0.75492</R00><R01>-0.09127</R01><R02>-0.64943</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.65581</R20><R21>-0.10506</R21><R22>-0.74758</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.19328</X><Y>0.682</Y><Z>-10.38069</Z><R00>-0.75492</R00><R01>-0.09127</R01><R02>-0.64943</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.65581</R20><R21>-0.10506</R21><R22>-0.74758</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67223,10 +67223,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.30129</X><Y>0.54</Y><Z>-12.04824</Z><R00>0.0536</R00><R01>0.55839</R01><R02>-0.82785</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.99856</R20><R21>-0.02997</R21><R22>0.04444</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.77619</X><Y>0.495</Y><Z>-12.04422</Z><R00>0.0536</R00><R01>0.55839</R01><R02>-0.82785</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.99856</R20><R21>-0.02997</R21><R22>0.04444</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67242,10 +67242,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-4.86336</X><Y>0.744</Y><Z>-12.12542</Z><R00>0.0536</R00><R01>-0.13897</R01><R02>-0.98884</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.99856</R20><R21>0.00746</R21><R22>0.05308</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-4.45808</X><Y>0.682</Y><Z>-12.11497</Z><R00>0.0536</R00><R01>-0.13897</R01><R02>-0.98884</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.99856</R20><R21>0.00746</R21><R22>0.05308</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67261,10 +67261,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.93239</X><Y>0.54</Y><Z>-12.85929</Z><R00>0.95477</R00><R01>0.16627</R01><R02>-0.24651</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.29734</R20><R21>-0.5339</R21><R22>0.79154</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.35469</X><Y>0.495</Y><Z>-12.78769</Z><R00>0.95477</R00><R01>0.16627</R01><R02>-0.24651</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.29734</R20><R21>-0.5339</R21><R22>0.79154</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">4168250</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67280,10 +67280,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.50421</X><Y>0.744</Y><Z>-14.23416</Z><R00>0.95477</R00><R01>-0.04138</R01><R02>-0.29445</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.29734</R20><R21>0.13288</R21><R22>0.94548</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.9622</X><Y>0.682</Y><Z>-14.04798</Z><R00>0.95477</R00><R01>-0.04138</R01><R02>-0.29445</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.29734</R20><R21>0.13288</R21><R22>0.94548</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67299,10 +67299,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.75582</X><Y>0.54</Y><Z>-12.70786</Z><R00>0.78651</R00><R01>-0.34535</R01><R02>0.512</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.61758</R20><R21>-0.43981</R21><R22>0.65204</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.10951</X><Y>0.495</Y><Z>-12.64887</Z><R00>0.78651</R00><R01>-0.34535</R01><R02>0.512</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.61758</R20><R21>-0.43981</R21><R22>0.65204</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67318,10 +67318,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-8.64514</X><Y>0.744</Y><Z>-13.84043</Z><R00>0.78651</R00><R01>0.08595</R01><R02>0.61157</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.61758</R20><R21>0.10946</R21><R22>0.77885</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.92471</X><Y>0.682</Y><Z>-13.68706</Z><R00>0.78651</R00><R01>0.08595</R01><R02>0.61157</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.61758</R20><R21>0.10946</R21><R22>0.77885</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67342,10 +67342,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-8.09952</X><Y>0.54</Y><Z>1.97076</Z><R00>0.03249</R00><R01>-0.5589</R01><R02>0.8286</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.99947</R20><R21>-0.01817</R21><R22>0.02694</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.42456</X><Y>0.495</Y><Z>1.9732</Z><R00>0.03249</R00><R01>-0.5589</R01><R02>0.8286</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.99947</R20><R21>-0.01817</R21><R22>0.02694</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">4168250</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67361,10 +67361,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-9.53876</X><Y>0.744</Y><Z>1.92397</Z><R00>0.03249</R00><R01>0.1391</R01><R02>0.98975</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.99947</R20><R21>0.00452</R21><R22>0.03217</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-8.74387</X><Y>0.682</Y><Z>1.93031</Z><R00>0.03249</R00><R01>0.1391</R01><R02>0.98975</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.99947</R20><R21>0.00452</R21><R22>0.03217</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67380,10 +67380,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.41958</X><Y>0.54</Y><Z>2.8728</Z><R00>-0.96978</R00><R01>-0.13643</R01><R02>0.20227</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.24398</R20><R21>0.54229</R21><R22>-0.80398</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.80129</X><Y>0.495</Y><Z>2.80007</Z><R00>-0.96978</R00><R01>-0.13643</R01><R02>0.20227</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.24398</R20><R21>0.54229</R21><R22>-0.80398</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67399,10 +67399,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.77092</X><Y>0.744</Y><Z>4.26928</Z><R00>-0.96978</R00><R01>0.03396</R01><R02>0.24161</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.24398</R20><R21>-0.13497</R21><R22>-0.96034</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.12334</X><Y>0.682</Y><Z>4.08018</Z><R00>-0.96978</R00><R01>0.03396</R01><R02>0.24161</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.24398</R20><R21>-0.13497</R21><R22>-0.96034</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67418,10 +67418,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.80179</X><Y>0.54</Y><Z>2.80711</Z><R00>-0.89679</R00><R01>0.24742</R01><R02>-0.36681</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.44245</R20><R21>0.50148</R21><R22>-0.74347</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.23498</X><Y>0.495</Y><Z>2.73985</Z><R00>-0.89679</R00><R01>0.24742</R01><R02>-0.36681</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.44245</R20><R21>0.50148</R21><R22>-0.74347</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">4168250</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67437,10 +67437,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.16466</X><Y>0.744</Y><Z>4.09849</Z><R00>-0.89679</R00><R01>-0.06158</R01><R02>-0.43815</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.44245</R20><R21>-0.12481</R21><R22>-0.88806</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.65094</X><Y>0.682</Y><Z>3.92362</Z><R00>-0.89679</R00><R01>-0.06158</R01><R02>-0.43815</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.44245</R20><R21>-0.12481</R21><R22>-0.88806</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67456,10 +67456,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.30207</X><Y>0.54</Y><Z>1.93901</Z><R00>0.06776</R00><R01>0.55791</R01><R02>-0.82713</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.9977</R20><R21>-0.03789</R21><R22>0.05618</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.7769</X><Y>0.495</Y><Z>1.94409</Z><R00>0.06776</R00><R01>0.55791</R01><R02>-0.82713</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.9977</R20><R21>-0.03789</R21><R22>0.05618</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67475,10 +67475,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-4.86538</X><Y>0.744</Y><Z>1.84143</Z><R00>0.06776</R00><R01>-0.13885</R01><R02>-0.98799</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.9977</R20><R21>0.00943</R21><R22>0.06711</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-4.45993</X><Y>0.682</Y><Z>1.85464</Z><R00>0.06776</R00><R01>-0.13885</R01><R02>-0.98799</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.9977</R20><R21>0.00943</R21><R22>0.06711</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67494,10 +67494,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.79511</X><Y>0.54</Y><Z>1.19622</Z><R00>0.89309</R00><R01>0.25157</R01><R02>-0.37296</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.44988</R20><R21>-0.49941</R21><R22>0.74041</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.22885</X><Y>0.495</Y><Z>1.2632</Z><R00>0.89309</R00><R01>0.25157</R01><R02>-0.37296</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>0.44988</R20><R21>-0.49941</R21><R22>0.74041</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">4168250</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67513,10 +67513,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.14729</X><Y>0.744</Y><Z>-0.08983</Z><R00>0.89309</R00><R01>-0.06261</R01><R02>-0.4455</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.44988</R20><R21>0.12429</R21><R22>0.8844</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.63502</X><Y>0.682</Y><Z>0.08432</Z><R00>0.89309</R00><R01>-0.06261</R01><R02>-0.4455</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.44988</R20><R21>0.12429</R21><R22>0.8844</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67532,10 +67532,10 @@
           <Properties>
             <string name="Name">FernLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.65951</X><Y>0.54</Y><Z>1.22614</Z><R00>0.85984</R00><R01>-0.2855</R01><R02>0.42328</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.51056</R20><R21>-0.48082</R21><R22>0.71284</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.02121</X><Y>0.495</Y><Z>1.29063</Z><R00>0.85984</R00><R01>-0.2855</R01><R02>0.42328</R02><R10>0</R10><R11>0.82904</R11><R12>0.55919</R12><R20>-0.51056</R20><R21>-0.48082</R21><R22>0.71284</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.66</X><Y>0.12</Y><Z>1.92</Z></Vector3>
+            <Vector3 name="size"><X>0.605</X><Y>0.12</Y><Z>1.76</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -67551,10 +67551,10 @@
           <Properties>
             <string name="Name">FernTip</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-8.39472</X><Y>0.744</Y><Z>-0.01203</Z><R00>0.85984</R00><R01>0.07106</R01><R02>0.50559</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.51056</R20><R21>0.11967</R21><R22>0.85147</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.69516</X><Y>0.682</Y><Z>0.15564</Z><R00>0.85984</R00><R01>0.07106</R01><R02>0.50559</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>-0.51056</R20><R21>0.11967</R21><R22>0.85147</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6012234</Color3uint8>
             <token name="Material">272</token>
-            <Vector3 name="size"><X>0.48</X><Y>0.1</Y><Z>1.32</Z></Vector3>
+            <Vector3 name="size"><X>0.44</X><Y>0.1</Y><Z>1.21</Z></Vector3>
             <bool name="CanCollide">false</bool>
             <bool name="CanTouch">false</bool>
             <bool name="CastShadow">false</bool>
@@ -69405,7 +69405,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>3.5</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>3.5</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">5913122</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -69424,7 +69424,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>0.3</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>0.3</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">12170185</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -69443,7 +69443,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>3.5</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>3.5</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">5913122</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -69462,7 +69462,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>0.3</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>0.3</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">12170185</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -69481,7 +69481,7 @@
         <Properties>
           <string name="Name">TrainerBoard</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.2</X><Y>4.6</Y><Z>-7.6</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.7</X><Y>4.6</Y><Z>-7.2</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2106411</Color3uint8>
           <token name="Material">272</token>
           <Vector3 name="size"><X>6.6</X><Y>4</Y><Z>0.4</Z></Vector3>
@@ -69500,7 +69500,7 @@
         <Properties>
           <string name="Name">BoardFrame</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.31545</X><Y>4.56938</Y><Z>-7.41525</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.8619</X><Y>4.56938</Y><Z>-7.05422</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">4861726</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>7.4</X><Y>4.8</Y><Z>0.36</Z></Vector3>
@@ -69519,7 +69519,7 @@
         <Properties>
           <string name="Name">BoardTrim</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.43095</X><Y>6.98253</Y><Z>-7.2304</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.02388</X><Y>6.98253</Y><Z>-6.90838</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16751150</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>7.5</X><Y>0.22</Y><Z>0.5</Z></Vector3>
@@ -69538,7 +69538,7 @@
         <Properties>
           <string name="Name">LevelPip1</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.01539</X><Y>7.40139</Y><Z>-8.09151</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-6.30959</X><Y>7.40139</Y><Z>-8.17286</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16751150</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -69557,7 +69557,7 @@
         <Properties>
           <string name="Name">LevelPip2</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.99773</X><Y>7.40139</Y><Z>-7.45561</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.50663</X><Y>7.40139</Y><Z>-7.28109</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16751150</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -69576,7 +69576,7 @@
         <Properties>
           <string name="Name">LevelPip3</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-5.98007</X><Y>7.40139</Y><Z>-6.81971</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.70367</X><Y>7.40139</Y><Z>-6.38931</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16751150</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -69595,7 +69595,7 @@
         <Properties>
           <string name="Name">LevelPip4</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.96242</X><Y>7.40139</Y><Z>-6.1838</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.90072</X><Y>7.40139</Y><Z>-5.49754</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16751150</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -69614,7 +69614,7 @@
         <Properties>
           <string name="Name">PipBar</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.49302</X><Y>7.09735</Y><Z>-7.13108</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.11092</X><Y>7.09735</Y><Z>-6.83001</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">5913122</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>5.61</X><Y>0.4</Y><Z>0.8</Z></Vector3>
@@ -73092,7 +73092,7 @@
         <Properties>
           <string name="Name">LanternFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-3.8</X><Y>0.5</Y><Z>-3.4</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>3.9</X><Y>0.5</Y><Z>-6.6</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">10130570</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.4</X><Y>0.4</Y><Z>1.4</Z></Vector3>
@@ -73111,7 +73111,7 @@
         <Properties>
           <string name="Name">LanternPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-3.8</X><Y>1.5</Y><Z>-3.4</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>3.9</X><Y>1.5</Y><Z>-6.6</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">11578014</Color3uint8>
           <token name="Material">800</token>
           <Vector3 name="size"><X>1.6</X><Y>0.7</Y><Z>0.7</Z></Vector3>
@@ -73131,7 +73131,7 @@
         <Properties>
           <string name="Name">LanternBox</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-3.8</X><Y>2.85</Y><Z>-3.4</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>3.9</X><Y>2.85</Y><Z>-6.6</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">10130570</Color3uint8>
           <token name="Material">800</token>
           <Vector3 name="size"><X>1.2</X><Y>1.1</Y><Z>1.2</Z></Vector3>
@@ -73150,7 +73150,7 @@
         <Properties>
           <string name="Name">LanternGlow</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-3.8</X><Y>2.85</Y><Z>-3.4</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>3.9</X><Y>2.85</Y><Z>-6.6</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16765562</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.7</Y><Z>1.25</Z></Vector3>
@@ -73178,7 +73178,7 @@
         <Properties>
           <string name="Name">LanternRoof</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-3.8</X><Y>3.75</Y><Z>-3.4</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>3.9</X><Y>3.75</Y><Z>-6.6</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">8025194</Color3uint8>
           <token name="Material">272</token>
           <Vector3 name="size"><X>1.9</X><Y>0.7</Y><Z>1.9</Z></Vector3>
@@ -73197,7 +73197,7 @@
         <Properties>
           <string name="Name">LanternTop</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-3.8</X><Y>4.25</Y><Z>-3.4</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>3.9</X><Y>4.25</Y><Z>-6.6</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">8025194</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>0.4</X><Y>0.4</Y><Z>0.4</Z></Vector3>
@@ -73220,7 +73220,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.47159</X><Y>0.75</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.07159</X><Y>0.75</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73240,7 +73240,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.47159</X><Y>1.55</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.07159</X><Y>1.55</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73260,7 +73260,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.47159</X><Y>2.35</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.07159</X><Y>2.35</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73280,7 +73280,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.47159</X><Y>3.15</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.07159</X><Y>3.15</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73300,7 +73300,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.47159</X><Y>3.95</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.07159</X><Y>3.95</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73320,7 +73320,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.47159</X><Y>4.75</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.07159</X><Y>4.75</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73340,7 +73340,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.47159</X><Y>5.55</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.07159</X><Y>5.55</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73360,7 +73360,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.47159</X><Y>6.35</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.07159</X><Y>6.35</Y><Z>6.41775</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73380,7 +73380,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.8332</X><Y>6.4</Y><Z>5.93562</Z><R00>0.60267</R00><R01>0.27293</R01><R02>-0.74986</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.79799</R20><R21>-0.20613</R21><R22>0.56633</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.4332</X><Y>6.4</Y><Z>5.93562</Z><R00>0.60267</R00><R01>0.27293</R01><R02>-0.74986</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.79799</R20><R21>-0.20613</R21><R22>0.56633</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -73399,7 +73399,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.68934</X><Y>5.5</Y><Z>6.58535</Z><R00>-0.2095</R00><R01>0.33443</R01><R02>-0.91884</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.97781</R20><R21>0.07165</R21><R22>-0.19686</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.28934</X><Y>5.5</Y><Z>6.58535</Z><R00>-0.2095</R00><R01>0.33443</R01><R02>-0.91884</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.97781</R20><R21>0.07165</R21><R22>-0.19686</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -73418,7 +73418,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-8.08684</X><Y>4.6</Y><Z>6.92909</Z><R00>-0.63917</R00><R01>-0.26303</R01><R02>0.72268</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.76906</R20><R21>0.21861</R21><R22>-0.60063</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.68684</X><Y>4.6</Y><Z>6.92909</Z><R00>-0.63917</R00><R01>-0.26303</R01><R02>0.72268</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.76906</R20><R21>0.21861</R21><R22>-0.60063</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -73437,7 +73437,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00196</X><Y>0.75</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60196</X><Y>0.75</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73457,7 +73457,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00196</X><Y>1.55</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60196</X><Y>1.55</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73477,7 +73477,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00196</X><Y>2.35</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60196</X><Y>2.35</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73497,7 +73497,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00196</X><Y>3.15</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60196</X><Y>3.15</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73517,7 +73517,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00196</X><Y>3.95</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60196</X><Y>3.95</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73537,7 +73537,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00196</X><Y>4.75</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60196</X><Y>4.75</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73557,7 +73557,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00196</X><Y>5.55</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60196</X><Y>5.55</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73577,7 +73577,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00196</X><Y>6.35</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60196</X><Y>6.35</Y><Z>5.49744</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73597,7 +73597,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.41549</X><Y>6.4</Y><Z>4.95333</Z><R00>0.68014</R00><R01>0.25073</R01><R02>-0.68887</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.73308</R20><R21>-0.23262</R21><R22>0.63912</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.01549</X><Y>6.4</Y><Z>4.95333</Z><R00>0.68014</R00><R01>0.25073</R01><R02>-0.68887</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.73308</R20><R21>-0.23262</R21><R22>0.63912</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -73616,7 +73616,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.32131</X><Y>5.5</Y><Z>4.76395</Z><R00>0.91687</R00><R01>-0.13653</R01><R02>0.37511</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.39919</R20><R21>-0.31359</R21><R22>0.86158</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.92131</X><Y>5.5</Y><Z>4.76395</Z><R00>0.91687</R00><R01>-0.13653</R01><R02>0.37511</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.39919</R20><R21>-0.31359</R21><R22>0.86158</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -73635,7 +73635,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.68177</X><Y>4.6</Y><Z>5.0757</Z><R00>0.52717</R00><R01>-0.29063</R01><R02>0.79851</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.84976</R20><R21>-0.1803</R21><R22>0.49538</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.28177</X><Y>4.6</Y><Z>5.0757</Z><R00>0.52717</R00><R01>-0.29063</R01><R02>0.79851</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.84976</R20><R21>-0.1803</R21><R22>0.49538</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -73654,7 +73654,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00336</X><Y>0.75</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60336</X><Y>0.75</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73674,7 +73674,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00336</X><Y>1.55</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60336</X><Y>1.55</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73694,7 +73694,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00336</X><Y>2.35</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60336</X><Y>2.35</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73714,7 +73714,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00336</X><Y>3.15</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60336</X><Y>3.15</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73734,7 +73734,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00336</X><Y>3.95</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60336</X><Y>3.95</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73754,7 +73754,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00336</X><Y>4.75</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60336</X><Y>4.75</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73774,7 +73774,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00336</X><Y>5.55</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60336</X><Y>5.55</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73794,7 +73794,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.00336</X><Y>6.35</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.60336</X><Y>6.35</Y><Z>6.25957</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73814,7 +73814,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.34233</X><Y>6.4</Y><Z>5.80896</Z><R00>0.56326</R00><R01>0.2826</R01><R02>-0.77645</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.82628</R20><R21>-0.19265</R21><R22>0.52929</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.94233</X><Y>6.4</Y><Z>5.80896</Z><R00>0.56326</R00><R01>0.2826</R01><R02>-0.77645</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.82628</R20><R21>-0.19265</R21><R22>0.52929</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -73833,7 +73833,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.13593</X><Y>5.5</Y><Z>7.04851</Z><R00>-0.98617</R00><R01>-0.05668</R01><R02>0.15572</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.16571</R20><R21>0.33729</R21><R22>-0.9267</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.73593</X><Y>5.5</Y><Z>7.04851</Z><R00>-0.98617</R00><R01>-0.05668</R01><R02>0.15572</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.16571</R20><R21>0.33729</R21><R22>-0.9267</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -73852,7 +73852,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.52224</X><Y>4.6</Y><Z>6.86847</Z><R00>-0.76113</R00><R01>-0.22184</R01><R02>0.60949</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.6486</R20><R21>0.26032</R21><R22>-0.71523</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.12224</X><Y>4.6</Y><Z>6.86847</Z><R00>-0.76113</R00><R01>-0.22184</R01><R02>0.60949</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.6486</R20><R21>0.26032</R21><R22>-0.71523</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -73871,7 +73871,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.32151</X><Y>0.75</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.92151</X><Y>0.75</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73891,7 +73891,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.32151</X><Y>1.55</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.92151</X><Y>1.55</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73911,7 +73911,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.32151</X><Y>2.35</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.92151</X><Y>2.35</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73931,7 +73931,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.32151</X><Y>3.15</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.92151</X><Y>3.15</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73951,7 +73951,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.32151</X><Y>3.95</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.92151</X><Y>3.95</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -73971,7 +73971,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.32151</X><Y>4.75</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.92151</X><Y>4.75</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -73991,7 +73991,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.32151</X><Y>5.55</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.92151</X><Y>5.55</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74011,7 +74011,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.32151</X><Y>6.35</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.92151</X><Y>6.35</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74031,7 +74031,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.32151</X><Y>7.15</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.92151</X><Y>7.15</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74051,7 +74051,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.32151</X><Y>7.95</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.92151</X><Y>7.95</Y><Z>5.24145</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74071,7 +74071,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.95101</X><Y>8</Y><Z>5.73514</Z><R00>-0.61712</R00><R01>-0.26913</R01><R02>0.73942</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.78687</R20><R21>0.21107</R21><R22>-0.5799</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.55101</X><Y>8</Y><Z>5.73514</Z><R00>-0.61712</R00><R01>-0.26913</R01><R02>0.73942</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.78687</R20><R21>0.21107</R21><R22>-0.5799</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74090,7 +74090,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-5.52154</X><Y>7.1</Y><Z>5.23403</Z><R00>0.00927</R00><R01>0.34201</R01><R02>-0.93965</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.99996</R20><R21>-0.00317</R21><R22>0.00871</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.12154</X><Y>7.1</Y><Z>5.23403</Z><R00>0.00927</R00><R01>0.34201</R01><R02>-0.93965</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.99996</R20><R21>-0.00317</R21><R22>0.00871</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74109,7 +74109,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-5.82833</X><Y>6.2</Y><Z>5.87135</Z><R00>-0.78738</R00><R01>0.21084</R01><R02>-0.57929</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.61647</R20><R21>0.2693</R21><R22>-0.7399</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.42833</X><Y>6.2</Y><Z>5.87135</Z><R00>-0.78738</R00><R01>0.21084</R01><R02>-0.57929</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.61647</R20><R21>0.2693</R21><R22>-0.7399</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74128,7 +74128,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.82107</X><Y>0.75</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.42107</X><Y>0.75</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74148,7 +74148,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.82107</X><Y>1.55</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.42107</X><Y>1.55</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74168,7 +74168,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.82107</X><Y>2.35</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.42107</X><Y>2.35</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74188,7 +74188,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.82107</X><Y>3.15</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.42107</X><Y>3.15</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74208,7 +74208,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.82107</X><Y>3.95</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.42107</X><Y>3.95</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74228,7 +74228,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.82107</X><Y>4.75</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.42107</X><Y>4.75</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74248,7 +74248,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.82107</X><Y>5.55</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.42107</X><Y>5.55</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74268,7 +74268,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.82107</X><Y>6.35</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.42107</X><Y>6.35</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74288,7 +74288,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.82107</X><Y>7.15</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.42107</X><Y>7.15</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74308,7 +74308,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.82107</X><Y>7.95</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.42107</X><Y>7.95</Y><Z>5.95408</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74328,7 +74328,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.07967</X><Y>8</Y><Z>6.71114</Z><R00>-0.94632</R00><R01>-0.11056</R01><R02>0.30375</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.32324</R20><R21>0.32366</R21><R22>-0.88925</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.67967</X><Y>8</Y><Z>6.71114</Z><R00>-0.94632</R00><R01>-0.11056</R01><R02>0.30375</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.32324</R20><R21>0.32366</R21><R22>-0.88925</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74347,7 +74347,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.80921</X><Y>7.1</Y><Z>6.754</Z><R00>-0.99989</R00><R01>0.00507</R01><R02>-0.01393</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.01483</R20><R21>0.34198</R21><R22>-0.93959</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.40921</X><Y>7.1</Y><Z>6.754</Z><R00>-0.99989</R00><R01>0.00507</R01><R02>-0.01393</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.01483</R20><R21>0.34198</R21><R22>-0.93959</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74366,7 +74366,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.60704</X><Y>6.2</Y><Z>5.80494</Z><R00>0.18643</R00><R01>-0.33602</R01><R02>0.92322</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.98247</R20><R21>-0.06376</R21><R22>0.17519</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.20704</X><Y>6.2</Y><Z>5.80494</Z><R00>0.18643</R00><R01>-0.33602</R01><R02>0.92322</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.98247</R20><R21>-0.06376</R21><R22>0.17519</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74385,7 +74385,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.39399</X><Y>0.75</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.99399</X><Y>0.75</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74405,7 +74405,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.39399</X><Y>1.55</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.99399</X><Y>1.55</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74425,7 +74425,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.39399</X><Y>2.35</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.99399</X><Y>2.35</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74445,7 +74445,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.39399</X><Y>3.15</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.99399</X><Y>3.15</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74465,7 +74465,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.39399</X><Y>3.95</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.99399</X><Y>3.95</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74485,7 +74485,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.39399</X><Y>4.75</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.99399</X><Y>4.75</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74505,7 +74505,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.39399</X><Y>5.55</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.99399</X><Y>5.55</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74525,7 +74525,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.39399</X><Y>6.35</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.99399</X><Y>6.35</Y><Z>6.53597</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74545,7 +74545,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.82769</X><Y>6.4</Y><Z>7.20822</Z><R00>-0.8403</R00><R01>-0.18542</R01><R02>0.50942</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.54212</R20><R21>0.2874</R21><R22>-0.78963</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.42769</X><Y>6.4</Y><Z>7.20822</Z><R00>-0.8403</R00><R01>-0.18542</R01><R02>0.50942</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.54212</R20><R21>0.2874</R21><R22>-0.78963</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74564,7 +74564,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.28416</X><Y>5.5</Y><Z>5.74355</Z><R00>0.99053</R00><R01>0.04695</R01><R02>-0.12901</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.13729</R20><R21>-0.33878</R21><R22>0.93079</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.88416</X><Y>5.5</Y><Z>5.74355</Z><R00>0.99053</R00><R01>0.04695</R01><R02>-0.12901</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.13729</R20><R21>-0.33878</R21><R22>0.93079</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74583,7 +74583,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-8.1921</X><Y>4.6</Y><Z>6.48094</Z><R00>0.06879</R00><R01>-0.34121</R01><R02>0.93747</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.99763</R20><R21>-0.02353</R21><R22>0.06464</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.7921</X><Y>4.6</Y><Z>6.48094</Z><R00>0.06879</R00><R01>-0.34121</R01><R02>0.93747</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.99763</R20><R21>-0.02353</R21><R22>0.06464</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74607,7 +74607,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.6688</X><Y>0.75</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.0688</X><Y>0.75</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74627,7 +74627,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.6688</X><Y>1.55</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.0688</X><Y>1.55</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74647,7 +74647,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.6688</X><Y>2.35</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.0688</X><Y>2.35</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74667,7 +74667,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.6688</X><Y>3.15</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.0688</X><Y>3.15</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74687,7 +74687,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.6688</X><Y>3.95</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.0688</X><Y>3.95</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74707,7 +74707,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.6688</X><Y>4.75</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.0688</X><Y>4.75</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74727,7 +74727,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.6688</X><Y>5.55</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.0688</X><Y>5.55</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74747,7 +74747,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.6688</X><Y>6.35</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.0688</X><Y>6.35</Y><Z>-1.72918</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74767,7 +74767,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.6739</X><Y>6.4</Y><Z>-2.52916</Z><R00>0.99998</R00><R01>-0.00218</R01><R02>0.00599</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.00637</R20><R21>-0.34201</R21><R22>0.93967</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.0739</X><Y>6.4</Y><Z>-2.52916</Z><R00>0.99998</R00><R01>-0.00218</R01><R02>0.00599</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.00637</R20><R21>-0.34201</R21><R22>0.93967</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74786,7 +74786,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-8.20805</X><Y>5.5</Y><Z>-1.13824</Z><R00>-0.73867</R00><R01>-0.23054</R01><R02>0.63341</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.67406</R20><R21>0.25264</R21><R22>-0.69413</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.60805</X><Y>5.5</Y><Z>-1.13824</Z><R00>-0.73867</R00><R01>-0.23054</R01><R02>0.63341</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.67406</R20><R21>0.25264</R21><R22>-0.69413</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74805,7 +74805,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-8.31243</X><Y>4.6</Y><Z>-1.25406</Z><R00>-0.5939</R00><R01>-0.27517</R01><R02>0.75602</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.80454</R20><R21>0.20312</R21><R22>-0.55808</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.71243</X><Y>4.6</Y><Z>-1.25406</Z><R00>-0.5939</R00><R01>-0.27517</R01><R02>0.75602</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.80454</R20><R21>0.20312</R21><R22>-0.55808</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74824,7 +74824,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.69849</X><Y>0.75</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.09849</X><Y>0.75</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74844,7 +74844,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.69849</X><Y>1.55</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.09849</X><Y>1.55</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74864,7 +74864,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.69849</X><Y>2.35</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.09849</X><Y>2.35</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74884,7 +74884,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.69849</X><Y>3.15</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.09849</X><Y>3.15</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74904,7 +74904,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.69849</X><Y>3.95</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.09849</X><Y>3.95</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -74924,7 +74924,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.69849</X><Y>4.75</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.09849</X><Y>4.75</Y><Z>-0.30626</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -74944,7 +74944,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-8.16397</X><Y>4.8</Y><Z>-0.9569</Z><R00>0.8133</R00><R01>-0.199</R01><R02>0.54675</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.58184</R20><R21>-0.27817</R21><R22>0.76425</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.56397</X><Y>4.8</Y><Z>-0.9569</Z><R00>0.8133</R00><R01>-0.199</R01><R02>0.54675</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.58184</R20><R21>-0.27817</R21><R22>0.76425</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74963,7 +74963,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.1518</X><Y>3.9</Y><Z>-0.89031</Z><R00>0.73007</R00><R01>0.23373</R01><R02>-0.64216</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.68337</R20><R21>-0.2497</R21><R22>0.68604</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.5518</X><Y>3.9</Y><Z>-0.89031</Z><R00>0.73007</R00><R01>0.23373</R01><R02>-0.64216</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.68337</R20><R21>-0.2497</R21><R22>0.68604</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -74982,7 +74982,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.23183</X><Y>3</Y><Z>-0.95605</Z><R00>0.81224</R00><R01>0.19951</R01><R02>-0.54815</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.58333</R20><R21>-0.2778</R21><R22>0.76325</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.63183</X><Y>3</Y><Z>-0.95605</Z><R00>0.81224</R00><R01>0.19951</R01><R02>-0.54815</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.58333</R20><R21>-0.2778</R21><R22>0.76325</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -75001,7 +75001,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.36996</X><Y>0.75</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.76996</X><Y>0.75</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -75021,7 +75021,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.36996</X><Y>1.55</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.76996</X><Y>1.55</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -75041,7 +75041,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.36996</X><Y>2.35</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.76996</X><Y>2.35</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -75061,7 +75061,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.36996</X><Y>3.15</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.76996</X><Y>3.15</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -75081,7 +75081,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.36996</X><Y>3.95</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.76996</X><Y>3.95</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -75101,7 +75101,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.36996</X><Y>4.75</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.76996</X><Y>4.75</Y><Z>-1.08735</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -75121,7 +75121,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-6.59558</X><Y>4.8</Y><Z>-0.88648</Z><R00>-0.25108</R00><R01>0.33106</R01><R02>-0.90959</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.96797</R20><R21>0.08587</R21><R22>-0.23593</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-5.99558</X><Y>4.8</Y><Z>-0.88648</Z><R00>-0.25108</R00><R01>0.33106</R01><R02>-0.90959</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.96797</R20><R21>0.08587</R21><R22>-0.23593</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -75140,7 +75140,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.78203</X><Y>3.9</Y><Z>-1.77305</Z><R00>0.85714</R00><R01>-0.17617</R01><R02>0.48403</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.51509</R20><R21>-0.29316</R21><R22>0.80544</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.18203</X><Y>3.9</Y><Z>-1.77305</Z><R00>0.85714</R00><R01>-0.17617</R01><R02>0.48403</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.51509</R20><R21>-0.29316</R21><R22>0.80544</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -75159,7 +75159,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.62443</X><Y>3</Y><Z>-0.3289</Z><R00>-0.94806</R00><R01>-0.1088</R01><R02>0.29891</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.3181</R20><R21>0.32425</R21><R22>-0.89088</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.02443</X><Y>3</Y><Z>-0.3289</Z><R00>-0.94806</R00><R01>-0.1088</R01><R02>0.29891</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.3181</R20><R21>0.32425</R21><R22>-0.89088</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -75178,7 +75178,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.9717</X><Y>0.75</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.3717</X><Y>0.75</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -75198,7 +75198,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.9717</X><Y>1.55</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.3717</X><Y>1.55</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -75218,7 +75218,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.9717</X><Y>2.35</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.3717</X><Y>2.35</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -75238,7 +75238,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.9717</X><Y>3.15</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.3717</X><Y>3.15</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -75258,7 +75258,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.9717</X><Y>3.95</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.3717</X><Y>3.95</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">9425231</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -75278,7 +75278,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.9717</X><Y>4.75</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.3717</X><Y>4.75</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -75298,7 +75298,7 @@
           <Properties>
             <string name="Name">BambooCane</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.9717</X><Y>5.55</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.3717</X><Y>5.55</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">8372031</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>1.5</X><Y>0.45</Y><Z>0.45</Z></Vector3>
@@ -75318,7 +75318,7 @@
           <Properties>
             <string name="Name">BambooNode</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.9717</X><Y>6.35</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.3717</X><Y>6.35</Y><Z>-0.77373</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">6265391</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.14</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -75338,7 +75338,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.47282</X><Y>6.4</Y><Z>-0.14834</Z><R00>-0.78175</R00><R01>0.21328</R01><R02>-0.58599</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.6236</R20><R21>0.26737</R21><R22>-0.7346</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.87282</X><Y>6.4</Y><Z>-0.14834</Z><R00>-0.78175</R00><R01>0.21328</R01><R02>-0.58599</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.6236</R20><R21>0.26737</R21><R22>-0.7346</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -75357,7 +75357,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-8.30134</X><Y>5.5</Y><Z>-0.0448</Z><R00>-0.91116</R00><R01>-0.14093</R01><R02>0.3872</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.41205</R20><R21>0.31164</R21><R22>-0.85621</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-7.70134</X><Y>5.5</Y><Z>-0.0448</Z><R00>-0.91116</R00><R01>-0.14093</R01><R02>0.3872</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>-0.41205</R20><R21>0.31164</R21><R22>-0.85621</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">5222467</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -75376,7 +75376,7 @@
           <Properties>
             <string name="Name">BambooLeaf</string>
             <bool name="Anchored">true</bool>
-            <CoordinateFrame name="CFrame"><X>-7.47173</X><Y>4.6</Y><Z>-1.39825</Z><R00>0.78065</R00><R01>0.21375</R01><R02>-0.58728</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.62497</R20><R21>-0.267</R21><R22>0.73357</R22></CoordinateFrame>
+            <CoordinateFrame name="CFrame"><X>-6.87173</X><Y>4.6</Y><Z>-1.39825</Z><R00>0.78065</R00><R01>0.21375</R01><R02>-0.58728</R02><R10>0</R10><R11>0.93969</R11><R12>0.34202</R12><R20>0.62497</R20><R21>-0.267</R21><R22>0.73357</R22></CoordinateFrame>
             <Color3uint8 name="Color3uint8">7130959</Color3uint8>
             <token name="Material">272</token>
             <Vector3 name="size"><X>0.35</X><Y>0.08</Y><Z>1.6</Z></Vector3>
@@ -77633,7 +77633,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>3.5</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>3.5</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">4869975</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -77652,7 +77652,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>0.3</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>0.3</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">6119784</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -77671,7 +77671,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>3.5</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>3.5</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">4869975</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -77690,7 +77690,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>0.3</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>0.3</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">6119784</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -77709,7 +77709,7 @@
         <Properties>
           <string name="Name">TrainerBoard</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.2</X><Y>4.6</Y><Z>-7.6</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.7</X><Y>4.6</Y><Z>-7.2</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2106411</Color3uint8>
           <token name="Material">272</token>
           <Vector3 name="size"><X>6.6</X><Y>4</Y><Z>0.4</Z></Vector3>
@@ -77728,7 +77728,7 @@
         <Properties>
           <string name="Name">BoardFrame</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.31545</X><Y>4.56938</Y><Z>-7.41525</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.8619</X><Y>4.56938</Y><Z>-7.05422</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">3816770</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>7.4</X><Y>4.8</Y><Z>0.36</Z></Vector3>
@@ -77747,7 +77747,7 @@
         <Properties>
           <string name="Name">BoardTrim</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.43095</X><Y>6.98253</Y><Z>-7.2304</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.02388</X><Y>6.98253</Y><Z>-6.90838</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">3724996</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>7.5</X><Y>0.22</Y><Z>0.5</Z></Vector3>
@@ -77766,7 +77766,7 @@
         <Properties>
           <string name="Name">LevelPip1</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.01539</X><Y>7.40139</Y><Z>-8.09151</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-6.30959</X><Y>7.40139</Y><Z>-8.17286</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">3724996</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -77785,7 +77785,7 @@
         <Properties>
           <string name="Name">LevelPip2</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.99773</X><Y>7.40139</Y><Z>-7.45561</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.50663</X><Y>7.40139</Y><Z>-7.28109</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">3724996</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -77804,7 +77804,7 @@
         <Properties>
           <string name="Name">LevelPip3</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-5.98007</X><Y>7.40139</Y><Z>-6.81971</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.70367</X><Y>7.40139</Y><Z>-6.38931</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">3724996</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -77823,7 +77823,7 @@
         <Properties>
           <string name="Name">LevelPip4</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.96242</X><Y>7.40139</Y><Z>-6.1838</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.90072</X><Y>7.40139</Y><Z>-5.49754</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">3724996</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -77842,7 +77842,7 @@
         <Properties>
           <string name="Name">PipBar</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.49302</X><Y>7.09735</Y><Z>-7.13108</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.11092</X><Y>7.09735</Y><Z>-6.83001</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">4869975</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>5.61</X><Y>0.4</Y><Z>0.8</Z></Vector3>
@@ -83612,7 +83612,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>3.5</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>3.5</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">3816770</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -83631,7 +83631,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>0.3</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>0.3</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">15222586</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -83650,7 +83650,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>3.5</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>3.5</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">3816770</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -83669,7 +83669,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>0.3</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>0.3</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">15222586</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -83688,7 +83688,7 @@
         <Properties>
           <string name="Name">TrainerBoard</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.2</X><Y>4.6</Y><Z>-7.6</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.7</X><Y>4.6</Y><Z>-7.2</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2106411</Color3uint8>
           <token name="Material">272</token>
           <Vector3 name="size"><X>6.6</X><Y>4</Y><Z>0.4</Z></Vector3>
@@ -83707,7 +83707,7 @@
         <Properties>
           <string name="Name">BoardFrame</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.31545</X><Y>4.56938</Y><Z>-7.41525</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.8619</X><Y>4.56938</Y><Z>-7.05422</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2829617</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>7.4</X><Y>4.8</Y><Z>0.36</Z></Vector3>
@@ -83726,7 +83726,7 @@
         <Properties>
           <string name="Name">BoardTrim</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.43095</X><Y>6.98253</Y><Z>-7.2304</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.02388</X><Y>6.98253</Y><Z>-6.90838</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16730685</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>7.5</X><Y>0.22</Y><Z>0.5</Z></Vector3>
@@ -83745,7 +83745,7 @@
         <Properties>
           <string name="Name">LevelPip1</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.01539</X><Y>7.40139</Y><Z>-8.09151</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-6.30959</X><Y>7.40139</Y><Z>-8.17286</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16730685</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -83764,7 +83764,7 @@
         <Properties>
           <string name="Name">LevelPip2</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.99773</X><Y>7.40139</Y><Z>-7.45561</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.50663</X><Y>7.40139</Y><Z>-7.28109</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16730685</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -83783,7 +83783,7 @@
         <Properties>
           <string name="Name">LevelPip3</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-5.98007</X><Y>7.40139</Y><Z>-6.81971</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.70367</X><Y>7.40139</Y><Z>-6.38931</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16730685</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -83802,7 +83802,7 @@
         <Properties>
           <string name="Name">LevelPip4</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.96242</X><Y>7.40139</Y><Z>-6.1838</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.90072</X><Y>7.40139</Y><Z>-5.49754</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16730685</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -83821,7 +83821,7 @@
         <Properties>
           <string name="Name">PipBar</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.49302</X><Y>7.09735</Y><Z>-7.13108</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.11092</X><Y>7.09735</Y><Z>-6.83001</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">3816770</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>5.61</X><Y>0.4</Y><Z>0.8</Z></Vector3>
@@ -91292,7 +91292,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>3.5</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>3.5</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">9062942</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -91311,7 +91311,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>0.3</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>0.3</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">15327172</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -91330,7 +91330,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>3.5</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>3.5</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">9062942</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -91349,7 +91349,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>0.3</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>0.3</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">15327172</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -91368,7 +91368,7 @@
         <Properties>
           <string name="Name">TrainerBoard</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.2</X><Y>4.6</Y><Z>-7.6</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.7</X><Y>4.6</Y><Z>-7.2</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2106411</Color3uint8>
           <token name="Material">272</token>
           <Vector3 name="size"><X>6.6</X><Y>4</Y><Z>0.4</Z></Vector3>
@@ -91387,7 +91387,7 @@
         <Properties>
           <string name="Name">BoardFrame</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.31545</X><Y>4.56938</Y><Z>-7.41525</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.8619</X><Y>4.56938</Y><Z>-7.05422</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">13137203</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>7.4</X><Y>4.8</Y><Z>0.36</Z></Vector3>
@@ -91406,7 +91406,7 @@
         <Properties>
           <string name="Name">BoardTrim</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.43095</X><Y>6.98253</Y><Z>-7.2304</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.02388</X><Y>6.98253</Y><Z>-6.90838</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16756782</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>7.5</X><Y>0.22</Y><Z>0.5</Z></Vector3>
@@ -91425,7 +91425,7 @@
         <Properties>
           <string name="Name">LevelPip1</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.01539</X><Y>7.40139</Y><Z>-8.09151</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-6.30959</X><Y>7.40139</Y><Z>-8.17286</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16756782</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -91444,7 +91444,7 @@
         <Properties>
           <string name="Name">LevelPip2</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.99773</X><Y>7.40139</Y><Z>-7.45561</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.50663</X><Y>7.40139</Y><Z>-7.28109</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16756782</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -91463,7 +91463,7 @@
         <Properties>
           <string name="Name">LevelPip3</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-5.98007</X><Y>7.40139</Y><Z>-6.81971</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.70367</X><Y>7.40139</Y><Z>-6.38931</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16756782</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -91482,7 +91482,7 @@
         <Properties>
           <string name="Name">LevelPip4</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.96242</X><Y>7.40139</Y><Z>-6.1838</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.90072</X><Y>7.40139</Y><Z>-5.49754</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">16756782</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -91501,7 +91501,7 @@
         <Properties>
           <string name="Name">PipBar</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.49302</X><Y>7.09735</Y><Z>-7.13108</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.11092</X><Y>7.09735</Y><Z>-6.83001</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">9062942</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>5.61</X><Y>0.4</Y><Z>0.8</Z></Vector3>
@@ -98566,7 +98566,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>3.5</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>3.5</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">14076850</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -98585,7 +98585,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>0.3</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>0.3</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">15920352</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -98604,7 +98604,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>3.5</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>3.5</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">14076850</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -98623,7 +98623,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>0.3</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>0.3</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">15920352</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -98642,7 +98642,7 @@
         <Properties>
           <string name="Name">TrainerBoard</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.2</X><Y>4.6</Y><Z>-7.6</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.7</X><Y>4.6</Y><Z>-7.2</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2106411</Color3uint8>
           <token name="Material">272</token>
           <Vector3 name="size"><X>6.6</X><Y>4</Y><Z>0.4</Z></Vector3>
@@ -98661,7 +98661,7 @@
         <Properties>
           <string name="Name">BoardFrame</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.31545</X><Y>4.56938</Y><Z>-7.41525</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.8619</X><Y>4.56938</Y><Z>-7.05422</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">15129803</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>7.4</X><Y>4.8</Y><Z>0.36</Z></Vector3>
@@ -98680,7 +98680,7 @@
         <Properties>
           <string name="Name">BoardTrim</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.43095</X><Y>6.98253</Y><Z>-7.2304</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.02388</X><Y>6.98253</Y><Z>-6.90838</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">11562239</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>7.5</X><Y>0.22</Y><Z>0.5</Z></Vector3>
@@ -98699,7 +98699,7 @@
         <Properties>
           <string name="Name">LevelPip1</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.01539</X><Y>7.40139</Y><Z>-8.09151</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-6.30959</X><Y>7.40139</Y><Z>-8.17286</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">11562239</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -98718,7 +98718,7 @@
         <Properties>
           <string name="Name">LevelPip2</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.99773</X><Y>7.40139</Y><Z>-7.45561</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.50663</X><Y>7.40139</Y><Z>-7.28109</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">11562239</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -98737,7 +98737,7 @@
         <Properties>
           <string name="Name">LevelPip3</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-5.98007</X><Y>7.40139</Y><Z>-6.81971</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.70367</X><Y>7.40139</Y><Z>-6.38931</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">11562239</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -98756,7 +98756,7 @@
         <Properties>
           <string name="Name">LevelPip4</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.96242</X><Y>7.40139</Y><Z>-6.1838</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.90072</X><Y>7.40139</Y><Z>-5.49754</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">11562239</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -98775,7 +98775,7 @@
         <Properties>
           <string name="Name">PipBar</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.49302</X><Y>7.09735</Y><Z>-7.13108</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.11092</X><Y>7.09735</Y><Z>-6.83001</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">14076850</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>5.61</X><Y>0.4</Y><Z>0.8</Z></Vector3>
@@ -101872,7 +101872,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>3.5</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>3.5</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2829617</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -101891,7 +101891,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.86067</X><Y>0.3</Y><Z>-8.43715</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-7.02685</X><Y>0.3</Y><Z>-8.7381</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2829617</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -101910,7 +101910,7 @@
         <Properties>
           <string name="Name">BoardPost</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>3.5</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>3.5</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2829617</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.1</X><Y>7</Y><Z>1.1</Z></Vector3>
@@ -101929,7 +101929,7 @@
         <Properties>
           <string name="Name">BoardFoot</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.28121</X><Y>0.3</Y><Z>-5.57558</Z><R00>0.84805</R00><R01>0</R01><R02>-0.52992</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.52992</R20><R21>0</R21><R22>0.84805</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.41355</X><Y>0.3</Y><Z>-4.72512</Z><R00>0.66913</R00><R01>0</R01><R02>-0.74314</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0.74314</R20><R21>0</R21><R22>0.66913</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2829617</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>1.7</X><Y>0.6</Y><Z>1.7</Z></Vector3>
@@ -101948,7 +101948,7 @@
         <Properties>
           <string name="Name">TrainerBoard</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.2</X><Y>4.6</Y><Z>-7.6</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.7</X><Y>4.6</Y><Z>-7.2</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2106411</Color3uint8>
           <token name="Material">272</token>
           <Vector3 name="size"><X>6.6</X><Y>4</Y><Z>0.4</Z></Vector3>
@@ -101967,7 +101967,7 @@
         <Properties>
           <string name="Name">BoardFrame</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.31545</X><Y>4.56938</Y><Z>-7.41525</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.8619</X><Y>4.56938</Y><Z>-7.05422</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">3817301</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>7.4</X><Y>4.8</Y><Z>0.36</Z></Vector3>
@@ -101986,7 +101986,7 @@
         <Properties>
           <string name="Name">BoardTrim</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.43095</X><Y>6.98253</Y><Z>-7.2304</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.02388</X><Y>6.98253</Y><Z>-6.90838</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">4253951</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>7.5</X><Y>0.22</Y><Z>0.5</Z></Vector3>
@@ -102005,7 +102005,7 @@
         <Properties>
           <string name="Name">LevelPip1</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-8.01539</X><Y>7.40139</Y><Z>-8.09151</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-6.30959</X><Y>7.40139</Y><Z>-8.17286</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">4253951</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -102024,7 +102024,7 @@
         <Properties>
           <string name="Name">LevelPip2</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.99773</X><Y>7.40139</Y><Z>-7.45561</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.50663</X><Y>7.40139</Y><Z>-7.28109</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">4253951</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -102043,7 +102043,7 @@
         <Properties>
           <string name="Name">LevelPip3</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-5.98007</X><Y>7.40139</Y><Z>-6.81971</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-4.70367</X><Y>7.40139</Y><Z>-6.38931</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">4253951</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -102062,7 +102062,7 @@
         <Properties>
           <string name="Name">LevelPip4</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-4.96242</X><Y>7.40139</Y><Z>-6.1838</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-3.90072</X><Y>7.40139</Y><Z>-5.49754</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">4253951</Color3uint8>
           <token name="Material">288</token>
           <Vector3 name="size"><X>0.8</X><Y>0.55</Y><Z>0.55</Z></Vector3>
@@ -102081,7 +102081,7 @@
         <Properties>
           <string name="Name">PipBar</string>
           <bool name="Anchored">true</bool>
-          <CoordinateFrame name="CFrame"><X>-6.49302</X><Y>7.09735</Y><Z>-7.13108</Z><R00>0.84805</R00><R01>-0.07375</R01><R02>-0.52476</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.52992</R20><R21>0.11803</R21><R22>0.83979</R22></CoordinateFrame>
+          <CoordinateFrame name="CFrame"><X>-5.11092</X><Y>7.09735</Y><Z>-6.83001</Z><R00>0.66913</R00><R01>-0.10343</R01><R02>-0.73591</R02><R10>0</R10><R11>0.99027</R11><R12>-0.13917</R12><R20>0.74314</R20><R21>0.09312</R21><R22>0.66262</R22></CoordinateFrame>
           <Color3uint8 name="Color3uint8">2829617</Color3uint8>
           <token name="Material">256</token>
           <Vector3 name="size"><X>5.61</X><Y>0.4</Y><Z>0.8</Z></Vector3>

@@ -142,7 +142,8 @@ end
 --------------------------------------------------------------------------------
 -- upgrades + launchers
 --------------------------------------------------------------------------------
-local function upgrade(player: Player)
+-- paid: bought with Robux (no coins, and the free first upgrade is kept for later)
+local function upgrade(player: Player, paid: boolean?)
 	local profile = Data.Peek(player)
 	if not profile then return { Ok = false } end
 	ensure(profile)
@@ -157,8 +158,8 @@ local function upgrade(player: Player)
 	end
 	local cost = def.Cost
 	-- the first upgrade is free once you've been on an expedition (the same free first upgrade the Armorer gives)
-	local free = T.FirstFree and not profile.Flags.FreeUpgradeUsed and (tonumber(profile.Stats and profile.Stats.Runs) or 0) >= 1
-	if free then cost = 0 end
+	local free = not paid and T.FirstFree and not profile.Flags.FreeUpgradeUsed and (tonumber(profile.Stats and profile.Stats.Runs) or 0) >= 1
+	if free or paid then cost = 0 end
 	if profile.Coins < cost then return { Ok = false, Err = "NOT ENOUGH COINS" } end
 	profile.Coins -= cost
 	profile.Trainer.Level = nxt
@@ -171,6 +172,19 @@ local function upgrade(player: Player)
 		Net.FireAll("Announce", { Text = string.format("%s BUILT A %s!", string.upper(player.DisplayName), T.TierNames[Config.TrainerTier(nxt)] or "NEW TRAINER"), Color = "Orange" })
 	end
 	return { Ok = true, Level = nxt, Tier = Config.TrainerTier(nxt), NewTier = newTier, PerSec = def.PerSec, Free = free }
+end
+
+-- the TRAINER LEVEL UP product (Monetization): the next level, or - maxed / waiting on a boss - that level's coins
+function Trainer.PaidUpgrade(player: Player): (boolean, string?)
+	local res = upgrade(player, true)
+	if res.Ok then return true, nil end
+	local profile = Data.Peek(player)
+	if not profile then return false, nil end
+	local nxt = T.Levels[levelOf(profile) + 1] or T.Levels[#T.Levels]
+	local coins = math.max(1000, nxt.Cost)
+	profile.Coins += coins
+	Data.Changed(player)
+	return true, "+" .. Config.FormatNumber(coins) .. " COINS INSTEAD"
 end
 
 --------------------------------------------------------------------------------

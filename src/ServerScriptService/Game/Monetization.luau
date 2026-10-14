@@ -46,7 +46,7 @@ end
 
 -- the contents of a product (Config.ProductGrants), applied; returns what was given for the receipt card
 local function applyGrants(player: Player, profile, id: string)
-	local got = { Eggs = {}, Coins = 0, Luck = 0, Hatch = 0, Slot = 0 }
+	local got = { Eggs = {}, Coins = 0, Luck = 0, Hatch = 0, Slot = 0, Trainer = nil :: string? }
 	for _, g in ipairs(Config.ProductGrants[id] or {}) do
 		if g.Kind == "Egg" then
 			for _ = 1, g.Count or 1 do
@@ -70,6 +70,10 @@ local function applyGrants(player: Player, profile, id: string)
 			end
 			got.Hatch += g.Count or 1
 			Plots.Sync(player)
+		elseif g.Kind == "TrainerLevel" then
+			local ok, note = require(script.Parent.Trainer).PaidUpgrade(player)
+			if not ok then error("trainer level not granted") end
+			got.Trainer = note or "LEVEL UP!"
 		elseif g.Kind == "Slot" then
 			local gear = profile.Gear
 			if (gear.BuddySlots or 1) >= Config.BuddySlots.Max then
