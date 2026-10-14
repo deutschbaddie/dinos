@@ -14,6 +14,7 @@ local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 
 local Config = require(ReplicatedStorage.DinoExpedition.Game.Config)
+local IndexDefs = require(ReplicatedStorage.DinoExpedition.Game.IndexDefs)
 
 local Dinos = {}
 local Data, Net, Plots, Quests
@@ -238,23 +239,20 @@ function Dinos.Hatch(player: Player, slot: number)
 	local key = dino.Species .. ":" .. dino.Rarity
 	local newEntry = not profile.Index[key]
 	profile.Index[key] = true
-	-- the Index pays: coins per new entry, and a milestone (coins + a permanent income bonus) every so often
-	local indexCoins, milestone = 0, nil
+	-- the Index pays: coins per new entry right away; its milestones (coins + a permanent income bonus) are claimed
+	-- in the Index's REWARDS tab now (IndexDefs "Entries", 2026-10-14) - the hatch just says one is ready
+	local indexCoins, readyBefore, readyNow = 0, 0, 0
 	if newEntry then
-		local found = 0
-		for _ in pairs(profile.Index) do found += 1 end
 		local sp = Config.Species[dino.Species]
 		local eraTier = sp and Config.EraTier(sp.Era) or 1
 		local ord = Config.Rarity[dino.Rarity].Order
 		indexCoins = Config.IndexEntryCoins * ord * ord * eraTier
-		for _, m in ipairs(Config.IndexMilestones) do
-			if found == m.Count then
-				milestone = m
-				indexCoins += m.Coins
-			end
-		end
 		profile.Coins += indexCoins
 		profile.Earned += indexCoins
+		profile.Index[key] = nil
+		readyBefore = IndexDefs.ClaimableCount(profile)
+		profile.Index[key] = true
+		readyNow = IndexDefs.ClaimableCount(profile)
 	end
 	-- straight into the yard if there's room (a sea star: straight into the sea pen, never the yard)
 	local placed = false
@@ -286,7 +284,7 @@ function Dinos.Hatch(player: Player, slot: number)
 		stage:SetAttribute("At", os.time())
 	end
 	announceHatch(player, dino, inc.Dev == true)
-	return { Ok = true, Dino = dino, Slot = slot, NewEntry = newEntry, Placed = placed, SeaPen = seaPen or nil, Income = Config.DinoIncome(dino), Buddy = autoBuddy, Pinned = pinned, IndexCoins = indexCoins, Milestone = milestone and { Count = milestone.Count, Income = milestone.Income } or nil }
+	return { Ok = true, Dino = dino, Slot = slot, NewEntry = newEntry, Placed = placed, SeaPen = seaPen or nil, Income = Config.DinoIncome(dino), Buddy = autoBuddy, Pinned = pinned, IndexCoins = indexCoins, RewardReady = readyNow > readyBefore or nil }
 end
 
 --------------------------------------------------------------------------------
@@ -640,9 +638,9 @@ function Dinos.Rate(profile, player: Player?, offline: boolean?, raw: boolean?):
 	end
 	r *= 1 + Config.StarPensFilled(profile) * Config.Island.PenIncome
 	r *= 1 + (profile.Stars or 0) * Config.StarPerk.Income
-	local found = 0
-	for _ in pairs(profile.Index or {}) do found += 1 end
-	r *= 1 + Config.IndexBonus(found)
+	-- (the Index's claimed INCOME rewards: IndexDefs "Entries")
+	local _, _, indexIncome = IndexDefs.Bonus(profile)
+	r *= 1 + indexIncome
 	if player and player:GetAttribute("Pass_DoubleMoney") then r *= 2 end
 	-- live income only: a coin boost never reaches offline money (Boosts.luau)
 	if player and not offline and not raw then

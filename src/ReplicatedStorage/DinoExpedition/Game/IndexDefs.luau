@@ -57,8 +57,14 @@ Defs.Tracks = {
 			{ At = "All", Luck = 0.15, Power = 0.10, Coins = 60000000, Title = "Master" },
 		},
 	},
+	-- (2026-10-14: the old automatic entry milestones moved here - one place for every Index reward. Every new
+	-- species x rarity still pays its coins the moment it hatches; these are claimed by hand)
+	{ Id = "Entries", Name = "INDEX ENTRIES", Nodes = {} },
 	-- (MUTATIONS / HYBRIDS: { Id = "Mutation", Name = "MUTATIONS FOUND", Nodes = {...} } + a counter in Defs.Count)
 }
+for _, m in ipairs(Config.IndexMilestones) do
+	table.insert(Defs.Tracks[2].Nodes, { At = m.Count, Coins = m.Coins, Income = m.Income })
+end
 -- an era page: every species of that era found (any rarity)
 Defs.EraPage = { Power = 0.03, CoinsPerTier = 12000 } -- coins x the era's tier (Config.EraTiers)
 
@@ -87,7 +93,21 @@ function Defs.SpeciesSet(index): { [string]: boolean }
 	return set
 end
 
+-- index entries: "Species:Rarity" keys of a known species and rarity
+function Defs.EntryCount(index): number
+	local n = 0
+	if typeof(index) ~= "table" then return 0 end
+	for key, v in pairs(index) do
+		if v and typeof(key) == "string" then
+			local sp, r = key:match("^([^:]+):(.+)$")
+			if sp and Config.Species[sp] and Config.Rarity[r] then n += 1 end
+		end
+	end
+	return n
+end
+
 function Defs.Count(profile, trackId: string): number
+	if trackId == "Entries" then return Defs.EntryCount(profile and profile.Index) end
 	if trackId == "Species" then
 		local n = 0
 		for _ in pairs(Defs.SpeciesSet(profile and profile.Index)) do n += 1 end
@@ -166,7 +186,7 @@ function Defs.Payout(r): any
 		return { Power = Defs.EraPage.Power, Coins = Defs.EraPage.CoinsPerTier * Config.EraTier(era.Id), Title = era.Id, Gold = era.Boss }
 	end
 	local d = r.Def
-	return { Luck = d.Luck, Power = d.Power, Coins = d.Coins, Title = d.Title }
+	return { Luck = d.Luck, Power = d.Power, Coins = d.Coins, Title = d.Title, Income = d.Income }
 end
 
 function Defs.ClaimableCount(profile): number
@@ -175,17 +195,34 @@ function Defs.ClaimableCount(profile): number
 	return n
 end
 
--- the permanent bonuses from everything claimed: Luck, Power (fractions, 0.3 = +30%)
-function Defs.Bonus(profile): (number, number)
-	local luck, power = 0, 0
+-- the permanent bonuses from everything claimed: Luck, Power, Income (fractions, 0.3 = +30%)
+function Defs.Bonus(profile): (number, number, number)
+	local luck, power, income = 0, 0, 0
 	for _, r in ipairs(Defs.Rewards(profile)) do
 		if r.Claimed then
 			local pay = Defs.Payout(r)
 			luck += pay.Luck or 0
 			power += pay.Power or 0
+			income += pay.Income or 0
 		end
 	end
-	return luck, power
+	return luck, power, income
+end
+
+-- saves from before the merge got their entry milestones (coins + income) automatically: those nodes count as
+-- claimed, once, so nobody is paid twice or loses income. Returns true if it changed anything.
+function Defs.MigrateEntries(profile): boolean
+	if typeof(profile) ~= "table" then return false end
+	if typeof(profile.IndexRewards) ~= "table" then profile.IndexRewards = { Claimed = {}, Title = "" } end
+	local ir = profile.IndexRewards
+	if ir.EntriesMigrated then return false end
+	if typeof(ir.Claimed) ~= "table" then ir.Claimed = {} end
+	local n = Defs.EntryCount(profile.Index)
+	for _, node in ipairs(Defs.Tracks[2].Nodes) do
+		if n >= node.At then ir.Claimed[Defs.NodeKey("Entries", node)] = true end
+	end
+	ir.EntriesMigrated = true
+	return true
 end
 
 -- titles this profile has earned (claimed), in track order

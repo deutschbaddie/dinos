@@ -1073,8 +1073,8 @@ function Hatch.Play(info)
 	if info.IndexCoins and info.IndexCoins > 0 then
 		Kit.Toast("NEW INDEX ENTRY! +" .. Config.FormatNumber(info.IndexCoins) .. " COINS", "Blue", "Index")
 	end
-	if info.Milestone then
-		Kit.Toast(string.format("INDEX MILESTONE: %d FOUND! +%d%% INCOME FOREVER", info.Milestone.Count, math.floor(info.Milestone.Income * 100 + 0.5)), "Gold", "Trophy")
+	if info.RewardReady then
+		task.delay(0.6, function() Kit.Toast("INDEX REWARD READY - CLAIM IT IN THE INDEX!", "Gold", "Trophy") end)
 	end
 	if info.Buddy then
 		-- a free companion slot: it stays with you. Say what that means, right when it matters - the first time a

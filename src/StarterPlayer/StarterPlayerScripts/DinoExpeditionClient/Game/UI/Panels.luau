@@ -630,12 +630,10 @@ local secretEra = nil :: string?
 local function indexDinos(content: Frame, header: Frame)
 	local p = Net.Profile
 	local index = p.Index or {}
-	local found = 0
-	for _ in pairs(index) do found += 1 end
-	local nextM = nil
-	for _, m in ipairs(Config.IndexMilestones) do if found < m.Count then nextM = m break end end
-	local bonus = math.floor(Config.IndexBonus(found) * 100 + 0.5)
-	pixel(header, found .. " / " .. (#Config.SpeciesOrder * #Config.RarityOrder) .. " FOUND  -  +" .. bonus .. "% INCOME" .. (nextM and ("  -  NEXT AT " .. nextM.Count) or ""), { Size = UDim2.fromOffset(520, 13), Position = UDim2.new(1, -90, 0.5, 0), AnchorPoint = Vector2.new(1, 0.5), Align = Enum.TextXAlignment.Right, ZIndex = 40, MaxSize = 13, Color = C.YellowHi })
+	local found = IndexDefs.EntryCount(index)
+	local _, _, income = IndexDefs.Bonus(p)
+	local ready = IndexDefs.ClaimableCount(p)
+	pixel(header, found .. " / " .. (#Config.SpeciesOrder * #Config.RarityOrder) .. " FOUND  -  +" .. math.floor(income * 100 + 0.5) .. "% INCOME" .. (ready > 0 and ("  -  " .. ready .. " REWARD" .. (ready > 1 and "S" or "") .. " TO CLAIM") or ""), { Size = UDim2.fromOffset(520, 13), Position = UDim2.new(1, -90, 0.5, 0), AnchorPoint = Vector2.new(1, 0.5), Align = Enum.TextXAlignment.Right, ZIndex = 40, MaxSize = 13, Color = C.YellowHi })
 	local grid = scroller(content, Vector2.new(172, 190), 10, UDim2.new(1, 0, 1, -54), UDim2.fromOffset(0, 54))
 	local first, cards = nil, {}
 	for i, sp in ipairs(Config.SpeciesOrder) do
@@ -673,6 +671,7 @@ local function payLine(pay): string
 	local parts = {}
 	if (pay.Luck or 0) > 0 then table.insert(parts, "+" .. math.floor(pay.Luck * 100 + 0.5) .. "% LUCK") end
 	if (pay.Power or 0) > 0 then table.insert(parts, "+" .. math.floor(pay.Power * 100 + 0.5) .. "% POWER") end
+	if (pay.Income or 0) > 0 then table.insert(parts, "+" .. math.floor(pay.Income * 100 + 0.5) .. "% INCOME") end
 	if (pay.Coins or 0) > 0 then table.insert(parts, "$" .. Config.FormatNumber(pay.Coins)) end
 	return table.concat(parts, "  ")
 end
@@ -700,6 +699,7 @@ local function claimReward(key: string)
 	if res.Title and IndexDefs.Titles[res.Title] then toast("NEW TITLE: " .. IndexDefs.Titles[res.Title].Name, "Blue", "Crown") end
 	if (res.Power or 0) > 0 then toast("+" .. math.floor(res.Power * 100 + 0.5) .. "% POWER - FOR GOOD!", "Lime", "Power") end
 	if (res.Luck or 0) > 0 then toast("+" .. math.floor(res.Luck * 100 + 0.5) .. "% LUCK - FOR GOOD!", "Orange", "Star") end
+	if (res.Income or 0) > 0 then toast("+" .. math.floor(res.Income * 100 + 0.5) .. "% INCOME - FOR GOOD!", "Lime", "Coin") end
 	if (res.Coins or 0) > 0 then toast("+" .. Config.FormatNumber(res.Coins) .. " COINS", "Gold", "Coin") end
 end
 
@@ -725,38 +725,63 @@ local function rewardCard(parent: Instance, r, x: number, y: number, w: number, 
 	return card, first
 end
 
--- the REWARDS page: the species track, the era pages, your titles
+-- the REWARDS page (scrolls): the species track, the index entries track, the era pages; your titles at the bottom
 local function indexRewards(content: Frame, header: Frame)
 	local p = Net.Profile
-	local luck, power = IndexDefs.Bonus(p)
-	pixel(header, "INDEX BONUS  +" .. math.floor(luck * 100 + 0.5) .. "% LUCK  +" .. math.floor(power * 100 + 0.5) .. "% POWER", { Size = UDim2.fromOffset(420, 13), Position = UDim2.new(1, -90, 0.5, 0), AnchorPoint = Vector2.new(1, 0.5), Align = Enum.TextXAlignment.Right, ZIndex = 40, MaxSize = 13, Color = C.YellowHi })
+	local luck, power, income = IndexDefs.Bonus(p)
+	pixel(header, "INDEX BONUS  +" .. math.floor(luck * 100 + 0.5) .. "% LUCK  +" .. math.floor(power * 100 + 0.5) .. "% POWER  +" .. math.floor(income * 100 + 0.5) .. "% INCOME", { Size = UDim2.fromOffset(520, 13), Position = UDim2.new(1, -90, 0.5, 0), AnchorPoint = Vector2.new(1, 0.5), Align = Enum.TextXAlignment.Right, ZIndex = 40, MaxSize = 13, Color = C.YellowHi })
 	local rewards = IndexDefs.Rewards(p)
 	local first, cards = nil, {}
-	-- the species track
-	local track = IndexDefs.Tracks[1]
-	local count = IndexDefs.Count(p, track.Id)
-	local total = IndexDefs.SpeciesTotal()
-	Kit.TierBar(content, track.Name .. "   " .. count .. " / " .. total, { Size = UDim2.new(1, 0, 0, 28), Position = UDim2.fromOffset(0, 52), ZIndex = 23, Color = C.Blue, Color2 = C.BlueLo, Align = Enum.TextXAlignment.Left })
-	local nodes, eras = {}, {}
+	local list = Instance.new("ScrollingFrame")
+	list.BackgroundTransparency = 1
+	list.BorderSizePixel = 0
+	list.Size = UDim2.new(1, 0, 1, -94)
+	list.Position = UDim2.fromOffset(0, 52)
+	list.ScrollBarThickness = 8
+	list.ScrollBarImageColor3 = C.LimeHi
+	list.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	list.CanvasSize = UDim2.new()
+	list.ZIndex = 22
+	list.Parent = content
+	local W = 840
+	local y = 0
+	-- one section: a bar, then a row of cards (sized so the row fills the width)
+	local function section(title: string, color: Color3, color2: Color3, items: { any }, card: (any, number, number, number) -> (Frame, GuiObject?))
+		Kit.TierBar(list, title, { Size = UDim2.fromOffset(W, 28), Position = UDim2.fromOffset(0, y), ZIndex = 23, Color = color, Color2 = color2, Align = Enum.TextXAlignment.Left })
+		y += 34
+		local n = math.max(#items, 1)
+		local w = math.floor((W - 8 * (n - 1)) / n)
+		for i, r in ipairs(items) do
+			local c, hit = card(r, (i - 1) * (w + 8), y, w)
+			table.insert(cards, c)
+			first = first or hit
+		end
+		y += 158
+	end
+	local byTrack = {}
+	local eras = {}
 	for _, r in ipairs(rewards) do
-		if r.Kind == "Node" then table.insert(nodes, r) elseif r.Kind == "Era" then table.insert(eras, r) end
+		if r.Kind == "Node" then
+			byTrack[r.Track.Id] = byTrack[r.Track.Id] or {}
+			table.insert(byTrack[r.Track.Id], r)
+		elseif r.Kind == "Era" then table.insert(eras, r) end
 	end
-	local w = math.floor((860 - 8 * (math.max(#nodes, 1) - 1)) / math.max(#nodes, 1))
-	for i, r in ipairs(nodes) do
-		local at = r.At
-		local card, hit = rewardCard(content, r, (i - 1) * (w + 8), 86, w, 150, "Index", nil, (r.Def.At == "All" and "ALL " or "") .. at .. " SPECIES", math.min(count, at) .. " / " .. at)
-		table.insert(cards, card)
-		first = first or hit
+	for _, track in ipairs(IndexDefs.Tracks) do
+		local items = byTrack[track.Id]
+		if items and #items > 0 then
+			local count = IndexDefs.Count(p, track.Id)
+			local entries = track.Id == "Entries"
+			local total = entries and (#Config.SpeciesOrder * #Config.RarityOrder) or IndexDefs.SpeciesTotal()
+			section(track.Name .. "   " .. count .. " / " .. total, entries and C.Teal or C.Blue, entries and C.TealLo or C.BlueLo, items, function(r, x, yy, w)
+				local label = (r.Def.At == "All" and "ALL " or "") .. r.At .. (entries and " FOUND" or " SPECIES")
+				return rewardCard(list, r, x, yy, w, 150, entries and "Star" or "Index", nil, label, math.min(count, r.At) .. " / " .. r.At)
+			end)
+		end
 	end
-	-- the era pages: every species of the era (its boss too)
-	Kit.TierBar(content, "ERA PAGES - FIND EVERY DINO OF AN ERA", { Size = UDim2.new(1, 0, 0, 28), Position = UDim2.fromOffset(0, 246), ZIndex = 23, Color = C.Orange, Color2 = C.OrangeLo, Align = Enum.TextXAlignment.Left })
-	local we = math.floor((860 - 8 * (math.max(#eras, 1) - 1)) / math.max(#eras, 1))
-	for i, r in ipairs(eras) do
+	section("ERA PAGES - FIND EVERY DINO OF AN ERA", C.Orange, C.OrangeLo, eras, function(r, x, yy, w)
 		local boss = Config.Bosses[r.Era.Boss]
-		local card, hit = rewardCard(content, r, (i - 1) * (we + 8), 280, we, 150, "Dino", boss and boss.Species or nil, r.Era.Name, r.Found .. " / " .. r.Total)
-		table.insert(cards, card)
-		first = first or hit
-	end
+		return rewardCard(list, r, x, yy, w, 150, "Dino", boss and boss.Species or nil, r.Era.Name, r.Found .. " / " .. r.Total)
+	end)
 	-- your titles: wear one (or none)
 	local earned = IndexDefs.EarnedTitles(p)
 	local wearing = (p.IndexRewards and p.IndexRewards.Title) or ""
@@ -764,9 +789,9 @@ local function indexRewards(content: Frame, header: Frame)
 	pixel(row, #earned > 0 and "TITLE:" or "CLAIM A REWARD WITH A TITLE TO WEAR IT OVER YOUR HEAD", { Size = UDim2.new(0, #earned > 0 and 64 or 600, 0, 11), Position = UDim2.new(0, 0, 0.5, 0), AnchorPoint = Vector2.new(0, 0.5), Align = Enum.TextXAlignment.Left, ZIndex = 26, MaxSize = 11, Color = #earned > 0 and C.Cream or C.Muted })
 	if #earned > 0 then
 		local x = 70
-		local list = { "" }
-		for _, t in ipairs(earned) do table.insert(list, t) end
-		for _, id in ipairs(list) do
+		local titles = { "" }
+		for _, t in ipairs(earned) do table.insert(titles, t) end
+		for _, id in ipairs(titles) do
 			local def = IndexDefs.Titles[id]
 			local label = def and def.Name or "NONE"
 			local bw = #label * 9 + 30
@@ -779,7 +804,7 @@ local function indexRewards(content: Frame, header: Frame)
 			x += bw + 6
 		end
 	end
-	Kit.Stagger(cards, 0.02, 0.3)
+	Kit.Stagger(cards, 0.015, 0.3)
 	return first
 end
 

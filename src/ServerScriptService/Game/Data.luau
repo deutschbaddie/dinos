@@ -62,7 +62,7 @@ local function default()
 		Stars = 0,
 		Pity = 0,
 		Index = {}, -- "Species:Rarity" -> true
-		IndexRewards = { Claimed = {}, Title = "" }, -- the Index's claimed rewards ("Species/10", "Era/FernValley", "Secrets/<era>") + the title you wear (IndexDefs)
+		IndexRewards = { Claimed = {}, Title = "", EntriesMigrated = true }, -- the Index's claimed rewards ("Species/10", "Era/FernValley", "Secrets/<era>") + the title you wear (IndexDefs)
 		Discover = {}, -- era -> secret id -> true (the Index's SECRETS page, Discover.luau)
 		Showcase = "", -- the dino id on your SHOWCASE pedestal ("" = empty; Showcase.luau)
 		Unlocked = { FernValley = true },
@@ -219,6 +219,8 @@ function Data.Load(player: Player)
 				end
 			end
 			if not fresh then away = payAway(player, profile) end
+			-- the Index's entry milestones became claimable rewards (2026-10-14): ones already paid count as claimed
+			pcall(function() require(ReplicatedStorage.DinoExpedition.Game.IndexDefs).MigrateEntries(profile) end)
 		else
 			warn(`[Data] load failed for {player.Name}: {res} — playing with a temporary profile`)
 			Data.Offline[player] = true

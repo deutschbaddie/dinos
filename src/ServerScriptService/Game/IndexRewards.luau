@@ -24,6 +24,7 @@ local function state(profile)
 	local ir = profile.IndexRewards
 	if typeof(ir.Claimed) ~= "table" then ir.Claimed = {} end
 	if typeof(ir.Title) ~= "string" then ir.Title = "" end
+	Defs.MigrateEntries(profile) -- (a save from before the Index merge: its paid milestones count as claimed)
 	return ir
 end
 
