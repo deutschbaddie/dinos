@@ -137,17 +137,44 @@ local function refreshBoard(board: BasePart, b)
 	local root = b.Gui:FindFirstChild("Root") :: Frame
 	root:ClearAllChildren()
 	local acc = accentOf(lvl)
-	local top = T.TierNames[Config.TrainerTier(lvl)] or "POWER TRAINER"
-	Kit.Text(root, top, { Size = UDim2.new(0.94, 0, 0.2, 0), Position = UDim2.fromScale(0.5, 0.04), AnchorPoint = Vector2.new(0.5, 0), Color = acc, Stroke = 4, Shadow = 3, MaxSize = 40 })
+	-- (2026-10-14 v2, the reference board: UPGRADE TRAINING / LEVEL N > LEVEL N+1 / a big price pill / +POWER/SEC)
+	local function line(text: string, y: number, h: number, color: Color3?, color2: Color3?, max: number?)
+		return Kit.Text(root, text, { Size = UDim2.new(0.94, 0, h, 0), Position = UDim2.fromScale(0.5, y), AnchorPoint = Vector2.new(0.5, 0), Color = color, Color2 = color2, Stroke = 4, Shadow = 3, MaxSize = max or 44 })
+	end
+	local function pill(text: string, y: number, fill: Color3)
+		local f = Instance.new("Frame")
+		f.Name = "Price"
+		f.AnchorPoint = Vector2.new(0.5, 0)
+		f.Position = UDim2.fromScale(0.5, y)
+		f.Size = UDim2.fromScale(0.62, 0.26)
+		f.BackgroundColor3 = fill
+		f.Parent = root
+		Kit.Corner(f, 16)
+		Kit.Stroke(f, C.Ink, 4)
+		Kit.Gradient(f, Kit.Shade(fill, 1.18), Kit.Shade(fill, 0.85))
+		Kit.Text(f, text, { Size = UDim2.fromScale(0.9, 0.78), Position = UDim2.fromScale(0.5, 0.5), AnchorPoint = Vector2.new(0.5, 0.5), Stroke = 4, Shadow = 3, MaxSize = 50 })
+	end
 	if mine and nxt then
-		Kit.Text(root, string.format("TRAINING LV %d > %d", lvl, lvl + 1), { Size = UDim2.new(0.94, 0, 0.22, 0), Position = UDim2.fromScale(0.5, 0.26), AnchorPoint = Vector2.new(0.5, 0), Stroke = 4, Shadow = 3, MaxSize = 44 })
-		Kit.Text(root, string.format("+%s POWER/SEC", Config.FormatNumber(nxt.PerSec)), { Size = UDim2.new(0.94, 0, 0.2, 0), Position = UDim2.fromScale(0.5, 0.5), AnchorPoint = Vector2.new(0.5, 0), Color = C.LimeHi, Color2 = C.Lime, Stroke = 4, Shadow = 3, MaxSize = 40 })
-		local price = locked and ("BEAT THE " .. ((Config.Bosses[gate :: string] or {}).Name or "BOSS")) or (free and "FREE!" or ("$" .. Config.FormatNumber(nxt.Cost)))
-		local col = locked and C.Grey or ((free or (profile and profile.Coins >= nxt.Cost)) and C.YellowHi or C.RedHi)
-		Kit.Text(root, price, { Size = UDim2.new(0.94, 0, 0.22, 0), Position = UDim2.fromScale(0.5, 0.74), AnchorPoint = Vector2.new(0.5, 0), Color = col, Stroke = 4, Shadow = 3, MaxSize = 44 })
+		line("UPGRADE TRAINING", 0.05, 0.18, Color3.new(1, 1, 1), nil, 40)
+		line(string.format("LEVEL %d > LEVEL %d", lvl, lvl + 1), 0.25, 0.17, C.YellowHi, acc, 38)
+		if locked then
+			pill("BEAT THE " .. ((Config.Bosses[gate :: string] or {}).Name or "BOSS"), 0.47, C.GreyLo)
+		elseif free then
+			pill("FREE!", 0.47, C.Lime)
+		else
+			local can = profile and profile.Coins and profile.Coins >= nxt.Cost
+			pill("$" .. Config.FormatNumber(nxt.Cost), 0.47, can and C.Lime or C.Red)
+		end
+		line(string.format("+%s POWER/SEC", Config.FormatNumber(nxt.PerSec)), 0.79, 0.15, C.Cream, nil, 30)
+	elseif mine then
+		line(T.TierNames[Config.TrainerTier(lvl)] or "POWER TRAINER", 0.08, 0.2, acc, nil, 40)
+		line("MAX LEVEL!", 0.34, 0.26, C.YellowHi, C.Yellow, 56)
+		line(string.format("+%s POWER/SEC", Config.FormatNumber(Config.TrainerPerSec(lvl))), 0.68, 0.18, C.LimeHi, C.Lime, 36)
 	else
-		Kit.Text(root, "TRAINING LV " .. lvl, { Size = UDim2.new(0.94, 0, 0.26, 0), Position = UDim2.fromScale(0.5, 0.3), AnchorPoint = Vector2.new(0.5, 0), Stroke = 4, Shadow = 3, MaxSize = 48 })
-		Kit.Text(root, string.format("+%s POWER/SEC", Config.FormatNumber(Config.TrainerPerSec(lvl))), { Size = UDim2.new(0.94, 0, 0.22, 0), Position = UDim2.fromScale(0.5, 0.62), AnchorPoint = Vector2.new(0.5, 0), Color = C.LimeHi, Color2 = C.Lime, Stroke = 4, Shadow = 3, MaxSize = 40 })
+		-- someone else's: what their machine is and does
+		line(T.TierNames[Config.TrainerTier(lvl)] or "POWER TRAINER", 0.08, 0.2, acc, nil, 40)
+		line("LEVEL " .. lvl, 0.34, 0.26, Color3.new(1, 1, 1), nil, 56)
+		line(string.format("+%s POWER/SEC", Config.FormatNumber(Config.TrainerPerSec(lvl))), 0.68, 0.18, C.LimeHi, C.Lime, 36)
 	end
 end
 

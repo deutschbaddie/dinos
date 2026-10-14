@@ -447,380 +447,475 @@ function bullseye(c, p, dia, o = {}) {
   }
   c.cyl({ name: 'BullseyeRim', axis: 'z', len: 0.16, d: dia + 0.5, p: [p[0], p[1], p[2] + 0.12], c: o.rim || '#2b2d31' });
 }
-// the glowing pad (TrainerPad) + its rim; size and trim grow with the tier
-function trainerPad(c, tier, accent) {
+// ---------------------------------------------------------------- the range every tier is built on (2026-10-14 v2)
+// (user, with a reference: "make the models nice") A compact TRAINING MAT like the genre's best: a chunky studded
+// border with corner blocks round a clean floor, an inset square round the big glowing pad, two slots running down to
+// ONE bold target at the back framed by a gate, a few themed props, and a big angled UPGRADE board beside the pad.
+// Kit-local: the mat is x -MAT.X..MAT.X, z MAT.Z0..MAT.Z1; behind it (z > MAT.Z1) each tier stands its showpiece.
+const MAT = { X: 5.8, Z0: -17.4, Z1: 7.8, H: 0.9, T: 1.1, FLOOR: 0.3 };
+const TGT_Z = 3.6; // where the target stands
+
+// one stretch of border from a to b (along x or z), chunky alternating blocks with studded tops
+function borderRun(c, a, b, th, gap) {
+  const dx = b[0] - a[0], dz = b[1] - a[1];
+  const L = Math.hypot(dx, dz);
+  const n = Math.max(1, Math.round(L / 2.4));
+  const seg = L / n;
+  for (let i = 0; i < n; i++) {
+    const t0 = i / n, t1 = (i + 1) / n;
+    const mx = a[0] + dx * (t0 + t1) / 2, mz = a[1] + dz * (t0 + t1) / 2;
+    if (gap && Math.abs(mx) < gap && Math.abs(dz) < 0.01) continue; // the entrance in the front run
+    const along = Math.abs(dx) > Math.abs(dz);
+    const s = along ? [seg - 0.08, MAT.H, MAT.T] : [MAT.T, MAT.H, seg - 0.08];
+    c.box({ name: 'MatBorder', s, p: [mx, MAT.FLOOR + MAT.H / 2, mz], c: i % 2 ? th.border : th.borderHi, m: th.borderM || 'SmoothPlastic', studs: 'top', collide: true });
+    if (th.trim) c.box({ name: 'MatTrim', s: along ? [seg - 0.08, 0.16, 0.18] : [0.18, 0.16, seg - 0.08], p: [mx - (along ? 0 : Math.sign(mx) * (MAT.T / 2 - 0.05)), MAT.FLOOR + MAT.H + 0.02, mz - (along ? Math.sign(mz) * (MAT.T / 2 - 0.05) : 0)], c: th.trim, m: 'Neon', shadow: false });
+  }
+}
+// the mat: floor, border, corner blocks, the inset square round the pad, the two slots down to the target
+function rangeMat(c, th) {
+  const X = MAT.X, Z0 = MAT.Z0, Z1 = MAT.Z1;
+  c.box({ name: 'MatBase', s: [X * 2, MAT.FLOOR, Z1 - Z0], p: [0, MAT.FLOOR / 2, (Z0 + Z1) / 2], c: th.base || shade(th.border, 0.8), m: th.borderM || 'SmoothPlastic', collide: true });
+  c.box({ name: 'MatFloor', s: [X * 2 - MAT.T * 2, 0.06, Z1 - Z0 - MAT.T * 2], p: [0, MAT.FLOOR + 0.03, (Z0 + Z1) / 2], c: th.floor, m: th.floorM || 'SmoothPlastic', shadow: false });
+  const xi = X - MAT.T / 2, z0 = Z0 + MAT.T / 2, z1 = Z1 - MAT.T / 2;
+  borderRun(c, [-xi, z0], [-xi, z1], th);
+  borderRun(c, [xi, z0], [xi, z1], th);
+  borderRun(c, [-xi, z1], [xi, z1], th);
+  borderRun(c, [-xi, z0], [xi, z0], th, 2.2); // (a step-in gap at the front, by the drive)
+  for (const [x, z] of [[-xi, z0], [xi, z0], [-xi, z1], [xi, z1], [-2.6, z0], [2.6, z0]]) {
+    const big = Math.abs(x) > 3;
+    const s = big ? 1.9 : 1.4, h = big ? 1.9 : 1.5;
+    c.box({ name: 'MatCorner', s: [s, h, s], p: [x, MAT.FLOOR + h / 2, z], c: th.corner, m: th.cornerM || 'SmoothPlastic', studs: 'top', collide: true });
+    c.box({ name: 'MatCornerCap', s: [s + 0.3, 0.35, s + 0.3], p: [x, MAT.FLOOR + h + 0.17, z], c: th.cap, m: th.capM || 'SmoothPlastic', studs: 'top' });
+  }
+  // the inset square round the pad, and the two slots running from it to the target (the reference's lines)
+  const L = th.line, y = MAT.FLOOR + 0.08, sq = 9.4, cz = TR.PAD_Z + 0.4;
+  for (const [s, p] of [[[sq, 0.1, 0.32], [0, y, cz - sq / 2]], [[sq, 0.1, 0.32], [0, y, cz + sq / 2]], [[0.32, 0.1, sq], [-sq / 2, y, cz]], [[0.32, 0.1, sq], [sq / 2, y, cz]]]) {
+    c.box({ name: 'MatLine', s, p, c: L, shadow: false });
+  }
+  for (const x of [-1.8, 1.8]) c.box({ name: 'MatSlot', s: [0.32, 0.1, TGT_Z - 2 - (cz + sq / 2)], p: [x, y, (TGT_Z - 2 + cz + sq / 2) / 2], c: L, shadow: false });
+}
+// the glowing pad (TrainerPad): a bright disc in a studded ring - the first thing you see on the mat
+function trainerPad(c, tier, accent, th) {
   const z = TR.PAD_Z;
   const R = 3.2 + tier * 0.12; // (Config.Trainer.PadRadius 4.6 covers the biggest)
-  const rimC = ['#87592f', '#7a746a', '#5d6168', '#3a3d42', '#c87533', '#e6dccb', '#2b2d31'][tier - 1];
-  c.cyl({ name: 'PadBase', axis: 'y', len: 0.5, d: R * 2 + 2, p: [0, 0.25, z], c: rimC, m: tier === 1 ? 'WoodPlanks' : tier === 2 ? 'Slate' : 'Metal', collide: true });
-  const pad = c.cyl({ name: 'TrainerPad', axis: 'y', len: 0.3, d: R * 2, p: [0, 0.6, z], c: accent, m: 'Neon', t: 0.05, collide: true });
-  c.cyl({ name: 'PadInner', axis: 'y', len: 0.32, d: R * 1.1, p: [0, 0.62, z], c: shade(accent, 1.25), m: 'Neon', shadow: false });
-  // chevrons pointing down the range
-  for (const dz of [-0.6, 0.6]) c.at([0, 0.8, z + R - 1.1 + dz * 0.6], [0, 45, 0]).box({ name: 'PadArrow', s: [0.5, 0.06, 1.6], c: '#ffffff', shadow: false });
-  // studs round the rim (the toy look)
-  const n = 10 + tier * 2;
+  const y0 = MAT.FLOOR;
+  c.cyl({ name: 'PadRing', axis: 'y', len: 0.36, d: R * 2 + 1.6, p: [0, y0 + 0.18, z], c: th.padRing || th.border, m: th.borderM || 'SmoothPlastic', collide: true });
+  const pad = c.cyl({ name: 'TrainerPad', axis: 'y', len: 0.3, d: R * 2, p: [0, y0 + 0.3, z], c: shade(accent, 1.35), m: 'Neon', t: 0.05, collide: true });
+  c.cyl({ name: 'PadInner', axis: 'y', len: 0.32, d: R * 1.15, p: [0, y0 + 0.32, z], c: '#ffffff', m: 'Neon', t: 0.15, shadow: false });
+  const n = 14 + tier * 2;
   for (let i = 0; i < n; i++) {
     const a = (i / n) * Math.PI * 2;
-    c.cyl({ name: 'PadStud', axis: 'y', len: 0.24, d: 0.62, p: [Math.cos(a) * (R + 0.5), 0.58, z + Math.sin(a) * (R + 0.5)], c: i % 2 ? shade(rimC, 1.3) : accent, m: i % 2 ? 'SmoothPlastic' : 'Neon', shadow: false });
+    c.cyl({ name: 'PadStud', axis: 'y', len: 0.22, d: 0.55, p: [Math.cos(a) * (R + 0.42), y0 + 0.44, z + Math.sin(a) * (R + 0.42)], c: i % 2 ? (th.cap || '#ffffff') : accent, m: i % 2 ? 'SmoothPlastic' : 'Neon', shadow: false });
   }
   const fx = c.box({ name: 'PadFx', s: [1, 1, 1], p: [0, 1, z], t: 1, shadow: false });
   fx.set('CanQuery', 'bool', false);
-  E.pointLight(pad, [1, 1, 1].map((v, i) => parseInt(accent.slice(1 + i * 2, 3 + i * 2), 16) / 255), 10 + tier * 1.5, 0.5);
+  E.pointLight(pad, [1, 1, 1].map((v, i) => Math.min(1, parseInt(accent.slice(1 + i * 2, 3 + i * 2), 16) / 255 + 0.35)), 12 + tier * 1.5, 1.1);
+  E.particles(pad, 'PadMotes', { rate: 6, life: [1, 1.8], speed: [1.2, 2.4], size: [[0, 0.3], [1, 0]], color: [1, 1, 1], emission: 0.9, spread: [12, 12], dir: 1 });
   return pad;
 }
-// the upgrade board (TrainerBoard) on two posts + the 4 level pips along its top; faces -Z
-function trainerBoard(c, tier, accent, o = {}) {
-  const [bx, bz] = TR.BOARD;
-  const g = c.at([bx, 0, bz], [0, o.yaw || -38, 0]);
-  const postC = o.post || ['#87592f', '#7a746a', '#5d6168', '#3a3d42', '#8a4a1e', '#d6cbb2', '#2b2d31'][tier - 1];
-  for (const x of [-1.9, 1.9]) g.box({ name: 'BoardPost', s: [0.6, 6.4, 0.6], p: [x, 3.2, 0.25], c: postC, studs: 'top', collide: true });
-  const board = g.box({ name: 'TrainerBoard', s: [4.6, 3, 0.4], p: [0, 4.7, 0], c: '#1f2329', collide: true });
-  g.box({ name: 'BoardFrame', s: [5.2, 3.6, 0.3], p: [0, 4.7, 0.2], c: accent, studs: 'sides' });
-  for (let k = 1; k <= 4; k++) g.box({ name: 'LevelPip' + k, s: [0.7, 0.5, 0.5], p: [-1.65 + (k - 1) * 1.1, 6.75, 0], c: accent, m: 'Neon', shadow: false });
-  g.box({ name: 'PipBar', s: [5.2, 0.4, 0.7], p: [0, 6.35, 0.05], c: postC, studs: 'top' });
-  void board;
+// the UPGRADE board (TrainerBoard): big, on two chunky posts beside the pad, leaning back a little and turned to face
+// you as you stand on the pad (TrainerView writes LEVEL N > N+1, the price, +POWER/SEC on it); LevelPip1..4 on top
+function trainerBoard(c, tier, accent, th) {
+  const g = c.at([-MAT.X - 0.4, 0, -7.6], [0, -32, 0]);
+  const W = 6.6, H = 4, y = 4.6;
+  for (const x of [-W / 2 + 0.6, W / 2 - 0.6]) {
+    g.box({ name: 'BoardPost', s: [1.1, y + H / 2 + 0.4, 1.1], p: [x, (y + H / 2 + 0.4) / 2, 0.7], c: th.post, m: th.postM || 'SmoothPlastic', studs: 'top', collide: true });
+    g.box({ name: 'BoardFoot', s: [1.7, 0.6, 1.7], p: [x, 0.3, 0.7], c: th.corner, m: th.cornerM || 'SmoothPlastic', studs: 'top', collide: true });
+  }
+  const b = g.at([0, y, 0], [8, 0, 0]);
+  b.box({ name: 'TrainerBoard', s: [W, H, 0.4], c: '#20242b', collide: true });
+  b.box({ name: 'BoardFrame', s: [W + 0.8, H + 0.8, 0.36], p: [0, 0, 0.22], c: th.frame || th.post, m: th.postM || 'SmoothPlastic', studs: 'sides' });
+  b.box({ name: 'BoardTrim', s: [W + 0.9, 0.22, 0.5], p: [0, H / 2 + 0.42, 0.1], c: accent, m: 'Neon', shadow: false });
+  for (let k = 1; k <= 4; k++) b.box({ name: 'LevelPip' + k, s: [0.8, 0.55, 0.55], p: [-1.8 + (k - 1) * 1.2, H / 2 + 0.85, 0.15], c: accent, m: 'Neon', shadow: false });
+  b.box({ name: 'PipBar', s: [W * 0.85, 0.4, 0.8], p: [0, H / 2 + 0.55, 0.2], c: th.post, m: th.postM || 'SmoothPlastic', studs: 'top' });
   return g;
-}
-// lane floor from the pad to the back
-function lane(c, tier, o) {
-  const z0 = -9, z1 = 17.5;
-  c.box({ name: 'LaneFloor', s: [o.w || 11, 0.16, z1 - z0], p: [0, 0.08, (z0 + z1) / 2], c: o.floor, m: o.floorM || 'SmoothPlastic', collide: true, shadow: false });
-  // lane stripes
-  for (const x of [-(o.w || 11) / 2 + 0.4, (o.w || 11) / 2 - 0.4]) c.box({ name: 'LaneEdge', s: [0.5, 0.18, z1 - z0], p: [x, 0.1, (z0 + z1) / 2], c: o.edge, m: o.edgeM || 'SmoothPlastic', shadow: false });
-  for (let k = 0; k < 5; k++) c.box({ name: 'LaneMark', s: [3, 0.18, 0.4], p: [0, 0.1, -4 + k * 5], c: o.mark || '#ffffff', shadow: false, t: 0.2 });
 }
 function targetPoint(c, p) {
   const t = c.box({ name: 'TargetPoint', s: [1, 1, 1], p, t: 1, shadow: false });
   t.set('CanQuery', 'bool', false);
 }
-function sign(c, p, w, h, text, accent, o = {}) {
-  const b = c.box({ name: 'TrainerSign', s: [w, h, 0.4], p, c: o.bg || '#2a2c31', r: o.r });
-  c.box({ name: 'TrainerSignFrame', s: [w + 0.6, h + 0.6, 0.3], p: [p[0], p[1], p[2] + 0.2], c: o.frame || accent, studs: 'sides', r: o.r });
-  label(b, 'Front', text, { pps: o.pps || 30, color: '#ffffff', color2: accent });
-  return b;
+// a round plinth the target stands on
+function plinth(c, p, d, th, o = {}) {
+  c.cyl({ name: 'TargetPlinth', axis: 'y', len: o.h || 0.7, d, p: [p[0], MAT.FLOOR + (o.h || 0.7) / 2, p[2]], c: o.c || th.border, m: o.m || th.borderM || 'SmoothPlastic', collide: true });
+  c.cyl({ name: 'TargetPlinthTop', axis: 'y', len: 0.12, d: d - 0.6, p: [p[0], MAT.FLOOR + (o.h || 0.7) + 0.06, p[2]], c: o.top || th.cap, m: o.topM || 'SmoothPlastic', shadow: false });
+  return MAT.FLOOR + (o.h || 0.7) + 0.12;
+}
+// a raised pond (the island floor is solid: a sunk one would vanish into it)
+function raisedPond(c, p, w, d, o = {}) {
+  const g = c.at(p, [0, o.yaw || 0, 0]);
+  const rimC = o.rim || ['#9a948a', '#8a8478', '#b0aa9e'];
+  const n = Math.round((w + d) / 1.1);
+  for (let i = 0; i < n * 2; i++) {
+    const u = (i / (n * 2)) * 2 * (w + d);
+    let x, z;
+    if (u < w) { x = -w / 2 + u; z = -d / 2; } else if (u < w + d) { x = w / 2; z = -d / 2 + (u - w); } else if (u < 2 * w + d) { x = w / 2 - (u - w - d); z = d / 2; } else { x = -w / 2; z = d / 2 - (u - 2 * w - d); }
+    g.box({ name: 'PondRim', s: [1.1, 0.7, 1.1], p: [x, MAT.FLOOR + 0.35, z], r: [0, (i * 37) % 40, 0], c: rimC[i % rimC.length], m: 'Slate', studs: 'top', collide: true });
+  }
+  g.box({ name: 'PondWater', s: [w - 0.4, 0.5, d - 0.4], p: [0, MAT.FLOOR + 0.3, 0], c: o.water || '#4fb3d9', m: 'Glass', t: 0.25, shadow: false }).tag('DinoWater');
+  for (const [x, z, col] of (o.koi || [])) {
+    g.box({ name: 'Koi', s: [0.35, 0.2, 0.9], p: [x, MAT.FLOOR + 0.48, z], r: [0, (x * 97) % 180, 0], c: col, shadow: false });
+  }
+  for (const [x, z] of (o.lilies || [])) g.cyl({ name: 'LilyPad', axis: 'y', len: 0.08, d: 0.9, p: [x, MAT.FLOOR + 0.58, z], c: '#4fb043', shadow: false });
+  return g;
+}
+// a clump of bamboo (segmented green poles with nodes and a few leaves)
+function bamboo(c, p, n, h, seed) {
+  const R = rng(seed);
+  const g = c.group('Bamboo');
+  for (let i = 0; i < n; i++) {
+    const x = p[0] + (R() - 0.5) * 1.8, z = p[2] + (R() - 0.5) * 1.8, hh = h * (0.7 + R() * 0.4);
+    const segs = Math.round(hh / 1.6);
+    for (let k = 0; k < segs; k++) {
+      g.cyl({ name: 'BambooCane', axis: 'y', len: 1.5, d: 0.45, p: [x, p[1] + 0.75 + k * 1.6, z], c: k % 2 ? '#7fbf3f' : '#8fd14f', shadow: k === 0 });
+      g.cyl({ name: 'BambooNode', axis: 'y', len: 0.14, d: 0.55, p: [x, p[1] + 1.55 + k * 1.6, z], c: '#5f9a2f', shadow: false });
+    }
+    for (let k = 0; k < 3; k++) {
+      const a = R() * 360;
+      g.at([x, p[1] + segs * 1.6 - k * 0.9, z], [0, a, 0]).box({ name: 'BambooLeaf', s: [0.35, 0.08, 1.6], p: [0, 0, -0.8], r: [-20, 0, 0], c: k % 2 ? '#4fb043' : '#6ccf4f', shadow: false });
+    }
+  }
+  return g;
+}
+// a blossom tree: a crooked studded trunk and puffy cube canopy clusters
+function blossomTree(c, p, h, seed, cols) {
+  const R = rng(seed);
+  const g = c.group('BlossomTree');
+  const t = g.at(p, [0, R() * 360, 0]);
+  let x = 0, y = 0;
+  for (let i = 0; i < 4; i++) {
+    const lean = (i % 2 ? 1 : -1) * (6 + R() * 6);
+    t.box({ name: 'Trunk', s: [1.3 - i * 0.12, h / 4 + 0.1, 1.3 - i * 0.12], p: [x, y + h / 8, 0], r: [0, 0, lean], c: i % 2 ? '#5a3a22' : '#6b4a2b', studs: 'sides', collide: i < 2 });
+    x -= Math.sin((lean * Math.PI) / 180) * (h / 4); y += h / 4;
+  }
+  for (let k = 0; k < 7; k++) {
+    const s = 2.2 + R() * 1.4;
+    t.box({ name: 'Blossom', s: [s, s * 0.8, s], p: [x + (R() - 0.5) * 3.6, y + (R() - 0.2) * 1.8, (R() - 0.5) * 3.6], r: [0, R() * 90, 0], c: cols[k % cols.length], studs: 'top' });
+  }
+  return g;
+}
+// a stone lantern (toro)
+function stoneLantern(c, p, accent) {
+  const g = c.at(p);
+  g.box({ name: 'LanternFoot', s: [1.4, 0.4, 1.4], p: [0, 0.2, 0], c: '#9a948a', m: 'Slate', studs: 'top', collide: true });
+  g.cyl({ name: 'LanternPost', axis: 'y', len: 1.6, d: 0.7, p: [0, 1.2, 0], c: '#b0aa9e', m: 'Slate', collide: true });
+  g.box({ name: 'LanternBox', s: [1.2, 1.1, 1.2], p: [0, 2.55, 0], c: '#9a948a', m: 'Slate' });
+  const glow = g.box({ name: 'LanternGlow', s: [0.8, 0.7, 1.25], p: [0, 2.55, 0], c: accent || '#ffd27a', m: 'Neon', shadow: false });
+  g.wedgeF({ name: 'LanternRoof', s: [1.9, 0.7, 1.9], p: [0, 3.45, 0], face: 'front', c: '#7a746a' });
+  g.box({ name: 'LanternTop', s: [0.4, 0.4, 0.4], p: [0, 3.95, 0], c: '#7a746a', studs: 'top' });
+  E.pointLight(glow, [1, 0.85, 0.55], 10, 0.6);
+  return g;
+}
+// a tiki torch at the entrance
+function torch(c, p, col) {
+  const g = c.at(p);
+  g.cyl({ name: 'TorchPole', axis: 'y', len: 3.6, d: 0.4, p: [0, 1.8, 0], c: '#6b4a2b', collide: true });
+  g.cyl({ name: 'TorchBowl', axis: 'y', len: 0.7, d: 0.95, p: [0, 3.8, 0], c: '#3a2a1e' });
+  const f = g.box({ name: 'TorchFlame', s: [0.6, 0.8, 0.6], p: [0, 4.4, 0], r: [0, 45, 0], c: col || '#ff9a2e', m: 'Neon', shadow: false });
+  E.particles(f, 'Flame', { rate: 10, life: [0.4, 0.8], speed: [1.5, 2.5], size: [[0, 0.5], [1, 0]], color: [1, 0.6, 0.2], emission: 1, spread: [10, 10], dir: 1 });
+  E.pointLight(f, [1, 0.62, 0.3], 9, 0.7);
+}
+// the four parts every tier has
+function range(c, tier, th) {
+  const A = TR.ACCENT[tier - 1];
+  rangeMat(c, th);
+  trainerPad(c, tier, A, th);
+  trainerBoard(c, tier, A, th);
+  return A;
 }
 
-// T1 DART RANGE: a backyard wooden range, one wooden raptor dummy, hay bales, a dart rack
+// T1 DART RANGE: a jungle camp - log border, sand floor, a bamboo frame with a painted bullseye behind a wooden raptor
+// on a stump, tiki torches at the step-in, palms and ferns round it
 function trainer1(root) {
   const c = kitModel(root, 'Trainer1');
-  const A = TR.ACCENT[0];
-  trainerPad(c, 1, A);
-  trainerBoard(c, 1, A);
-  lane(c, 1, { floor: '#9c7046', floorM: 'Mud', edge: '#c08a52', mark: '#e9dfc4' });
-  // low log rails both sides
+  const th = { border: '#8a5a33', borderHi: '#9c6a3d', corner: '#6b4a2b', cap: '#e8c45a', floor: '#ead6a4', floorM: 'Sand', line: '#c9a46a', post: '#6b4a2b', frame: '#8a5a33', padRing: '#7a4f2c' };
+  const A = range(c, 1, th);
+  // the bamboo frame + the bullseye
   for (const sx of [-1, 1]) {
-    for (let k = 0; k < 6; k++) c.box({ name: 'RailPost', s: [0.7, 2.2, 0.7], p: [sx * 6.2, 1.1, -8 + k * 5], c: PAL.woodLo, studs: 'top', collide: true });
-    c.beam([sx * 6.2, 1.6, -8], [sx * 6.2, 1.6, 17], 0.5, 0.5, { name: 'RailLog', c: PAL.wood, collide: true });
+    for (let k = 0; k < 4; k++) {
+      c.cyl({ name: 'FrameCane', axis: 'y', len: 1.7, d: 0.7, p: [sx * 3.7, MAT.FLOOR + 0.85 + k * 1.75, TGT_Z + 1.8], c: k % 2 ? '#7fbf3f' : '#8fd14f' });
+      c.cyl({ name: 'FrameNode', axis: 'y', len: 0.16, d: 0.85, p: [sx * 3.7, MAT.FLOOR + 1.72 + k * 1.75, TGT_Z + 1.8], c: '#5f9a2f', shadow: false });
+    }
+    c.box({ name: 'FrameLash', s: [0.9, 0.5, 0.9], p: [sx * 3.7, 7.1, TGT_Z + 1.8], c: '#c9a46a', m: 'Fabric' });
   }
-  // hay bales
-  for (const [x, z, r] of [[-4.6, 2, 8], [4.4, 5, -6], [-4.2, 8.5, 20]]) {
-    c.at([x, 0, z], [0, r, 0]).box({ name: 'HayBale', s: [2.4, 1.6, 1.6], p: [0, 0.8, 0], c: '#e8c45a', studs: 'top', collide: true });
-    c.at([x, 0, z], [0, r, 0]).box({ name: 'HayBand', s: [2.45, 1.65, 0.2], p: [0, 0.8, 0], c: '#a8743f' });
+  c.tube([-4.4, 7.3, TGT_Z + 1.8], [4.4, 7.3, TGT_Z + 1.8], 0.75, { name: 'FrameBeam', c: '#8fd14f' });
+  for (const x of [-1.5, 1.5]) c.box({ name: 'TargetRope', s: [0.12, 1.4, 0.12], p: [x, 6.4, TGT_Z + 1.9], c: '#c9a46a', shadow: false });
+  c.box({ name: 'TargetBoard', s: [4.2, 4.2, 0.4], p: [0, 3.9, TGT_Z + 2], c: '#c08a52', m: 'WoodPlanks' });
+  bullseye(c, [0, 3.9, TGT_Z + 1.75], 3.6, { cols: ['#ffffff', '#e8473a', '#ffffff', '#e8473a'], rim: '#6b4a2b' });
+  // the raptor on its stump
+  const top = plinth(c, [0, 0, TGT_Z], 3.4, th, { c: '#7a4f2c', top: '#c08a52', h: 0.9 });
+  dummy(c, 'Velociraptor', [0, top, TGT_Z], 18, 1.55, 'wood');
+  targetPoint(c, [0, 3.4, TGT_Z]);
+  // hay bales in the back corners, a dart barrel by the pad
+  for (const [x, z, r] of [[-3.9, 6.2, 8], [4, 6.1, -10]]) {
+    c.at([x, MAT.FLOOR, z], [0, r, 0]).box({ name: 'HayBale', s: [2.2, 1.4, 1.4], p: [0, 0.7, 0], c: '#e8c45a', studs: 'top', collide: true });
+    c.at([x, MAT.FLOOR, z], [0, r, 0]).box({ name: 'HayBand', s: [2.25, 1.45, 0.2], p: [0, 0.7, 0], c: '#a8743f' });
   }
-  // the backstop: a plank wall with a painted bullseye, and the raptor dummy in front of it
-  for (let k = 0; k < 6; k++) c.box({ name: 'Backstop', s: [12, 0.9, 1], p: [0, 0.45 + k * 0.92, 17], c: k % 2 ? PAL.wood : PAL.woodHi, m: 'WoodPlanks', collide: true });
-  for (const x of [-6.3, 6.3]) c.box({ name: 'BackstopPost', s: [1, 6.6, 1.2], p: [x, 3.3, 17], c: PAL.woodLo, studs: 'top', collide: true });
-  bullseye(c, [0, 3, 16.4], 4);
-  c.box({ name: 'DummyStand', s: [4, 0.5, 6], p: [0, 0.25, 12], c: PAL.woodLo, m: 'WoodPlanks', collide: true });
-  dummy(c, 'Velociraptor', [0, 0.5, 12], 30, 1.7, 'wood');
-  bullseye(c, [-1.2, 4.3, 9.6], 1.8, { cols: ['#ffffff', '#e8473a', '#ffffff'] });
-  targetPoint(c, [0, 3.2, 12]);
-  // a dart rack by the pad + a lantern
-  const rk = c.at([-5.2, 0, -14.5], [0, 20, 0]);
-  rk.box({ name: 'DartRack', s: [2.2, 2.4, 0.8], p: [0, 1.2, 0], c: PAL.wood, m: 'WoodPlanks', collide: true });
-  for (let k = 0; k < 4; k++) rk.box({ name: 'Dart', s: [0.18, 1.6, 0.18], p: [-0.7 + k * 0.45, 2.9, 0], c: '#f2c230', shadow: false });
-  E.lampPost(c, [-6.4, 0, 15], { yaw: 180, h: 6 });
-  sign(c, [0, 7.8, 17.2], 7, 1.6, 'DART RANGE', A, { pps: 34 });
+  const br = c.at([3.9, MAT.FLOOR, -14.6]);
+  br.cyl({ name: 'DartBarrel', axis: 'y', len: 1.6, d: 1.3, p: [0, 0.8, 0], c: '#8a5a33', m: 'WoodPlanks', collide: true });
+  br.cyl({ name: 'BarrelHoop', axis: 'y', len: 0.15, d: 1.36, p: [0, 1.2, 0], c: '#3a2a1e' });
+  for (let k = 0; k < 5; k++) br.at([0, 1.6, 0], [0, k * 72, 0]).box({ name: 'Dart', s: [0.16, 1.3, 0.16], p: [0.35, 0.55, 0], r: [0, 0, 12], c: k % 2 ? A : '#f2c230', shadow: false });
+  // the step-in: two tiki torches
+  for (const sx of [-1, 1]) torch(c, [sx * 2.6, MAT.FLOOR + 1.5, MAT.Z0 + 0.55]);
+  // round it: palms behind, ferns and bushes along the sides
+  E.palm(c, [-4.6, 0, 11.5], 11, 41);
+  E.palm(c, [3.4, 0, 13], 12.5, 77);
+  E.bush(c, [0, 0, 11], 0.9, 12);
+  // (the +X side is the lodge's: keep inside the lot there)
+  for (const [x, z, k, s] of [[-7.2, -12, 1.2, 3], [-7.2, 2, 1.2, 9], [5.6, 10, 0.8, 11], [-6.8, 12, 1, 5]]) E.fern(c, [x, 0, z], k, s);
   return c;
 }
 
-// T2 TRAINING YARD: stone lane, an arch over the pad with a banner, two dummies, sandbag backstop, a scoreboard
+// T2 TRAINING YARD: a dojo yard (the reference): dark wood border with pale stone corners, a red TORII framing the
+// target, a cherry tree, a stone lantern, a koi pond, bamboo
 function trainer2(root) {
   const c = kitModel(root, 'Trainer2');
-  const A = TR.ACCENT[1];
-  trainerPad(c, 2, A);
-  trainerBoard(c, 2, A);
-  lane(c, 2, { floor: '#b5a98e', floorM: 'Pebble', edge: A, mark: '#fff4d6' });
+  const th = { border: '#4a2f1e', borderHi: '#5a3a22', corner: '#b9b3c9', cornerM: 'Slate', cap: '#d6d0e2', capM: 'Slate', floor: '#efe0b4', floorM: 'Fabric', line: '#c9b17e', post: '#5a3a22', frame: '#4a2f1e', padRing: '#3d2718', base: '#3d2718' };
+  const A = range(c, 2, th);
+  // the torii
+  const RED = '#d8332a', RED2 = '#b8261f';
   for (const sx of [-1, 1]) {
-    for (let k = 0; k < 9; k++) c.box({ name: 'LaneWall', s: [1.4, 1.6 + (k % 2) * 0.3, 2.9], p: [sx * 6.6, 0.8, -8 + k * 3], c: k % 2 ? '#8a8478' : '#7a746a', m: 'Slate', studs: 'top', collide: true });
+    c.box({ name: 'ToriiFoot', s: [1.5, 0.8, 1.5], p: [sx * 3.9, MAT.FLOOR + 0.4, TGT_Z + 1.6], c: '#2b2d31', collide: true });
+    c.cyl({ name: 'ToriiPillar', axis: 'y', len: 8.2, d: 1.05, p: [sx * 3.9, MAT.FLOOR + 4.9, TGT_Z + 1.6], c: RED, collide: true });
   }
-  // the arch over the pad
-  for (const sx of [-1, 1]) {
-    for (let k = 0; k < 4; k++) c.box({ name: 'ArchPillar', s: [1.8 - k * 0.08, 2.4, 1.8 - k * 0.08], p: [sx * 6.2, 1.2 + k * 2.4, TR.PAD_Z], r: [0, k * 8, 0], c: k % 2 ? '#8a8478' : '#9a948a', m: 'Slate', studs: 'top', collide: true });
-    c.box({ name: 'ArchCap', s: [2.4, 0.7, 2.4], p: [sx * 6.2, 10, TR.PAD_Z], c: A, studs: 'top' });
-    E.flag(c, [sx * 6.2, 10.3, TR.PAD_Z], A, { h: 3.5 });
-  }
-  c.box({ name: 'ArchBeam', s: [14.2, 1.3, 1.6], p: [0, 9.6, TR.PAD_Z], c: PAL.woodLo, studs: 'top' });
-  const banner = c.box({ name: 'ArchBanner', s: [8, 2, 0.2], p: [0, 7.9, TR.PAD_Z - 0.3], c: '#2a2c31' });
-  label(banner, 'Front', 'TRAINING YARD', { pps: 30, color: '#ffffff', color2: A });
-  label(banner, 'Back', 'GO!', { pps: 30, color: '#ffffff', color2: A });
-  // two dummies: a raptor and a little triceratops
-  c.box({ name: 'DummyStand', s: [3, 0.5, 3], p: [-2.8, 0.25, 11], c: '#7a746a', m: 'Slate', collide: true });
-  dummy(c, 'Velociraptor', [-2.8, 0.5, 11], 25, 1.6, 'paint');
-  c.box({ name: 'DummyStand', s: [4, 0.5, 5], p: [3, 0.25, 13.5], c: '#7a746a', m: 'Slate', collide: true });
-  dummy(c, 'Triceratops', [3, 0.5, 13.5], -28, 0.62, 'wood');
-  bullseye(c, [-3.8, 3.6, 9.6], 1.6);
-  bullseye(c, [2.2, 2.8, 10.9], 1.8);
-  targetPoint(c, [0, 3, 12]);
-  // sandbags + crates at the back, a scoreboard over them
-  for (let row = 0; row < 3; row++) for (let k = 0; k < 6 - row; k++) c.box({ name: 'Sandbag', s: [2, 0.9, 1.2], p: [-5 + row + k * 2.05, 0.45 + row * 0.9, 17.4], r: [0, (k % 2) * 6 - 3, 0], c: '#cdb27a', m: 'Fabric', collide: true });
-  E.crate(c, [-5, 0, 15.2], 1, { yaw: 12 });
-  E.crate(c, [5.4, 0, 15.6], 0.9, { yaw: -18 });
-  const sb = c.at([0, 0, 18.6]);
-  for (const x of [-4.6, 4.6]) sb.box({ name: 'ScorePost', s: [0.7, 9, 0.7], p: [x, 4.5, 0], c: '#3a3d42', m: 'Metal', collide: true });
-  sb.box({ name: 'Scoreboard', s: [10, 3.4, 0.6], p: [0, 7.2, 0], c: '#1f2329' });
-  sb.box({ name: 'ScoreFrame', s: [10.6, 4, 0.4], p: [0, 7.2, 0.3], c: A, studs: 'sides' });
-  for (let k = 0; k < 8; k++) sb.box({ name: 'ScoreLight', s: [0.6, 0.6, 0.2], p: [-3.9 + k * 1.1, 8.4, -0.35], c: k % 2 ? '#ffd23a' : A, m: 'Neon', shadow: false });
-  const st = sb.box({ name: 'ScoreText', s: [8, 1.6, 0.1], p: [0, 6.8, -0.35], c: '#1f2329' });
-  label(st, 'Front', 'BULLSEYE!', { pps: 30, color: '#ffffff', color2: TR.ACCENT2[1] });
-  E.lampPost(c, [6.6, 0, 3], { yaw: -90, h: 6.5 });
-  E.lampPost(c, [-6.6, 0, 9], { yaw: 90, h: 6.5 });
+  c.box({ name: 'ToriiNuki', s: [9.8, 0.7, 0.7], p: [0, 7.1, TGT_Z + 1.6], c: RED2, studs: 'top' });
+  c.box({ name: 'ToriiKasagi', s: [11.4, 0.8, 1.3], p: [0, 8.95, TGT_Z + 1.6], c: '#2b2d31', studs: 'top' });
+  c.box({ name: 'ToriiShimaki', s: [10.6, 0.6, 1.1], p: [0, 8.35, TGT_Z + 1.6], c: RED, studs: 'top' });
+  for (const sx of [-1, 1]) c.wedgeF({ name: 'ToriiTip', s: [1.3, 0.8, 1.3], p: [sx * 6.3, 9.25, TGT_Z + 1.6], face: sx > 0 ? 'right' : 'left', c: '#2b2d31' });
+  c.box({ name: 'ToriiPlaque', s: [1.4, 1.6, 0.3], p: [0, 7.8, TGT_Z + 1.25], c: '#2b2d31' });
+  // the gong-bullseye hanging from the nuki, and the painted raptor in front of it
+  for (const x of [-1.3, 1.3]) c.box({ name: 'GongCord', s: [0.12, 1.2, 0.12], p: [x, 6.2, TGT_Z + 1.7], c: '#f2c230', shadow: false });
+  bullseye(c, [0, 4.1, TGT_Z + 1.75], 3.8, { cols: ['#ffffff', RED, '#ffffff', RED], rim: '#2b2d31' });
+  const top = plinth(c, [0, 0, TGT_Z - 0.3], 3.4, th, { c: '#b9b3c9', m: 'Slate', top: '#d6d0e2', h: 0.8 });
+  dummy(c, 'Velociraptor', [0, top, TGT_Z - 0.3], 14, 1.6, 'paint');
+  targetPoint(c, [0, 3.4, TGT_Z - 0.3]);
+  // the garden: a koi pond and a stone lantern on the mat, bamboo and a cherry tree round it
+  raisedPond(c, [3.3, 0, -2.6], 2.6, 4.4, { koi: [[-0.4, -0.8, '#ff8a3a'], [0.3, 0.9, '#ffffff'], [0.2, -0.1, '#ff5a3a']], lilies: [[0.4, -1.4], [-0.3, 1.5]] });
+  stoneLantern(c, [-3.8, MAT.FLOOR, -3.4], '#ffd27a');
+  bamboo(c, [-7, 0, 6], 6, 8, 5);
+  bamboo(c, [-7.2, 0, -1], 4, 6, 9);
+  blossomTree(c, [5, 0, 11], 7.5, 21, ['#ffb7d5', '#ff9ec4', '#ffc9de', '#f7a8c8']);
+  blossomTree(c, [-5.2, 0, 13], 6, 33, ['#ffb7d5', '#ffc9de', '#ff9ec4']);
+  for (const [x, z] of [[-1.4, 10], [1.8, 12.4], [-0.2, 14]]) E.rock(c, [x, 0, z], 0.8, Math.round(x * 10 + z));
+  for (const sx of [-1, 1]) E.flag(c, [sx * 6.6, 0, MAT.Z0 + 1.4], A, { h: 5 });
   return c;
 }
 
-// T3 TARGET RAIL: a steel gantry, a rail with three swinging targets, a metal stegosaurus dummy, floodlights, a console
+// T3 TARGET RAIL: a steel test range - hazard-striped border on diamond plate, a gantry with three hanging targets
+// over a metal stegosaurus, floodlight towers, a control console
 function trainer3(root) {
   const c = kitModel(root, 'Trainer3');
-  const A = TR.ACCENT[2];
-  trainerPad(c, 3, A);
-  trainerBoard(c, 3, A);
-  lane(c, 3, { floor: '#6c7178', floorM: 'DiamondPlate', edge: '#f2b632', mark: '#f2b632' });
+  const th = { border: '#1d1e21', borderHi: '#f2b632', corner: '#5d6168', cornerM: 'Metal', cap: '#8c9399', capM: 'Metal', floor: '#9aa1a8', floorM: 'DiamondPlate', line: '#f2b632', post: '#4a4f57', postM: 'Metal', frame: '#3a3d42', padRing: '#3a3d42', base: '#3a3d42' };
+  const A = range(c, 3, th);
+  // the gantry
   for (const sx of [-1, 1]) {
-    // hazard-striped lane walls
-    for (let k = 0; k < 13; k++) c.box({ name: 'HazardWall', s: [0.8, 1.4, 2], p: [sx * 6.6, 0.7, -8 + k * 2], c: k % 2 ? '#1d1e21' : '#f2b632', collide: true });
-    // gantry legs (three pairs along the lane)
-    for (const z of [-12.5, 2, 16]) {
-      c.box({ name: 'GantryLeg', s: [1, 13, 1], p: [sx * 6.8, 6.5, z], c: '#5d6168', m: 'Metal', studs: 'top', collide: true });
-      c.box({ name: 'GantryFoot', s: [2, 0.6, 2], p: [sx * 6.8, 0.3, z], c: '#3a3d42', m: 'Metal', collide: true });
-    }
-    c.beam([sx * 6.8, 12.6, -12.5], [sx * 6.8, 12.6, 16], 1, 1, { name: 'GantryRail', c: A, m: 'Metal', extend: 1 });
+    c.box({ name: 'GantryFoot', s: [1.8, 0.6, 1.8], p: [sx * 4.3, MAT.FLOOR + 0.3, TGT_Z + 1.8], c: '#3a3d42', m: 'Metal', studs: 'top', collide: true });
+    c.box({ name: 'GantryLeg', s: [0.9, 9, 0.9], p: [sx * 4.3, MAT.FLOOR + 4.8, TGT_Z + 1.8], c: '#5d6168', m: 'Metal', studs: 'top', collide: true });
+    for (let k = 0; k < 4; k++) c.box({ name: 'LegStripe', s: [0.95, 0.5, 0.95], p: [sx * 4.3, MAT.FLOOR + 1.2 + k * 2, TGT_Z + 1.8], c: '#f2b632', m: 'Metal', shadow: false });
   }
-  for (const z of [-12.5, 2, 16]) c.box({ name: 'GantryBeam', s: [14.6, 1, 1], p: [0, 13, z], c: '#5d6168', m: 'Metal', studs: 'top' });
-  // the target rail across the back with three hanging targets
-  c.box({ name: 'TargetRail', s: [12.6, 0.5, 0.5], p: [0, 12.2, 8], c: '#f2b632', m: 'Metal' });
-  c.beam([-6.8, 12.6, 8], [6.8, 12.6, 8], 0.5, 0.5, { name: 'TargetRailTop', c: '#3a3d42', m: 'Metal' });
-  for (const [x, y] of [[-4, 7.5], [0, 6.2], [4, 8]]) {
-    c.box({ name: 'TargetChain', s: [0.15, 12.2 - y - 1.2, 0.15], p: [x, (12.2 + y + 1.2) / 2, 8], c: '#2b2d31', m: 'Metal', shadow: false });
-    bullseye(c, [x, y, 8], 2.2, { cols: ['#ffffff', A, '#ffffff', '#e8473a'] });
+  c.box({ name: 'GantryBeam', s: [10, 1, 1.2], p: [0, 9.6, TGT_Z + 1.8], c: A, m: 'Metal', studs: 'top' });
+  c.box({ name: 'GantryRail', s: [8.6, 0.35, 0.35], p: [0, 8.9, TGT_Z + 1.8], c: '#2b2d31', m: 'Metal' });
+  for (const [x, y] of [[-2.6, 6.2], [0, 5], [2.6, 6.6]]) {
+    c.box({ name: 'TargetChain', s: [0.14, 8.9 - y - 1, 0.14], p: [x, (8.9 + y + 1) / 2, TGT_Z + 1.8], c: '#2b2d31', m: 'Metal', shadow: false });
+    bullseye(c, [x, y, TGT_Z + 1.8], 1.9, { cols: ['#ffffff', A, '#ffffff', '#e8473a'] });
   }
-  c.box({ name: 'DummyStand', s: [5, 0.6, 7], p: [0, 0.3, 13.5], c: '#3a3d42', m: 'Metal', studs: 'top', collide: true });
-  dummy(c, 'Stegosaurus', [0, 0.6, 13.5], 32, 0.62, 'metal');
-  targetPoint(c, [0, 4, 12]);
-  // armoured backstop
-  for (let k = 0; k < 4; k++) c.box({ name: 'Backstop', s: [13, 2, 1.2], p: [0, 1 + k * 2, 18], c: k % 2 ? '#5d6168' : '#4a4f57', m: 'DiamondPlate', collide: true });
-  for (let k = 0; k < 5; k++) c.at([-4.8 + k * 2.4, 4.2, 17.3], [0, 0, 45]).box({ name: 'Chevron', s: [1.2, 1.2, 0.2], c: k % 2 ? '#1d1e21' : '#f2b632', shadow: false });
-  // floodlights on the gantry
+  const top = plinth(c, [0, 0, TGT_Z - 0.4], 4.2, th, { c: '#3a3d42', m: 'Metal', top: '#f2b632', h: 0.7 });
+  dummy(c, 'Stegosaurus', [0, top, TGT_Z - 0.4], 24, 0.5, 'metal');
+  targetPoint(c, [0, 3.2, TGT_Z - 0.4]);
+  // floodlight towers behind, an armoured backstop between them
   for (const sx of [-1, 1]) {
-    const fl = c.at([sx * 5.6, 12.2, -12.5], [-35, sx * -20, 0]).box({ name: 'Floodlight', s: [1.6, 1.1, 1.1], c: '#fff1d0', m: 'Neon' });
-    E.pointLight(fl, [0.85, 1, 0.95], 22, 0.6);
+    const t = c.at([sx * 5, 0, 10.5]);
+    for (let k = 0; k < 4; k++) t.box({ name: 'TowerBlock', s: [1.8 - k * 0.1, 3, 1.8 - k * 0.1], p: [0, 1.5 + k * 3, 0], c: k % 2 ? '#3a3d42' : '#5d6168', m: 'Metal', studs: 'top', collide: true });
+    const fl = t.at([0, 12.6, -0.4], [-30, sx * 18, 0]).box({ name: 'Floodlight', s: [2.2, 1.4, 1.2], c: '#fff6dc', m: 'Neon' });
+    t.box({ name: 'FloodHousing', s: [2.5, 1.7, 1], p: [0, 12.7, 0.2], c: '#2b2d31', m: 'Metal' });
+    E.pointLight(fl, [0.85, 1, 0.95], 26, 0.7);
   }
-  // the console by the pad: a lever and two dials
-  const con = c.at([-5.4, 0, -15], [0, 25, 0]);
-  con.box({ name: 'Console', s: [2.6, 2.6, 1.8], p: [0, 1.3, 0], c: '#3a3d42', m: 'Metal', studs: 'top', collide: true });
-  con.box({ name: 'ConsoleScreen', s: [1.8, 1, 0.1], p: [0, 2, -0.95], c: A, m: 'Neon', shadow: false });
-  con.beam([0.6, 2.6, 0], [0.9, 4, -0.3], 0.25, 0.25, { name: 'Lever', c: '#d9d9d9', m: 'Metal' });
-  con.ball({ name: 'LeverKnob', d: 0.6, p: [0.9, 4.1, -0.3], c: '#e8473a' });
-  sign(c, [0, 14.9, -12.5], 8.6, 1.8, 'TARGET RAIL', A, { pps: 32 });
+  for (let k = 0; k < 3; k++) c.box({ name: 'Backstop', s: [9.6, 2, 1.2], p: [0, 1 + k * 2, 11], c: k % 2 ? '#5d6168' : '#4a4f57', m: 'DiamondPlate', studs: 'top', collide: true });
+  for (let k = 0; k < 5; k++) c.at([-3.6 + k * 1.8, 4.1, 10.35], [0, 0, 45]).box({ name: 'Chevron', s: [1, 1, 0.2], c: k % 2 ? '#1d1e21' : '#f2b632', shadow: false });
+  // the console by the step-in
+  const con = c.at([4.2, MAT.FLOOR, -15], [0, -20, 0]);
+  con.box({ name: 'Console', s: [2.2, 2.2, 1.4], p: [0, 1.1, 0], c: '#3a3d42', m: 'Metal', studs: 'top', collide: true });
+  con.box({ name: 'ConsoleScreen', s: [1.6, 0.9, 0.1], p: [0, 1.7, -0.75], c: A, m: 'Neon', shadow: false });
+  con.beam([0.5, 2.2, 0], [0.8, 3.4, -0.3], 0.22, 0.22, { name: 'Lever', c: '#d9d9d9', m: 'Metal' });
+  con.ball({ name: 'LeverKnob', d: 0.5, p: [0.8, 3.5, -0.3], c: '#e8473a' });
+  for (const [x, z] of [[6.8, -2], [-6.9, 4]]) E.crate(c, [x, 0, z], 1, { yaw: x * 9 });
+  E.barrel(c, [6.7, 0, 3.4], {});
   return c;
 }
 
-// T4 MECHA RANGE: a hydraulic mech T. rex dummy on a turntable, two spotlight towers, an armoured arch
+// T4 MECHA RANGE: dark armour plate with red neon, an armoured arch with a light bar and speakers, a hydraulic mech
+// T. rex on a turntable, red spotlight towers
 function trainer4(root) {
   const c = kitModel(root, 'Trainer4');
-  const A = TR.ACCENT[3];
-  trainerPad(c, 4, A);
-  trainerBoard(c, 4, A);
-  lane(c, 4, { floor: '#2b2d31', floorM: 'DiamondPlate', edge: A, edgeM: 'Neon', mark: '#f2b632' });
+  const th = { border: '#2b2d31', borderHi: '#3a3d42', borderM: 'Metal', trim: '#ff4a3d', corner: '#e8473a', cornerM: 'Metal', cap: '#3a3d42', capM: 'Metal', floor: '#4a4f57', floorM: 'DiamondPlate', line: '#ff4a3d', post: '#3a3d42', postM: 'Metal', frame: '#2b2d31', padRing: '#1d1e21', base: '#1d1e21' };
+  const A = range(c, 4, th);
+  // the arch
   for (const sx of [-1, 1]) {
-    for (let k = 0; k < 9; k++) c.box({ name: 'ArmourWall', s: [1.2, 2.2, 2.8], p: [sx * 6.7, 1.1, -8 + k * 3], c: k % 2 ? '#4a4f57' : '#3a3d42', m: 'Metal', studs: 'top', collide: true });
-    // spotlight towers at the back corners
-    const t = c.at([sx * 6.4, 0, 16.5]);
-    for (let k = 0; k < 5; k++) t.box({ name: 'TowerBlock', s: [2.6 - k * 0.15, 3.4, 2.6 - k * 0.15], p: [0, 1.7 + k * 3.4, 0], c: k % 2 ? '#3a3d42' : '#e8473a', m: 'Metal', studs: 'top', collide: true });
-    const sp = t.at([0, 18, 0], [-25, sx * 25 + 180, 0]).box({ name: 'Spotlight', s: [2, 1.4, 1.6], c: '#fff1d0', m: 'Neon' });
-    E.pointLight(sp, [1, 0.6, 0.5], 24, 0.6);
-    t.box({ name: 'TowerBeacon', s: [1, 1, 1], p: [0, 17.6, 0], c: A, m: 'Neon' });
+    c.box({ name: 'ArchLeg', s: [1.6, 9.5, 1.6], p: [sx * 4.3, MAT.FLOOR + 4.75, TGT_Z + 1.9], c: '#3a3d42', m: 'Metal', studs: 'top', collide: true });
+    c.box({ name: 'ArchLegGlow', s: [0.3, 8, 0.3], p: [sx * 3.45, MAT.FLOOR + 4.6, TGT_Z + 1.2], c: A, m: 'Neon', shadow: false });
+    c.box({ name: 'Speaker', s: [1.7, 2.2, 1.3], p: [sx * 3.4, 11.4, TGT_Z + 1.9], c: '#1d1e21', studs: 'top' });
+    c.cyl({ name: 'SpeakerCone', axis: 'z', len: 0.2, d: 1.2, p: [sx * 3.4, 11.4, TGT_Z + 1.2], c: '#5d6168', m: 'Metal' });
   }
-  // armoured arch over the pad with speakers
-  for (const sx of [-1, 1]) c.box({ name: 'ArchLeg', s: [1.6, 11, 1.6], p: [sx * 6.6, 5.5, TR.PAD_Z], c: '#3a3d42', m: 'Metal', studs: 'top', collide: true });
-  c.box({ name: 'ArchTop', s: [15, 1.8, 2.2], p: [0, 11.4, TR.PAD_Z], c: A, m: 'Metal', studs: 'top' });
-  for (let k = 0; k < 7; k++) c.box({ name: 'ArchLight', s: [0.9, 0.5, 0.3], p: [-5.4 + k * 1.8, 10.4, TR.PAD_Z - 1.15], c: '#ffd23a', m: 'Neon', shadow: false });
+  c.box({ name: 'ArchTop', s: [10.4, 1.6, 2], p: [0, 10, TGT_Z + 1.9], c: '#e8473a', m: 'Metal', studs: 'top' });
+  for (let k = 0; k < 7; k++) c.box({ name: 'ArchLight', s: [0.85, 0.45, 0.3], p: [-3.6 + k * 1.2, 9.1, TGT_Z + 0.85], c: '#ffd23a', m: 'Neon', shadow: false });
+  // the mech rex on its turntable
+  c.cyl({ name: 'Turntable', axis: 'y', len: 0.8, d: 7.4, p: [0, MAT.FLOOR + 0.4, TGT_Z], c: '#4a4f57', m: 'Metal', collide: true });
+  c.cyl({ name: 'TurntableRing', axis: 'y', len: 0.85, d: 7.8, p: [0, MAT.FLOOR + 0.4, TGT_Z], c: A, m: 'Neon', t: 0.3, shadow: false });
   for (const sx of [-1, 1]) {
-    c.box({ name: 'Speaker', s: [1.8, 2.4, 1.4], p: [sx * 4.8, 13.6, TR.PAD_Z], c: '#1d1e21', studs: 'top' });
-    c.cyl({ name: 'SpeakerCone', axis: 'z', len: 0.2, d: 1.3, p: [sx * 4.8, 13.6, TR.PAD_Z - 0.75], c: '#5d6168', m: 'Metal' });
+    c.beam([sx * 2.8, MAT.FLOOR + 0.8, TGT_Z - 2], [sx * 1.1, 6.2, TGT_Z], 0.6, 0.6, { name: 'Piston', c: '#b8bec4', m: 'Metal' });
+    c.beam([sx * 2.8, MAT.FLOOR + 0.8, TGT_Z - 2], [sx * 2.3, 2.8, TGT_Z - 1.4], 1, 1, { name: 'PistonSleeve', c: '#f2b632', m: 'Metal' });
   }
-  sign(c, [0, 12.9, TR.PAD_Z - 1.3], 7, 1.4, 'MECHA RANGE', A, { pps: 30 });
-  // the mech rex: a turntable, pistons, the dummy
-  c.cyl({ name: 'Turntable', axis: 'y', len: 0.8, d: 9, p: [0, 0.4, 11.5], c: '#4a4f57', m: 'Metal', collide: true });
-  c.cyl({ name: 'TurntableRing', axis: 'y', len: 0.85, d: 9.4, p: [0, 0.4, 11.5], c: A, m: 'Neon', t: 0.3, shadow: false });
+  dummy(c, 'TyrannosaurusRex', [0, MAT.FLOOR + 0.8, TGT_Z + 0.3], 20, 0.5, 'metal');
+  targetPoint(c, [0, 4.6, TGT_Z]);
+  // red spotlight towers behind, a backstop wall
   for (const sx of [-1, 1]) {
-    c.beam([sx * 3.2, 0.8, 9], [sx * 1.2, 7, 11], 0.7, 0.7, { name: 'Piston', c: '#b8bec4', m: 'Metal' });
-    c.beam([sx * 3.2, 0.8, 9], [sx * 2.6, 3, 9.6], 1.1, 1.1, { name: 'PistonSleeve', c: '#f2b632', m: 'Metal' });
+    const t = c.at([sx * 5.2, 0, 11]);
+    for (let k = 0; k < 5; k++) t.box({ name: 'TowerBlock', s: [2.2 - k * 0.12, 3, 2.2 - k * 0.12], p: [0, 1.5 + k * 3, 0], c: k % 2 ? '#3a3d42' : '#e8473a', m: 'Metal', studs: 'top', collide: true });
+    const sp = t.at([0, 15.8, -0.4], [-25, sx * 22, 0]).box({ name: 'Spotlight', s: [2, 1.4, 1.4], c: '#fff1d0', m: 'Neon' });
+    E.pointLight(sp, [1, 0.55, 0.5], 26, 0.7);
+    t.box({ name: 'TowerBeacon', s: [0.9, 0.9, 0.9], p: [0, 17.2, 0], c: A, m: 'Neon' });
   }
-  dummy(c, 'TyrannosaurusRex', [0, 0.8, 12], 28, 0.62, 'metal');
-  bullseye(c, [-1.2, 5.6, 7.6], 2.2, { cols: ['#ffffff', A, '#ffffff', A] });
-  targetPoint(c, [0, 6, 11]);
-  for (let k = 0; k < 3; k++) c.box({ name: 'Backstop', s: [13, 2.6, 1.2], p: [0, 1.3 + k * 2.6, 18.2], c: k % 2 ? '#e8473a' : '#3a3d42', m: 'Metal', studs: 'top', collide: true });
+  for (let k = 0; k < 3; k++) c.box({ name: 'Backstop', s: [8, 2.4, 1.2], p: [0, 1.2 + k * 2.4, 11.6], c: k % 2 ? '#e8473a' : '#3a3d42', m: 'Metal', studs: 'top', collide: true });
+  // hazard bollards at the step-in
+  for (const sx of [-1, 1]) {
+    c.cyl({ name: 'Bollard', axis: 'y', len: 2, d: 0.8, p: [sx * 2.6, MAT.FLOOR + 1, MAT.Z0 - 0.9], c: '#f2b632', collide: true });
+    c.cyl({ name: 'BollardBand', axis: 'y', len: 0.4, d: 0.85, p: [sx * 2.6, MAT.FLOOR + 1.3, MAT.Z0 - 0.9], c: '#1d1e21' });
+    c.cyl({ name: 'BollardLight', axis: 'y', len: 0.3, d: 0.6, p: [sx * 2.6, MAT.FLOOR + 2.15, MAT.Z0 - 0.9], c: A, m: 'Neon', shadow: false });
+  }
   return c;
 }
 
-// T5 AMBER LAB: amber resin tanks with glowing cores piped to the pad, a giganotosaurus set in amber, a copper dome
+// T5 AMBER LAB: copper and amber - a giganotosaurus set in an amber block under a copper dome, resin tanks with glowing
+// cores behind, copper coils round the pad
 function trainer5(root) {
   const c = kitModel(root, 'Trainer5');
-  const A = TR.ACCENT[4];
-  trainerPad(c, 5, A);
-  trainerBoard(c, 5, A);
-  lane(c, 5, { floor: '#5a3a22', floorM: 'Marble', edge: '#ffb02e', edgeM: 'Neon', mark: '#ffd27a' });
-  for (const sx of [-1, 1]) {
-    // three amber tanks a side
-    for (const [z, h] of [[-6, 7], [2, 9], [10, 7.5]]) {
-      const t = c.at([sx * 6.8, 0, z]);
-      t.cyl({ name: 'TankBase', axis: 'y', len: 1, d: 3.6, p: [0, 0.5, 0], c: '#8a4a1e', m: 'Metal', collide: true });
-      t.cyl({ name: 'TankGlass', axis: 'y', len: h, d: 3, p: [0, 1 + h / 2, 0], c: '#ffcf7a', m: 'Glass', t: 0.45, collide: true });
-      const core = t.cyl({ name: 'TankCore', axis: 'y', len: h - 1, d: 1.6, p: [0, 1 + h / 2, 0], c: '#ff9a1a', m: 'Neon', t: 0.15 });
-      core.tag('AmberCore');
-      t.cyl({ name: 'TankCap', axis: 'y', len: 0.8, d: 3.6, p: [0, 1.4 + h, 0], c: '#c87533', m: 'Metal' });
-      t.ball({ name: 'TankDome', d: 2.4, p: [0, 1.9 + h, 0], c: '#d98a44', m: 'Metal' });
-      // a fossil mosquito in the biggest ones (the amber joke)
-      if (h === 9) t.box({ name: 'Mosquito', s: [0.3, 0.3, 1.2], p: [0, 1 + h / 2, 0], c: '#2b2d31', shadow: false });
-    }
-    // a copper manifold along the tank tops, and a drop pipe into the coils by the pad
-    c.beam([sx * 6.8, 9.2, -6], [sx * 6.8, 9.2, 10], 0.6, 0.6, { name: 'AmberPipe', c: '#c87533', m: 'Metal', extend: 0.6 });
-    c.beam([sx * 6.8, 9.2, -6], [sx * 4.6, 3.9, TR.PAD_Z + 3.2], 0.5, 0.5, { name: 'AmberPipe', c: '#c87533', m: 'Metal', extend: 0.4 });
-    for (const z of [-10, 6, 14]) c.box({ name: 'LabWall', s: [1, 3, 3.6], p: [sx * 8.6 - sx * 1.8, 1.5, z], c: '#e9dfc4', studs: 'sides', collide: true });
+  const th = { border: '#a8602a', borderHi: '#c87533', borderM: 'Metal', trim: '#ffb02e', corner: '#e9dfc4', cap: '#c87533', capM: 'Metal', floor: '#6b4428', floorM: 'Marble', line: '#ffb02e', post: '#8a4a1e', postM: 'Metal', frame: '#c87533', padRing: '#8a4a1e', base: '#5a3a22' };
+  const A = range(c, 5, th);
+  // the amber block + the giganotosaurus inside it, a glow under it
+  const top = plinth(c, [0, 0, TGT_Z + 0.2], 6.4, th, { c: '#8a4a1e', m: 'Metal', top: A, topM: 'Neon', h: 0.8 });
+  dummy(c, 'Giganotosaurus', [0, top, TGT_Z + 0.4], 22, 0.42, 'amber');
+  E.pointLight(c.box({ name: 'AmberGlow', s: [0.5, 0.5, 0.5], p: [0, 2.2, TGT_Z], t: 1, shadow: false }), [1, 0.62, 0.2], 18, 0.8);
+  targetPoint(c, [0, 4.2, TGT_Z]);
+  // the copper dome ribs over it
+  const R = 4.6;
+  for (let k = 0; k < 6; k++) {
+    const a = (k / 6) * Math.PI * 2;
+    const x = Math.cos(a) * R, z = TGT_Z + 0.2 + Math.sin(a) * R * 0.75;
+    c.beam([x, MAT.FLOOR, z], [x * 0.55, 6.5, TGT_Z + 0.2 + (z - TGT_Z - 0.2) * 0.55], 0.5, 0.5, { name: 'DomeRib', c: '#c87533', m: 'Metal', collide: k > 1 && k < 5 });
+    c.beam([x * 0.55, 6.5, TGT_Z + 0.2 + (z - TGT_Z - 0.2) * 0.55], [0, 9, TGT_Z + 0.2], 0.45, 0.45, { name: 'DomeRib', c: '#d98a44', m: 'Metal' });
   }
-  // a big amber block at the back with the giganotosaurus "inside" it (glassy amber dummy + glowing base)
-  c.box({ name: 'AmberPlinth', s: [10, 1.2, 9], p: [0, 0.6, 13], c: '#8a4a1e', m: 'Metal', studs: 'top', collide: true });
-  const glow = c.box({ name: 'AmberGlow', s: [9, 0.3, 8], p: [0, 1.3, 13], c: A, m: 'Neon', t: 0.2, shadow: false });
-  E.pointLight(glow, [1, 0.62, 0.2], 26, 0.7);
-  dummy(c, 'Giganotosaurus', [0, 1.4, 13], 30, 0.5, 'amber');
-  targetPoint(c, [0, 6, 12]);
-  // copper dome frame over the back
-  const R = 9, cz = 13;
-  for (let k = 0; k <= 4; k++) {
-    const a = (k / 4) * Math.PI;
-    const x = Math.cos(a) * R * 0.78;
-    c.beam([x, 0, cz - 5], [x * 0.3, 15, cz], 0.6, 0.6, { name: 'DomeRib', c: '#c87533', m: 'Metal' });
-    c.beam([x, 0, cz + 5], [x * 0.3, 15, cz], 0.6, 0.6, { name: 'DomeRib', c: '#c87533', m: 'Metal' });
+  c.cyl({ name: 'DomeRing', axis: 'y', len: 0.45, d: 5.4, p: [0, 6.5, TGT_Z + 0.2], c: '#c87533', m: 'Metal' });
+  c.ball({ name: 'DomeTop', d: 1.6, p: [0, 9.3, TGT_Z + 0.2], c: A, m: 'Neon' });
+  // resin tanks behind, piped together
+  for (const [x, h] of [[-4.2, 7], [0, 9], [4.2, 7.5]]) {
+    const t = c.at([x, 0, 11.5]);
+    t.cyl({ name: 'TankBase', axis: 'y', len: 1, d: 3.4, p: [0, 0.5, 0], c: '#8a4a1e', m: 'Metal', collide: true });
+    t.cyl({ name: 'TankGlass', axis: 'y', len: h, d: 2.9, p: [0, 1 + h / 2, 0], c: '#ffcf7a', m: 'Glass', t: 0.45, collide: true });
+    const core = t.cyl({ name: 'TankCore', axis: 'y', len: h - 1, d: 1.5, p: [0, 1 + h / 2, 0], c: '#ff9a1a', m: 'Neon', t: 0.15 });
+    core.tag('AmberCore');
+    t.cyl({ name: 'TankCap', axis: 'y', len: 0.8, d: 3.4, p: [0, 1.4 + h, 0], c: '#c87533', m: 'Metal' });
+    t.ball({ name: 'TankDome', d: 2.2, p: [0, 1.9 + h, 0], c: '#d98a44', m: 'Metal' });
+    if (h === 9) t.box({ name: 'Mosquito', s: [0.3, 0.3, 1.1], p: [0, 1 + h / 2, -0.2], c: '#2b2d31', shadow: false });
   }
-  c.ball({ name: 'DomeTop', d: 2.4, p: [0, 15.4, cz], c: A, m: 'Neon' });
-  c.cyl({ name: 'DomeRing', axis: 'y', len: 0.5, d: 6, p: [0, 14, cz], c: '#c87533', m: 'Metal' });
-  // the pad ring: four copper coils round the pad
-  for (const [x, z] of [[-4.6, -1], [4.6, -1], [-4.6, 1], [4.6, 1]]) {
-    const cl = c.at([x, 0, TR.PAD_Z + z * 3.2]);
-    cl.cyl({ name: 'Coil', axis: 'y', len: 3.4, d: 1, p: [0, 1.7, 0], c: '#c87533', m: 'Metal', collide: true });
-    for (let k = 0; k < 4; k++) cl.cyl({ name: 'CoilWind', axis: 'y', len: 0.25, d: 1.3, p: [0, 0.8 + k * 0.7, 0], c: '#ffb02e', m: 'Neon', shadow: false });
-    cl.ball({ name: 'CoilTop', d: 1.2, p: [0, 3.6, 0], c: '#ffd27a', m: 'Neon' });
+  c.beam([-4.2, 9.2, 11.5], [4.2, 9.2, 11.5], 0.5, 0.5, { name: 'AmberPipe', c: '#c87533', m: 'Metal', extend: 0.5 });
+  // four copper coils round the pad
+  for (const [x, z] of [[-4.3, -1], [4.3, -1], [-4.3, 1], [4.3, 1]]) {
+    const cl = c.at([x, MAT.FLOOR, TR.PAD_Z + z * 3]);
+    cl.cyl({ name: 'Coil', axis: 'y', len: 3, d: 0.9, p: [0, 1.5, 0], c: '#c87533', m: 'Metal', collide: true });
+    for (let k = 0; k < 4; k++) cl.cyl({ name: 'CoilWind', axis: 'y', len: 0.22, d: 1.2, p: [0, 0.7 + k * 0.62, 0], c: A, m: 'Neon', shadow: false });
+    cl.ball({ name: 'CoilTop', d: 1.1, p: [0, 3.2, 0], c: '#ffd27a', m: 'Neon' });
   }
-  sign(c, [0, 4.4, 18.6], 8, 1.8, 'AMBER LAB', A, { pps: 32 });
   return c;
 }
 
-// T6 FOSSIL ENGINE: a giant fossil T. rex skull at the back (glowing eyes, a core in its jaws) and ribs arching over
-// the whole range, a spine along the top, pistons
+// T6 FOSSIL ENGINE: bone border on dark slate, fossil ribs arching over the mat, a giant T. rex skull at the back with
+// glowing eyes and a core in its jaws (the target)
 function trainer6(root) {
   const c = kitModel(root, 'Trainer6');
-  const A = TR.ACCENT[5];
   const BONE = ['#e6dccb', '#d6cbb2', '#f2ece0'];
-  trainerPad(c, 6, A);
-  trainerBoard(c, 6, A);
-  lane(c, 6, { floor: '#3d3550', floorM: 'Slate', edge: A, edgeM: 'Neon', mark: '#e6dccb' });
-  // ribcage: arching bone ribs over the lane, a spine on top
-  const ribs = [-12.5, -7.5, -2.5, 2.5, 7.5];
-  for (const [i, z] of ribs.entries()) {
-    const h = 12 + i * 0.8;
+  const th = { border: '#d6cbb2', borderHi: '#e6dccb', trim: '#b06cff', corner: '#f2ece0', cap: '#b06cff', capM: 'Neon', floor: '#3d3550', floorM: 'Slate', line: '#b06cff', post: '#d6cbb2', frame: '#e6dccb', padRing: '#2a2438', base: '#2a2438' };
+  const A = range(c, 6, th);
+  // ribs over the mat
+  // (behind the mat, round the skull: framing it, never in front of it)
+  for (const [i, z] of [8.6, 13.2].entries()) {
+    const h = 13 + i * 0.8;
     for (const sx of [-1, 1]) {
-      c.beam([sx * 7, 0, z], [sx * 7.4, h * 0.45, z], 1.4, 1.4, { name: 'Rib', c: BONE[i % 3], collide: true, extend: 0.4 });
-      c.beam([sx * 7.4, h * 0.45, z], [sx * 5.4, h * 0.85, z + 0.5], 1.2, 1.2, { name: 'Rib', c: BONE[(i + 1) % 3], extend: 0.4 });
-      c.beam([sx * 5.4, h * 0.85, z + 0.5], [sx * 1, h, z + 0.8], 1.1, 1.1, { name: 'Rib', c: BONE[(i + 2) % 3], extend: 0.4 });
+      c.beam([sx * 6.4, 0, z], [sx * 6.6, h * 0.5, z], 1.1, 1.1, { name: 'Rib', c: BONE[i % 3], collide: true, extend: 0.3 });
+      c.beam([sx * 6.6, h * 0.5, z], [sx * 4.6, h * 0.88, z + 0.4], 1, 1, { name: 'Rib', c: BONE[(i + 1) % 3], extend: 0.3 });
+      c.beam([sx * 4.6, h * 0.88, z + 0.4], [sx * 0.8, h, z + 0.6], 0.9, 0.9, { name: 'Rib', c: BONE[(i + 2) % 3], extend: 0.3 });
     }
-    c.box({ name: 'Vertebra', s: [2.2, 1.6, 2.2], p: [0, h + 0.4, z + 0.8], c: BONE[i % 3], studs: 'top' });
-    c.wedgeF({ name: 'VertebraSpike', s: [1, 1.6, 1.8], p: [0, h + 2, z + 0.8], face: 'front', c: BONE[2] });
-    c.box({ name: 'RibGlow', s: [0.4, 0.4, 0.4], p: [0, h - 0.5, z + 0.8], c: A, m: 'Neon', shadow: false });
+    c.box({ name: 'Vertebra', s: [1.8, 1.4, 1.8], p: [0, h + 0.3, z + 0.6], c: BONE[i % 3], studs: 'top' });
+    c.box({ name: 'RibGlow', s: [0.35, 0.35, 0.35], p: [0, h - 0.5, z + 0.6], c: A, m: 'Neon', shadow: false });
   }
-  c.beam([0, 12.6, -12], [0, 16.5, 9], 1, 1, { name: 'Spine', c: BONE[1] });
-  // the skull: cranium, snout, eye sockets with glowing eyes, jaw with teeth, a purple core between the jaws
-  c.box({ name: 'SkullBase', s: [13, 2, 9], p: [0, 1, 15], c: '#4a4f57', m: 'Metal', studs: 'top', collide: true });
-  // (turned so you see its profile from the pad: a skull face-on reads as a box)
-  const s = c.at([1, 0, 14.5], [0, -38, 0]);
-  s.box({ name: 'Cranium', s: [9, 7, 7], p: [0, 9, 2], c: BONE[0], studs: 'top', collide: true });
-  s.box({ name: 'Snout', s: [7, 4.4, 6], p: [0, 8.6, -3.6], c: BONE[1], studs: 'top', collide: true });
-  s.wedgeF({ name: 'SnoutTip', s: [7, 2.4, 3], p: [0, 9.8, -7.8], face: 'front', c: BONE[2] });
+  c.beam([0, 13.4, 7], [0, 14.4, 16], 0.8, 0.8, { name: 'Spine', c: BONE[1] });
+  // the skull, facing the pad
+  c.box({ name: 'SkullBase', s: [11, 1.4, 7], p: [0, 0.7, 11.5], c: '#4a4f57', m: 'Metal', studs: 'top', collide: true });
+  // (turned three-quarters: face-on, a skull reads as a box)
+  const s = c.at([0.8, 1.4, 11.2], [0, -32, 0]);
+  s.box({ name: 'Cranium', s: [8, 6, 6], p: [0, 6.4, 1.6], c: BONE[0], studs: 'top', collide: true });
+  s.box({ name: 'Snout', s: [6, 3.8, 5], p: [0, 6, -3.2], c: BONE[1], studs: 'top', collide: true });
+  s.wedgeF({ name: 'SnoutTip', s: [6, 2, 2.4], p: [0, 7, -6.8], face: 'front', c: BONE[2] });
   for (const sx of [-1, 1]) {
-    s.box({ name: 'EyeSocket', s: [2.6, 2.4, 0.4], p: [sx * 2.4, 10.6, -1.35], c: '#2b2d31' });
-    const eye = s.box({ name: 'SkullEye', s: [1.4, 1.2, 0.3], p: [sx * 2.4, 10.6, -1.6], c: A, m: 'Neon' });
+    s.box({ name: 'EyeSocket', s: [2.2, 2, 0.4], p: [sx * 2.2, 7.8, -1.25], c: '#2b2d31' });
+    const eye = s.box({ name: 'SkullEye', s: [1.2, 1, 0.3], p: [sx * 2.2, 7.8, -1.5], c: A, m: 'Neon' });
     eye.tag('FossilEye');
-    s.box({ name: 'Cheek', s: [1.6, 4, 5], p: [sx * 4.6, 7.5, 0], c: BONE[2], studs: 'sides' });
+    s.box({ name: 'Cheek', s: [1.4, 3.4, 4.4], p: [sx * 4, 5, 0], c: BONE[2], studs: 'sides' });
   }
-  s.box({ name: 'UpperTeethRow', s: [6.4, 0.3, 5], p: [0, 6.3, -3.8], c: BONE[2] });
-  for (let k = 0; k < 6; k++) for (const sx of [-1, 1]) s.wedgeF({ name: 'Tooth', s: [0.6, 1.3, 0.6], p: [sx * 3, 5.6, -6 + k * 0.9], face: 'front', flip: true, c: '#ffffff' });
-  s.at([0, 4.2, 0], [20, 0, 0]).box({ name: 'Jaw', s: [7.4, 1.6, 9], p: [0, 0, -3], c: BONE[1], studs: 'top', collide: true });
-  const core = s.ball({ name: 'EngineCore', d: 3.4, p: [0, 5.4, -3.2], c: A, m: 'Neon', t: 0.1 });
+  for (let k = 0; k < 5; k++) for (const sx of [-1, 1]) s.wedgeF({ name: 'Tooth', s: [0.5, 1.1, 0.5], p: [sx * 2.6, 3.6, -5.4 + k * 0.85], face: 'front', flip: true, c: '#ffffff' });
+  s.at([0, 2, 0], [16, 0, 0]).box({ name: 'Jaw', s: [6.4, 1.4, 7.6], p: [0, 0, -2.6], c: BONE[1], studs: 'top', collide: true });
+  const core = s.ball({ name: 'EngineCore', d: 2.8, p: [0, 3.4, -3.4], c: A, m: 'Neon', t: 0.1 });
   core.tag('EngineCore');
-  E.pointLight(core, [0.7, 0.45, 1], 26, 0.8);
-  // pistons driving the jaw
-  for (const sx of [-1, 1]) {
-    s.beam([sx * 5.4, 2, -2], [sx * 4.2, 6.8, -4], 0.8, 0.8, { name: 'JawPiston', c: '#b8bec4', m: 'Metal' });
-    s.beam([sx * 5.4, 2, -2], [sx * 5, 4, -2.6], 1.3, 1.3, { name: 'PistonSleeve', c: A, m: 'Metal' });
+  E.pointLight(core, [0.7, 0.45, 1], 22, 0.9);
+  targetPoint(c, [0, 4.8, 8]);
+  // purple crystals at the corners
+  for (const [x, z] of [[-6.8, 8], [6.8, 9], [-6.9, -16], [6.9, -15]]) {
+    const g = c.at([x, 0, z], [0, x * 13, 0]);
+    for (const [dx, h, r] of [[0, 2.6, 0], [0.6, 1.6, 18], [-0.5, 1.3, -20]]) g.at([dx, 0, 0], [0, 0, r]).box({ name: 'Crystal', s: [0.7, h, 0.7], p: [0, h / 2, 0], r: [0, 45, 0], c: A, m: 'Glass', t: 0.2 });
   }
-  targetPoint(c, [0, 7, 11]);
-  sign(c, [0, 17.6, 19.6], 9, 1.8, 'FOSSIL ENGINE', A, { pps: 30, bg: '#241d33' });
   return c;
 }
 
-// T7 TITAN RIG: twin pylons with floating rings, neon arches the length of the range, a holographic T. rex target on a
-// projector, turbines, a beacon - the biggest thing on any island
+// T7 TITAN RIG: black glass and neon - neon arches over the mat, a holographic T. rex on a projector, twin pylons with
+// floating rings and a sign bridge behind, the biggest thing on any island
 function trainer7(root) {
   const c = kitModel(root, 'Trainer7');
-  const A = TR.ACCENT[6], A2 = TR.ACCENT2[6];
-  trainerPad(c, 7, A);
-  trainerBoard(c, 7, A, { post: '#2b2d31' });
-  lane(c, 7, { floor: '#14161c', floorM: 'Glass', edge: A, edgeM: 'Neon', mark: A2 });
-  // neon arches along the lane, alternating colours, rising toward the back
-  for (const [i, z] of [-12.5, -6, 0.5, 7].entries()) {
-    const h = 13 + i * 1.2, col = i % 2 ? A2 : A;
+  const A2 = TR.ACCENT2[6];
+  const th = { border: '#14161c', borderHi: '#22252e', borderM: 'Glass', trim: TR.ACCENT[6], corner: '#2b2d31', cornerM: 'Metal', cap: '#ffcf3a', capM: 'Metal', floor: '#1b1e27', floorM: 'Glass', line: TR.ACCENT[6], post: '#2b2d31', postM: 'Metal', frame: '#3a3f55', padRing: '#0e1016', base: '#0e1016' };
+  const A = range(c, 7, th);
+  for (const [i, z] of [-2.5, 6.4].entries()) {
+    const h = 10.5 + i * 1.2, col = i % 2 ? A2 : A;
     for (const sx of [-1, 1]) {
-      c.box({ name: 'ArchLeg', s: [1.2, h, 1.2], p: [sx * 6.9, h / 2, z], c: '#3a3f55', m: 'Metal', studs: 'top', collide: true });
-      c.box({ name: 'ArchLegGlow', s: [0.3, h - 2, 0.3], p: [sx * 6.3, h / 2, z - 0.5], c: col, m: 'Neon', shadow: false });
+      c.box({ name: 'ArchLeg', s: [1, h, 1], p: [sx * 6.4, h / 2, z], c: '#5b6380', m: 'Metal', studs: 'top', collide: true });
+      c.box({ name: 'ArchLegGlow', s: [0.25, h - 2, 0.25], p: [sx * 5.85, h / 2, z - 0.4], c: col, m: 'Neon', shadow: false });
     }
-    c.box({ name: 'ArchTop', s: [15, 1, 1], p: [0, h, z], c: '#3a3f55', m: 'Metal', studs: 'top' });
-    for (const sx of [-1, 1]) c.box({ name: 'ArchCap', s: [1.6, 0.6, 1.6], p: [sx * 6.9, h + 0.8, z], c: '#ffcf3a', m: 'Metal' });
-    c.box({ name: 'ArchGlow', s: [13.4, 0.35, 0.35], p: [0, h - 0.8, z - 0.5], c: col, m: 'Neon', shadow: false });
+    c.box({ name: 'ArchTop', s: [13.8, 0.9, 0.9], p: [0, h, z], c: '#5b6380', m: 'Metal', studs: 'top' });
+    for (const sx of [-1, 1]) c.box({ name: 'ArchCap', s: [1.5, 0.5, 1.5], p: [sx * 6.4, h + 0.7, z], c: '#ffcf3a', m: 'Metal' });
+    c.box({ name: 'ArchGlow', s: [12.2, 0.3, 0.3], p: [0, h - 0.7, z - 0.4], c: col, m: 'Neon', shadow: false });
   }
-  // twin pylons at the back with floating rings (TrainerView turns them) and gold caps
+  // the projector + holo rex
+  c.cyl({ name: 'Projector', axis: 'y', len: 1, d: 7.4, p: [0, MAT.FLOOR + 0.5, TGT_Z], c: '#2b2d31', m: 'Metal', collide: true });
+  c.cyl({ name: 'ProjectorRing', axis: 'y', len: 1.05, d: 7.8, p: [0, MAT.FLOOR + 0.5, TGT_Z], c: A, m: 'Neon', t: 0.2, shadow: false });
+  c.cyl({ name: 'ProjectorLens', axis: 'y', len: 1.1, d: 3, p: [0, MAT.FLOOR + 0.5, TGT_Z], c: '#ffffff', m: 'Neon', shadow: false });
+  dummy(c, 'TyrannosaurusRex', [0, MAT.FLOOR + 1, TGT_Z + 0.4], 20, 0.6, 'holo');
+  targetPoint(c, [0, 5.2, TGT_Z]);
+  // twin pylons with floating rings, a sign bridge between them
   for (const sx of [-1, 1]) {
-    const py = c.at([sx * 6, 0, 16.4]);
-    for (let k = 0; k < 7; k++) py.box({ name: 'PylonBlock', s: [3 - k * 0.22, 3.6, 3 - k * 0.22], p: [0, 1.8 + k * 3.6, 0], r: [0, k * 10, 0], c: k % 2 ? '#2b2d31' : '#3a3d42', m: 'Metal', studs: 'top', collide: true });
-    py.cyl({ name: 'PylonCap', axis: 'y', len: 1, d: 3.2, p: [0, 26, 0], c: '#ffcf3a', m: 'Metal' });
-    const orb = py.ball({ name: 'PylonOrb', d: 2.4, p: [0, 27.8, 0], c: sx > 0 ? A : A2, m: 'Neon' });
-    E.pointLight(orb, sx > 0 ? [0.3, 0.9, 1] : [1, 0.35, 0.85], 30, 0.7);
-    for (const [y, d] of [[9, 6.4], [17, 5.4]]) {
+    const py = c.at([sx * 5.2, 0, 12.5]);
+    for (let k = 0; k < 6; k++) py.box({ name: 'PylonBlock', s: [2.6 - k * 0.2, 3.4, 2.6 - k * 0.2], p: [0, 1.7 + k * 3.4, 0], r: [0, k * 10, 0], c: k % 2 ? '#2b2d31' : '#3a3d42', m: 'Metal', studs: 'top', collide: true });
+    py.cyl({ name: 'PylonCap', axis: 'y', len: 1, d: 2.8, p: [0, 21, 0], c: '#ffcf3a', m: 'Metal' });
+    const orb = py.ball({ name: 'PylonOrb', d: 2.2, p: [0, 22.6, 0], c: sx > 0 ? A : A2, m: 'Neon' });
+    E.pointLight(orb, sx > 0 ? [0.3, 0.9, 1] : [1, 0.35, 0.85], 28, 0.7);
+    for (const [y, d] of [[7.5, 5.6], [14.5, 4.6]]) {
       const ring = py.group('FloatRing').at([0, y, 0]);
       for (let k = 0; k < 12; k++) {
         const a = (k / 12) * Math.PI * 2;
-        ring.at([Math.cos(a) * d / 2, 0, Math.sin(a) * d / 2], [0, -a * 180 / Math.PI, 0]).box({ name: 'RingSeg', s: [0.5, 0.5, d * 0.27], c: k % 2 ? A : '#ffffff', m: 'Neon', shadow: false });
+        ring.at([Math.cos(a) * d / 2, 0, Math.sin(a) * d / 2], [0, -a * 180 / Math.PI, 0]).box({ name: 'RingSeg', s: [0.45, 0.45, d * 0.27], c: k % 2 ? A : '#ffffff', m: 'Neon', shadow: false });
       }
     }
   }
-  c.beam([-6, 22, 16.4], [6, 22, 16.4], 1.2, 1.2, { name: 'PylonBridge', c: '#ffcf3a', m: 'Metal' });
-  const sgn = c.box({ name: 'TitanSign', s: [9, 2.4, 0.5], p: [0, 24, 16.2], c: '#14161c' });
+  c.beam([-5.2, 18, 12.5], [5.2, 18, 12.5], 1.1, 1.1, { name: 'PylonBridge', c: '#ffcf3a', m: 'Metal' });
+  const sgn = c.box({ name: 'TitanSign', s: [7.6, 2.2, 0.5], p: [0, 19.8, 12.3], c: '#14161c' });
   label(sgn, 'Front', 'TITAN RIG', { pps: 30, color: '#ffffff', color2: A });
-  c.box({ name: 'TitanSignGlow', s: [9.6, 3, 0.3], p: [0, 24, 16.5], c: A2, m: 'Neon', shadow: false });
-  // the holo projector + holographic T. rex
-  c.cyl({ name: 'Projector', axis: 'y', len: 1.2, d: 9.6, p: [0, 0.6, 11.5], c: '#2b2d31', m: 'Metal', collide: true });
-  c.cyl({ name: 'ProjectorRing', axis: 'y', len: 1.25, d: 10, p: [0, 0.6, 11.5], c: A, m: 'Neon', t: 0.2, shadow: false });
-  c.cyl({ name: 'ProjectorLens', axis: 'y', len: 1.3, d: 4, p: [0, 0.6, 11.5], c: '#ffffff', m: 'Neon', shadow: false });
-  dummy(c, 'TyrannosaurusRex', [0, 1.2, 12], 26, 0.78, 'holo');
-  bullseye(c, [-1.4, 6.8, 6.8], 2.6, { cols: [A2, '#ffffff', A2, '#ffffff'], m: 'Neon' });
-  targetPoint(c, [0, 7, 11]);
-  // turbines on the side walls
-  for (const sx of [-1, 1]) for (const z of [-3, 4]) {
-    const tb = c.at([sx * 8, 3.4, z]);
-    tb.cyl({ name: 'Turbine', axis: 'x', len: 2, d: 4.2, c: '#3a3d42', m: 'Metal', collide: true });
-    tb.cyl({ name: 'TurbineFace', axis: 'x', len: 0.2, d: 3.4, p: [-sx * 1.05, 0, 0], c: A, m: 'Neon', t: 0.3, shadow: false });
-    for (let k = 0; k < 4; k++) tb.at([-sx * 1.2, 0, 0], [k * 45, 0, 0]).box({ name: 'TurbineBlade', s: [0.2, 3.2, 0.5], c: '#d9d9d9', m: 'Metal', shadow: false });
-  }
-  // gold trim on the pad end + a beacon
-  for (const sx of [-1, 1]) c.box({ name: 'GoldPost', s: [1, 3, 1], p: [sx * 5.4, 1.5, -17], c: '#ffcf3a', m: 'Metal', studs: 'top', collide: true });
+  c.box({ name: 'TitanSignGlow', s: [8.2, 2.8, 0.3], p: [0, 19.8, 12.6], c: A2, m: 'Neon', shadow: false });
   return c;
 }
 
