@@ -343,3 +343,43 @@ Fern Valley's three teases (footprints, the throne roar, the road crossing) now 
 - **Please check:**
   - The Fern Valley boss from start to finish: reveal, flee, chase him to the arena, last stand.
   - Making an admin, rejoining, and checking they still have the tab.
+
+## 14. PRE-BETA 0.3: finished features (2026-10-14, untested in Studio)
+
+`git pull` in your dino folder first; Rojo picks the changes up. Settings → **TEST TOOLS** gives eggs of any rarity, which makes these quick to check.
+
+**A. Egg Fusion** (the Fusion Nest beside the Egg Keeper)
+1. With no matching eggs, the nest just glows softly. Press E on it: the EGG FUSION window lists what you hold, each row showing how many of 3 you have and "NEED N MORE".
+2. Get 3 eggs of the same dino and rarity. The nest should pulse brighter and show **1 READY!** over the pod.
+3. FUSE on that row: the window closes and the cutscene plays. The three eggs sit in the cradles, glow, spiral into the pod, it flares, and the new egg drops into the middle cradle with its rarity glow and a big rarity title. Tap after 1 s skips to the reveal; tap again ends it.
+4. You end up back in control with the camera behind you. The bag has 1 egg one rarity up, and the 3 are gone.
+5. FUSE ALL with several trios: one cutscene (the rarest result) with "+N MORE", then a "FUSED N EGGS" toast.
+6. Try fusing while trading, on an expedition, or far from the nest: each refuses with a clear message.
+
+**B. Dino names + the Showcase pedestal** (the turning pedestal by your bridge)
+1. Bag → DINOS → tap a dino → **NAME**. Type a name (16 letters max, counter shown), SAVE. The card, the yard tag over its head and the Companions window show the name in yellow.
+2. Try a rude word: it should refuse ("THAT NAME ISN'T ALLOWED"). RENAME → SPECIES NAME clears it.
+3. In the same detail bar, **SHOWCASE**: the dino appears on your pedestal, turning slowly with the platform, its lights tinted to its rarity, a name card over it with "<YOU>'S STAR". The button now reads ON SHOW (tap to take it down).
+4. At the pedestal, **Pick a star** opens the SHOWCASE picker. Star pen dinos say IN STAR PEN and can't be picked.
+5. Showcase a Mosasaurus: it should swim in a glass tank on the platform.
+6. Sell or trade away the showcased dino: the pedestal empties and you get a toast.
+7. With 2 players, check the other island's pedestal shows their star.
+
+**C. Index rewards, titles, secrets** (INDEX button, top right)
+1. The INDEX button gets a red number when a reward is ready. Three tabs: DINOS (as before), REWARDS, SECRETS.
+2. REWARDS: species-track nodes and era pages. A ready one glows with CLAIM. Claiming shows toasts for coins, permanent +% LUCK / POWER, and a title.
+3. Claiming a title puts it over your head (pixel text, coloured; DINO MASTER is rainbow) and on your profile card. Swap or remove it in the TITLE row.
+4. Completing an era page turns that boss's trophy statue at your island polished gold, with sparkles and a gold outline.
+5. SECRETS: pick an era on the left; the right lists its landmarks, nests, the stash, wild, shiny and boss. Unfound ones are "???" with a hint ("A WATERFALL").
+6. In an era, drive to a landmark: a **SECRET FOUND!** banner with "3 / 14". Finding all of an era's secrets plays **ALL SECRETS!** and unlocks its rover paint.
+
+**D. Luck events + boosts** (top-left chips)
+1. Settings → ADMIN → start 2x LUCK (or wait 15-35 min): everyone gets a "2x LUCK EVENT!" banner and a chime, and a chip with a countdown appears top-left.
+2. Start it again while it runs: "+15 MIN OF 2x LUCK!". When it ends: "THE 2x LUCK EVENT IS OVER".
+3. Two Roblox friends in one server: a "FRIENDS HERE" chip (+10% luck and power each). Tap any chip to see what it does.
+4. Index bonuses now really apply: claim a +% POWER node, stand on your trainer pad and the "+N" pops should grow by that much.
+
+**E. Trainer + Guess the Dino fixes**
+1. Upgrade the trainer: the window updates straight away to the next level and price (it used to keep the old one).
+2. While the quiz is open on your pad, the trainer's Upgrade prompt doesn't open a window underneath it.
+3. The quiz now pays about 4-10 seconds of training per right answer, so quizzing on the pad earns up to ~3x standing there (it was ~7x).
