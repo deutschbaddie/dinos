@@ -1,0 +1,776 @@
+[
+  {
+    "key": "Coin",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      43,
+      39,
+      469,
+      472
+    ]
+  },
+  {
+    "key": "Gem",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      54,
+      39,
+      457,
+      472
+    ]
+  },
+  {
+    "key": "Gear",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      39,
+      472,
+      472
+    ]
+  },
+  {
+    "key": "Shop",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      41,
+      472,
+      471
+    ]
+  },
+  {
+    "key": "Index",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      42,
+      472,
+      470
+    ]
+  },
+  {
+    "key": "Gate",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      40,
+      472,
+      471
+    ]
+  },
+  {
+    "key": "Home",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      42,
+      472,
+      469
+    ]
+  },
+  {
+    "key": "Garage",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      70,
+      472,
+      442
+    ]
+  },
+  {
+    "key": "Shield",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      62,
+      39,
+      449,
+      472
+    ]
+  },
+  {
+    "key": "Bolt",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      55,
+      39,
+      457,
+      472
+    ]
+  },
+  {
+    "key": "Dart",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      42,
+      472,
+      470
+    ]
+  },
+  {
+    "key": "Star",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      49,
+      472,
+      462
+    ]
+  },
+  {
+    "key": "Lock",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      74,
+      39,
+      438,
+      472
+    ]
+  },
+  {
+    "key": "Eye",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      47,
+      39,
+      465,
+      472
+    ]
+  },
+  {
+    "key": "Alert",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      51,
+      472,
+      461
+    ]
+  },
+  {
+    "key": "Trophy",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      90,
+      39,
+      422,
+      473
+    ]
+  },
+  {
+    "key": "Egg",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      67,
+      39,
+      444,
+      472
+    ]
+  },
+  {
+    "key": "Dino",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      56,
+      39,
+      455,
+      472
+    ]
+  },
+  {
+    "key": "Jeep",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      72,
+      473,
+      439
+    ]
+  },
+  {
+    "key": "Hand",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      67,
+      472,
+      445
+    ]
+  },
+  {
+    "key": "Door",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      43,
+      472,
+      468
+    ]
+  },
+  {
+    "key": "Footprints",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      53,
+      39,
+      458,
+      472
+    ]
+  },
+  {
+    "key": "Clock",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      59,
+      39,
+      453,
+      472
+    ]
+  },
+  {
+    "key": "Map",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      48,
+      472,
+      464
+    ]
+  },
+  {
+    "key": "Gift",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      46,
+      472,
+      466
+    ]
+  },
+  {
+    "key": "Wrench",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      42,
+      472,
+      470
+    ]
+  },
+  {
+    "key": "Paddock",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      48,
+      472,
+      464
+    ]
+  },
+  {
+    "key": "Incubator",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      71,
+      39,
+      440,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Velociraptor",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      67,
+      39,
+      444,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Triceratops",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      55,
+      39,
+      456,
+      473
+    ]
+  },
+  {
+    "key": "Dino_Parasaurolophus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      50,
+      39,
+      462,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Stegosaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      42,
+      472,
+      469
+    ]
+  },
+  {
+    "key": "Dino_Ankylosaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      41,
+      472,
+      471
+    ]
+  },
+  {
+    "key": "Dino_Carnotaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      51,
+      39,
+      460,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Brachiosaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      80,
+      39,
+      432,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Spinosaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      47,
+      472,
+      465
+    ]
+  },
+  {
+    "key": "Dino_TyrannosaurusRex",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      41,
+      472,
+      471
+    ]
+  },
+  {
+    "key": "Dino_Giganotosaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      42,
+      39,
+      470,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Mosasaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      52,
+      472,
+      460
+    ]
+  },
+  {
+    "key": "Dino_PrimalRex",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      43,
+      39,
+      468,
+      472
+    ]
+  },
+  {
+    "key": "Vehicle_RookieRanger",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      52,
+      472,
+      460
+    ]
+  },
+  {
+    "key": "Vehicle_RaptorRunner",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      38,
+      62,
+      473,
+      449
+    ]
+  },
+  {
+    "key": "Vehicle_TitanTransport",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      38,
+      58,
+      473,
+      454
+    ]
+  }
+]

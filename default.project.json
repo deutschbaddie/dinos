@@ -1,0 +1,137 @@
+{
+  "name": "DinoExpedition",
+  "servePort": 34900,
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "DinoExpedition": {
+        "$path": "src/ReplicatedStorage/DinoExpedition"
+      }
+    },
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "DinoExpeditionServer": {
+        "$path": "src/ServerScriptService/DinoExpeditionServer.server.luau"
+      },
+      "DinoExpeditionGame": {
+        "$path": "src/ServerScriptService/Game"
+      }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "DinoExpeditionClient": {
+          "$path": "src/StarterPlayer/StarterPlayerScripts/DinoExpeditionClient"
+        }
+      },
+      "$properties": {
+        "CameraMaxZoomDistance": 80,
+        "CharacterWalkSpeed": 20
+      }
+    },
+    "Workspace": {
+      "$className": "Workspace",
+      "DinoExpeditionShowcase": {
+        "$path": "src/Workspace/DinoExpeditionShowcase.rbxmx"
+      },
+      "DinoExpeditionVehicles": {
+        "$path": "src/Workspace/DinoExpeditionVehicles.rbxmx"
+      },
+      "$properties": {
+        "StreamingEnabled": false
+      },
+      "BaseCamp": {
+        "$path": "src/Workspace/BaseCamp.rbxmx"
+      },
+      "FernValley": {
+        "$path": "src/Workspace/FernValley.rbxmx"
+      },
+      "GiantPlains": {
+        "$path": "src/Workspace/GiantPlains.rbxmx"
+      },
+      "SpineRiver": {
+        "$path": "src/Workspace/SpineRiver.rbxmx"
+      },
+      "RedCliffs": {
+        "$path": "src/Workspace/RedCliffs.rbxmx"
+      },
+      "FrostForest": {
+        "$path": "src/Workspace/FrostForest.rbxmx"
+      },
+      "DawnDesert": {
+        "$path": "src/Workspace/DawnDesert.rbxmx"
+      }
+    },
+    "Lighting": {
+      "$className": "Lighting",
+      "$properties": {
+        "ClockTime": 16.4,
+        "Brightness": 2.6,
+        "ExposureCompensation": 0.15,
+        "EnvironmentDiffuseScale": 1,
+        "EnvironmentSpecularScale": 1,
+        "OutdoorAmbient": [
+          0.55,
+          0.5,
+          0.48
+        ],
+        "Ambient": [
+          0.28,
+          0.26,
+          0.25
+        ],
+        "GlobalShadows": true,
+        "Technology": "Future"
+      },
+      "DinoAtmosphere": {
+        "$className": "Atmosphere",
+        "$properties": {
+          "Density": 0.3,
+          "Offset": 0.2,
+          "Color": [
+            0.85,
+            0.72,
+            0.58
+          ],
+          "Decay": [
+            0.45,
+            0.42,
+            0.5
+          ],
+          "Glare": 0.35,
+          "Haze": 1.4
+        }
+      },
+      "DinoBloom": {
+        "$className": "BloomEffect",
+        "$properties": {
+          "Intensity": 0.5,
+          "Size": 28,
+          "Threshold": 1.25
+        }
+      },
+      "DinoColorGrade": {
+        "$className": "ColorCorrectionEffect",
+        "$properties": {
+          "Saturation": 0.12,
+          "Contrast": 0.08,
+          "Brightness": 0.01,
+          "TintColor": [
+            1,
+            0.97,
+            0.93
+          ]
+        }
+      },
+      "DinoSunRays": {
+        "$className": "SunRaysEffect",
+        "$properties": {
+          "Intensity": 0.05,
+          "Spread": 0.6
+        }
+      }
+    }
+  }
+}

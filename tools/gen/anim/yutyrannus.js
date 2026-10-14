@@ -1,0 +1,176 @@
+// Yutyrannus — the Frost Forest ruler. Patient, cold, relentless. Signature: BLIZZARD KING (walks out of a whiteout,
+// shakes the snow off its feathers in a cloud, breath steaming, stamps the ice into cracks and roars - and the
+// pines around it dump their snow).
+const { W } = require('./util.js');
+
+const LOW = { Neck1: [-0.18], Neck2: [-0.12], Head: [-0.1], Torso: [-0.05] };
+const ROAR_POSE = {
+  Neck1: [0.02], Neck2: [0.02], Head: [0.14], Jaw: [-0.85], Torso: [-0.02],
+  Chest: [0, 0, 0, 0, -0.25, -0.3], Pelvis: [0, 0, 0, 0, -0.1, -0.6],
+  '~Arm': [-0.45, 0, 0.35], '~Forearm': [-0.5], Tail1: [-0.15], Tail2: [-0.1], Tail3: [-0.06],
+};
+const SHAKE_POSE = { Neck1: [-0.15], Neck2: [-0.1], Head: [-0.25], Jaw: [-0.08], Torso: [-0.06], Pelvis: [0, 0, 0, 0, -0.25, 0], '~Thigh': [0.12], '~Shin': [-0.22], '~Foot': [0.1], '~Arm': [0.2, 0, 0.25] };
+const STAMP_UP = { Pelvis: [0, 0, 0.05, 0, 0.1, 0.2], RightThigh: [0.55], RightShin: [-0.7], RightFoot: [0.3], LeftThigh: [-0.05], Torso: [0.05], Neck1: [0.05], Head: [0.05] };
+
+module.exports = {
+  Signature: 'BlizzardKing', Intro: 'BlizzardKing', IntroShots: 'YutyBlizzardKing', Chase: 'Chase', Special: 'Listen',
+  CycleOrder: ['Walk', 'Run', 'Listen', 'LookAround', 'Sniff', 'FrostBite', 'IceStomp', 'FrostRoar', 'TailSweep', 'Stunned', 'Roar'],
+  CameraScale: 3.4,
+  Gait: {
+    Type: 'Biped', Scale: 3.4, Neck: ['Neck1', 'Neck2'], Tail: ['Tail1', 'Tail2', 'Tail3', 'Tail4', 'Tail5', 'Tail6'],
+    Idle: { Breath: 0.2, BreathAmp: 1.0, Sway: 0.06, Look: 0.2, Twitch: false, JawIdle: 0.04 },
+    Walk: { Freq: 0.5, Stride: 0.36, Knee: 0.62, Bob: 0.12, Roll: 0.035, Yaw: 0.05, Lean: 0.04, TailSway: 0.09, HeadBob: 0.04, Speed: 6 },
+    Run: { Freq: 0.9, Stride: 0.48, Knee: 0.88, Bob: 0.2, Roll: 0.025, Yaw: 0.04, Lean: 0.14, TailSway: 0.05, HeadBob: 0.06, ThighBias: 0, Speed: 16 },
+  },
+  Actions: {
+    Roar: {
+      Duration: 3.3, Suppress: 0.92,
+      Keys: [
+        [0.5, W(LOW, { Jaw: [-0.08], Chest: [0, 0, 0, 0, 0.12, 0.25], Pelvis: [0, 0, 0, 0, -0.2, 0.3], Tail1: [0.05] }), 'Sine'],
+        [0.95, ROAR_POSE, 'Back'],
+        [2.5, W(ROAR_POSE, { Jaw: [-0.92], Head: [0.16] }), 'Linear'],
+      ],
+      Shake: [['Head', 0.95, 2.5, 0.04, 14, 3], ['Jaw', 0.95, 2.5, 0.03, 20, 1], ['Neck2', 0.95, 2.5, 0.02, 9, 2], ['~Forearm', 1.0, 2.4, 0.15, 7, 1]],
+      Events: [[0.4, 'BreathPlume', { Scale: 1.2 }], [0.9, 'EyeGlow', 1.8], [0.95, 'Roar', { Scale: 1.7 }], [0.96, 'BreathPlume', { Scale: 2.2, Roar: true }], [0.97, 'CameraShake', 0.9]],
+    },
+    Attack: {
+      Duration: 1.9, Suppress: 0.95,
+      Keys: [
+        [0.45, { Neck1: [0.2], Neck2: [0.12], Head: [0.2], Jaw: [-0.85], Torso: [0.08], Pelvis: [0, 0, 0, 0, -0.15, 0.8], Tail1: [0.08] }, 'Out'],
+        [0.75, { Neck1: [-0.12], Neck2: [-0.08], Head: [0], Jaw: [-0.78], Torso: [-0.14], Pelvis: [0, 0, 0, 0, -0.35, -2.6], RightThigh: [0.35], RightShin: [-0.3], LeftThigh: [-0.15], Tail1: [-0.15] }, 'Snap'],
+        [0.86, { Neck1: [-0.2], Neck2: [-0.16], Head: [-0.18], Jaw: [0.03], Torso: [-0.15], Pelvis: [0, 0, 0, 0, -0.38, -2.8], RightThigh: [0.35], RightShin: [-0.3], LeftThigh: [-0.15] }, 'Snap'],
+        [1.3, { Neck1: [-0.05], Head: [0.05, 0.15, 0.1], Jaw: [-0.05], Pelvis: [0, 0, 0, 0, -0.1, -1.2] }, 'Sine'],
+      ],
+      Events: [[0.75, 'Footstep', { Side: 'Right' }], [0.86, 'Bite', { Scale: 1.5 }], [0.88, 'CameraShake', 0.6]],
+    },
+    // TAKEDOWN: a lunging bite that leaves frost in the air
+    FrostBite: {
+      Duration: 2.0, Suppress: 0.95,
+      Keys: [
+        [0.5, { Neck1: [0.22], Neck2: [0.15], Head: [0.25], Jaw: [-0.95], Torso: [0.1], Pelvis: [0, 0, 0, 0, -0.2, 1.0], Tail1: [0.1], '~Arm': [-0.3, 0, 0.3] }, 'Out'],
+        [0.8, { Neck1: [-0.15], Neck2: [-0.1], Head: [-0.05], Jaw: [-0.85], Torso: [-0.16], Pelvis: [0, 0, 0, 0, -0.4, -3.2], RightThigh: [0.4], RightShin: [-0.35], LeftThigh: [-0.2], Tail1: [-0.18] }, 'Snap'],
+        [0.9, { Neck1: [-0.24], Neck2: [-0.18], Head: [-0.2], Jaw: [0.03], Torso: [-0.16], Pelvis: [0, 0, 0, 0, -0.42, -3.4], RightThigh: [0.4], RightShin: [-0.35], LeftThigh: [-0.2] }, 'Snap'],
+        [1.4, { Neck1: [-0.05], Head: [0.08, -0.2, -0.12], Jaw: [-0.05], Pelvis: [0, 0, 0, 0, -0.1, -1.4] }, 'Sine'],
+      ],
+      Shake: [['Head', 0.95, 1.35, 0.14, 5, 2]],
+      Events: [[0.8, 'Footstep', { Side: 'Right' }], [0.9, 'Bite', { Scale: 1.6 }], [0.91, 'BreathPlume', { Scale: 1.3 }], [0.92, 'CameraShake', 0.7]],
+    },
+    // TAKEDOWN: rears and stamps both feet - the ice cracks out in a ring
+    IceStomp: {
+      Duration: 2.2, Suppress: 1,
+      Keys: [
+        [0.55, W(STAMP_UP, { Pelvis: [0, 0, 0.04, 0, 0.35, 0.5], Torso: [0.12], Neck1: [0.15], Head: [0.12], Jaw: [-0.4], '~Arm': [-0.4, 0, 0.3], Tail1: [0.15] }), 'Out'],
+        [0.8, { Pelvis: [0, 0, 0, 0, -0.55, -0.2], RightThigh: [0.25], RightShin: [-0.5], RightFoot: [0.2], '~Thigh': [0.12], Torso: [-0.12], Neck1: [-0.15], Head: [-0.15], Jaw: [-0.6], Chest: [0, 0, 0, 0, -0.2, 0] }, 'In'],
+        [1.25, { Pelvis: [0, 0, 0, 0, -0.45, -0.2], Torso: [-0.1], Neck1: [-0.12], Head: [-0.1], Jaw: [-0.3] }, 'Sine'],
+      ],
+      Events: [[0.8, 'Footstep', { Side: 'Right' }], [0.8, 'IceCrack', { At: 'VFX_RightFoot', Scale: 1.6, Ring: true }], [0.81, 'Land', { Scale: 1.6 }], [0.82, 'CameraShake', 1.0], [0.85, 'SnowShake', { Scale: 0.7 }]],
+    },
+    // TAKEDOWN / BUDDY FROST ROAR: a freezing roar - a cone of frost breath that slows everything in it
+    FrostRoar: {
+      Duration: 2.8, Suppress: 1,
+      Keys: [
+        [0.6, W(LOW, { Jaw: [-0.1], Chest: [0, 0, 0, 0, 0.15, 0.3], Pelvis: [0, 0, 0, 0, -0.25, 0.4], Neck1: [-0.25], Head: [-0.15] }), 'Sine'],
+        [0.95, { Neck1: [0.04], Neck2: [0.03], Head: [0.16], Jaw: [-0.85], Torso: [-0.06], Chest: [0, 0, 0, 0, -0.3, -0.4], Pelvis: [0, 0, 0, 0, -0.15, -0.7], '~Arm': [-0.4, 0, 0.35], Tail1: [-0.15] }, 'Back'],
+        [2.1, { Neck1: [0.05], Neck2: [0.03], Head: [0.17, 0.1], Jaw: [-0.86], Torso: [-0.06], Chest: [0, 0, 0, 0, -0.3, -0.45], Pelvis: [0, 0, 0, 0, -0.15, -0.7], '~Arm': [-0.4, 0, 0.35], Tail1: [-0.15] }, 'Linear'],
+      ],
+      Shake: [['Head', 0.95, 2.1, 0.04, 14, 3], ['Jaw', 0.95, 2.1, 0.03, 20, 1]],
+      Events: [[0.5, 'BreathPlume', { Scale: 1.0 }], [0.92, 'EyeGlow', 1.5], [0.95, 'Roar', { Scale: 1.5 }], [0.96, 'BreathPlume', { Scale: 2.6, Roar: true }], [0.97, 'CameraShake', 0.8], [1.4, 'BreathPlume', { Scale: 2.0, Roar: true }]],
+    },
+    TailSweep: {
+      Duration: 2.0, Suppress: 0.95,
+      Keys: [
+        [0.5, { Pelvis: [0, 0.35, 0, 0, -0.15, 0], Torso: [-0.05, 0.12], Neck1: [0, -0.15], Tail2: [0, -0.4], Tail3: [0, -0.45], Tail4: [0, -0.45], Tail5: [0, -0.4] }, 'Sine'],
+        [0.82, { Pelvis: [0, -0.4, 0, 0, -0.1, 0], Torso: [0, -0.12], Neck1: [0, 0.15], Tail2: [0, 0.5], Tail3: [0, 0.6], Tail4: [0, 0.6], Tail5: [0, 0.55], RightThigh: [-0.2] }, 'Snap'],
+        [1.3, { Pelvis: [0, -0.15, 0, 0, 0, 0], Tail2: [0, 0.15], Tail3: [0, 0.15] }, 'Sine'],
+      ],
+      Events: [[0.55, 'TailSwing', 0.8], [0.82, 'Impact', { At: 'VFX_TailTip', Scale: 1.2 }], [0.84, 'SnowShake', { Scale: 0.5, At: 'VFX_TailTip' }]],
+    },
+    Stunned: {
+      Duration: 3.0, Suppress: 0.92,
+      Keys: [
+        [0.3, { Pelvis: [0, 0.08, 0.1, 0, -0.2, 1.4], Torso: [0.12], Neck1: [0.08, 0.15], Neck2: [0.04], Head: [0.03, 0.12, 0.18], Jaw: [-0.3], Tail1: [0.12] }, 'Out'],
+        [0.8, { Pelvis: [0, -0.05, -0.08, 0, -0.6, 1.2], Torso: [-0.08], Neck1: [-0.12], Neck2: [-0.08], Head: [0, -0.1, -0.16], '~Thigh': [0.22], '~Shin': [-0.38], '~Foot': [0.12], Jaw: [-0.35] }, 'Sine'],
+        [2.2, { Pelvis: [0, 0, 0.04, 0, -0.45, 0.9], Neck1: [-0.1], Head: [-0.08, 0, 0.15], '~Thigh': [0.18], '~Shin': [-0.32], '~Foot': [0.1], Jaw: [-0.25] }, 'Linear'],
+        [2.6, { Neck1: [0.05], Head: [0.05], Jaw: [-0.1] }, 'Sine'],
+      ],
+      Shake: [['Head', 2.35, 2.85, 0.12, 6.4, 3]],
+      Procedural: { Type: 'Dizzy', T0: 0.7, T1: 2.4, Rate: 4, Head: [0.12, 0.12], Neck: 0.08, Roll: 0.04 },
+      Events: [[0.05, 'Stunned', { Scale: 1.6 }], [0.1, 'CameraShake', 0.6], [0.32, 'Footstep', { Side: 'Left' }], [0.35, 'SnowShake', { Scale: 0.6 }]],
+    },
+    LookAround: {
+      Duration: 4.2, Suppress: 0.65,
+      Keys: [
+        [0.8, { Neck1: [0.1, 0.11], Neck2: [0.08, 0.1], Head: [0.08, 0.1, 0.1] }, 'Sine'],
+        [1.6, { Neck1: [0.1, 0.12], Neck2: [0.08, 0.1], Head: [0.12, 0.11, 0.06] }, 'Linear'],
+        [2.6, { Neck1: [0.1, -0.11], Neck2: [0.08, -0.1], Head: [0.08, -0.1, -0.1], Tail2: [0, 0.1], Tail3: [0, 0.12] }, 'Sine'],
+        [3.4, { Neck1: [0.1, -0.12], Neck2: [0.08, -0.1], Head: [0.12, -0.11, -0.06], Tail2: [0, 0.1], Tail3: [0, 0.12] }, 'Linear'],
+      ],
+      Events: [[1.0, 'BreathPlume', { Scale: 1.0 }], [3.0, 'BreathPlume', { Scale: 1.0 }]],
+    },
+    // WHITEOUT HUNT: it can't see you, so it listens - head cocked, dead still... then snaps toward the sound
+    Listen: {
+      Duration: 3.6, Suppress: 0.9,
+      Keys: [
+        [0.6, W(LOW, { Neck1: [0.0, 0.1], Neck2: [0.02, 0.08], Head: [0.06, 0.1, 0.16] }), 'Sine'],
+        [2.2, W(LOW, { Neck1: [0.0, 0.11], Neck2: [0.02, 0.09], Head: [0.06, 0.11, 0.17] }), 'Linear'],
+        [2.45, W(LOW, { Neck1: [0.02, -0.14], Neck2: [0.03, -0.12], Head: [0.08, -0.14, -0.05], Jaw: [-0.2] }), 'Snap'],
+        [3.1, W(LOW, { Neck1: [0.02, -0.14], Neck2: [0.03, -0.12], Head: [0.08, -0.14, -0.05], Jaw: [-0.1] }), 'Linear'],
+      ],
+      Shake: [['Head', 2.45, 2.8, 0.03, 6, 1]],
+      Events: [[0.3, 'BreathPlume', { Scale: 0.9 }], [1.6, 'BreathPlume', { Scale: 0.9 }], [2.45, 'Growl'], [2.47, 'EyeGlow', 1.2]],
+    },
+    Sniff: {
+      Duration: 2.4, Suppress: 0.85,
+      Keys: [
+        [0.7, { Neck1: [-0.25], Neck2: [-0.2], Head: [-0.2], Torso: [-0.08], Pelvis: [0, 0, 0, 0, -0.3, 0], Tail1: [-0.06] }, 'Sine'],
+        [1.7, { Neck1: [-0.25], Neck2: [-0.2], Head: [-0.22], Torso: [-0.08], Pelvis: [0, 0, 0, 0, -0.3, 0], Tail1: [-0.06] }, 'Linear'],
+      ],
+      Shake: [['Head', 0.7, 1.7, 0.03, 5, 1]],
+      Events: [[0.8, 'Sniff'], [1.5, 'BreathPlume', { Scale: 1.0 }]],
+    },
+    // the chase across the ice: a lunge whose landing cracks the ice
+    Chase: {
+      Duration: 4.2, Suppress: 1,
+      Gait: [[0, 3.2, 'Run', 1]],
+      Keys: [
+        [3.0, { Pelvis: [0, 0, 0, 0, 0, -7.5], Torso: [-0.08], Neck1: [0.05] }, 'Linear'],
+        [3.35, { Pelvis: [0, 0, 0, 0, -0.2, -8.4], Neck1: [0.2], Neck2: [0.12], Head: [0.18], Jaw: [-1.0] }, 'Out'],
+        [3.5, { Pelvis: [0, 0, 0, 0, -0.35, -9.0], Neck1: [-0.2], Neck2: [-0.15], Head: [-0.15], Jaw: [0.03] }, 'Snap'],
+        [3.9, { Pelvis: [0, 0, 0, 0, -0.1, -9.0] }, 'Sine'],
+      ],
+      Events: [[1.0, 'BreathPlume', { Scale: 1.0 }], [3.5, 'Bite', { Scale: 1.5 }], [3.51, 'IceCrack', { At: 'VFX_RightFoot', Scale: 1.2 }], [3.52, 'CameraShake', 0.8]],
+    },
+    // SIGNATURE
+    BlizzardKing: {
+      Duration: 8.0, Suppress: 1, FadeIn: 0.01,
+      Gait: [[0.0, 2.45, 'Walk', 1]],
+      Keys: [
+        [0.0, W(LOW, { Pelvis: [0, 0, 0, 0, -0.3, 12.0], Neck1: [-0.22], Neck2: [-0.14], Head: [-0.12] }), 'Linear'],
+        [2.4, W(LOW, { Pelvis: [0, 0, 0, 0, -0.2, 0] }), 'Sine'],
+        [2.95, { Neck1: [0.04], Neck2: [0.03], Head: [-0.04], Chest: [0, 0, 0, 0, 0.1, 0.2], Pelvis: [0, 0, 0, 0, -0.1, 0] }, 'Sine'],
+        [3.15, SHAKE_POSE, 'Out'],
+        [4.15, SHAKE_POSE, 'Linear'],
+        [4.5, { Neck1: [-0.04], Neck2: [-0.02], Head: [-0.08, 0.12, 0.05], Jaw: [-0.15], Chest: [0, 0, 0, 0, 0.08, 0.15] }, 'Sine'],
+        [4.85, { Neck1: [-0.02], Neck2: [-0.02], Head: [-0.06, 0.1, 0.05], Jaw: [-0.12], Chest: [0, 0, 0, 0, -0.05, -0.1] }, 'Sine'],
+        [5.1, W(STAMP_UP, { Head: [-0.02, 0.05] }), 'Out'],
+        [5.3, { Pelvis: [0, 0, 0, 0, -0.35, -0.05], RightThigh: [0.15], RightShin: [-0.3], RightFoot: [0.15], '~Thigh': [0.1], Torso: [-0.06], Neck1: [-0.1], Head: [-0.12], Jaw: [-0.2] }, 'In'],
+        [5.65, { Neck1: [-0.14], Neck2: [-0.1], Head: [-0.1], Jaw: [-0.12], Torso: [-0.04], Chest: [0, 0, 0, 0, 0.14, 0.28], Pelvis: [0, 0, 0, 0, -0.2, 0.35] }, 'Sine'],
+        [5.95, ROAR_POSE, 'Back'],
+        [7.3, W(ROAR_POSE, { Jaw: [-0.8], Head: [0.12] }), 'Linear'],
+        [8.0, { Neck1: [-0.02], Head: [0.0], Jaw: [-0.05] }, 'Sine'],
+      ],
+      Shake: [
+        ['Torso', 3.15, 4.15, 0.13, 4.6, 3], ['Pelvis', 3.15, 4.15, 0.05, 4.6, 3], ['Neck1', 3.15, 4.15, 0.22, 4.6, 2], ['Head', 3.15, 4.15, 0.22, 4.6, 2],
+        ['Tail2', 3.15, 4.15, 0.12, 4.6, 2], ['Tail4', 3.15, 4.15, 0.18, 4.6, 2], ['~Arm', 3.15, 4.15, 0.2, 9, 1],
+        ['Head', 5.95, 7.3, 0.045, 13, 3], ['Jaw', 5.95, 7.3, 0.035, 20, 1], ['Neck2', 5.95, 7.3, 0.025, 8, 2], ['~Forearm', 6.0, 7.2, 0.18, 7, 1],
+      ],
+      Events: [
+        [0.0, 'Whiteout', { Dur: 2.7, At: [0, 0, 0] }], [0.2, 'EyeGlow', 2.6], [0.6, 'Growl'], [2.45, 'Footstep', { Side: 'Left' }],
+        [2.6, 'BreathPlume', { Scale: 1.3 }], [3.2, 'SnowShake', { Scale: 1.6 }], [3.55, 'SnowShake', { Scale: 1.1 }], [3.9, 'SnowShake', { Scale: 0.8 }],
+        [4.55, 'BreathPlume', { Scale: 1.4 }], [5.3, 'Footstep', { Side: 'Right' }], [5.3, 'IceCrack', { At: 'VFX_RightFoot', Scale: 1.8, Prop: 'ThinIce' }],
+        [5.31, 'CameraShake', 0.7], [5.75, 'BreathPlume', { Scale: 1.1 }], [5.9, 'EyeGlow', 2.2], [5.95, 'Roar', { Scale: 2.0 }],
+        [5.96, 'BreathPlume', { Scale: 2.6, Roar: true }], [5.97, 'CameraShake', 1.0], [6.2, 'PineDump', { Prop: 'SnowPines' }],
+      ],
+    },
+  },
+};

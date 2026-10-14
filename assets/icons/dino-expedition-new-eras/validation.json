@@ -1,0 +1,296 @@
+[
+  {
+    "key": "Era_SpineRiver",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      39,
+      43,
+      472,
+      469
+    ]
+  },
+  {
+    "key": "Mat_TideScale",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      40,
+      39,
+      471,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Sarcosuchus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      39,
+      58,
+      472,
+      454
+    ]
+  },
+  {
+    "key": "Dino_Oviraptor",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      55,
+      39,
+      456,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Protoceratops",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      51,
+      39,
+      460,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Gallimimus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      51,
+      39,
+      460,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Therizinosaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      46,
+      38,
+      466,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Microraptor",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      39,
+      52,
+      472,
+      459
+    ]
+  },
+  {
+    "key": "Dino_Psittacosaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      39,
+      39,
+      473,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Compy",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      43,
+      39,
+      469,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Yutyrannus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      40,
+      39,
+      471,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Coelophysis",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      39,
+      45,
+      473,
+      466
+    ]
+  },
+  {
+    "key": "Dino_Plateosaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      41,
+      38,
+      471,
+      472
+    ]
+  },
+  {
+    "key": "Dino_Dilophosaurus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      39,
+      47,
+      472,
+      464
+    ]
+  },
+  {
+    "key": "Dino_Postosuchus",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      47,
+      39,
+      465,
+      472
+    ]
+  },
+  {
+    "key": "Mat_ScytheClaw",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      39,
+      40,
+      472,
+      471
+    ]
+  },
+  {
+    "key": "Mat_FrostPlume",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      48,
+      39,
+      464,
+      472
+    ]
+  },
+  {
+    "key": "Mat_DawnScute",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      53,
+      39,
+      459,
+      472
+    ]
+  },
+  {
+    "key": "Era_RedCliffs",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      39,
+      45,
+      472,
+      466
+    ]
+  },
+  {
+    "key": "Era_FrostForest",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      39,
+      54,
+      472,
+      457
+    ]
+  },
+  {
+    "key": "Era_DawnDesert",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "visible_bounds": [
+      40,
+      39,
+      472,
+      472
+    ]
+  }
+]

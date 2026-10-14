@@ -1,0 +1,79 @@
+// Spinosaurus — territorial, aquatic. Signature: RIVER AMBUSH (sail cuts the water, erupts, roars).
+const { W } = require('./util.js');
+const ROAR = { Neck1: [0.05], Neck2: [0.02], Head: [0.12], Jaw: [-0.75], Torso: [0.06], '~Arm': [-0.4, 0, 0.35], '~Forearm': [-0.6], Tail1: [-0.12], Tail2: [-0.08], Pelvis: [0, 0, 0, 0, 0, -0.4] };
+module.exports = {
+  Signature: 'RiverAmbush', Intro: 'RiverAmbush', IntroShots: 'River', Chase: 'Chase', Special: 'FishSnap',
+  CycleOrder: ['Walk', 'Run', 'FishSnap', 'LookAround', 'Attack', 'Stunned', 'Roar'],
+  CameraScale: 2.8,
+  Gait: {
+    Type: 'Biped', Scale: 2.4, Neck: ['Neck1', 'Neck2'], Tail: ['Tail1', 'Tail2', 'Tail3', 'Tail4', 'Tail5'],
+    Idle: { Breath: 0.26, BreathAmp: 1.0, Sway: 0.1, Look: 0.25, Twitch: false, JawIdle: 0.04 },
+    Walk: { Freq: 0.6, Stride: 0.36, Knee: 0.6, Bob: 0.12, Roll: 0.05, Yaw: 0.05, Lean: 0.05, TailSway: 0.15, HeadBob: 0.05 },
+    Run: { Freq: 1.05, Stride: 0.42, Knee: 0.8, Bob: 0.2, Roll: 0.03, Yaw: 0.04, Lean: 0.16, TailSway: 0.1, HeadBob: 0.07 },
+  },
+  Actions: {
+    Roar: {
+      Duration: 3.0, Suppress: 0.92,
+      Keys: [[0.5, { Neck1: [-0.12], Head: [-0.12], Pelvis: [0, 0, 0, 0, -0.2, 0.3] }, 'Sine'], [0.95, ROAR, 'Back'], [2.3, W(ROAR, { Jaw: [-0.72] }), 'Linear']],
+      Shake: [['Head', 0.95, 2.3, 0.04, 13, 3], ['Jaw', 0.95, 2.3, 0.03, 20, 1], ['~Forearm', 1.0, 2.2, 0.15, 7, 1]],
+      Events: [[0.9, 'EyeGlow', 1.6], [0.95, 'Roar', { Scale: 1.5 }], [0.97, 'CameraShake', 0.7]],
+    },
+    // sweeping claw swipe
+    Attack: {
+      Duration: 1.7, Suppress: 0.95,
+      Keys: [
+        [0.4, { RightArm: [0.3, 0, 0.6], RightForearm: [-0.4], Torso: [0, -0.25], Neck1: [0, -0.15], Pelvis: [0, -0.15, 0] }, 'Sine'],
+        [0.62, { RightArm: [0.9, 0, -0.2], RightForearm: [-0.1], Torso: [0, 0.3], Neck1: [0, 0.15], Pelvis: [0, 0.2, 0, 0, 0, -1.0] }, 'Snap'],
+        [1.0, { RightArm: [0.3], Torso: [0, 0.1], Pelvis: [0, 0.05, 0, 0, 0, -0.5] }, 'Sine'],
+      ],
+      Events: [[0.62, 'Bite', { Scale: 1.2 }], [0.63, 'CameraShake', 0.5]],
+    },
+    // snaps a fish out of the water
+    FishSnap: {
+      Duration: 2.4, Suppress: 0.95,
+      Keys: [
+        [0.5, { Neck1: [-0.35], Neck2: [-0.3], Head: [-0.35], Torso: [-0.15], Pelvis: [0, 0, 0, 0, -0.3, 0] }, 'Sine'],
+        [0.75, { Neck1: [-0.45], Neck2: [-0.35], Head: [-0.45], Jaw: [-0.6], Torso: [-0.18], Pelvis: [0, 0, 0, 0, -0.4, -0.4] }, 'Snap'],
+        [0.9, { Neck1: [-0.45], Neck2: [-0.35], Head: [-0.45], Jaw: [0.02], Torso: [-0.18], Pelvis: [0, 0, 0, 0, -0.4, -0.4] }, 'Snap'],
+        [1.5, { Neck1: [0.25], Neck2: [0.2], Head: [0.3], Jaw: [-0.15] }, 'Back'],
+      ],
+      Shake: [['Head', 1.5, 2.1, 0.1, 5, 2]],
+      Events: [[0.85, 'Splash', { At: 'VFX_Mouth', Scale: 1.2 }]],
+    },
+    Stunned: {
+      Duration: 2.8, Suppress: 0.9,
+      Keys: [[0.3, { Pelvis: [0, 0.1, 0.1, 0, -0.2, 1.0], Neck1: [0.2], Head: [0.2, 0.2, 0.3], Jaw: [-0.4] }, 'Out'], [0.8, { Pelvis: [0, -0.05, -0.08, 0, -0.5, 0.8], Neck1: [-0.15], Head: [-0.15, -0.15, -0.25], '~Thigh': [0.2], '~Shin': [-0.35] }, 'Sine'], [2.2, { Pelvis: [0, 0, 0.04, 0, -0.35, 0.6], Neck1: [-0.1], Head: [-0.08, 0, 0.15] }, 'Linear']],
+      Procedural: { Type: 'Dizzy', T0: 0.7, T1: 2.4, Rate: 4.5, Head: [0.2, 0.16], Neck: 0.08, Roll: 0.04 },
+      Events: [[0.05, 'Stunned', { Scale: 1.4 }], [0.1, 'CameraShake', 0.5]],
+    },
+    LookAround: {
+      Duration: 4.0, Suppress: 0.65,
+      Keys: [[0.8, { Neck1: [0.08, 0.25], Neck2: [0.05, 0.2], Head: [0.05, 0.25, 0.1] }, 'Sine'], [1.6, { Neck1: [0.08, 0.27], Neck2: [0.05, 0.22], Head: [0.1, 0.27] }, 'Linear'], [2.5, { Neck1: [0.06, -0.25], Neck2: [0.05, -0.2], Head: [0.04, -0.25, -0.1] }, 'Sine'], [3.3, { Neck1: [0.06, -0.27], Neck2: [0.05, -0.22], Head: [0.1, -0.27] }, 'Linear']],
+    },
+    Chase: {
+      Duration: 4.0, Suppress: 1, Gait: [[0, 3.1, 'Run', 1]],
+      Keys: [[2.9, { Pelvis: [0, 0, 0, 0, 0, -7] }, 'Linear'], [3.2, { Pelvis: [0, 0, 0, 0, -0.2, -7.8], Neck1: [0.2], Head: [0.2], Jaw: [-0.8] }, 'Out'], [3.35, { Pelvis: [0, 0, 0, 0, -0.3, -8.2], Neck1: [-0.2], Head: [-0.15], Jaw: [0.02] }, 'Snap'], [3.7, { Pelvis: [0, 0, 0, 0, 0, -8.2] }, 'Sine']],
+      Events: [[3.35, 'Bite', { Scale: 1.4 }], [3.36, 'CameraShake', 0.6]],
+    },
+    // SIGNATURE: only the sail cuts the water toward us... it erupts, shakes off the river and roars
+    RiverAmbush: {
+      Duration: 6.6, Suppress: 1, FadeIn: 0.01,
+      Keys: [
+        [0.0, { Pelvis: [0, 0, 0, 0, -8.5, 7.0], Torso: [-0.1], Neck1: [-0.2], Head: [-0.1] }, 'Linear'],
+        [1.7, { Pelvis: [0, 0, 0, 0, -8.3, 0.5], Torso: [-0.1], Neck1: [-0.2], Head: [-0.1] }, 'Sine'],
+        [2.25, { Pelvis: [0, 0, 0, 0, 0.6, -0.4], Torso: [0.15], Neck1: [0.25], Neck2: [0.2], Head: [0.25], Jaw: [-0.3], '~Arm': [-0.6, 0, 0.4], '~Forearm': [-0.5] }, 'Out'],
+        [2.8, { Pelvis: [0, 0, 0, 0, 0, -0.3], Neck1: [0.05], Head: [0, 0, 0.25], Jaw: [-0.1] }, 'Sine'],
+        [3.15, { Pelvis: [0, 0, 0, 0, 0, -0.3], Neck1: [0.05], Head: [0, 0, -0.25], Jaw: [-0.1] }, 'Sine'],
+        [3.5, { Neck1: [-0.12], Head: [-0.12], Pelvis: [0, 0, 0, 0, -0.2, 0.3] }, 'Sine'],
+        [3.9, ROAR, 'Back'],
+        [5.6, W(ROAR, { Jaw: [-0.72] }), 'Linear'],
+      ],
+      Shake: [['Head', 3.9, 5.6, 0.045, 13, 3], ['Jaw', 3.9, 5.6, 0.035, 20, 1], ['~Forearm', 4.0, 5.5, 0.15, 7, 1]],
+      Events: [
+        [0.4, 'Splash', { At: 'VFX_Head', Scale: 0.5 }], [1.1, 'Splash', { At: 'VFX_Head', Scale: 0.5 }], [1.75, 'Splash', { At: 'VFX_Chest', Scale: 2.4 }],
+        [1.8, 'CameraShake', 0.9], [1.95, 'Splash', { At: 'VFX_Head', Scale: 2.0 }], [2.9, 'Splash', { At: 'VFX_Mouth', Scale: 0.9 }],
+        [3.85, 'EyeGlow', 2.0], [3.9, 'Roar', { Scale: 1.6 }], [3.92, 'CameraShake', 0.8],
+      ],
+    },
+  },
+};

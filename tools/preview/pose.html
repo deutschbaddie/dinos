@@ -1,0 +1,631 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Player Pose Preview</title>
+<!--
+  Player pose preview: a JS mirror of PlayerAnim.luau (pose building, foot planting, carry IK and the joint write
+  path, C0 * Transform * C1^-1 on Roblox's real R6 joint frames and an R15 block rig). Keep it in step with the Luau.
+  ?only=Carry%20big&rig=R15  filters cells; ?cols=6
+-->
+<style>
+  html, body { margin: 0; height: 100%; background: #1d2230; overflow: hidden; font: 11px/1.25 system-ui, sans-serif; color: #dfe6f5; }
+  #labels div { position: fixed; text-shadow: 0 1px 2px #000; pointer-events: none; }
+  canvas { display: block; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+</head>
+<body>
+<div id="labels"></div>
+<script type="module">
+import * as THREE from 'three';
+const q = new URLSearchParams(location.search);
+
+// ---------------------------------------------------------------- CFrame (Roblox semantics)
+class CF {
+  constructor(m) { this.m = m || new THREE.Matrix4(); }
+  static new(x = 0, y = 0, z = 0) { return new CF(new THREE.Matrix4().makeTranslation(x, y, z)); }
+  static pos(v) { return CF.new(v.x, v.y, v.z); }
+  // CFrame.new(x,y,z, R00,R01,R02, R10,R11,R12, R20,R21,R22)
+  static comp(x, y, z, a, b, c, d, e, f, g, h, i) { const m = new THREE.Matrix4(); m.set(a, b, c, x, d, e, f, y, g, h, i, z, 0, 0, 0, 1); return new CF(m); }
+  static angles(rx, ry, rz) { return new CF(new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(rx, ry, rz, 'XYZ'))); }
+  static axisAngle(axis, a) { return new CF(new THREE.Matrix4().makeRotationAxis(axis.clone().normalize(), a)); }
+  mul(o) { return new CF(this.m.clone().multiply(o.m)); }
+  inv() { return new CF(this.m.clone().invert()); }
+  get p() { return new THREE.Vector3().setFromMatrixPosition(this.m); }
+  rot() { const m = this.m.clone(); m.setPosition(0, 0, 0); return new CF(m); }
+  point(v) { return v.clone().applyMatrix4(this.m); }
+  vec(v) { return v.clone().transformDirection(this.m).multiplyScalar(v.length()); }
+  toObj(v) { return v.clone().applyMatrix4(this.m.clone().invert()); }
+  col(i) { const e = this.m.elements; return new THREE.Vector3(e[i * 4], e[i * 4 + 1], e[i * 4 + 2]); }
+  lerp(o, t) {
+    const p1 = new THREE.Vector3(), q1 = new THREE.Quaternion(), s = new THREE.Vector3();
+    const p2 = new THREE.Vector3(), q2 = new THREE.Quaternion();
+    this.m.decompose(p1, q1, s); o.m.decompose(p2, q2, s);
+    return new CF(new THREE.Matrix4().compose(p1.lerp(p2, t), q1.slerp(q2, t), new THREE.Vector3(1, 1, 1)));
+  }
+}
+const I = new CF();
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const ease = (u) => { u = clamp(u, 0, 1); return u * u * (3 - 2 * u); };
+
+// ---------------------------------------------------------------- rigs
+const R6r = (x, y, z) => CF.comp(x, y, z, -1, 0, 0, 0, 0, 1, 0, 1, 0);
+const R6s = (x, y, z) => CF.comp(x, y, z, 0, 0, 1, 0, 1, 0, -1, 0, 0);
+const R6l = (x, y, z) => CF.comp(x, y, z, 0, 0, -1, 0, 1, 0, 1, 0, 0);
+function rigR6() {
+  const parts = { HRP: [2, 2, 1], Torso: [2, 2, 1], Head: [1.25, 1.2, 1.2], 'Right Arm': [1, 2, 1], 'Left Arm': [1, 2, 1], 'Right Leg': [1, 2, 1], 'Left Leg': [1, 2, 1] };
+  const joints = {
+    Root: ['HRP', 'Torso', R6r(0, 0, 0), R6r(0, 0, 0)],
+    Neck: ['Torso', 'Head', R6r(0, 1, 0), R6r(0, -0.5, 0)],
+    ShoulderR: ['Torso', 'Right Arm', R6s(1, 0.5, 0), R6s(-0.5, 0.5, 0)],
+    ShoulderL: ['Torso', 'Left Arm', R6l(-1, 0.5, 0), R6l(0.5, 0.5, 0)],
+    HipR: ['Torso', 'Right Leg', R6s(1, -1, 0), R6s(0.5, 1, 0)],
+    HipL: ['Torso', 'Left Leg', R6l(-1, -1, 0), R6l(-0.5, 1, 0)],
+  };
+  return { r15: false, parts, joints };
+}
+function rigR15() {
+  const parts = { HRP: [2, 2, 1], LowerTorso: [2, 0.4, 1], UpperTorso: [2, 1.6, 1], Head: [1.2, 1.2, 1.2] };
+  const joints = {
+    Root: ['HRP', 'LowerTorso', CF.new(0, -1, 0), CF.new(0, -0.2, 0)],
+    Waist: ['LowerTorso', 'UpperTorso', CF.new(0, 0.2, 0), CF.new(0, -0.8, 0)],
+    Neck: ['UpperTorso', 'Head', CF.new(0, 0.8, 0), CF.new(0, -0.6, 0)],
+  };
+  for (const [S, sg] of [['R', 1], ['L', -1]]) {
+    const n = S === 'R' ? 'Right' : 'Left';
+    Object.assign(parts, { [n + 'UpperArm']: [1, 1.2, 1], [n + 'LowerArm']: [1, 0.8, 1], [n + 'Hand']: [1, 0.3, 1], [n + 'UpperLeg']: [1, 1, 1], [n + 'LowerLeg']: [1, 0.8, 1], [n + 'Foot']: [1, 0.2, 1] });
+    joints['Shoulder' + S] = ['UpperTorso', n + 'UpperArm', CF.new(sg, 0.56, 0), CF.new(-sg * 0.5, 0.36, 0)];
+    joints['Elbow' + S] = [n + 'UpperArm', n + 'LowerArm', CF.new(0, -0.6, 0), CF.new(0, 0.2, 0)];
+    joints['Wrist' + S] = [n + 'LowerArm', n + 'Hand', CF.new(0, -0.4, 0), CF.new(0, 0.15, 0)];
+    joints['Hip' + S] = ['LowerTorso', n + 'UpperLeg', CF.new(sg * 0.5, -0.2, 0), CF.new(0, 0.5, 0)];
+    joints['Knee' + S] = [n + 'UpperLeg', n + 'LowerLeg', CF.new(0, -0.5, 0), CF.new(0, 0.4, 0)];
+    joints['Ankle' + S] = [n + 'LowerLeg', n + 'Foot', CF.new(0, -0.4, 0), CF.new(0, 0.1, 0)];
+  }
+  return { r15: true, parts, joints };
+}
+
+// ---------------------------------------------------------------- PlayerAnim mirror
+const NAMES = ['Root', 'Waist', 'Neck', 'ShoulderR', 'ElbowR', 'ShoulderL', 'ElbowL', 'HipR', 'KneeR', 'HipL', 'KneeL'];
+const CHAIN = ['Root', 'Waist', 'Neck', 'ShoulderR', 'ElbowR', 'WristR', 'ShoulderL', 'ElbowL', 'WristL', 'HipR', 'KneeR', 'AnkleR', 'HipL', 'KneeL', 'AnkleL'];
+const DEFAULT_EGG = V(1.6, 2.2, 1.6);
+const envelope = (u, a, b) => Math.min(ease(u / a), 1 - ease((u - (1 - b)) / b));
+const resolve = (t) => (typeof t === 'function' ? t() : t) || null;
+function newPose() { const p = { R: {}, Plant: 1, PlantAll: 0, Reach: {}, Look: null, LookW: 0 }; for (const n of NAMES) p[n] = [0, 0, 0, 0, 0, 0]; return p; }
+function add(pose, j, rx, ry = 0, rz = 0, px = 0, py = 0, pz = 0, w = 1) { const v = pose[j]; v[0] += rx * w; v[1] += ry * w; v[2] += rz * w; v[3] += px * w; v[4] += py * w; v[5] += pz * w; }
+function sym(pose, b, rx, ry, rz, w = 1) { add(pose, b + 'R', rx, ry, rz, 0, 0, 0, w); add(pose, b + 'L', rx, -ry, -rz, 0, 0, 0, w); }
+function mix(dst, src, w) {
+  for (const n of NAMES) { for (let k = 0; k < 6; k++) dst[n][k] += src[n][k] * w; const r = src.R[n]; if (r) dst.R[n] = (dst.R[n] || I).lerp(r, w); }
+  for (const [side, r] of Object.entries(src.Reach)) { const cur = dst.Reach[side]; if (!cur || r.W * w > cur.W) dst.Reach[side] = { P: r.P, W: r.W * w }; }
+  if (src.Look && src.LookW * w > dst.LookW) { dst.Look = src.Look; dst.LookW = src.LookW * w; }
+}
+function crouch(rig, pose, k) {
+  if (k <= 0) return;
+  if (rig.R15) { add(pose, 'Root', -0.45 * k); sym(pose, 'Hip', 1.3 * k, 0, 0.12 * k); add(pose, 'KneeR', -2.0 * k); add(pose, 'KneeL', -2.0 * k); }
+  else { add(pose, 'Root', -0.85 * k); sym(pose, 'Hip', 0.75 * k, 0, 0.1 * k); }
+}
+function fromTo(a, b) { const axis = a.clone().cross(b); if (axis.length() < 1e-5) return I; return CF.axisAngle(axis, Math.acos(clamp(a.dot(b), -1, 1))); }
+function jointRot(pose, name) {
+  const v = pose && pose[name]; if (!v) return [I, null];
+  let rot = CF.angles(v[0], v[1], v[2]);
+  if (pose.R[name]) rot = rot.mul(pose.R[name]);
+  if (name === 'Root' && pose.RootRoll) rot = pose.RootRoll.mul(rot);
+  return [rot, v];
+}
+function fk(rig, pose) {
+  const cfs = { HRP: I };
+  for (const name of CHAIN) {
+    const j = rig.Joints[name]; const parent = j && cfs[j.Part0]; if (!parent) continue;
+    const [rot, v] = jointRot(pose, name);
+    const off = v ? V(v[3], v[4], v[5]) : V(0, 0, 0);
+    cfs[j.Part1] = parent.mul(CF.pos(j.P0.clone().add(off))).mul(rot).mul(j.K);
+  }
+  return cfs;
+}
+function lowest(rig, cfs, parts) {
+  let low = Infinity;
+  for (const foot of parts || rig.Feet) {
+    const cf = cfs[foot]; if (!cf) continue;
+    const s = rig.Size[foot];
+    const e = (Math.abs(cf.col(0).y) * s[0] + Math.abs(cf.col(1).y) * s[1] + Math.abs(cf.col(2).y) * s[2]) / 2;
+    low = Math.min(low, cf.p.y - e);
+  }
+  return low < Infinity ? low : null;
+}
+function bind(def) {
+  const joints = {};
+  for (const [name, [p0, p1, c0, c1]] of Object.entries(def.joints)) {
+    const c0r = c0.rot();
+    joints[name] = { C0: c0, C1: c1, C0r: c0r, C0rInv: c0r.inv(), P0: c0.p, K: c0r.mul(c1.inv()), Part0: p0, Part1: p1 };
+  }
+  const rig = { R15: def.r15, Joints: joints, Size: def.parts, Weight: 0, Combat: false, Phase: 0, Move: 0, Aiming: true, AimPitch: 0, Sprint: false,
+    Actions: {}, Loop: null, LoopW: 0, LoopT: 0, Recoil: 0, RecoilV: 0, Tilt: 0, Lean: 0, Bank: 0, Air: 0, Carrying: false, Feet: [], Arms: {}, Ground: -3, NeckY: 1,
+    Driving: false, Steer: 0, Bump: 0, LookW: 0 };
+  for (const s of ['R', 'L']) { const j = joints['Ankle' + s] || joints['Knee' + s] || joints['Hip' + s]; if (j) rig.Feet.push(j.Part1); }
+  rig.Parts = Object.values(joints).map((j) => j.Part1);
+  const rest = fk(rig, null);
+  rig.Ground = lowest(rig, rest) ?? -3;
+  const torso = joints.ShoulderR.Part0; rig.Torso = torso;
+  rig.NeckY = joints.Neck.Part0 === torso ? joints.Neck.P0.y : 1;
+  const t0 = rest[torso];
+  for (const side of ['R', 'L']) {
+    const sh = joints['Shoulder' + side]; const sgn = side === 'R' ? 1 : -1;
+    const el = joints['Elbow' + side], wr = joints['Wrist' + side];
+    const hand = def.r15 ? ((wr && wr.Part1) || (el && el.Part1)) : sh.Part1;
+    const hcf = rest[hand]; const s = def.parts[hand];
+    const palm = def.r15 ? V(-sgn * s[0] * 0.3, -s[1] * 0.2, 0) : V(-sgn * s[0] * 0.45, -s[1] * 0.44, 0);
+    const arm = { Sgn: sgn, S: sh.P0, H: t0.toObj(hcf.point(palm)) };
+    if (def.r15 && el && rest[el.Part0]) { arm.E = t0.toObj(rest[el.Part0].point(el.P0)); arm.L1 = arm.E.distanceTo(arm.S); arm.L2 = arm.H.distanceTo(arm.E); }
+    rig.Arms[side] = arm;
+  }
+  return rig;
+}
+const CarrySpot = (egg, torso) => V(0, -torso[1] / 2 - 0.3 + egg.y / 2, -(torso[2] / 2 + egg.z / 2) + 0.1);
+function eggState(rig, S) {
+  let size;
+  if (rig.Proxy) size = rig.Proxy.Size;
+  else { if (!(rig.Carrying || rig.Stance === 'Carry')) return null; size = S.egg || DEFAULT_EGG; }
+  let spot = CarrySpot(size, rig.Size[rig.Torso]);
+  const over = clamp((spot.y + size.y / 2 - rig.NeckY - 0.5) / 1.2, 0, 1);
+  spot.add(V(0.22 * over, 0, 0));
+  const lift = rig.Actions.Lift;
+  if (lift) { const u = lift.T / lift.D; const g = u < 0.3 ? 1 : 1 - ease((u - 0.3) / 0.7); spot.add(V(0, -1.25 * g, -0.45 * g)); }
+  const rec = rig.Actions.Receive;
+  if (rec) { const u = rec.T / rec.D; spot.add(V(0, 0.5 * (1 - ease(u * 1.8)) - 0.12 * Math.sin(u * Math.PI), 0)); }
+  return { Spot: spot, Size: size, Over: over, W: 1 };
+}
+function solveArm(rig, pose, side, T, w) {
+  const arm = rig.Arms[side]; if (!arm || w <= 0.001) return;
+  let R1, R2;
+  if (!arm.E) R1 = fromTo(arm.H.clone().sub(arm.S).normalize(), T.clone().sub(arm.S).normalize());
+  else {
+    const sgn = arm.Sgn; const d = T.clone().sub(arm.S);
+    const dist = clamp(d.length(), Math.abs(arm.L1 - arm.L2) + 0.05, arm.L1 + arm.L2 - 0.02);
+    const dir = d.length() > 1e-4 ? d.clone().normalize() : V(0, -1, 0);
+    const cosA = clamp((arm.L1 ** 2 + dist ** 2 - arm.L2 ** 2) / (2 * arm.L1 * dist), -1, 1);
+    const pole = V(sgn, -0.55, 0.4);
+    let perp = pole.clone().sub(dir.clone().multiplyScalar(pole.dot(dir)));
+    perp = perp.length() > 1e-4 ? perp.normalize() : V(sgn, 0, 0);
+    const E = arm.S.clone().add(dir.clone().multiplyScalar(arm.L1 * cosA)).add(perp.multiplyScalar(arm.L1 * Math.sqrt(1 - cosA * cosA)));
+    R1 = fromTo(arm.E.clone().sub(arm.S).normalize(), E.clone().sub(arm.S).normalize());
+    const fore = arm.H.clone().sub(arm.E).normalize().transformDirection(R1.m);
+    const Q = fromTo(fore, arm.S.clone().add(dir.clone().multiplyScalar(dist)).sub(E).normalize());
+    R2 = R1.inv().mul(Q).mul(R1);
+  }
+  const sh = 'Shoulder' + side, el = 'Elbow' + side;
+  for (let k = 0; k < 3; k++) pose[sh][k] *= (1 - w);
+  pose.R[sh] = (pose.R[sh] || I).lerp(R1, w);
+  if (R2) { for (let k = 0; k < 3; k++) pose[el][k] *= (1 - w); pose.R[el] = (pose.R[el] || I).lerp(R2, w); }
+}
+function solveCarry(rig, pose, egg) {
+  const spot = egg.Spot, size = egg.Size; const a = size.x / 2, b = size.y / 2, c = size.z / 2;
+  const edge = (y, z) => a * Math.sqrt(Math.max(1 - ((y - spot.y) / b) ** 2 - ((z - spot.z) / c) ** 2, 0));
+  for (const [side, arm] of Object.entries(rig.Arms)) {
+    const sgn = arm.Sgn, one = !arm.E;
+    const reach = one ? arm.H.distanceTo(arm.S) * 0.97 : (arm.L1 + arm.L2) * 0.9;
+    const y = spot.y - b * (one ? 0.12 : 0.35); const margin = one ? 0 : 0.1;
+    const at = (z) => V(sgn * (edge(y, z) + margin), y, z);
+    let lo = spot.z + c * 0.8, hi = spot.z - c * (one ? 0.45 : 0.7), z;
+    if (at(hi).distanceTo(arm.S) <= reach) z = hi;
+    else if (at(lo).distanceTo(arm.S) > reach) z = lo;
+    else { for (let i = 0; i < 10; i++) { const mid = (lo + hi) / 2; if (at(mid).distanceTo(arm.S) <= reach) lo = mid; else hi = mid; } z = lo; }
+    solveArm(rig, pose, side, at(z), egg.W);
+  }
+}
+function rimPoint(W, angle) {
+  const axis = W.axis.clone().normalize();
+  let up = V(0, 1, 0); up.sub(axis.clone().multiplyScalar(up.dot(axis))).normalize();
+  let right = V(1, 0, 0); right.sub(axis.clone().multiplyScalar(right.dot(axis))).sub(up.clone().multiplyScalar(right.dot(up))).normalize();
+  return W.pos.clone().add(right.multiplyScalar(Math.sin(angle) * W.r * 0.92)).add(up.multiplyScalar(Math.cos(angle) * W.r * 0.92));
+}
+function locomotion(rig, pose, dt, egg, S) {
+  const v = S.v || 0; let f = 0, s = 0; if (v > 0.5) { f = S.f ?? 1; s = S.s ?? 0; }
+  const carry = !!egg;
+  const sneak = rig.Stance === 'Sneak' && !rig.Sprint && !carry;
+  const sprint = (rig.Sprint || v > 19) && !sneak;
+  const heavy = carry ? clamp((egg.Size.y - 1.4) / 3, 0, 1) : 0;
+  const stride = sprint ? 7.6 : (sneak ? 5.6 : (carry ? 4.6 - heavy : 5.4));
+  rig.Phase = (rig.Phase + dt * (v / stride) * Math.PI * 2) % (Math.PI * 2);
+  rig.Move += ((v > 0.6 ? 1 : 0) - rig.Move) * Math.min(1, dt * 10);
+  const A = clamp(v / 16, 0, 1.25) * rig.Move;
+  const ph = rig.Phase; const sR = Math.sin(ph), sL = -Math.sin(ph), cR = Math.cos(ph), cL = -Math.cos(ph);
+  if (!sneak) {
+    const swing = (sprint ? 0.82 : 0.56) * Math.min(A, 1.1) * (carry ? 0.8 - 0.2 * heavy : 1);
+    add(pose, 'HipR', sR * swing * f, 0, sR * swing * s * 0.6);
+    add(pose, 'HipL', sL * swing * f, 0, sL * swing * s * 0.6);
+    if (rig.R15) { const bend = (sprint ? 1.55 : 1.05) * Math.min(A, 1); add(pose, 'KneeR', -Math.max(0, cR) * bend - 0.05); add(pose, 'KneeL', -Math.max(0, cL) * bend - 0.05); }
+  }
+  let lean = -(sprint ? 0.26 : 0.08) * A * f; if (carry) lean += 0.05 + 0.1 * heavy;
+  rig.Lean += (lean - rig.Lean) * Math.min(1, dt * 8);
+  rig.Bank += (clamp(-(S.yaw || 0) * 0.035 * A, -0.18, 0.18) - rig.Bank) * Math.min(1, dt * 6);
+  const waddle = carry ? sR * (0.03 + 0.05 * heavy) * A : 0;
+  add(pose, 'Root', rig.Lean, sR * 0.07 * A * f, -s * 0.1 * A + rig.Bank + waddle);
+  if (rig.R15) add(pose, 'Waist', 0, -sR * 0.1 * A * f, 0);
+  add(pose, 'Neck', -rig.Lean * 0.6, 0, -rig.Bank * 0.5);
+  const air = S.air ? 1 : 0; rig.Air += (air - rig.Air) * Math.min(1, dt * 10);
+  if (rig.Air > 0.01) {
+    const up = (S.vy || 0) > 2;
+    add(pose, 'HipR', 0.8, 0, 0.05, 0, 0, 0, rig.Air); add(pose, 'HipL', up ? 0.15 : 0.45, 0, -0.05, 0, 0, 0, rig.Air);
+    if (rig.R15) { add(pose, 'KneeR', -1.25, 0, 0, 0, 0, 0, rig.Air); add(pose, 'KneeL', up ? -0.5 : -0.9, 0, 0, 0, 0, 0, rig.Air); }
+  }
+  pose.Plant = 1 - rig.Air;
+  const t = S.t || 0;
+  if (sneak) {
+    const k = clamp(v / 10, 0, 1.2) * rig.Move;
+    for (const [side, off] of [['R', 0], ['L', Math.PI]]) {
+      const u = ((ph + off) % (Math.PI * 2)) / (Math.PI * 2);
+      let hip, lift;
+      if (u < 0.42) { const q = u / 0.42; hip = -0.4 + 1.15 * ease(q); lift = Math.sin(q * Math.PI); } else { hip = 0.75 - 1.15 * ((u - 0.42) / 0.58); lift = 0; }
+      hip *= k * f; lift *= k;
+      if (rig.R15) { add(pose, 'Hip' + side, 0.85 + hip + lift * 0.55, 0, (side === 'R' ? 1 : -1) * 0.08); add(pose, 'Knee' + side, -1.3 - lift * 1.25); }
+      else add(pose, 'Hip' + side, 0.45 + hip * 0.9 + lift * 0.45, 0, (side === 'R' ? 1 : -1) * 0.06);
+    }
+    const peek = Math.sin(t * 0.8) * 0.4 * (1 - rig.Move) + Math.sin(ph) * 0.12 * k;
+    add(pose, 'Root', -0.42, Math.sin(ph) * 0.06 * k, Math.sin(ph) * 0.07 * k);
+    add(pose, 'Neck', 0.38, peek, 0);
+  }
+  if (carry) {
+    const bounce = Math.abs(sR) * 0.035 * A; add(pose, 'ShoulderR', bounce); add(pose, 'ShoulderL', bounce);
+    add(pose, 'Neck', -0.1, 0.55 * egg.Over, 0.3 * egg.Over);
+    if (egg.Over > 0) add(pose, 'Root', 0, 0, 0.05 * egg.Over);
+  } else if (sprint || !rig.Aiming || !rig.Combat) {
+    const pump = (sprint ? 0.95 : 0.5) * Math.min(A, 1.1);
+    add(pose, 'ShoulderR', -sR * pump * Math.max(f, 0.35) + (sprint ? 0.18 : 0.04), 0, 0.07);
+    add(pose, 'ShoulderL', -sL * pump * Math.max(f, 0.35) + (sprint ? 0.18 : 0.04), 0, -0.07);
+    if (rig.R15) { const e = sprint ? 1.35 : 0.3 + 0.35 * Math.min(A, 1); add(pose, 'ElbowR', e + Math.max(0, -sR) * 0.3); add(pose, 'ElbowL', e + Math.max(0, -sL) * 0.3); }
+  } else if (sneak) {
+    const p = clamp(rig.AimPitch, -0.9, 0.9) * 0.5; const bob = Math.sin(ph * 2) * 0.04 * Math.min(A, 1);
+    add(pose, 'ShoulderR', 0.75 + p + bob, 0.3, -0.05); add(pose, 'ShoulderL', 0.95 + p + bob, -0.55, 0.05);
+    if (rig.R15) { add(pose, 'ElbowR', 0.75); add(pose, 'ElbowL', 1.15); }
+  } else {
+    const p = clamp(rig.AimPitch, -0.9, 0.9); const sway = Math.sin(t * 1.7) * 0.025 + sR * 0.035 * A;
+    add(pose, 'ShoulderR', 1.5 + p + sway, 0.18, -0.05); add(pose, 'ShoulderL', 1.32 + p + sway, -0.62, 0.05);
+    if (rig.R15) { add(pose, 'ElbowR', 0.12); add(pose, 'ElbowL', 0.72); }
+    add(pose, 'Neck', -p * 0.55, 0.05);
+    if (rig.R15) add(pose, 'Waist', -p * 0.25, 0.08);
+  }
+  const still = 1 - rig.Move;
+  if (still > 0.01) {
+    const br = Math.sin(t * 2.1);
+    add(pose, 'Root', br * 0.012, 0, Math.sin(t * 0.6) * 0.02, 0, 0, 0, still);
+    add(pose, 'Neck', -br * 0.03, 0, 0, 0, 0, 0, still);
+    if (!carry) sym(pose, 'Shoulder', br * 0.02, 0, 0.04 + br * 0.015, still);
+  }
+}
+function actionPose(rig, pose, name, a, u) {
+  const w = Math.sin(Math.min(u, 1) * Math.PI); const O = a.Opts;
+  if (name === 'Dodge') {
+    const dir = O.Dir || V(0, 0, -1); let axis = V(0, 1, 0).cross(dir); if (axis.length() < 0.01) axis = V(1, 0, 0);
+    const e = ease(u), tuck = Math.sin(Math.min(u * 1.15, 1) * Math.PI);
+    const roll = CF.axisAngle(axis, e * Math.PI * 2); pose.RootRoll = roll; pose.PlantAll = 1;
+    const p0 = rig.Joints.Root.P0; const sw = p0.clone().transformDirection(roll.m).multiplyScalar(p0.length()).sub(p0);
+    add(pose, 'Root', 0, 0, 0, sw.x, sw.y, sw.z); sym(pose, 'Hip', 1.7, 0, 0.12, tuck); sym(pose, 'Shoulder', 1.25, 0.2, 0.1, tuck);
+    if (rig.R15) { add(pose, 'KneeR', -2, 0, 0, 0, 0, 0, tuck); add(pose, 'KneeL', -2, 0, 0, 0, 0, 0, tuck); add(pose, 'ElbowR', 1.3, 0, 0, 0, 0, 0, tuck); add(pose, 'ElbowL', 1.3, 0, 0, 0, 0, 0, tuck); }
+    add(pose, 'Neck', -0.5, 0, 0, 0, 0, 0, tuck); return 1;
+  } else if (name === 'Hit' || name === 'BigHit') {
+    const big = name === 'BigHit'; const k = (u < 0.12 ? ease(u / 0.12) : 1 - ease((u - 0.12) / 0.88)) * (big ? 1.4 : 1); const side = O.Side || 0;
+    add(pose, 'Root', 0.16 * k, side * 0.22 * k, side * 0.1 * k); add(pose, 'Neck', 0.4 * k, -side * 0.3 * k);
+    sym(pose, 'Shoulder', -0.4 * k, 0, 0.65 * k);
+    add(pose, 'HipR', -0.16 * k + 0.12 * k, 0, 0.06 * k); add(pose, 'HipL', -0.16 * k - 0.05 * k, 0, -0.06 * k);
+    if (rig.R15) { add(pose, 'Waist', 0.28 * k); add(pose, 'KneeR', -0.45 * k); add(pose, 'KneeL', -0.25 * k); add(pose, 'ElbowR', 0.7 * k); add(pose, 'ElbowL', 0.7 * k); }
+    return 1;
+  } else if (name === 'Startle') {
+    const k = u < 0.15 ? ease(u / 0.15) : 1 - ease((u - 0.15) / 0.85);
+    add(pose, 'Root', 0.22 * k); add(pose, 'Neck', 0.3 * k); sym(pose, 'Shoulder', 1.7 * k, 0.35 * k, 0.25 * k);
+    if (rig.R15) { add(pose, 'ElbowR', 1.4 * k); add(pose, 'ElbowL', 1.4 * k); add(pose, 'Waist', 0.2 * k); }
+    add(pose, 'HipR', -0.12 * k); add(pose, 'HipL', -0.2 * k); return 1;
+  } else if (name === 'Throw') {
+    const wind = u < 0.4 ? ease(u / 0.4) : 1 - ease((u - 0.4) / 0.25);
+    const through = u < 0.4 ? 0 : Math.sin(Math.min((u - 0.4) / 0.6, 1) * Math.PI);
+    add(pose, 'ShoulderR', 2.8 * wind + 1.0 * through, 0, 0.35 * wind); add(pose, 'ShoulderL', 1.0 * wind + 0.3 * through, -0.3, -0.1);
+    add(pose, 'Root', 0.1 * wind - 0.18 * through, 0.35 * wind - 0.3 * through, 0); add(pose, 'HipL', 0.35 * through); add(pose, 'HipR', -0.2 * through);
+    if (rig.R15) { add(pose, 'ElbowR', 1.3 * wind + 0.2 * through); add(pose, 'Waist', 0, 0.45 * wind - 0.4 * through); }
+    return 1;
+  } else if (name === 'Lift') {
+    const g = u < 0.3 ? ease(u / 0.3) : 1 - ease((u - 0.3) / 0.7); crouch(rig, pose, g); add(pose, 'Neck', 0.4 * g); return 1;
+  } else if (name === 'Place') {
+    const g = u < 0.55 ? ease(u / 0.55) : 1 - ease((u - 0.6) / 0.4); crouch(rig, pose, 0.8 * g); add(pose, 'Neck', -0.35 * g);
+    const p = O.Target ? O.Target.p : null; if (p) { pose.Look = p; pose.LookW = g; } return 1;
+  } else if (name === 'Receive') {
+    const k = Math.sin(Math.min(u * 1.4, 1) * Math.PI);
+    add(pose, 'Root', 0.06 * k); if (rig.R15) { sym(pose, 'Hip', 0.3 * k, 0, 0); add(pose, 'KneeR', -0.5 * k); add(pose, 'KneeL', -0.5 * k); }
+    add(pose, 'Neck', -0.12 * k); return 1;
+  } else if (name === 'Pet' || name === 'Feed') {
+    const p = resolve(O.Target); if (!p) return 0;
+    const env = envelope(u, 0.12, 0.18);
+    const h = p.y; // HRP is the origin in the preview
+    crouch(rig, pose, clamp((-0.3 - h) / 1.6, 0, 1) * env);
+    add(pose, 'Root', -0.12 * env);
+    let hand = p.clone();
+    if (name === 'Pet') hand.add(V(0, 0.32 * Math.max(0, Math.sin(u * Math.PI * 7)) * env, 0)); else hand.add(V(0, Math.sin(u * 30) * 0.03, 0));
+    pose.Reach.R = { P: hand, W: env }; add(pose, 'ShoulderL', 0.25 * env, 0, -0.1 * env);
+    pose.Look = p; pose.LookW = env; return 1;
+  } else if (name === 'Tap') {
+    const p = resolve(O.Target); if (!p) return 0;
+    const env = envelope(u, 0.2, 0.2);
+    crouch(rig, pose, clamp((-0.4 - p.y) / 2.2, 0, 1) * env * (rig.Loop === 'Kneel' ? 0 : 1));
+    let away = V(-p.x, 0, -p.z); away = away.length() > 1e-3 ? away.normalize() : V(0, 0, 0);
+    pose.Reach.R = { P: p.clone().add(away.multiplyScalar(0.45 * Math.max(0, Math.sin(u * Math.PI * 4)))), W: env };
+    pose.Look = p; pose.LookW = env; return 1;
+  } else if (name === 'Pickup') {
+    const s = u * a.D; let down = 0, up = 0, hold = 0, lower = 0;
+    if (s < 0.3) down = ease(s / 0.3);
+    else if (s < 0.75) { down = 1 - ease((s - 0.3) / 0.45); up = ease((s - 0.3) / 0.45); }
+    else if (s < 1.4) { up = 1; hold = 1; }
+    else { lower = ease((s - 1.4) / 0.3); up = 1 - lower; }
+    crouch(rig, pose, down);
+    pose.Reach.R = { P: V(0.5, rig.Ground + 0.35, -1.4), W: down };
+    const bounce = hold * Math.abs(Math.sin((s - 0.75) * 9)) * 0.12;
+    add(pose, 'ShoulderR', (3.0 + bounce) * up, 0, 0.12 * up);
+    if (rig.R15) { add(pose, 'ElbowR', 0.05 * up); add(pose, 'ElbowL', 1.3 * up); }
+    add(pose, 'ShoulderL', 0.15 * up, 0, -0.5 * up); add(pose, 'Neck', 0.35 * up - 0.3 * down);
+    add(pose, 'Root', 0.06 * up, 0.12 * up, 0, 0, bounce * 1.2, 0); return 1;
+  } else if (name === 'Wave') {
+    const env = envelope(u, 0.15, 0.2); const sway = Math.sin(u * a.D * 13) * env;
+    if (rig.R15) { add(pose, 'ShoulderR', 0.3 * env, 0, 2.2 * env); add(pose, 'ElbowR', 0.15 * env, 0, 0.45 * sway); }
+    else add(pose, 'ShoulderR', 0.3 * env, 0, (2.45 + 0.3 * sway) * env);
+    add(pose, 'Neck', 0.08 * env, 0, -0.12 * env); add(pose, 'Root', 0, 0, -0.04 * env); return 1;
+  } else if (name === 'GetIn') {
+    const k = 1 - ease(u); add(pose, 'Root', -0.3 * k, 0, 0, 0, 0.9 * k, 0); sym(pose, 'Hip', -1.0 * k, 0, 0.1 * k);
+    if (rig.R15) { add(pose, 'KneeR', 1.0 * k); add(pose, 'KneeL', 1.0 * k); } return 1;
+  } else if (name === 'GetOut') {
+    const k = 1 - ease(u); crouch(rig, pose, 0.55 * k); sym(pose, 'Shoulder', 0.4 * k, 0, 0.3 * k); return 1;
+  } else if (name === 'Victory') {
+    const pump = Math.abs(Math.sin(u * Math.PI * 3));
+    add(pose, 'ShoulderR', 2.6 + pump * 0.35, 0, 0.3); if (rig.R15) { add(pose, 'ElbowR', 0.9 - pump * 0.6); add(pose, 'ElbowL', 1.4); }
+    add(pose, 'ShoulderL', 0.15, 0, -0.55); add(pose, 'Root', 0.08 + pump * 0.04, 0.15, 0, 0, pump * 0.22, 0); add(pose, 'Neck', 0.25);
+    return w;
+  }
+  return 0;
+}
+function loopPose(rig, pose, name, t, dt, S) {
+  const rootY = rig.Joints.Root.P0.y;
+  if (name === 'Downed') {
+    const c = Math.sin(t * 2.4); pose.Plant = 0;
+    add(pose, 'Root', -1.5, 0, c * 0.05, 0, rig.Ground + 0.55 - rootY, 0);
+    add(pose, 'ShoulderR', 2.7 + c * 0.35, 0, 0.25); add(pose, 'ShoulderL', 2.7 - c * 0.35, 0, -0.25);
+    sym(pose, 'Hip', 0.08, 0, 0.15); add(pose, 'Neck', 0.95);
+    if (rig.R15) { add(pose, 'KneeR', -0.3 - Math.max(0, c) * 0.6); add(pose, 'KneeL', -0.3 - Math.max(0, -c) * 0.6); }
+  } else if (name === 'Revive' || name === 'Kneel') {
+    const revive = name === 'Revive'; const c = revive ? Math.sin(t * 11) : Math.sin(t * 2) * 0.3;
+    add(pose, 'Root', (revive ? -0.22 : -0.12) - c * 0.04);
+    if (rig.R15) { add(pose, 'HipR', 1.5); add(pose, 'KneeR', -1.5); add(pose, 'HipL', 0.05); add(pose, 'KneeL', -1.5); }
+    else { pose.Plant = 0; add(pose, 'Root', 0, 0, 0, 0, -1.0, 0); add(pose, 'HipR', 1.5); add(pose, 'HipL', -0.2, 0, -0.05); }
+    if (revive) { if (rig.R15) { add(pose, 'ElbowR', 0.35 + c * 0.2); add(pose, 'ElbowL', 0.35 + c * 0.2); } sym(pose, 'Shoulder', 0.95 + c * 0.25, 0.3, 0); add(pose, 'Neck', -0.35); }
+    else { add(pose, 'ShoulderR', 0.75 + c * 0.05, 0.1, -0.05); add(pose, 'ShoulderL', 0.55, -0.1, 0.1); if (rig.R15) { add(pose, 'ElbowR', 0.7); add(pose, 'ElbowL', 0.9); } add(pose, 'Neck', -0.2); }
+  } else if (name === 'Work') {
+    const P = 0.62, k = (t % P) / P; const a = k < 0.68 ? ease(k / 0.68) : 1 - ((k - 0.68) / 0.32) ** 0.5;
+    add(pose, 'ShoulderR', 0.8 + 2.0 * a, 0, 0.12);
+    if (rig.R15) { add(pose, 'ElbowR', 0.25 + 0.9 * a); add(pose, 'ElbowL', 0.6); add(pose, 'Waist', 0.06 * a, 0.12 * a); }
+    add(pose, 'ShoulderL', 1.0, -0.25, 0.05); add(pose, 'Root', -0.12 - 0.06 * (1 - a), 0.05 * a); add(pose, 'Neck', -0.3);
+  } else if (name === 'Drive') {
+    pose.Plant = 0;
+    rig.Steer += (clamp((S.steer || 0), -1, 1) - rig.Steer) * Math.min(1, dt * 8);
+    const st = rig.Steer;
+    add(pose, 'Root', 0.08 + rig.Bump * 0.25, 0, -st * 0.12, 0, rig.Bump * 0.5, 0);
+    if (rig.R15) { sym(pose, 'Hip', 1.45, 0, 0.08); add(pose, 'KneeR', -1.35); add(pose, 'KneeL', -1.35); } else sym(pose, 'Hip', 1.57, 0, 0.04);
+    add(pose, 'Neck', -0.06 - rig.Bump * 0.4, st * 0.25, st * 0.06);
+    if (S.wheel) { const turn = -st * 0.95; pose.Reach.R = { P: rimPoint(S.wheel, 0.95 + turn), W: 1 }; pose.Reach.L = { P: rimPoint(S.wheel, -0.95 + turn), W: 1 }; }
+    else sym(pose, 'Shoulder', 1.25, 0, -0.1);
+  } else if (name === 'Rodeo') {
+    const tilt = rig.Tilt, buck = Math.sin(t * 9) * 0.12; pose.Plant = 0;
+    add(pose, 'Root', -0.25 + buck, 0, -tilt * 0.6, 0, -0.9 + Math.abs(buck) * 2, 0);
+    sym(pose, 'Hip', 1.35, 0, 0.75); if (rig.R15) { add(pose, 'KneeR', -1.3); add(pose, 'KneeL', -1.3); }
+    add(pose, 'ShoulderR', 1.1 - buck * 2, 0.4, 0.2 + tilt * 0.4); add(pose, 'ShoulderL', 1.1 + buck * 2, -0.4, -0.2 + tilt * 0.4); add(pose, 'Neck', 0.2 + buck, 0, tilt * 0.3);
+  }
+}
+function toTransform(j, v, R, roll) {
+  let rot = CF.angles(v[0], v[1], v[2]); if (R) rot = rot.mul(R); if (roll) rot = roll.mul(rot);
+  return CF.pos(V(v[3], v[4], v[5]).applyMatrix4(j.C0rInv.m)).mul(j.C0rInv.mul(rot).mul(j.C0r));
+}
+const isZero = (v) => v.every((x) => x === 0);
+const FULL = { Lift: 1, Place: 1, Pet: 1, Feed: 1, Pickup: 1, Tap: 1, Startle: 1, GetOut: 1 };
+function placeEgg(rig, a, torsoW, carrySpot) {
+  const O = a.Opts, u = a.T / a.D; const target = O.Target; if (!target) return null;
+  const size = O.Size || DEFAULT_EGG;
+  const from = torsoW.mul(CF.pos(carrySpot || CarrySpot(size, rig.Size[rig.Torso])));
+  const cf = from.lerp(target, ease(u / 0.55));
+  rig.PlaceWorld = cf.p; rig.PlaceSize = size;
+  return { Spot: torsoW.toObj(cf.p), Size: size, Over: 0, W: 1 - ease((u - 0.6) / 0.22) };
+}
+// one frame of PlayerAnim.step for one rig; S = scenario inputs (speed, flags) standing in for the Humanoid
+function step(rig, dt, S) {
+  const wantLoop = S.loop || null;
+  if (wantLoop !== rig.WantLoop) { if (wantLoop && rig.Loop !== wantLoop) { rig.Loop = wantLoop; rig.LoopT = 0; } rig.WantLoop = wantLoop; }
+  const egg = eggState(rig, S);
+  let full = rig.Combat || !!egg; for (const n in rig.Actions) if (FULL[n]) full = true;
+  rig.Weight += ((full ? 1 : 0) - rig.Weight) * Math.min(1, dt * 7);
+  if (rig.WantLoop) rig.LoopW = Math.min(1, rig.LoopW + dt * 5); else rig.LoopW = Math.max(0, rig.LoopW - dt * 4);
+  if (rig.LoopW <= 0) rig.Loop = null;
+  rig.RecoilV += (-rig.Recoil * 260 - rig.RecoilV * 22) * dt; rig.Recoil += rig.RecoilV * dt;
+  const wb = Math.max(rig.Weight, rig.LoopW);
+  const pose = newPose(); pose.Plant = 0;
+  if (wb > 0.002) {
+    const base = 1 - rig.LoopW;
+    if (base > 0) { const lp = newPose(); locomotion(rig, lp, dt, egg, S); mix(pose, lp, base); pose.Plant += lp.Plant * base; }
+    if (rig.Loop && rig.LoopW > 0) { rig.LoopT += dt; const lp = newPose(); loopPose(rig, lp, rig.Loop, rig.LoopT, dt, S); mix(pose, lp, rig.LoopW); pose.Plant += lp.Plant * rig.LoopW; }
+  }
+  const offs = newPose();
+  let plantAll = 0;
+  for (const [name, a] of Object.entries(rig.Actions)) {
+    a.T += dt; const u = a.T / a.D; if (u >= 1) { delete rig.Actions[name]; continue; }
+    const ap = newPose(); const k = actionPose(rig, ap, name, a, u);
+    if (ap.RootRoll) offs.RootRoll = ap.RootRoll; plantAll = Math.max(plantAll, ap.PlantAll * k); mix(offs, ap, k);
+  }
+  mix(pose, offs, 1); pose.RootRoll = offs.RootRoll;
+  const cfs = fk(rig, pose);
+  const all = plantAll > 0.5; const plant = all ? 1 : pose.Plant;
+  if (wb > 0.002 && plant > 0.001) {
+    const low = lowest(rig, cfs, all ? rig.Parts : null);
+    if (low != null) { const dy = (rig.Ground - low) * plant; pose.Root[4] += dy; for (const p in cfs) if (p !== 'HRP') cfs[p] = CF.new(0, dy, 0).mul(cfs[p]); }
+  }
+  const torsoW = cfs[rig.Torso];
+  rig.EggSpot = null; rig.PlaceWorld = null;
+  if (torsoW && wb > 0.002) {
+    const placing = rig.Actions.Place;
+    const held = placing ? placeEgg(rig, placing, torsoW, egg && egg.Spot) : egg;
+    if (held) { solveCarry(rig, pose, held); if (!placing) { rig.EggSpot = held.Spot; rig.EggSize = held.Size; } }
+    for (const [side, r] of Object.entries(pose.Reach)) if (!(held && held.W > 0.5)) solveArm(rig, pose, side, torsoW.toObj(r.P), r.W);
+    rig.Targets = Object.values(pose.Reach).map((r) => r.P);
+  }
+  let lookP = resolve(S.lookAt), lookWant = lookP ? 1 : 0;
+  if (!lookP && pose.Look) { lookP = pose.Look; lookWant = pose.LookW; }
+  rig.LookW += (lookWant - rig.LookW) * Math.min(1, dt * 6);
+  if (lookP) rig.LookP = lookP;
+  if (torsoW && rig.LookP && rig.LookW > 0.01) {
+    const d = torsoW.toObj(rig.LookP).sub(V(0, rig.NeckY + 0.5, 0));
+    const yaw = clamp(Math.atan2(-d.x, -d.z), -1.1, 1.1), pitch = clamp(Math.atan2(d.y, Math.hypot(d.x, d.z)), -0.8, 0.6);
+    const k = rig.LookW; pose.Neck[0] = pose.Neck[0] * (1 - k) + pitch * k; pose.Neck[1] = pose.Neck[1] * (1 - k) + yaw * k;
+  }
+  const out = {};
+  for (const name of NAMES) {
+    const j = rig.Joints[name]; if (!j) continue;
+    const roll = name === 'Root' ? offs.RootRoll : null;
+    let o = I; if (roll || !isZero(offs[name])) o = toTransform(j, offs[name], null, roll).mul(I);
+    if (wb > 0.002) { const target = toTransform(j, pose[name], pose.R[name], roll); o = wb >= 0.999 ? target : o.lerp(target, wb); }
+    out[name] = o;
+  }
+  rig.Out = out;
+}
+// place every part the way Roblox does: Part1 = Part0 * C0 * Transform * C1^-1
+function place(rig) {
+  const cfs = { HRP: I };
+  const order = CHAIN.filter((n) => rig.Joints[n]);
+  for (const name of order) { const j = rig.Joints[name]; const p = cfs[j.Part0]; if (!p) continue; cfs[j.Part1] = p.mul(j.C0).mul(rig.Out[name] || I).mul(j.C1.inv()); }
+  return cfs;
+}
+
+// ---------------------------------------------------------------- scenarios
+const SMALL = V(1.03, 1.42, 1.03), MID = V(1.75, 2.4, 1.75), BIG = V(3.2, 4.4, 3.2);
+const WHEEL = { pos: V(0, 0.15, -1.75), axis: V(0, 0.45, 1), r: 0.5 };
+const CELLS = [
+  ['Idle (combat)', { combat: true, v: 0, t: 1 }],
+  ['Walk aim', { combat: true, v: 16, time: 1.15 }],
+  ['Sprint', { combat: true, v: 24, sprint: true, time: 1.1 }],
+  ['Sneak walk', { combat: true, v: 10, stance: 'Sneak', time: 1.2 }],
+  ['Sneak A', { combat: true, v: 10, stance: 'Sneak', time: 1.0 }],
+  ['Sneak B', { combat: true, v: 10, stance: 'Sneak', time: 1.1 }],
+  ['Sneak C', { combat: true, v: 10, stance: 'Sneak', time: 1.2 }],
+  ['Sneak D', { combat: true, v: 10, stance: 'Sneak', time: 1.3 }],
+  ['Sneak idle', { combat: true, v: 0, stance: 'Sneak' }],
+  ['Jump', { combat: true, v: 16, air: true, vy: 10, time: 1 }],
+  ['Carry small', { carry: SMALL, v: 0 }],
+  ['Carry mid', { carry: MID, v: 0 }],
+  ['Carry big', { carry: BIG, v: 0 }],
+  ['Carry mid walk', { carry: MID, v: 12, time: 1.3 }],
+  ['Carry big walk', { carry: BIG, v: 12, time: 1.15 }],
+  ['Lift 20%', { carry: MID, act: 'Lift', at: 0.2, combat: true }],
+  ['Lift 35%', { carry: MID, act: 'Lift', at: 0.35, combat: true }],
+  ['Lift 65%', { carry: MID, act: 'Lift', at: 0.65, combat: true }],
+  ['Receive 30%', { carry: MID, act: 'Receive', at: 0.3 }],
+  ['Place 30%', { carry: MID, act: 'Place', at: 0.3, opts: { Target: CF.new(0, -2.3, -2.6), Size: MID } }],
+  ['Place 55%', { carry: MID, act: 'Place', at: 0.55, opts: { Target: CF.new(0, -2.3, -2.6), Size: MID } }],
+  ['Place 85%', { act: 'Place', at: 0.85, opts: { Target: CF.new(0, -2.3, -2.6), Size: MID } }],
+  ['Pet small', { act: 'Pet', at: 0.42, opts: { Target: V(0, -2.0, -1.5) } }],
+  ['Pet mid', { act: 'Pet', at: 0.42, opts: { Target: V(0.2, 0.2, -2.1) } }],
+  ['Pet tall', { act: 'Pet', at: 0.42, opts: { Target: V(0.2, 2.6, -1.8) } }],
+  ['Feed', { act: 'Feed', at: 0.5, opts: { Target: V(0.1, -0.4, -2.2) } }],
+  ['Tap egg', { act: 'Tap', at: 0.3, opts: { Target: V(0, -1.5, -2.6) } }],
+  ['Pickup 15%', { act: 'Pickup', at: 0.15 }],
+  ['Pickup 60%', { act: 'Pickup', at: 0.6 }],
+  ['Wave', { act: 'Wave', at: 0.4 }],
+  ['Startle', { act: 'Startle', at: 0.18 }],
+  ['Kneel', { loop: 'Kneel', lookAt: V(0, -2.2, -2.8) }],
+  ['Work', { loop: 'Work', time: 1.48 }],
+  ['Drive', { loop: 'Drive', wheel: WHEEL }],
+  ['Drive left', { loop: 'Drive', wheel: WHEEL, steer: 1 }],
+  ['Get in', { loop: 'Drive', wheel: WHEEL, act: 'GetIn', at: 0.3 }],
+  ['Get out', { act: 'GetOut', at: 0.2 }],
+  ['Hold baby', { proxy: V(1.4, 1.5, 2.6) }],
+  ['Dodge 30%', { combat: true, act: 'Dodge', at: 0.3 }],
+  ['Dodge 50%', { combat: true, act: 'Dodge', at: 0.5 }],
+  ['Hit 20%', { combat: true, act: 'BigHit', at: 0.15, opts: { Side: 1 } }],
+  ['Throw 35%', { combat: true, act: 'Throw', at: 0.35 }],
+  ['Throw 65%', { combat: true, act: 'Throw', at: 0.65 }],
+  ['Victory', { combat: true, act: 'Victory', at: 0.5 }],
+  ['Downed', { combat: true, loop: 'Downed' }],
+  ['Revive', { combat: true, loop: 'Revive' }],
+  ['Rodeo', { combat: true, loop: 'Rodeo' }],
+];
+const DURS = { Dodge: 0.42, Hit: 0.4, BigHit: 0.7, Throw: 0.5, Lift: 0.75, Receive: 0.4, Victory: 1.3, Place: 0.85, Pet: 1.9, Feed: 1.6, Pickup: 1.7, Wave: 1.6, Tap: 0.55, Startle: 0.7, GetIn: 0.45, GetOut: 0.45 };
+function simulate(def, S) {
+  const rig = bind(def);
+  rig.Combat = !!S.combat; rig.Stance = S.stance; rig.Sprint = !!S.sprint;
+  if (S.carry) { rig.Carrying = true; S.egg = S.carry; }
+  if (S.proxy) rig.Proxy = { Size: S.proxy };
+  const dt = 1 / 60; let t = 0;
+  const pre = S.time ?? 1.5;
+  for (; t < pre; t += dt) step(rig, dt, { ...S, t, air: false });
+  if (S.act) {
+    if (S.act === 'Place') rig.Carrying = false;
+    rig.Actions[S.act] = { T: 0, D: DURS[S.act], Opts: S.opts || {} };
+    const n = Math.round(rig.Actions[S.act].D * S.at / dt);
+    for (let i = 0; i < n; i++, t += dt) step(rig, dt, { ...S, t });
+  } else if (S.air) { for (let i = 0; i < 20; i++, t += dt) step(rig, dt, { ...S, t }); }
+  return rig;
+}
+
+// ---------------------------------------------------------------- render
+const only = q.get('only'), rigSel = q.get('rig');
+const cells = [];
+for (const [label, S] of CELLS) for (const [rn, def] of [['R6', rigR6], ['R15', rigR15]]) {
+  if (only && !only.split(',').includes(label)) continue;
+  if (rigSel && rigSel !== rn) continue;
+  cells.push({ label: label + ' · ' + rn, S: { ...S }, def });
+}
+while (innerWidth < 50 || innerHeight < 50) await new Promise((r) => setTimeout(r, 50)); // pane may start at 0x0
+const cols = +(q.get('cols') || 8);
+const rows = Math.ceil(cells.length / cols);
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(devicePixelRatio); renderer.setSize(innerWidth, innerHeight); renderer.setScissorTest(true);
+document.body.appendChild(renderer.domElement);
+const yaw = +(q.get('yaw') ?? 35) * Math.PI / 180;
+const COL = { HRP: null, Torso: '#3d7bd9', UpperTorso: '#3d7bd9', LowerTorso: '#2d5fb0', Head: '#f2c94c' };
+const colorOf = (n) => COL[n] !== undefined ? COL[n] : (/Leg|Foot/.test(n) ? '#2f9e5b' : '#f2c94c');
+const lbl = document.getElementById('labels');
+const cw = innerWidth / cols, ch = innerHeight / rows;
+cells.forEach((cell, i) => {
+  const rig = simulate(cell.def(), cell.S);
+  const cfs = place(rig);
+  const scene = new THREE.Scene(); scene.background = new THREE.Color(i % 2 ? '#2a3142' : '#262c3b');
+  scene.add(new THREE.HemisphereLight('#ffffff', '#445', 1.6));
+  const sun = new THREE.DirectionalLight('#fff', 1.6); sun.position.set(4, 8, -6); scene.add(sun);
+  const ground = new THREE.Mesh(new THREE.BoxGeometry(8, 0.05, 8), new THREE.MeshStandardMaterial({ color: '#566b4a' }));
+  ground.position.y = rig.Ground - 0.025; scene.add(ground);
+  for (const [name, cf] of Object.entries(cfs)) {
+    const col = colorOf(name); if (!col) continue;
+    const s = cell.def().parts[name];
+    const m = new THREE.Mesh(new THREE.BoxGeometry(s[0] * 0.98, s[1] * 0.98, s[2] * 0.98), new THREE.MeshStandardMaterial({ color: col, roughness: 0.6 }));
+    m.matrixAutoUpdate = false; m.matrix.copy(cf.m); scene.add(m);
+    if (name === 'Head') { const face = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.18, 0.05), new THREE.MeshStandardMaterial({ color: '#222' })); face.position.set(0, 0, -s[2] / 2); m.add(face); }
+  }
+  if (rig.EggSpot) {
+    const tcf = cfs[rig.Torso].mul(CF.pos(rig.EggSpot));
+    const e = new THREE.Mesh(new THREE.SphereGeometry(0.5, 20, 14), new THREE.MeshStandardMaterial({ color: '#f4efe2', transparent: true, opacity: 0.85 }));
+    e.scale.set(rig.EggSize.x, rig.EggSize.y, rig.EggSize.z); e.matrixAutoUpdate = false; e.updateMatrix(); e.matrix.premultiply(tcf.m); scene.add(e);
+  }
+  if (rig.PlaceWorld) {
+    const e = new THREE.Mesh(new THREE.SphereGeometry(0.5, 20, 14), new THREE.MeshStandardMaterial({ color: '#f4efe2', transparent: true, opacity: 0.85 }));
+    e.scale.set(rig.PlaceSize.x, rig.PlaceSize.y, rig.PlaceSize.z); e.position.copy(rig.PlaceWorld); scene.add(e);
+  }
+  for (const p of rig.Targets || []) { const m = new THREE.Mesh(new THREE.SphereGeometry(0.12, 10, 8), new THREE.MeshBasicMaterial({ color: '#ff3355' })); m.position.copy(p); scene.add(m); }
+  if (cell.S.wheel) {
+    const W = cell.S.wheel; const ring = new THREE.Mesh(new THREE.TorusGeometry(W.r, 0.07, 8, 24), new THREE.MeshStandardMaterial({ color: '#222' }));
+    ring.position.copy(W.pos); ring.lookAt(W.pos.clone().add(W.axis)); scene.add(ring);
+  }
+  const cam = new THREE.PerspectiveCamera(32, cw / ch, 0.1, 100);
+  cam.fov = 2 * Math.atan(4.6 / (2 * 16) / Math.min(1, cw / ch)) * 180 / Math.PI; cam.updateProjectionMatrix();
+  const d = 16, camY = +(q.get('camy') ?? 2.5); cam.position.set(-Math.sin(yaw) * d, camY, -Math.cos(yaw) * d); cam.lookAt(0, -0.3, 0);
+  const x = (i % cols) * cw, y = Math.floor(i / cols) * ch;
+  renderer.setViewport(x, innerHeight - y - ch, cw, ch); renderer.setScissor(x, innerHeight - y - ch, cw, ch);
+  renderer.render(scene, cam);
+  const div = document.createElement('div'); div.textContent = cell.label; div.style.left = (x + 4) + 'px'; div.style.top = (y + 3) + 'px'; lbl.appendChild(div);
+});
+window.__done = true;
+Object.assign(window, { bind, rigR6, rigR15, simulate, place, fk, CF, V, THREE });
+</script>
+</body>
+</html>

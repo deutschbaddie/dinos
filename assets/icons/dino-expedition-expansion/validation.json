@@ -1,0 +1,362 @@
+[
+  {
+    "key": "Bag",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      40,
+      39,
+      472,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Sell",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      39,
+      472,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Quest",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      59,
+      472,
+      453
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Power",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      51,
+      472,
+      461
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Key",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      67,
+      39,
+      445,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Hammer",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      48,
+      39,
+      464,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Crown",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      81,
+      473,
+      430
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Film",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      62,
+      39,
+      449,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Chest",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      43,
+      39,
+      469,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Launcher",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      61,
+      472,
+      451
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Armor",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      45,
+      472,
+      467
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Rack",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      68,
+      472,
+      443
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Buddy",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      55,
+      39,
+      457,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Gadget_Bait",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      48,
+      472,
+      463
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Gadget_Flare",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      42,
+      473,
+      469
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Gadget_Earthshaker",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      46,
+      39,
+      465,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Mat_QueenClaw",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      64,
+      39,
+      447,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Mat_MatriarchScale",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      71,
+      39,
+      441,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Era_FernValley",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      43,
+      39,
+      469,
+      472
+    ],
+    "uploaded": false
+  },
+  {
+    "key": "Era_GiantPlains",
+    "size": [
+      512,
+      512
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "visible_bounds": [
+      39,
+      45,
+      472,
+      467
+    ],
+    "uploaded": false
+  }
+]

@@ -1,0 +1,209 @@
+// Coelophysis — quick, twitchy, bird-like; the pack moves as one. Signature: OASIS STRIKE
+// (the pack drinks; one lifts its head; it whips round, leaps onto a rock and the pack screeches in chorus).
+const { W } = require('./util.js');
+
+const PI = Math.PI;
+const CROUCH = { Pelvis: [0, 0, 0, 0, -0.27, 0], '~Thigh': [0.28], '~Shin': [-0.5], '~Foot': [0.22] };
+// head down at the water, back to the camera (turned to the pool behind it)
+const DRINK = W(CROUCH, {
+  Pelvis: [0, 0, 0, 0, -0.32, 0], '~Thigh': [0.36], '~Shin': [-0.62], '~Foot': [0.26],
+  Torso: [-0.3], Neck1: [-0.7], Neck2: [-0.2], Head: [0.62], Jaw: [-0.1], '~Arm': [0.25, 0, 0.1],
+  Tail1: [-0.3], Tail2: [-0.1], Tail3: [0.05], Tail4: [0.08],
+});
+const turned = (pose) => W(pose, { Pelvis: [0, PI, 0, ...(pose.Pelvis || [0, 0, 0, 0, 0, 0]).slice(3)] });
+const ALERT = W(CROUCH, { Pelvis: [0, 0, 0, 0, -0.11, 0], '~Thigh': [0.12], '~Shin': [-0.22], '~Foot': [0.1], Torso: [0.06], Neck1: [0.28], Neck2: [-0.02], Head: [-0.18, 0, 0.12], Jaw: [-0.08], Tail1: [-0.1] });
+const STARE = W(CROUCH, { Pelvis: [0, 0, 0, 0, -0.44, 0], '~Thigh': [0.42], '~Shin': [-0.75], '~Foot': [0.33], Torso: [-0.18], Neck1: [-0.2], Neck2: [-0.05], Head: [0.12], Jaw: [-0.3], '~Arm': [-0.2, 0, 0.4], '~Forearm': [-0.5], Tail1: [-0.25], Tail2: [-0.1], Tail3: [0, 0.2], Tail4: [0, 0.3] });
+const SCREECH_A = { Neck1: [0.2], Neck2: [0.15], Head: [0.32, 0, 0.12], Jaw: [-0.95], Torso: [0.12], '~Arm': [-0.6, 0, 0.7], '~Forearm': [-0.8], Tail1: [-0.3, 0.25], Tail2: [-0.12, 0.3], Tail3: [0, 0.35], Tail4: [0, 0.4], Tail5: [0, 0.4] };
+const SCREECH_B = W(SCREECH_A, { Head: [0.26, 0, -0.14], Jaw: [-0.9], Tail1: [-0.3, -0.25], Tail2: [-0.12, -0.3], Tail3: [0, -0.35], Tail4: [0, -0.4], Tail5: [0, -0.4] });
+// standing on the perch rock in front (its top is ROCK studs up): crouched legs, pelvis lifted onto it
+const ROCK = 1.1;
+const ON_ROCK = (pose, z = -3.2) => W(pose, { Pelvis: [0, 0, 0, 0, ROCK - 0.27, z], '~Thigh': [0.28], '~Shin': [-0.5], '~Foot': [0.22] });
+
+module.exports = {
+  Signature: 'OasisStrike', Intro: 'OasisStrike', IntroShots: 'CoeloOasis', Chase: 'Chase', Special: 'Drink',
+  CycleOrder: ['Walk', 'Run', 'Drink', 'LookAround', 'SnapBite', 'DartLunge', 'PackCall', 'Jump', 'Stunned', 'Roar'],
+  CameraScale: 1.1,
+  Gait: {
+    Type: 'Biped', Scale: 1, Neck: ['Neck1', 'Neck2'], Tail: ['Tail1', 'Tail2', 'Tail3', 'Tail4', 'Tail5'],
+    Idle: { Breath: 0.7, BreathAmp: 1.1, Sway: 0.12, Look: 0.6, Twitch: true, JawIdle: 0.05 },
+    Walk: { Freq: 1.6, Stride: 0.5, Knee: 0.75, Bob: 0.1, Roll: 0.04, Yaw: 0.08, Lean: 0.08, TailSway: 0.16, HeadBob: 0.12, Speed: 5 },
+    Run: { Freq: 3.0, Stride: 0.6, Knee: 0.95, Bob: 0.2, Roll: 0.03, Yaw: 0.05, Lean: 0.24, TailSway: 0.1, HeadBob: 0.07, ThighBias: 0, Speed: 15 },
+  },
+  Actions: {
+    // a shrill chittering screech with jerky head-bobs
+    Roar: {
+      Duration: 2.0, Suppress: 0.9,
+      Keys: [
+        [0.25, W(CROUCH, { Neck1: [-0.25], Neck2: [-0.1], Head: [-0.2], Jaw: [-0.2], Torso: [-0.06] }), 'Sine'],
+        [0.5, SCREECH_A, 'Back'],
+        [1.45, SCREECH_B, 'Sine'],
+      ],
+      Shake: [['Head', 0.5, 1.45, 0.1, 9, 1], ['Jaw', 0.5, 1.45, 0.06, 26, 1], ['Tail4', 0.5, 1.45, 0.12, 6, 2]],
+      Events: [[0.48, 'EyeGlow', 1.0], [0.5, 'Roar', { Scale: 0.45, Screech: true }], [0.52, 'CameraShake', 0.2]],
+    },
+    Attack: {
+      Duration: 1.0, Suppress: 0.9,
+      Keys: [
+        [0.22, W(CROUCH, { Neck1: [0.2], Neck2: [0.1], Head: [0.2], Jaw: [-0.85], Pelvis: [0, 0, 0, 0, -0.2, 0.25] }), 'Out'],
+        [0.38, { Neck1: [-0.25], Neck2: [-0.1], Head: [-0.1], Jaw: [-0.6], Torso: [-0.15], Pelvis: [0, 0, 0, 0, -0.1, -0.7] }, 'Snap'],
+        [0.44, { Neck1: [-0.3], Neck2: [-0.12], Head: [-0.2], Jaw: [0.02], Torso: [-0.15], Pelvis: [0, 0, 0, 0, -0.1, -0.75] }, 'Snap'],
+        [0.7, { Neck1: [-0.05], Head: [0.05, 0.2, 0.15], Pelvis: [0, 0, 0, 0, 0, -0.2] }, 'Sine'],
+      ],
+      Events: [[0.44, 'Bite', { Scale: 0.4 }], [0.45, 'CameraShake', 0.15]],
+    },
+    // takedown: a darting head-snap from the side (quick bites from five sides)
+    SnapBite: {
+      Duration: 0.9, Suppress: 0.9,
+      Keys: [
+        [0.18, { Neck1: [0.15, 0.25], Neck2: [0.05, 0.2], Head: [0.25, 0.1, 0.2], Jaw: [-0.9], Pelvis: [0, 0.15, 0, 0, -0.15, 0.2], '~Thigh': [0.2], '~Shin': [-0.35] }, 'Out'],
+        [0.32, { Neck1: [-0.25, -0.1], Neck2: [-0.1], Head: [-0.1, -0.1], Jaw: [-0.5], Torso: [-0.12], Pelvis: [0, -0.1, 0, 0, -0.1, -0.6] }, 'Snap'],
+        [0.37, { Neck1: [-0.3, -0.12], Neck2: [-0.12], Head: [-0.22, -0.1, -0.15], Jaw: [0.03], Torso: [-0.12], Pelvis: [0, -0.1, 0, 0, -0.1, -0.62] }, 'Snap'],
+        [0.6, { Neck1: [0, 0.1], Head: [0.1, 0.25, 0.2], Pelvis: [0, 0, 0, 0, 0, -0.1] }, 'Sine'],
+      ],
+      Shake: [['Head', 0.38, 0.6, 0.12, 14, 2]],
+      Events: [[0.37, 'Bite', { Scale: 0.4 }], [0.38, 'CameraShake', 0.12]],
+    },
+    // takedown: crouch, then a darting leap with jaws wide
+    DartLunge: {
+      Duration: 1.5, Suppress: 0.95,
+      Keys: [
+        [0.35, W(STARE, { Pelvis: [0, 0, 0, 0, -0.42, 0.3] }), 'Out'],
+        [0.55, W(STARE, { Pelvis: [0, 0, 0, 0, -0.45, 0.35], Jaw: [-0.6] }), 'Linear'],
+        [0.78, { Pelvis: [0, 0, 0, 0, 0.75, -2.6], '~Thigh': [0.7], '~Shin': [-1.2], '~Foot': [0.6], Torso: [0.05], Neck1: [0.1], Neck2: [0.05], Head: [0.15], Jaw: [-1.0], '~Arm': [0.9, 0, 0.35], Tail1: [-0.3], Tail2: [-0.15] }, 'Out'],
+        [0.95, { Pelvis: [0, 0, 0, 0, -0.15, -3.4], '~Thigh': [0.4], '~Shin': [-0.7], '~Foot': [0.3], Neck1: [-0.3], Neck2: [-0.1], Head: [-0.2], Jaw: [0.03], Torso: [-0.15], '~Arm': [0.6, 0, 0.3] }, 'In'],
+        [1.25, { Pelvis: [0, 0, 0, 0, 0, -3.3], Neck1: [0.05], Head: [0.1, 0.2, 0.1] }, 'Sine'],
+      ],
+      HoldEnd: false,
+      Shake: [['Jaw', 0.2, 0.55, 0.05, 24, 1]],
+      Events: [[0.25, 'Roar', { Scale: 0.3, Screech: true }], [0.6, 'JumpDust', { Scale: 0.4 }], [0.95, 'Bite', { Scale: 0.45 }], [0.96, 'Land', { Scale: 0.35 }]],
+    },
+    Stunned: {
+      Duration: 2.4, Suppress: 0.9,
+      Keys: [
+        [0.2, { Pelvis: [0, 0, 0.15, 0, -0.05, 0.35], Torso: [0.2], Neck1: [0.3], Neck2: [0.15], Head: [0.3, 0, 0.35], Jaw: [-0.45], Tail1: [0.15] }, 'Out'],
+        [0.55, { Pelvis: [0, 0, -0.12, 0, -0.14, 0.3], Torso: [-0.06], Neck1: [-0.25], Head: [-0.25, 0, -0.3], '~Thigh': [0.22], '~Shin': [-0.4], Jaw: [-0.3] }, 'Sine'],
+        [1.9, { Pelvis: [0, 0, 0.05, 0, -0.1, 0.25], Neck1: [-0.18], Head: [-0.1, 0, 0.2], '~Thigh': [0.15], '~Shin': [-0.3], Jaw: [-0.25] }, 'Linear'],
+      ],
+      Procedural: { Type: 'Dizzy', T0: 0.45, T1: 2.15, Rate: 7, Head: [0.3, 0.24], Neck: 0.14, Roll: 0.05 },
+      Events: [[0.05, 'Stunned', { Scale: 0.45 }], [0.1, 'CameraShake', 0.2]],
+    },
+    // bird-like: freeze, snap, freeze
+    LookAround: {
+      Duration: 3.0, Suppress: 0.6,
+      Keys: [
+        [0.25, { Neck1: [0.18, 0.4], Neck2: [0.05, 0.2], Head: [0.05, 0.35, 0.25] }, 'Snap'],
+        [1.0, { Neck1: [0.18, 0.42], Neck2: [0.05, 0.2], Head: [0.08, 0.38, 0.2] }, 'Linear'],
+        [1.2, { Neck1: [0.2, -0.05], Head: [0.1, -0.05, 0.3] }, 'Snap'],
+        [1.6, { Neck1: [0.2, -0.05], Head: [0.12, -0.05, 0.32] }, 'Linear'],
+        [1.8, { Neck1: [0.15, -0.42], Neck2: [0.05, -0.2], Head: [0.05, -0.35, -0.25], Tail3: [0, 0.2] }, 'Snap'],
+        [2.5, { Neck1: [0.15, -0.44], Neck2: [0.05, -0.2], Head: [0.08, -0.38, -0.2], Tail3: [0, 0.2] }, 'Linear'],
+      ],
+    },
+    Sniff: {
+      Duration: 1.6, Suppress: 0.8,
+      Keys: [[0.4, W(CROUCH, { Neck1: [-0.55], Neck2: [-0.2], Head: [-0.3], Torso: [-0.12] }), 'Sine'], [1.2, W(CROUCH, { Neck1: [-0.55], Neck2: [-0.2], Head: [-0.32], Torso: [-0.12] }), 'Linear']],
+      Shake: [['Head', 0.4, 1.2, 0.05, 9, 1]],
+      Events: [[0.5, 'Sniff']],
+    },
+    // head down at the water, lapping (the pack's idle at the oasis)
+    Drink: {
+      Duration: 4.6, Suppress: 0.85,
+      Keys: [[0.7, DRINK, 'Sine'], [3.8, W(DRINK, { Head: [0.56], Neck1: [-0.72] }), 'Linear']],
+      Shake: [['Jaw', 0.9, 3.7, 0.1, 3, 1], ['Head', 0.9, 3.7, 0.04, 1.5, 1]],
+      Events: [[1.0, 'Ripple', { Scale: 0.5 }], [2.2, 'Ripple', { Scale: 0.45 }], [3.3, 'Ripple', { Scale: 0.5 }]],
+    },
+    // a pack-mate on the far bank: heads up together, a little hop, and the chorus
+    PackScreech: {
+      Duration: 4.4, Suppress: 0.95,
+      Keys: [
+        [0.0, DRINK, 'Linear'],
+        [0.25, ALERT, 'Snap'],
+        [0.9, W(ALERT, { Head: [0.08, 0, -0.1] }), 'Linear'],
+        [1.1, STARE, 'Snap'],
+        [1.35, { Pelvis: [0, 0, 0, 0, 0.7, 0], '~Thigh': [0.6], '~Shin': [-1.0], '~Foot': [0.5], Neck1: [0.1], Head: [0.1], '~Arm': [0.5, 0, 0.3], Tail1: [-0.25] }, 'Out'],
+        [1.55, W(CROUCH, { Pelvis: [0, 0, 0, 0, -0.25, 0], Neck1: [-0.1] }), 'In'],
+        [1.85, SCREECH_A, 'Back'],
+        [3.2, SCREECH_B, 'Sine'],
+      ],
+      FadeIn: 0.05,
+      Shake: [['Head', 1.85, 3.2, 0.1, 9, 1], ['Jaw', 1.85, 3.2, 0.06, 26, 1]],
+      Events: [[1.84, 'Roar', { Scale: 0.35, Screech: true }], [1.55, 'Land', { Scale: 0.3 }]],
+    },
+    // buddy PACK CALL: head up, staccato chirps that carry across the dunes
+    PackCall: {
+      Duration: 2.4, Suppress: 0.9,
+      Keys: [
+        [0.3, W(ALERT, { Neck1: [0.35], Neck2: [0.25], Head: [0.35], Jaw: [-0.5] }), 'Back'],
+        [0.7, W(ALERT, { Neck1: [0.35], Neck2: [0.25], Head: [0.3, 0, 0.15], Jaw: [-0.15] }), 'Snap'],
+        [1.0, W(ALERT, { Neck1: [0.38], Neck2: [0.25], Head: [0.38, 0, -0.1], Jaw: [-0.6] }), 'Snap'],
+        [1.3, W(ALERT, { Neck1: [0.36], Neck2: [0.25], Head: [0.3], Jaw: [-0.15] }), 'Snap'],
+        [1.6, W(ALERT, { Neck1: [0.4], Neck2: [0.28], Head: [0.4], Jaw: [-0.7] }), 'Snap'],
+      ],
+      Events: [[0.3, 'Call', { At: 'VFX_Mouth', Scale: 0.6, Color: [255, 200, 120], Count: 2 }], [1.0, 'Call', { At: 'VFX_Mouth', Scale: 0.6, Color: [255, 200, 120], Count: 2 }], [1.6, 'Call', { At: 'VFX_Mouth', Scale: 0.7, Color: [255, 200, 120], Count: 3 }]],
+    },
+    // a wild pack answering the call
+    HerdResponse: {
+      Duration: 1.8, Suppress: 0.9,
+      Keys: [[0.3, SCREECH_A, 'Back'], [1.1, SCREECH_B, 'Sine']],
+      Shake: [['Head', 0.3, 1.1, 0.1, 9, 1]],
+      Events: [[0.3, 'Call', { At: 'VFX_Mouth', Scale: 0.4, Color: [255, 200, 120], Count: 2 }]],
+    },
+    Jump: {
+      Duration: 1.4, Suppress: 1,
+      Keys: [
+        [0.25, W(CROUCH, { Pelvis: [0, 0, 0, 0, -0.35, 0], '~Thigh': [0.55], '~Shin': [-0.95], '~Foot': [0.4], Torso: [-0.15], Neck1: [-0.1] }), 'Sine'],
+        [0.52, { Pelvis: [0, 0, 0, 0, 1.5, 0], '~Thigh': [0.7], '~Shin': [-1.2], '~Foot': [0.6], Torso: [0.1], Neck1: [0.15], Head: [0.1], '~Arm': [0.5, 0, 0.3], Tail1: [-0.2], Tail2: [-0.1] }, 'Out'],
+        [0.72, { Pelvis: [0, 0, 0, 0, 1.3, 0], '~Thigh': [0.3], '~Shin': [-0.5], '~Foot': [0.2], Torso: [-0.05], '~Arm': [0.3, 0, 0.5], Tail1: [-0.1] }, 'Sine'],
+        [0.92, W(CROUCH, { Pelvis: [0, 0, 0, 0, -0.3, 0], '~Thigh': [0.5], '~Shin': [-0.9], '~Foot': [0.4], Torso: [-0.15], Neck1: [-0.15] }), 'In'],
+      ],
+      Events: [[0.45, 'JumpDust', { Scale: 0.4 }], [0.92, 'Land', { Scale: 0.4 }]],
+    },
+    Stumble: {
+      Duration: 1.3, Suppress: 0.95,
+      Keys: [
+        [0.22, { Pelvis: [0, 0, -0.15, 0, -0.15, -0.3], Torso: [-0.3], Neck1: [-0.3], Head: [-0.2], RightThigh: [0.6], RightShin: [-0.2], LeftThigh: [-0.3], LeftShin: [-0.6], '~Arm': [0.6, 0, 0.3], Tail1: [-0.3] }, 'Out'],
+        [0.55, { Pelvis: [0, 0, 0.1, 0, -0.2, -0.4], Torso: [-0.2], Neck1: [0.1], Head: [0.2], LeftThigh: [0.5], LeftShin: [-0.5], RightThigh: [-0.2], Jaw: [-0.4] }, 'Sine'],
+      ],
+      Events: [[0.25, 'Footstep', { Side: 'Right' }], [0.56, 'Footstep', { Side: 'Left' }]],
+    },
+    // the chase: in a snake-like line they take turns to lunge (each one plays this offset)
+    Chase: {
+      Duration: 3.0, Suppress: 1,
+      Gait: [[0, 2.3, 'Run', 1]],
+      Keys: [
+        [2.1, { Pelvis: [0, 0, 0, 0, 0, -5], Torso: [-0.12] }, 'Linear'],
+        [2.4, { Pelvis: [0, 0, 0, 0, 0.5, -5.8], Neck1: [0.2], Neck2: [0.1], Head: [0.2], Jaw: [-1.0], '~Arm': [0.7, 0, 0.4], '~Thigh': [0.6], '~Shin': [-1.0] }, 'Out'],
+        [2.55, { Pelvis: [0, 0, 0, 0, 0.1, -6.2], Neck1: [-0.25], Head: [-0.15], Jaw: [0.02] }, 'Snap'],
+        [2.8, { Pelvis: [0, 0, 0, 0, 0, -6.2] }, 'Sine'],
+      ],
+      Events: [[2.2, 'Roar', { Scale: 0.3, Screech: true }], [2.55, 'Bite', { Scale: 0.45 }], [2.56, 'CameraShake', 0.25]],
+    },
+    // SIGNATURE: drinking at the oasis with its back to you... the head comes up... it whips round, leaps onto a
+    // rock and the whole pack screeches
+    OasisStrike: {
+      Duration: 6.4, Suppress: 1, FadeIn: 0.01, FadeOut: 0.25,
+      Keys: [
+        [0.0, turned(DRINK), 'Linear'],
+        [1.3, turned(W(DRINK, { Head: [0.56], Neck1: [-0.72] })), 'Linear'],
+        [1.42, turned(ALERT), 'Snap'],
+        [1.9, turned(W(ALERT, { Head: [-0.14, 0, -0.14], Neck1: [0.3] })), 'Linear'],
+        [2.22, STARE, 'Snap'],
+        [2.55, W(STARE, { Pelvis: [0, 0, 0, 0, -0.5, 0.1], '~Thigh': [0.47], '~Shin': [-0.84], '~Foot': [0.37], Jaw: [-0.45] }), 'Sine'],
+        [2.85, { Pelvis: [0, 0, 0, 0, 2.0, -1.7], '~Thigh': [0.75], '~Shin': [-1.25], '~Foot': [0.65], Torso: [0.08], Neck1: [0.15], Neck2: [0.05], Head: [0.1], Jaw: [-0.5], '~Arm': [0.8, 0, 0.35], '~Forearm': [-0.4], Tail1: [-0.3], Tail2: [-0.15] }, 'Out'],
+        [3.12, W(CROUCH, { Pelvis: [0, 0, 0, 0, ROCK - 0.47, -3.2], '~Thigh': [0.45], '~Shin': [-0.8], '~Foot': [0.35], Torso: [-0.15], Neck1: [-0.2], Head: [0.05] }), 'In'],
+        [3.45, ON_ROCK(SCREECH_A), 'Back'],
+        [4.45, ON_ROCK(SCREECH_B), 'Sine'],
+        [5.3, ON_ROCK(W(STARE, { Jaw: [-0.55] })), 'Sine'],
+        [6.4, ON_ROCK(W(STARE, { Jaw: [-0.5], Head: [0.15, 0, 0.12] })), 'Linear'],
+      ],
+      Shake: [['Jaw', 0.2, 1.25, 0.1, 3, 1], ['Head', 3.45, 4.45, 0.1, 9, 1], ['Jaw', 3.45, 5.2, 0.06, 26, 1], ['Tail4', 2.25, 2.6, 0.2, 7, 2], ['Head', 5.3, 6.3, 0.05, 1.3, 3]],
+      Events: [
+        [0.1, 'PackCue', { Action: 'Drink' }], [0.35, 'Ripple', { Scale: 0.5 }], [0.95, 'Ripple', { Scale: 0.45 }], [1.42, 'Ripple', { Scale: 0.9 }],
+        [1.6, 'PackCue', { Action: 'PackScreech', Stagger: 0.06 }],
+        [1.95, 'TailSwing', 0.5], [2.2, 'EyeGlow', 3.5], [2.62, 'JumpDust', { Scale: 0.45 }],
+        [3.1, 'BreakProp', { Prop: 'Pebbles', Power: 0.6, At: 'VFX_RightFoot' }], [3.12, 'Land', { Scale: 0.45 }], [3.13, 'CameraShake', 0.25],
+        [3.44, 'Roar', { Scale: 0.55, Screech: true }], [3.46, 'CameraShake', 0.35], [3.5, 'TailSwing', 1.0],
+      ],
+    },
+  },
+};

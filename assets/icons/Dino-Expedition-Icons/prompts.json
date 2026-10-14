@@ -1,0 +1,226 @@
+{
+  "mode": "built-in image_gen",
+  "transparent_background": true,
+  "export": {
+    "width": 512,
+    "height": 512,
+    "format": "PNG"
+  },
+  "icons": [
+    {
+      "key": "Coin",
+      "subject": "a thick gold coin tilted toward the viewer, a dinosaur footprint embossed on its face, a small sparkle on the rim",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a thick gold coin tilted toward the viewer, a dinosaur footprint embossed on its face, a small sparkle on the rim. Asset key: Coin (do not render this name)."
+    },
+    {
+      "key": "Gem",
+      "subject": "a faceted cyan crystal gem with a lime inner glow",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a faceted cyan crystal gem with a lime inner glow. Asset key: Gem (do not render this name)."
+    },
+    {
+      "key": "Gear",
+      "subject": "a chunky silver settings cog with a lime-green centre bolt",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a chunky silver settings cog with a lime-green centre bolt. Asset key: Gear (do not render this name)."
+    },
+    {
+      "key": "Shop",
+      "subject": "a small wooden jungle market stall with a striped orange-and-cream awning and a coin sign",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a small wooden jungle market stall with a striped orange-and-cream awning and a coin sign. Asset key: Shop (do not render this name)."
+    },
+    {
+      "key": "Index",
+      "subject": "a thick leather field journal with a dinosaur skull emblem on the cover and a yellow bookmark ribbon",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a thick leather field journal with a dinosaur skull emblem on the cover and a yellow bookmark ribbon. Asset key: Index (do not render this name)."
+    },
+    {
+      "key": "Gate",
+      "subject": "a glowing teal hexagonal time portal ring made of stone blocks, swirling energy in the middle",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a glowing teal hexagonal time portal ring made of stone blocks, swirling energy in the middle. Asset key: Gate (do not render this name)."
+    },
+    {
+      "key": "Home",
+      "subject": "a small jungle research hut with a green roof and a yellow door",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a small jungle research hut with a green roof and a yellow door. Asset key: Home (do not render this name)."
+    },
+    {
+      "key": "Garage",
+      "subject": "a corrugated-metal garage with a half-open roll-up door and a yellow hazard stripe",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a corrugated-metal garage with a half-open roll-up door and a yellow hazard stripe. Asset key: Garage (do not render this name)."
+    },
+    {
+      "key": "Shield",
+      "subject": "a sturdy steel-and-orange armour shield with rivets, for vehicle armour",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a sturdy steel-and-orange armour shield with rivets, for vehicle armour. Asset key: Shield (do not render this name)."
+    },
+    {
+      "key": "Bolt",
+      "subject": "a fat yellow lightning bolt with a blue glow, for boost",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a fat yellow lightning bolt with a blue glow, for boost. Asset key: Bolt (do not render this name)."
+    },
+    {
+      "key": "Dart",
+      "subject": "a tranquilizer dart with an orange feather tail and a glass vial of green liquid",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a tranquilizer dart with an orange feather tail and a glass vial of green liquid. Asset key: Dart (do not render this name)."
+    },
+    {
+      "key": "Star",
+      "subject": "a plump yellow five-point star with a white shine",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a plump yellow five-point star with a white shine. Asset key: Star (do not render this name)."
+    },
+    {
+      "key": "Lock",
+      "subject": "a chunky steel padlock with a yellow keyhole",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a chunky steel padlock with a yellow keyhole. Asset key: Lock (do not render this name)."
+    },
+    {
+      "key": "Eye",
+      "subject": "a big cartoon dinosaur eye with a yellow iris and a slit pupil, for \"awareness\"",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a big cartoon dinosaur eye with a yellow iris and a slit pupil, for \"awareness\". Asset key: Eye (do not render this name)."
+    },
+    {
+      "key": "Alert",
+      "subject": "a red warning triangle with a white exclamation mark",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a red warning triangle with a white exclamation mark. Asset key: Alert (do not render this name)."
+    },
+    {
+      "key": "Trophy",
+      "subject": "a gold trophy cup with a small dinosaur figure on top",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a gold trophy cup with a small dinosaur figure on top. Asset key: Trophy (do not render this name)."
+    },
+    {
+      "key": "Egg",
+      "subject": "a plain cream-white speckled dinosaur egg (keep it pale: the game tints it to each species' colour)",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a plain cream-white speckled dinosaur egg (keep it pale: the game tints it to each species' colour). Asset key: Egg (do not render this name)."
+    },
+    {
+      "key": "Dino",
+      "subject": "a cute baby green raptor head poking out of a cracked egg shell",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a cute baby green raptor head poking out of a cracked egg shell. Asset key: Dino (do not render this name)."
+    },
+    {
+      "key": "Jeep",
+      "subject": "an orange-and-yellow safari jeep with big off-road tyres and a roof light bar, side 3/4 view",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: an orange-and-yellow safari jeep with big off-road tyres and a roof light bar, side 3/4 view. Asset key: Jeep (do not render this name)."
+    },
+    {
+      "key": "Hand",
+      "subject": "a gloved explorer's hand grabbing, for \"grab\"",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a gloved explorer's hand grabbing, for \"grab\". Asset key: Hand (do not render this name)."
+    },
+    {
+      "key": "Door",
+      "subject": "an open vehicle door with an arrow pointing out, for \"get out\"",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: an open vehicle door with an arrow pointing out, for \"get out\". Asset key: Door (do not render this name)."
+    },
+    {
+      "key": "Footprints",
+      "subject": "a trail of three green dinosaur footprints",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a trail of three green dinosaur footprints. Asset key: Footprints (do not render this name)."
+    },
+    {
+      "key": "Clock",
+      "subject": "an explorer's brass pocket watch",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: an explorer's brass pocket watch. Asset key: Clock (do not render this name)."
+    },
+    {
+      "key": "Map",
+      "subject": "a rolled-out treasure-style jungle map with a red X",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a rolled-out treasure-style jungle map with a red X. Asset key: Map (do not render this name)."
+    },
+    {
+      "key": "Gift",
+      "subject": "a wrapped present with a lime ribbon and a dinosaur tag, for daily rewards",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a wrapped present with a lime ribbon and a dinosaur tag, for daily rewards. Asset key: Gift (do not render this name)."
+    },
+    {
+      "key": "Wrench",
+      "subject": "a crossed wrench and screwdriver with orange grips, for upgrades",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a crossed wrench and screwdriver with orange grips, for upgrades. Asset key: Wrench (do not render this name)."
+    },
+    {
+      "key": "Paddock",
+      "subject": "a wooden log palisade gate with a dinosaur footprint sign",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a wooden log palisade gate with a dinosaur footprint sign. Asset key: Paddock (do not render this name)."
+    },
+    {
+      "key": "Incubator",
+      "subject": "a glass incubator dome on a metal base, with a glowing egg inside",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a glass incubator dome on a metal base, with a glowing egg inside. Asset key: Incubator (do not render this name)."
+    },
+    {
+      "key": "Dino_Velociraptor",
+      "subject": "an olive-green velociraptor with dark stripes, sharp grin, feather tuft on its head",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: an olive-green velociraptor with dark stripes, sharp grin, feather tuft on its head. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_Velociraptor (do not render this name)."
+    },
+    {
+      "key": "Dino_Triceratops",
+      "subject": "an orange-brown triceratops with a cream frill and three ivory horns",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: an orange-brown triceratops with a cream frill and three ivory horns. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_Triceratops (do not render this name)."
+    },
+    {
+      "key": "Dino_Parasaurolophus",
+      "subject": "a golden-yellow parasaurolophus with a long backward head crest",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a golden-yellow parasaurolophus with a long backward head crest. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_Parasaurolophus (do not render this name)."
+    },
+    {
+      "key": "Dino_Stegosaurus",
+      "subject": "a green stegosaurus with orange back plates",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a green stegosaurus with orange back plates. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_Stegosaurus (do not render this name)."
+    },
+    {
+      "key": "Dino_Ankylosaurus",
+      "subject": "a grey armoured ankylosaurus with studded plates and a club tail visible",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a grey armoured ankylosaurus with studded plates and a club tail visible. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_Ankylosaurus (do not render this name)."
+    },
+    {
+      "key": "Dino_Carnotaurus",
+      "subject": "a crimson carnotaurus with two horns above its eyes",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a crimson carnotaurus with two horns above its eyes. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_Carnotaurus (do not render this name)."
+    },
+    {
+      "key": "Dino_Brachiosaurus",
+      "subject": "a tan brachiosaurus with a long neck curving up, a gentle face",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a tan brachiosaurus with a long neck curving up, a gentle face. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_Brachiosaurus (do not render this name)."
+    },
+    {
+      "key": "Dino_Spinosaurus",
+      "subject": "a teal spinosaurus with a tall sail on its back and a crocodile-like snout",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a teal spinosaurus with a tall sail on its back and a crocodile-like snout. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_Spinosaurus (do not render this name)."
+    },
+    {
+      "key": "Dino_TyrannosaurusRex",
+      "subject": "a green T. rex mid-roar, big teeth",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a green T. rex mid-roar, big teeth. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_TyrannosaurusRex (do not render this name)."
+    },
+    {
+      "key": "Dino_Giganotosaurus",
+      "subject": "a dark charcoal giganotosaurus with red eyes, mid-roar",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a dark charcoal giganotosaurus with red eyes, mid-roar. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_Giganotosaurus (do not render this name)."
+    },
+    {
+      "key": "Dino_Mosasaurus",
+      "subject": "a deep-blue mosasaurus bursting out of a splash of water",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a deep-blue mosasaurus bursting out of a splash of water. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_Mosasaurus (do not render this name)."
+    },
+    {
+      "key": "Dino_PrimalRex",
+      "subject": "a pale bone-white cybernetic T. rex with glowing cyan lab tubes and a metal jaw plate",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a pale bone-white cybernetic T. rex with glowing cyan lab tubes and a metal jaw plate. Cute but heroic head-and-shoulders portrait in 3/4 view, blocky Roblox-style dinosaur. Asset key: Dino_PrimalRex (do not render this name)."
+    },
+    {
+      "key": "Vehicle_RookieRanger",
+      "subject": "a small yellow safari jeep with green trim, a roof rack and a dart launcher on top",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a small yellow safari jeep with green trim, a roof rack and a dart launcher on top. Asset key: Vehicle_RookieRanger (do not render this name)."
+    },
+    {
+      "key": "Vehicle_RaptorRunner",
+      "subject": "a fast lime-green dune buggy with an orange roll cage and raptor-claw decals",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a fast lime-green dune buggy with an orange roll cage and raptor-claw decals. Asset key: Vehicle_RaptorRunner (do not render this name)."
+    },
+    {
+      "key": "Vehicle_TitanTransport",
+      "subject": "a huge armoured orange expedition truck with six wheels and a cargo crate full of eggs",
+      "prompt": "Roblox game UI icon, chunky stylized 3D cartoon render, toy-like blocky shapes made of rounded bricks, bold saturated colors, soft top-left key light with a bright specular highlight, thick dark navy-black outline around the whole silhouette (6–8 px at 512 px), slight 3/4 angle, no text, no background, transparent PNG, centred, matches the icon style of Roblox simulator games like Ghost Catchers and Pet Simulator. Keep the palette jungle-adventure: lime green, expedition yellow, adventure orange, sky blue, and warm brown wood, with cream whites. Export a single 512×512 PNG with actual transparent background, object centred and filling about 85% of the frame. Extra thick black cartoon outline, sticker style. Use case: stylized-concept. Subject: a huge armoured orange expedition truck with six wheels and a cargo crate full of eggs. Asset key: Vehicle_TitanTransport (do not render this name)."
+    }
+  ]
+}

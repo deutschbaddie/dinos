@@ -1,0 +1,74 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8765",
+        "--directory",
+        "tools/preview"
+      ],
+      "port": 8765
+    },
+    {
+      "name": "pose-preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8766",
+        "--directory",
+        "tools/preview"
+      ],
+      "port": 8766
+    },
+    {
+      "name": "tiktok-preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8767",
+        "--directory",
+        "tools/preview"
+      ],
+      "port": 8767
+    },
+    {
+      "name": "preview-map",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8768",
+        "--directory",
+        "tools/preview"
+      ],
+      "port": 8768
+    },
+    {
+      "name": "newcontent-preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8771",
+        "--directory",
+        "tools/preview"
+      ],
+      "port": 8771
+    },
+    {
+      "name": "refs-render",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "tools/preview/refserver.py",
+        "8781"
+      ],
+      "port": 8781
+    }
+  ]
+}

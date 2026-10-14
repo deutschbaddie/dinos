@@ -1,0 +1,82 @@
+[
+  {
+    "key": "Bag",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-afb65ba4-0253-440f-b3e7-0eea52f256c3.png"
+  },
+  {
+    "key": "Sell",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-3142fe17-44e3-4225-9779-2caa79da7e3d.png"
+  },
+  {
+    "key": "Quest",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-1a6f029f-67c8-4564-9d49-8c8b23e4b2a6.png"
+  },
+  {
+    "key": "Power",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-17925462-1ca9-4d65-9b48-070aafacd512.png"
+  },
+  {
+    "key": "Key",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-daf8fd21-b993-4abc-b134-7d80887e71d3.png"
+  },
+  {
+    "key": "Hammer",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-48e5f0e3-abda-42ea-9734-aefa9f7f7ed7.png"
+  },
+  {
+    "key": "Crown",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-0cddb791-b2c2-4f7d-9254-49c41b320336.png"
+  },
+  {
+    "key": "Film",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-b16bce54-49c7-4e9b-9a99-11815f747609.png"
+  },
+  {
+    "key": "Chest",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-76905aac-4517-4e32-b8a7-ae4de54be834.png"
+  },
+  {
+    "key": "Launcher",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-564565bb-60e4-4a21-ba82-31ac6b5d139d.png"
+  },
+  {
+    "key": "Armor",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-f3e5c29d-3435-46d9-9a45-9d66295f7078.png"
+  },
+  {
+    "key": "Rack",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-2f69edf7-1bd5-4ace-bb93-0457fe65ed5f.png"
+  },
+  {
+    "key": "Buddy",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-befdb63f-1359-420a-bbfb-9ade756bd217.png"
+  },
+  {
+    "key": "Gadget_Bait",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-2fec8b15-da36-4aff-88da-08ab99e2565c.png"
+  },
+  {
+    "key": "Gadget_Flare",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-f91f85da-b4b1-43ce-ba1b-39ed13a85418.png"
+  },
+  {
+    "key": "Gadget_Earthshaker",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-463f07dc-21e0-42f4-bab7-63f2ee8d6abb.png"
+  },
+  {
+    "key": "Mat_QueenClaw",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-b1f2237d-1087-4933-bc39-ad8ad408f2fb.png"
+  },
+  {
+    "key": "Mat_MatriarchScale",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-1f00b7fe-91c4-46c4-a230-b5fb3751b6c8.png"
+  },
+  {
+    "key": "Era_FernValley",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-84a8869e-9e66-481f-ac48-3f6012b7a7b1.png"
+  },
+  {
+    "key": "Era_GiantPlains",
+    "source": "/Users/emers/.codex/generated_images/01a12be9-5351-79f1-a0e1-91b67d9f9764/exec-dfd94c4a-1f69-4398-96bd-475d0558aca9.png"
+  }
+]

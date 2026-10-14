@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dino Expedition reference renders</title>
+<style>
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; }
+  canvas { display: block; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+</script>
+</head>
+<body>
+<script type="module">
+// Clean reference renders of the real generated models (for image-model reference sheets).
+// ?file=out/scene.json&focus=Group[,Group]&az=35&el=14&zoom=1&bg=none|#hex&studs=1&ground=shadow|none|#hex
+// or a world camera: &cam=x,y,z&look=x,y,z&fov=40
+// window.__render(opts) re-renders with new view params; window.__save(name) POSTs the PNG to /save
+import * as THREE from 'three';
+
+const q = new URLSearchParams(location.search);
+const file = q.get('file') || 'out/scene.json';
+const bg = q.get('bg') || 'none';
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, alpha: true });
+renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.08;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = bg === 'none' ? null : new THREE.Color(bg);
+scene.add(new THREE.HemisphereLight('#f2f6ff', '#9a917f', 1.7));
+const sun = new THREE.DirectionalLight('#fff4e2', 2.3);
+sun.castShadow = true;
+sun.shadow.mapSize.set(4096, 4096);
+sun.shadow.bias = -0.0004;
+scene.add(sun, sun.target);
+const rim = new THREE.DirectionalLight('#dff0ff', 1.1); // a cool back rim light so silhouettes read
+scene.add(rim, rim.target);
+
+function wedgeGeo() {
+  const v = [[-.5, -.5, -.5], [.5, -.5, -.5], [.5, -.5, .5], [-.5, -.5, .5], [-.5, .5, .5], [.5, .5, .5]];
+  const f = [[0, 2, 1], [0, 3, 2], [3, 4, 5], [3, 5, 2], [0, 1, 5], [0, 5, 4], [0, 4, 3], [1, 2, 5]];
+  const pos = [];
+  for (const t of f) for (const i of t) pos.push(...v[i]);
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.computeVertexNormals();
+  return g;
+}
+const GEO = {
+  box: new THREE.BoxGeometry(1, 1, 1),
+  wedge: wedgeGeo(),
+  cyl: new THREE.CylinderGeometry(.5, .5, 1, 32).rotateZ(Math.PI / 2),
+  ball: new THREE.SphereGeometry(.5, 32, 20),
+  ellipsoid: new THREE.SphereGeometry(.5, 32, 20),
+};
+const EDGE = {};
+for (const k in GEO) EDGE[k] = new THREE.EdgesGeometry(GEO[k], 25);
+const edgeMat = new THREE.LineBasicMaterial({ color: '#000000', transparent: true, opacity: 0.22 });
+const matCache = {};
+function mat(c, m, t) {
+  const key = c + m + t;
+  if (matCache[key]) return matCache[key];
+  const o = { color: c, roughness: 0.62, metalness: 0 };
+  if (m === 'Neon') { o.emissive = c; o.emissiveIntensity = 1.8; }
+  if (m === 'Metal' || m === 'DiamondPlate' || m === 'CorrodedMetal') { o.metalness = 0.5; o.roughness = 0.4; }
+  if (m === 'Glass') { o.roughness = 0.08; o.metalness = 0.2; }
+  if (m === 'SmoothPlastic') o.roughness = 0.5;
+  if (m === 'Fabric' || m === 'Grass' || m === 'Sand' || m === 'Slate' || m === 'WoodPlanks') o.roughness = 0.9;
+  if (t > 0) { o.transparent = true; o.opacity = 1 - t; o.depthWrite = t < 0.5; }
+  return (matCache[key] = new THREE.MeshStandardMaterial(o));
+}
+// Roblox studs on top faces: little raised discs, a shade lighter (one per stud, 1-stud grid)
+const studGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.14, 20);
+const studMats = {};
+
+const data = await (await fetch(file + '?v=' + Date.now())).json();
+const focus = q.get('focus');
+const groups = focus ? data.groups.filter((g) => focus.split(',').includes(g.name)) : data.groups;
+const box3 = new THREE.Box3();
+const studsOn = q.get('studs') !== '0';
+const studsByColor = {};
+for (const g of groups) {
+  for (const p of g.parts) {
+    if (p.t >= 1) continue;
+    const mesh = new THREE.Mesh(GEO[p.k], mat(p.c, p.m, p.t));
+    const [x, y, z, a, b, c, d, e, f, gg, h, i] = p.cf;
+    const rot = new THREE.Matrix4().set(a, b, c, x, d, e, f, y, gg, h, i, z, 0, 0, 0, 1);
+    const m4 = rot.clone().multiply(new THREE.Matrix4().makeScale(...p.s));
+    mesh.matrixAutoUpdate = false;
+    mesh.matrix.copy(m4);
+    mesh.castShadow = p.t < 0.3;
+    mesh.receiveShadow = true;
+    scene.add(mesh);
+    if (p.m !== 'Neon' && p.k !== 'ball' && p.k !== 'ellipsoid') {
+      const l = new THREE.LineSegments(EDGE[p.k], edgeMat);
+      l.matrixAutoUpdate = false; l.matrix.copy(m4); scene.add(l);
+    }
+    if (studsOn && p.st && p.k === 'box') {
+      const nx = Math.floor(p.s[0] + 0.01), nz = Math.floor(p.s[2] + 0.01);
+      if (nx >= 1 && nz >= 1 && nx * nz <= 600) {
+        const list = (studsByColor[p.c] = studsByColor[p.c] || []);
+        for (let u = 0; u < nx; u++) for (let w = 0; w < nz; w++) {
+          const lx = -p.s[0] / 2 + (p.s[0] - nx) / 2 + u + 0.5, lz = -p.s[2] / 2 + (p.s[2] - nz) / 2 + w + 0.5;
+          list.push(rot.clone().multiply(new THREE.Matrix4().makeTranslation(lx, p.s[1] / 2 + 0.07, lz)));
+        }
+      }
+    }
+    mesh.updateMatrixWorld(true);
+    box3.expandByObject(mesh);
+  }
+}
+for (const [col, list] of Object.entries(studsByColor)) {
+  const c = new THREE.Color(col).lerp(new THREE.Color('#ffffff'), 0.08);
+  const im = new THREE.InstancedMesh(studGeo, studMats[col] || (studMats[col] = new THREE.MeshStandardMaterial({ color: c, roughness: 0.55 })), list.length);
+  list.forEach((m, k) => im.setMatrixAt(k, m));
+  im.castShadow = true; im.receiveShadow = true;
+  scene.add(im);
+}
+const center = box3.getCenter(new THREE.Vector3());
+const sizeV = box3.getSize(new THREE.Vector3());
+const radius = sizeV.length() / 2;
+const groundMode = q.get('ground') || 'shadow';
+if (groundMode !== 'none') {
+  const gm = groundMode === 'shadow' ? new THREE.ShadowMaterial({ opacity: 0.28 }) : new THREE.MeshStandardMaterial({ color: groundMode, roughness: 1 });
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(8000, 8000), gm);
+  ground.rotation.x = -Math.PI / 2; ground.position.y = box3.min.y - 0.01; ground.receiveShadow = true;
+  scene.add(ground);
+}
+
+let cam = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.1, 8000);
+function place(opts) {
+  const o = Object.assign({ az: +(q.get('az') || 35), el: +(q.get('el') || 14), zoom: +(q.get('zoom') || 1), cam: q.get('cam'), look: q.get('look'), fov: +(q.get('fov') || 30) }, opts || {});
+  cam.fov = o.fov;
+  cam.aspect = innerWidth / innerHeight;
+  if (o.cam) {
+    const [px, py, pz] = String(o.cam).split(',').map(Number);
+    const [lx, ly, lz] = String(o.look || '0,0,0').split(',').map(Number);
+    cam.position.set(px, py, pz); cam.lookAt(lx, ly, lz);
+    sun.position.set(px + 300, py + 600, pz + 200); sun.target.position.set(lx, ly, lz);
+  } else {
+    const A = o.az * Math.PI / 180, E = o.el * Math.PI / 180;
+    const fit = Math.max(sizeV.y, Math.max(sizeV.x, sizeV.z) / Math.max(0.6, cam.aspect)) * 0.62;
+    const dist = (fit / Math.tan((cam.fov / 2) * Math.PI / 180)) / o.zoom;
+    cam.position.set(center.x + Math.sin(A) * Math.cos(E) * dist, center.y + Math.sin(E) * dist, center.z - Math.cos(A) * Math.cos(E) * dist);
+    cam.lookAt(center);
+    // key light from the camera's upper left, rim from behind
+    sun.position.set(center.x + Math.sin(A - 0.9) * radius * 3, center.y + radius * 3, center.z - Math.cos(A - 0.9) * radius * 3);
+    sun.target.position.copy(center);
+    rim.position.set(center.x - Math.sin(A) * radius * 3, center.y + radius * 1.5, center.z + Math.cos(A) * radius * 3);
+    rim.target.position.copy(center);
+    const sc = sun.shadow.camera; sc.left = sc.bottom = -radius * 1.6; sc.right = sc.top = radius * 1.6; sc.near = 0.1; sc.far = radius * 10; sc.updateProjectionMatrix();
+  }
+  cam.updateProjectionMatrix();
+  renderer.render(scene, cam);
+}
+window.__render = (opts) => { place(opts); return true; };
+window.__save = async (name) => {
+  const url = renderer.domElement.toDataURL('image/png');
+  const r = await fetch('/save?name=' + encodeURIComponent(name), { method: 'POST', body: url });
+  return r.status;
+};
+addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); place(); });
+place();
+window.__info = { size: [sizeV.x, sizeV.y, sizeV.z], groups: groups.map((g) => g.name) };
+window.__ready = true;
+</script>
+</body>
+</html>

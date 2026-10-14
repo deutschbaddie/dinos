@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dino Expedition Preview</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #1d2230; overflow: hidden; font: 12px/1.3 system-ui, sans-serif; color: #dfe6f5; }
+  #hud { position: fixed; left: 8px; top: 6px; pointer-events: none; text-shadow: 0 1px 2px #000; }
+  canvas { display: block; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+</script>
+</head>
+<body>
+<div id="hud"></div>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const q = new URLSearchParams(location.search);
+const file = q.get('file') || 'out/scene.json';
+const focus = q.get('focus');
+const grid = q.get('grid') !== '0' && !q.get('cam');
+const views = grid
+  ? [[35, 18], [90, 4], [215, 22], [0, 70]]
+  : [[+(q.get('az') || 35), +(q.get('el') || 18)]];
+const zoom = +(q.get('zoom') || 1);
+const edges = q.get('edges') !== '0';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.setScissorTest(true);
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#9fb7d6');
+scene.add(new THREE.HemisphereLight('#eaf2ff', '#8a8578', 1.9));
+const sun = new THREE.DirectionalLight('#fff6e8', 2.1);
+sun.castShadow = true;
+sun.shadow.mapSize.set(4096, 4096);
+scene.add(sun, sun.target);
+
+function wedgeGeo() {
+  // Roblox WedgePart: full bottom (-Y) and back (+Z) faces; slope rises from front-bottom to back-top
+  const v = [
+    [-.5, -.5, -.5], [.5, -.5, -.5], [.5, -.5, .5], [-.5, -.5, .5], // bottom
+    [-.5, .5, .5], [.5, .5, .5], // top back edge
+  ];
+  const f = [[0, 2, 1], [0, 3, 2], [3, 4, 5], [3, 5, 2], [0, 1, 5], [0, 5, 4], [0, 4, 3], [1, 2, 5]];
+  const pos = [];
+  for (const t of f) for (const i of t) pos.push(...v[i]);
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.computeVertexNormals();
+  return g;
+}
+const GEO = {
+  box: new THREE.BoxGeometry(1, 1, 1),
+  wedge: wedgeGeo(),
+  cyl: new THREE.CylinderGeometry(.5, .5, 1, 28).rotateZ(Math.PI / 2),
+  ball: new THREE.SphereGeometry(.5, 28, 18),
+  ellipsoid: new THREE.SphereGeometry(.5, 28, 18),
+};
+const EDGE = {};
+for (const k in GEO) EDGE[k] = new THREE.EdgesGeometry(GEO[k], 25);
+const edgeMat = new THREE.LineBasicMaterial({ color: '#000000', transparent: true, opacity: 0.16 });
+
+const matCache = {};
+function mat(c, m, t) {
+  const key = c + m + t;
+  if (matCache[key]) return matCache[key];
+  const o = { color: c, roughness: 0.75, metalness: 0 };
+  if (m === 'Neon') { o.emissive = c; o.emissiveIntensity = 1.6; }
+  if (m === 'Metal' || m === 'DiamondPlate' || m === 'CorrodedMetal') { o.metalness = 0.55; o.roughness = 0.45; }
+  if (m === 'Glass') { o.roughness = 0.08; o.metalness = 0.2; }
+  if (m === 'SmoothPlastic') o.roughness = 0.55;
+  if (t > 0) { o.transparent = true; o.opacity = 1 - t; o.depthWrite = t < 0.5; }
+  return (matCache[key] = new THREE.MeshStandardMaterial(o));
+}
+
+const data = await (await fetch(file + '?v=' + Date.now())).json();
+const groups = focus ? data.groups.filter((g) => focus.split(',').includes(g.name)) : data.groups;
+const box3 = new THREE.Box3();
+let count = 0;
+for (const g of groups) {
+  for (const p of g.parts) {
+    if (p.t >= 1) continue;
+    const mesh = new THREE.Mesh(GEO[p.k], mat(p.c, p.m, p.t));
+    const [x, y, z, a, b, c, d, e, f, gg, h, i] = p.cf;
+    const m4 = new THREE.Matrix4().set(a, b, c, x, d, e, f, y, gg, h, i, z, 0, 0, 0, 1);
+    m4.multiply(new THREE.Matrix4().makeScale(...p.s));
+    mesh.matrixAutoUpdate = false;
+    mesh.matrix.copy(m4);
+    mesh.castShadow = p.t < 0.3;
+    mesh.receiveShadow = true;
+    scene.add(mesh);
+    if (edges && p.m !== 'Neon') {
+      const l = new THREE.LineSegments(EDGE[p.k], edgeMat);
+      l.matrixAutoUpdate = false; l.matrix.copy(m4); scene.add(l);
+    }
+    mesh.updateMatrixWorld(true);
+    box3.expandByObject(mesh);
+    count++;
+  }
+}
+const center = box3.getCenter(new THREE.Vector3());
+const sizeV = box3.getSize(new THREE.Vector3());
+const radius = sizeV.length() / 2;
+// ground
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(4000, 4000), new THREE.MeshStandardMaterial({ color: '#8d939b', roughness: 1 }));
+ground.rotation.x = -Math.PI / 2; ground.position.y = Math.min(box3.min.y, 0) - 0.01; ground.receiveShadow = true;
+scene.add(ground);
+sun.position.set(center.x + radius * 0.6, center.y + radius * 1.4, center.z + radius * 0.45);
+sun.target.position.copy(center);
+const sc = sun.shadow.camera; sc.left = sc.bottom = -radius * 1.6; sc.right = sc.top = radius * 1.6; sc.far = radius * 8; sc.updateProjectionMatrix();
+
+document.getElementById('hud').textContent = `${groups.map((g) => g.name).join(', ')} — ${count} parts — size ${sizeV.x.toFixed(1)} x ${sizeV.y.toFixed(1)} x ${sizeV.z.toFixed(1)}`;
+
+const cams = views.map(([az, el]) => {
+  const cam = new THREE.PerspectiveCamera(32, 1, 0.1, 5000);
+  const A = az * Math.PI / 180, E = el * Math.PI / 180;
+  const dist = radius / Math.sin(16 * Math.PI / 180) * 0.92 / zoom;
+  // az measured from model front (-Z) toward +X
+  cam.position.set(center.x + Math.sin(A) * Math.cos(E) * dist, center.y + Math.sin(E) * dist, center.z - Math.cos(A) * Math.cos(E) * dist);
+  cam.lookAt(center);
+  return cam;
+});
+if (q.get('cam')) {
+  const [px, py, pz] = q.get('cam').split(',').map(Number);
+  const [lx, ly, lz] = (q.get('look') || '0,0,0').split(',').map(Number);
+  cams.length = 0;
+  const cam = new THREE.PerspectiveCamera(+(q.get('fov') || 60), 1, 0.5, 6000);
+  cam.position.set(px, py, pz); cam.lookAt(lx, ly, lz);
+  cams.push(cam);
+  scene.background = new THREE.Color('#bfe3f2');
+  scene.fog = new THREE.Fog('#cfe6ee', +(q.get('fog0') || 250), +(q.get('fog1') || 1100));
+}
+let controls = null;
+if (!grid) { controls = new OrbitControls(cams[0], renderer.domElement); if (q.get('cam')) controls.target.set(...(q.get('look') || '0,0,0').split(',').map(Number)); else controls.target.copy(center); controls.update(); }
+
+function render() {
+  const W = innerWidth, H = innerHeight;
+  const cols = grid ? 2 : 1, rows = grid ? 2 : 1;
+  const w = W / cols, h = H / rows;
+  cams.forEach((cam, k) => {
+    const cx = (k % cols) * w, cy = H - (Math.floor(k / cols) + 1) * h;
+    renderer.setViewport(cx, cy, w, h); renderer.setScissor(cx, cy, w, h);
+    cam.aspect = w / h; cam.updateProjectionMatrix();
+    renderer.render(scene, cam);
+  });
+  requestAnimationFrame(render);
+}
+addEventListener('resize', () => renderer.setSize(innerWidth, innerHeight));
+render();
+window.__ready = true;
+</script>
+</body>
+</html>

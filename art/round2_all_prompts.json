@@ -1,0 +1,342 @@
+[
+  {
+    "key": "r2_ICON_b_1",
+    "id": "ICON",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round1/r1_ICON_b.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/rover_rookie_34.png",
+      "/Users/emers/dino/art/refs/egg_TyrannosaurusRex.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nSimplify the background to flat sky blue and exactly two chunky white clouds. Remove distant trees and reduce fine dust by half. Keep the screaming explorer face and ONE stepped golden egg within central 85%; enlarge face slightly for tiny size. Dim vehicle headlights so egg remains brightest. Keep exact rover, exact green rex, existing diagonal chase pose. Use matte flat plastic and thin dark part outlines, no white rim halos.\n1024x1024 opaque square.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_ICON_a_1",
+    "id": "ICON",
+    "variant": "a",
+    "target": "/Users/emers/dino/art/round1/r1_ICON_a.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/rover_rookie_34.png",
+      "/Users/emers/dino/art/refs/egg_TyrannosaurusRex.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nSimplify the background to flat sky blue and exactly two chunky white clouds. Remove distant trees and reduce fine dust by half. Keep the screaming explorer face and ONE stepped golden egg within central 85%; enlarge face slightly for tiny size. Dim vehicle headlights so egg remains brightest. Keep exact rover, exact green rex, existing diagonal chase pose. Use matte flat plastic and thin dark part outlines, no white rim halos.\n1024x1024 opaque square.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_ICON_ALT_b_1",
+    "id": "ICON_ALT",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round1/r1_ICON_ALT_b.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nSimplify background to flat sunset orange with only subtle block cloud shapes. Keep the large startled explorer face, sweat drop and ONE stepped egg in same relative positions. Egg should preserve a real reference egg's stacked layers and diamond, with rainbow rarity light around it. Reduce glossy specular edges; no white halo around character. Keep rex rectangular head geometry and yellow eye. Central 85% safe crop.\n1024x1024 opaque square.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_ICON_ALT_d_1",
+    "id": "ICON_ALT",
+    "variant": "d",
+    "target": "/Users/emers/dino/art/round1/r1_ICON_ALT_d.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nSimplify background to flat sunset orange with only subtle block cloud shapes. Keep the large startled explorer face, sweat drop and ONE stepped egg in same relative positions. Egg should preserve a real reference egg's stacked layers and diamond, with rainbow rarity light around it. Reduce glossy specular edges; no white halo around character. Keep rex rectangular head geometry and yellow eye. Central 85% safe crop.\n1024x1024 opaque square.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T1_d_1",
+    "id": "T1",
+    "variant": "d",
+    "target": "/Users/emers/dino/art/round1/r1_T1_d.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/rover_views_contact_sheet.png",
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/dino_Velociraptor.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nCorrect the creature clinging to hood to the EXACT olive/lime Velociraptor reference: long narrow rectangular snout, dark olive stripes, cream chest, thin limbs, black head spikes; it must not resemble a bright green baby rex. Keep exact yellow-green rover and large bright green rex. Restore tan roof bedroll alongside exactly three stepped eggs with blue, purple and gold glow. Passenger operates a compact mounted single dart launcher backward toward rex; one bright orange feather-tailed dart, not a rocket or beam. Reframe to leave upper-left rectangle x=4%-49%, y=5%-27% open blue sky for later headline, without shrinking rover face excessively. Bottom-left dust kept simple. Matte plastic; everything sharp.\n1536x1024 landscape with all action in middle 1536x864 band for final 16:9 crop. Respect specified empty title zone.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T1_b_1",
+    "id": "T1",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round1/r1_T1_b.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/rover_views_contact_sheet.png",
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/dino_Velociraptor.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nCorrect the creature clinging to hood to the EXACT olive/lime Velociraptor reference: long narrow rectangular snout, dark olive stripes, cream chest, thin limbs, black head spikes; it must not resemble a bright green baby rex. Keep exact yellow-green rover and large bright green rex. Restore tan roof bedroll alongside exactly three stepped eggs with blue, purple and gold glow. Passenger operates a compact mounted single dart launcher backward toward rex; one bright orange feather-tailed dart, not a rocket or beam. Reframe to leave upper-left rectangle x=4%-49%, y=5%-27% open blue sky for later headline, without shrinking rover face excessively. Bottom-left dust kept simple. Matte plastic; everything sharp.\n1536x1024 landscape with all action in middle 1536x864 band for final 16:9 crop. Respect specified empty title zone.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T2_c_1",
+    "id": "T2",
+    "variant": "c",
+    "target": "/Users/emers/dino/art/round1/r1_T2_c.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_Triceratops.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png",
+      "/Users/emers/dino/art/refs/rover_rookie_side.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nKeep the reference Triceratops cream frill with orange markings and exactly three cream horns, orange-brown studded body, dark beak. Preserve rover yellow and green details. Explorer holds one blue rare stepped egg, face a clear sneaky grin; nest retains exactly three smaller eggs glowing green purple gold. Reduce tiny foreground flowers and blurred ferns. Shift action down/right enough to leave upper-left x=4%-49%, y=5%-26% mostly blue sky for headline. No text yet; flatter plastic lighting.\n1536x1024 landscape with all action in middle 1536x864 band for final 16:9 crop. Respect specified empty title zone.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T2_b_1",
+    "id": "T2",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round1/r1_T2_b.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_Triceratops.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png",
+      "/Users/emers/dino/art/refs/rover_rookie_side.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nKeep the reference Triceratops cream frill with orange markings and exactly three cream horns, orange-brown studded body, dark beak. Preserve rover yellow and green details. Explorer holds one blue rare stepped egg, face a clear sneaky grin; nest retains exactly three smaller eggs glowing green purple gold. Reduce tiny foreground flowers and blurred ferns. Shift action down/right enough to leave upper-left x=4%-49%, y=5%-26% mostly blue sky for headline. No text yet; flatter plastic lighting.\n1536x1024 landscape with all action in middle 1536x864 band for final 16:9 crop. Respect specified empty title zone.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T3_c_1",
+    "id": "T3",
+    "variant": "c",
+    "target": "/Users/emers/dino/art/round1/r1_T3_c.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/egg_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png",
+      "/Users/emers/dino/art/refs/baby_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/babies_row.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nKeep exact baby T. rex reference proportions: compact cuboid snout, small yellow eyes, green square plates and tan belly; two legs and two tiny arms only. Keep happy open mouth but no added oversized cartoon eyes. Explorer wears tan safari hat and explorer vest, hands on cheeks. Reduce confetti count and bloom so baby/egg reveal is single dominant focus. Exactly six small reference stepped eggs ordered grey, green, blue, purple, gold, rainbow across bottom, fully within frame; keep bottom-left 4% clear. Reserve upper-left x=4%-42%, y=5%-27% dark violet for later title; move player farther down if needed. Maintain deep violet backdrop and localized rainbow burst, not overall pink grading.\n1536x1024 landscape with all action in middle 1536x864 band for final 16:9 crop. Respect specified empty title zone.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T3_d_1",
+    "id": "T3",
+    "variant": "d",
+    "target": "/Users/emers/dino/art/round1/r1_T3_d.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/egg_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png",
+      "/Users/emers/dino/art/refs/baby_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/babies_row.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nKeep exact baby T. rex reference proportions: compact cuboid snout, small yellow eyes, green square plates and tan belly; two legs and two tiny arms only. Keep happy open mouth but no added oversized cartoon eyes. Explorer wears tan safari hat and explorer vest, hands on cheeks. Reduce confetti count and bloom so baby/egg reveal is single dominant focus. Exactly six small reference stepped eggs ordered grey, green, blue, purple, gold, rainbow across bottom, fully within frame; keep bottom-left 4% clear. Reserve upper-left x=4%-42%, y=5%-27% dark violet for later title; move player farther down if needed. Maintain deep violet backdrop and localized rainbow burst, not overall pink grading.\n1536x1024 landscape with all action in middle 1536x864 band for final 16:9 crop. Respect specified empty title zone.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T4_b_1",
+    "id": "T4",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round1/r1_T4_b.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/gear_launchers.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nReplace the oversized multicolor weapon with ONE compact launcher from the reference row: the orange/red-bodied leftmost launcher, cream cylindrical barrel and red-orange muzzle, black handle; reference row shows separate weapons, never join them end to end. Exactly two explorers with tan vests and safari hats: one dodging the stomp with alarm, one aiming that launcher. Show two orange feather-tail darts, no muzzle flame, rockets, injury or bullets. Preserve exact uncrowned green rex. Make upper-left x=4%-48%, y=5%-28% clear orange sky for headline, move boss health bar to upper-right x=57%-95%, y=7%-13%, blank red bar with dark border. Keep boss face under bar and unobscured. Simpler dust, sharp matte plastic.\n1536x1024 landscape with all action in middle 1536x864 band for final 16:9 crop. Respect specified empty title zone.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T4_d_1",
+    "id": "T4",
+    "variant": "d",
+    "target": "/Users/emers/dino/art/round1/r1_T4_d.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/gear_launchers.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nReplace the oversized multicolor weapon with ONE compact launcher from the reference row: the orange/red-bodied leftmost launcher, cream cylindrical barrel and red-orange muzzle, black handle; reference row shows separate weapons, never join them end to end. Exactly two explorers with tan vests and safari hats: one dodging the stomp with alarm, one aiming that launcher. Show two orange feather-tail darts, no muzzle flame, rockets, injury or bullets. Preserve exact uncrowned green rex. Make upper-left x=4%-48%, y=5%-28% clear orange sky for headline, move boss health bar to upper-right x=57%-95%, y=7%-13%, blank red bar with dark border. Keep boss face under bar and unobscured. Simpler dust, sharp matte plastic.\n1536x1024 landscape with all action in middle 1536x864 band for final 16:9 crop. Respect specified empty title zone.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T5_c_1",
+    "id": "T5",
+    "variant": "c",
+    "target": "/Users/emers/dino/art/round1/r1_T5_c.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/camp_views_contact_sheet.png",
+      "/Users/emers/dino/art/refs/rover_rookie_34.png",
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/place_timegate.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nRepair geography using camp and island references: foreground wedge-shaped island connects by ONE stone bridge to round central plaza. Gate stands on its separate raised deck BEYOND plaza against cliff, not in center of plaza. Preserve red-roof hatchery and its adjacent small utility buildings, log-fenced main rear paddock, palm trees and turf. Feature exact green blocky rex in rear paddock and a couple of tiny same-model dinos in another log pen. Rover with exactly two waving explorer friends on connecting bridge, preserve yellow body green trim black roof bars tan bedroll gold wheel hubs. Do not make rover bigger than hatchery. Keep island dominant. Reserve upper-left x=4%-54%, y=4%-25% quiet sky/water for title. Turquoise lagoon, block cliffs and waterfalls, matte game-render surfaces, no realistic glitter water.\n1536x1024 landscape with all action in middle 1536x864 band for final 16:9 crop. Respect specified empty title zone.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T5_b_1",
+    "id": "T5",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round1/r1_T5_b.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/camp_views_contact_sheet.png",
+      "/Users/emers/dino/art/refs/rover_rookie_34.png",
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/place_timegate.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images are authoritative model references. Refine target with these specific corrections, preserving scene concept and recognizable assets:\nRepair geography using camp and island references: foreground wedge-shaped island connects by ONE stone bridge to round central plaza. Gate stands on its separate raised deck BEYOND plaza against cliff, not in center of plaza. Preserve red-roof hatchery and its adjacent small utility buildings, log-fenced main rear paddock, palm trees and turf. Feature exact green blocky rex in rear paddock and a couple of tiny same-model dinos in another log pen. Rover with exactly two waving explorer friends on connecting bridge, preserve yellow body green trim black roof bars tan bedroll gold wheel hubs. Do not make rover bigger than hatchery. Keep island dominant. Reserve upper-left x=4%-54%, y=4%-25% quiet sky/water for title. Turquoise lagoon, block cliffs and waterfalls, matte game-render surfaces, no realistic glitter water.\n1536x1024 landscape with all action in middle 1536x864 band for final 16:9 crop. Respect specified empty title zone.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_ICON_b_2",
+    "id": "ICON",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round2/r2_ICON_b_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/rover_rookie_34.png",
+      "/Users/emers/dino/art/refs/egg_TyrannosaurusRex.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First input is edit target; remaining inputs preserve original model identity. Second refinement: keep current clean blue backdrop and exact asset geometry. Bring the egg 5% inward from left edge and the explorer face 5% larger. Egg is the only luminous object; headlights should be pale unlit plastic discs. Keep thin black outlines rather than bright contour glow. No title.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_ICON_a_2",
+    "id": "ICON",
+    "variant": "a",
+    "target": "/Users/emers/dino/art/round2/r2_ICON_a_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/rover_rookie_34.png",
+      "/Users/emers/dino/art/refs/egg_TyrannosaurusRex.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First input is edit target; remaining inputs preserve original model identity. Second refinement: keep current clean blue backdrop and exact asset geometry. Bring the egg 5% inward from left edge and the explorer face 5% larger. Egg is the only luminous object; headlights should be pale unlit plastic discs. Keep thin black outlines rather than bright contour glow. No title.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_ICON_ALT_b_2",
+    "id": "ICON_ALT",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round2/r2_ICON_ALT_b_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First input is edit target; remaining inputs preserve original model identity. Second refinement: keep clean orange background. Keep face and full diamond gem comfortably inside central 85%. Make explorer a sneaky shocked expression glancing toward the rex, not straight at viewer. Slightly reduce rainbow sparkle size so stepped egg edges remain crisp. Preserve all dinosaur head parts. No title.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_ICON_ALT_d_2",
+    "id": "ICON_ALT",
+    "variant": "d",
+    "target": "/Users/emers/dino/art/round2/r2_ICON_ALT_d_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First input is edit target; remaining inputs preserve original model identity. Second refinement: keep clean orange background. Keep face and full diamond gem comfortably inside central 85%. Make explorer a sneaky shocked expression glancing toward the rex, not straight at viewer. Slightly reduce rainbow sparkle size so stepped egg edges remain crisp. Preserve all dinosaur head parts. No title.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T2_c_2",
+    "id": "T2",
+    "variant": "c",
+    "target": "/Users/emers/dino/art/round2/r2_T2_c_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_Triceratops.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png",
+      "/Users/emers/dino/art/refs/rover_rookie_side.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First input is edit target; remaining inputs preserve original model identity. Second refinement: retain the newly open upper-left headline space. Restore two small cartoon white steam puffs at Triceratops nostrils without covering beak or horns. Reduce foreground plant density and keep all surfaces sharp, remove foreground depth-of-field blur. Keep three cream horns and same distinctive frill. No text.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T2_b_2",
+    "id": "T2",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round2/r2_T2_b_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_Triceratops.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png",
+      "/Users/emers/dino/art/refs/rover_rookie_side.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First input is edit target; remaining inputs preserve original model identity. Second refinement: retain the newly open upper-left headline space. Restore two small cartoon white steam puffs at Triceratops nostrils without covering beak or horns. Reduce foreground plant density and keep all surfaces sharp, remove foreground depth-of-field blur. Keep three cream horns and same distinctive frill. No text.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T1_d_2",
+    "id": "T1",
+    "variant": "d",
+    "target": "/Users/emers/dino/art/round2/r2_T1_d_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/rover_views_contact_sheet.png",
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/dino_Velociraptor.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images preserve exact reference model identities. Second refinement: preserve corrected olive raptor, yellow-green rover, bright green rex, two explorers and three roof eggs. Ensure the tan rolled bedroll is visible on roof beside eggs. Show ONE thin orange feather-tail dart with small blunt tip; remove glowing rocket trail and make launcher a small blocky roof-mounted toy device aimed back. Keep top-left 45% width by 24% height as quiet sky for headline, faces below it. Remove blurred foreground foliage and excessive dirt particles; keep everything sharp. Final frame 16:9, no text.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T1_b_2",
+    "id": "T1",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round2/r2_T1_b_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/rover_views_contact_sheet.png",
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/dino_Velociraptor.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images preserve exact reference model identities. Second refinement: preserve corrected olive raptor, yellow-green rover, bright green rex, two explorers and three roof eggs. Ensure the tan rolled bedroll is visible on roof beside eggs. Show ONE thin orange feather-tail dart with small blunt tip; remove glowing rocket trail and make launcher a small blocky roof-mounted toy device aimed back. Keep top-left 45% width by 24% height as quiet sky for headline, faces below it. Remove blurred foreground foliage and excessive dirt particles; keep everything sharp. Final frame 16:9, no text.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T3_c_2",
+    "id": "T3",
+    "variant": "c",
+    "target": "/Users/emers/dino/art/round2/r2_T3_c_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/egg_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png",
+      "/Users/emers/dino/art/refs/baby_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/babies_row.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images preserve exact reference model identities. Second refinement: preserve reference baby cuboid proportions and current safari explorer, exactly six small rarity eggs ordered grey green blue purple gold rainbow. Keep top-left 43% width by 29% height almost flat deep violet for title, and keep baby face entirely to right of this. Reduce blast brightness near baby legs so exactly two legs with distinct small feet can be counted. Keep rainbow radiating locally behind hatching egg, reduce floating shell pieces. Final 16:9 no text.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T3_d_2",
+    "id": "T3",
+    "variant": "d",
+    "target": "/Users/emers/dino/art/round2/r2_T3_d_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/egg_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/eggs_grid.png",
+      "/Users/emers/dino/art/refs/baby_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/babies_row.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images preserve exact reference model identities. Second refinement: preserve reference baby cuboid proportions and current safari explorer, exactly six small rarity eggs ordered grey green blue purple gold rainbow. Keep top-left 43% width by 29% height almost flat deep violet for title, and keep baby face entirely to right of this. Reduce blast brightness near baby legs so exactly two legs with distinct small feet can be counted. Keep rainbow radiating locally behind hatching egg, reduce floating shell pieces. Final 16:9 no text.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T4_b_2",
+    "id": "T4",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round2/r2_T4_b_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/gear_launchers.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images preserve exact reference model identities. Second refinement: preserve exact uncrowned rex and corrected single orange/red launcher, two safari explorers and only two feather-tailed orange darts. Keep health bar comfortably inside upper-right 57%-94% width and 7%-12% height of FINAL 16:9 frame, not at very top edge. Keep upper-left 4%-45% width and 5%-25% height clear orange sky for title. Keep full faces and feet below title, reduce soft foreground blur and bright rims. Final output 16:9 landscape, no letters.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T4_d_2",
+    "id": "T4",
+    "variant": "d",
+    "target": "/Users/emers/dino/art/round2/r2_T4_d_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex_front.png",
+      "/Users/emers/dino/art/refs/gear_launchers.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images preserve exact reference model identities. Second refinement: preserve exact uncrowned rex and corrected single orange/red launcher, two safari explorers and only two feather-tailed orange darts. Keep health bar comfortably inside upper-right 57%-94% width and 7%-12% height of FINAL 16:9 frame, not at very top edge. Keep upper-left 4%-45% width and 5%-25% height clear orange sky for title. Keep full faces and feet below title, reduce soft foreground blur and bright rims. Final output 16:9 landscape, no letters.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T5_c_2",
+    "id": "T5",
+    "variant": "c",
+    "target": "/Users/emers/dino/art/round2/r2_T5_c_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/camp_views_contact_sheet.png",
+      "/Users/emers/dino/art/refs/rover_rookie_34.png",
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/place_timegate.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images preserve exact reference model identities. Second refinement: preserve existing main island buildings and the corrected gate beyond plaza. Make the bridge with rover visibly connect from front entrance of featured island to round plaza, with no disconnected or crossing bridge segments. Rover must remain much smaller than hatchery, with two friends waving. Main island must have a wider rear coastline and narrower front entrance, i.e. wedge-shaped footprint as camp reference. Preserve original reference green rex cuboid shapes; no rounded body. Gate has dark blue/charcoal studded hexagon with gold trim, cyan nodes and membrane, low gray platform and ramps, two skeleton displays, matching gate reference rather than a tall cliff temple. Leave upper-left 50% width by 25% height quiet sky/water for title. Do not change this to a new map. No text. Final 16:9.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  },
+  {
+    "key": "r2_T5_b_2",
+    "id": "T5",
+    "variant": "b",
+    "target": "/Users/emers/dino/art/round2/r2_T5_b_1.png",
+    "refs": [
+      "/Users/emers/dino/art/refs/camp_views_contact_sheet.png",
+      "/Users/emers/dino/art/refs/rover_rookie_34.png",
+      "/Users/emers/dino/art/refs/dino_TyrannosaurusRex.png",
+      "/Users/emers/dino/art/refs/place_timegate.png"
+    ],
+    "prompt": "Roblox game key art made from the attached reference renders of the real in-game 3D models: keep their exact blocky shapes, part layout, colours and proportions, only change the pose, camera and lighting. Toy-like blocky 3D look built from chunky rectangular parts with studs, flat saturated plastic colours, clean bright lighting with a warm key light and a cool rim light, crisp thin dark outlines on the parts, high contrast, everything sharp. Players are classic blocky Roblox avatars with big expressive cartoon faces. Kid-friendly, exciting, no gore. Looks like a polished in-engine Roblox render.\nUse case: precise-object-edit. First image is edit target. Remaining images preserve exact reference model identities. Second refinement: preserve existing main island buildings and the corrected gate beyond plaza. Make the bridge with rover visibly connect from front entrance of featured island to round plaza, with no disconnected or crossing bridge segments. Rover must remain much smaller than hatchery, with two friends waving. Main island must have a wider rear coastline and narrower front entrance, i.e. wedge-shaped footprint as camp reference. Preserve original reference green rex cuboid shapes; no rounded body. Gate has dark blue/charcoal studded hexagon with gold trim, cyan nodes and membrane, low gray platform and ramps, two skeleton displays, matching gate reference rather than a tall cliff temple. Leave upper-left 50% width by 25% height quiet sky/water for title. Do not change this to a new map. No text. Final 16:9.\nDo not: redesign the models, add realistic scales/skin/feathers, smooth or melt the blocky parts, add extra teeth/limbs/wheels/eggs, change the rover's colours, put a crown on the T. rex, add text or letters (text comes later), add watermarks or other games' logos, use painterly brush strokes, depth-of-field blur, film grain, HDR halos, or a purple-pink AI colour grade, or give realistic five-finger hands (Roblox hands are simple)."
+  }
+]

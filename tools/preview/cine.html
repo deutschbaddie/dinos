@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dino Expedition Preview</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #1d2230; overflow: hidden; font: 12px/1.3 system-ui, sans-serif; color: #dfe6f5; }
+  #hud { position: fixed; left: 8px; top: 6px; pointer-events: none; text-shadow: 0 1px 2px #000; }
+  canvas { display: block; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+</script>
+</head>
+<body>
+<div id="hud"></div>
+<script type="module">
+import * as THREE from 'three';
+const q = new URLSearchParams(location.search);
+const file = q.get('file');
+const data = await (await fetch(file + '?v=' + Date.now())).json();
+const pick = q.get('frames') ? q.get('frames').split(',').map(Number) : data.frames.map((_, i) => i);
+const cols = +(q.get('cols') || 3);
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.setScissorTest(true);
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#e9b98a');
+scene.fog = new THREE.Fog('#e9b98a', 90, 260);
+scene.add(new THREE.HemisphereLight('#ffe9cf', '#6d5a48', 1.6));
+const sun = new THREE.DirectionalLight('#ffd9a8', 2.3);
+sun.castShadow = true; sun.shadow.mapSize.set(4096, 4096);
+const sc = sun.shadow.camera; sc.left = sc.bottom = -70; sc.right = sc.top = 70; sc.far = 400;
+scene.add(sun, sun.target);
+function wedgeGeo() {
+  const v = [[-.5,-.5,-.5],[.5,-.5,-.5],[.5,-.5,.5],[-.5,-.5,.5],[-.5,.5,.5],[.5,.5,.5]];
+  const f = [[0,2,1],[0,3,2],[3,4,5],[3,5,2],[0,1,5],[0,5,4],[0,4,3],[1,2,5]];
+  const pos = []; for (const t of f) for (const i of t) pos.push(...v[i]);
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.computeVertexNormals(); return g;
+}
+const GEO = { box: new THREE.BoxGeometry(1,1,1), wedge: wedgeGeo(), cyl: new THREE.CylinderGeometry(.5,.5,1,28).rotateZ(Math.PI/2), ball: new THREE.SphereGeometry(.5,28,18), ellipsoid: new THREE.SphereGeometry(.5,28,18) };
+const cache = {};
+function mat(c, m, t) {
+  const k = c + m + t; if (cache[k]) return cache[k];
+  const o = { color: c, roughness: 0.7 };
+  if (m === 'Neon') { o.emissive = c; o.emissiveIntensity = 1.8; }
+  if (m === 'Metal' || m === 'DiamondPlate') { o.metalness = 0.5; o.roughness = 0.45; }
+  if (t > 0) { o.transparent = true; o.opacity = 1 - t; o.depthWrite = t < 0.5; }
+  return (cache[k] = new THREE.MeshStandardMaterial(o));
+}
+function addParts(parts, parent) {
+  for (const p of parts) {
+    if (p.t >= 1) continue;
+    const m = new THREE.Mesh(GEO[p.k], mat(p.c, p.m, p.t));
+    const [x,y,z,a,b,c,d,e,f,g,h,i] = p.cf;
+    m.matrixAutoUpdate = false;
+    m.matrix.set(a,b,c,x,d,e,f,y,g,h,i,z,0,0,0,1).multiply(new THREE.Matrix4().makeScale(...p.s));
+    m.castShadow = true; m.receiveShadow = true; parent.add(m);
+  }
+}
+addParts(data.env, scene);
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(3000, 3000), new THREE.MeshStandardMaterial({ color: '#4f8f3e', roughness: 1 }));
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+const groups = pick.map((fi) => { const g = new THREE.Group(); addParts(data.frames[fi].parts, g); g.visible = false; scene.add(g); return g; });
+const c0 = data.frames[pick[0]].cam.look;
+sun.position.set(c0[0] + 60, c0[1] + 90, c0[2] + 40); sun.target.position.set(...c0);
+const cams = pick.map((fi) => {
+  const fr = data.frames[fi];
+  const cam = new THREE.PerspectiveCamera(fr.cam.fov, 16 / 9, 0.1, 2000);
+  cam.position.set(...fr.cam.pos); cam.lookAt(...fr.cam.look); cam.rotateZ(fr.cam.roll * Math.PI / 180);
+  return cam;
+});
+const hud = document.getElementById('hud');
+hud.style.cssText = 'position:fixed;inset:0;pointer-events:none;font:11px system-ui;color:#fff';
+const rows = Math.ceil(pick.length / cols);
+function layout() {
+  const W = innerWidth, H = innerHeight;
+  const cw = W / cols; const ch = Math.min(H / rows, cw * 9 / 16); const vw = ch * 16 / 9;
+  return { W, H, cw, ch, vw };
+}
+while (innerWidth < 10) await new Promise((r) => setTimeout(r, 100));
+renderer.setSize(innerWidth, innerHeight);
+const L = layout();
+hud.innerHTML = pick.map((fi, k) => {
+  const x = (k % cols) * L.cw + (L.cw - L.vw) / 2, y = Math.floor(k / cols) * L.ch;
+  const fr = data.frames[fi];
+  const bar = L.ch * data.letterbox;
+  return `<div style="position:absolute;left:${x}px;top:${y}px;width:${L.vw - 2}px;height:${bar}px;background:#000"></div>
+          <div style="position:absolute;left:${x}px;top:${y + L.ch - bar - 1}px;width:${L.vw - 2}px;height:${bar}px;background:#000"></div>
+          <div style="position:absolute;left:${x + 4}px;top:${y + 2}px">#${fi} t=${fr.t}s ${fr.shot} fov ${fr.cam.fov.toFixed(0)}</div>`;
+}).join('');
+function render() {
+  cams.forEach((cam, k) => {
+    const x = (k % cols) * L.cw + (L.cw - L.vw) / 2, yTop = Math.floor(k / cols) * L.ch;
+    const y = L.H - yTop - L.ch;
+    groups.forEach((g, j) => (g.visible = j === k));
+    renderer.setViewport(x, y, L.vw - 2, L.ch - 1); renderer.setScissor(x, y, L.vw - 2, L.ch - 1);
+    renderer.render(scene, cam);
+  });
+}
+render();
+setInterval(render, 500);
+window.__ready = true;
+</script>
+</body>
+</html>

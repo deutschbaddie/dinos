@@ -1,0 +1,51 @@
+{
+  "ICON": {
+    "source": "round2/r2_ICON_a_2.png",
+    "runners": [
+      "round2/r2_ICON_b_2.png",
+      "round2/r2_ICON_a_1.png"
+    ]
+  },
+  "ICON_ALT": {
+    "source": "round2/r2_ICON_ALT_d_2.png",
+    "runners": [
+      "round2/r2_ICON_ALT_b_1.png",
+      "round2/r2_ICON_ALT_d_1.png"
+    ]
+  },
+  "T1": {
+    "source": "round2/r2_T1_d_2.png",
+    "runners": [
+      "round2/r2_T1_b_2.png",
+      "round2/r2_T1_d_1.png"
+    ]
+  },
+  "T2": {
+    "source": "round2/r2_T2_c_2.png",
+    "runners": [
+      "round2/r2_T2_b_2.png",
+      "round2/r2_T2_c_1.png"
+    ]
+  },
+  "T3": {
+    "source": "round2/r2_T3_c_2.png",
+    "runners": [
+      "round2/r2_T3_d_2.png",
+      "round2/r2_T3_c_1.png"
+    ]
+  },
+  "T4": {
+    "source": "round2/r2_T4_b_2.png",
+    "runners": [
+      "round2/r2_T4_d_2.png",
+      "round2/r2_T4_d_1.png"
+    ]
+  },
+  "T5": {
+    "source": "round2/r2_T5_c_2.png",
+    "runners": [
+      "round2/r2_T5_b_2.png",
+      "round2/r2_T5_c_1.png"
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+// Mosasaurus — enormous, mysterious. Swimmer. Signature: OCEAN BREACH.
+module.exports = {
+  Signature: 'OceanBreach', Intro: 'OceanBreach', IntroShots: 'Breach', Chase: 'Chase', Special: 'Dive',
+  CycleOrder: ['Walk', 'Run', 'Dive', 'LookAround', 'Attack', 'Stunned', 'Roar'],
+  CameraScale: 2.8, PatrolRadius: 10,
+  Gait: {
+    Type: 'Swim', Scale: 2.0, Neck: ['Neck'], Tail: ['Tail1', 'Tail2', 'Tail3', 'Tail4', 'Tail5'],
+    Idle: { Freq: 0.25, Amp: 0.06, Flip: 0.5, Bob: 0.15, JawIdle: 0.03 },
+    Walk: { Freq: 0.45, Amp: 0.11, Flip: 0.9, Bob: 0.12, Speed: 7 },
+    Run: { Freq: 0.85, Amp: 0.16, Flip: 1.2, Bob: 0.1, Speed: 14 },
+  },
+  Actions: {
+    Roar: {
+      Duration: 3.0, Suppress: 0.85,
+      Keys: [[0.5, { Neck: [-0.08], Head: [0.02], Pelvis: [0, 0, 0, 0, -0.4, 0] }, 'Sine'], [1.0, { Neck: [0.25], Head: [0.25], Jaw: [-0.8], Torso: [0.08], Pelvis: [0, 0, 0, 0, 0.8, 0], '~FrontFlipper': [0, 0, 0.3] }, 'Back'], [2.3, { Neck: [0.27], Head: [0.27], Jaw: [-0.78], Torso: [0.08], Pelvis: [0, 0, 0, 0, 0.8, 0] }, 'Linear']],
+      Shake: [['Head', 1.0, 2.3, 0.04, 11, 3], ['Jaw', 1.0, 2.3, 0.03, 18, 1]],
+      Events: [[0.95, 'EyeGlow', 1.6], [1.0, 'Roar', { Scale: 1.5 }], [1.0, 'Splash', { At: 'VFX_Chest', Scale: 1.2 }], [1.02, 'CameraShake', 0.6]],
+    },
+    Attack: {
+      Duration: 1.8, Suppress: 0.95,
+      Keys: [
+        [0.45, { Neck: [0.25], Head: [0.25], Jaw: [-0.85], Pelvis: [0, 0, 0, 0, 0.6, 1.0], Tail2: [0, 0.3], Tail3: [0, 0.4] }, 'Out'],
+        [0.75, { Neck: [-0.05], Head: [0], Jaw: [-0.72], Pelvis: [0, 0, 0, 0, 0.4, -3.5], Tail2: [0, -0.3], Tail3: [0, -0.4] }, 'Snap'],
+        [0.85, { Neck: [-0.1], Head: [-0.1], Jaw: [0.02], Pelvis: [0, 0, 0, 0, 0.3, -3.6] }, 'Snap'],
+        [1.3, { Pelvis: [0, 0, 0, 0, 0, -1.5] }, 'Sine'],
+      ],
+      Events: [[0.85, 'Bite', { Scale: 1.6 }], [0.85, 'Splash', { At: 'VFX_Mouth', Scale: 1.4 }], [0.87, 'CameraShake', 0.6]],
+    },
+    Stunned: {
+      Duration: 2.8, Suppress: 0.9,
+      Keys: [[0.3, { Torso: [0, 0, 0.25], Pelvis: [0, 0, 0.3, 0, 0.4, 0], Head: [0.2, 0, 0.3] }, 'Out'], [1.0, { Torso: [0, 0, -0.2], Pelvis: [0, 0, -0.25, 0, -0.2, 0], Head: [-0.1, 0, -0.25] }, 'Sine'], [2.2, { Torso: [0, 0, 0.1], Pelvis: [0, 0, 0.1, 0, 0, 0] }, 'Sine']],
+      Events: [[0.05, 'Stunned', { Scale: 1.6 }], [0.1, 'Splash', { At: 'VFX_Chest', Scale: 1.0 }]],
+    },
+    LookAround: {
+      Duration: 3.6, Suppress: 0.6,
+      Keys: [[0.8, { Neck: [0.05, 0.3], Head: [0.1, 0.3] }, 'Sine'], [1.5, { Neck: [0.05, 0.32], Head: [0.15, 0.32] }, 'Linear'], [2.3, { Neck: [0.05, -0.3], Head: [0.1, -0.3] }, 'Sine'], [3.0, { Neck: [0.05, -0.32], Head: [0.15, -0.32] }, 'Linear']],
+    },
+    // slips beneath the surface and comes back up
+    Dive: {
+      Duration: 4.2, Suppress: 1,
+      Keys: [[0.8, { Pelvis: [0, 0, 0, 0, 0.6, 0], Torso: [-0.15], Neck: [-0.15], Head: [-0.1] }, 'Sine'], [1.8, { Pelvis: [0, 0, 0, 0, -8, -2], Torso: [-0.2], Neck: [-0.2] }, 'In'], [3.0, { Pelvis: [0, 0, 0, 0, -7, -3] }, 'Linear'], [4.0, { Pelvis: [0, 0, 0, 0, 0.3, 0], Neck: [0.1] }, 'Out']],
+      Events: [[1.3, 'Splash', { At: 'VFX_Chest', Scale: 1.6 }], [3.8, 'Splash', { At: 'VFX_Head', Scale: 1.2 }]],
+    },
+    Chase: {
+      Duration: 3.4, Suppress: 1, Gait: [[0, 3.0, 'Run', 1]],
+      Keys: [[2.6, { Pelvis: [0, 0, 0, 0, 0, -8] }, 'Linear'], [2.9, { Pelvis: [0, 0, 0, 0, 0.8, -9], Neck: [0.2], Head: [0.2], Jaw: [-0.9] }, 'Out'], [3.05, { Pelvis: [0, 0, 0, 0, 0.6, -9.4], Neck: [-0.1], Jaw: [0.02] }, 'Snap']],
+      Events: [[3.05, 'Bite', { Scale: 1.6 }], [3.06, 'Splash', { At: 'VFX_Mouth', Scale: 1.6 }]],
+    },
+    // SIGNATURE: a shadow under the water... it launches out, jaws open, and crashes back down
+    OceanBreach: {
+      Duration: 6.6, Suppress: 1, FadeIn: 0.01,
+      Gait: [[0.0, 1.8, 'Run', 1]],
+      Keys: [
+        [0.0, { Pelvis: [0, 0, 0, 0, -9.0, 10.0], Torso: [0.05] }, 'Linear'],
+        [1.6, { Pelvis: [0, 0, 0, 0, -8.0, 2.0], Torso: [0.15], Neck: [0.15], Head: [0.1] }, 'Sine'],
+        [2.4, { Pelvis: [0, 0.5, 0, 0, 11.0, -3.0], Torso: [0.5], Neck: [0.3], Head: [0.25], Jaw: [-0.85], '~FrontFlipper': [0.2, 0, 0.5], Tail1: [0.2], Tail2: [0.2], Tail3: [0.15] }, 'Out'],
+        [2.85, { Pelvis: [0, 0.6, 0, 0, 12.0, -6.0], Torso: [0.15], Neck: [0.1], Head: [0.05], Jaw: [-0.9], '~FrontFlipper': [0.3, 0, 0.7] }, 'Sine'],
+        [3.5, { Pelvis: [0, 0.6, 0, 0, -2.0, -9.0], Torso: [-0.5], Neck: [-0.3], Head: [-0.2], Jaw: [-0.2], Tail1: [-0.3], Tail2: [-0.3] }, 'In'],
+        [4.4, { Pelvis: [0, 0.4, 0, 0, -6.0, -6.0], Torso: [-0.2] }, 'Out'],
+        [5.6, { Pelvis: [0, 0, 0, 0, 0.6, 0], Neck: [0.2], Head: [0.2], Jaw: [-0.6] }, 'Sine'],
+      ],
+      Events: [
+        [0.3, 'Splash', { At: 'VFX_Head', Scale: 0.4 }], [1.95, 'Splash', { At: 'VFX_Chest', Scale: 2.6 }], [1.96, 'CameraShake', 0.6],
+        [2.0, 'EyeGlow', 3.0], [2.5, 'Roar', { Scale: 1.6 }], [3.55, 'Splash', { At: 'VFX_Chest', Scale: 3.4 }], [3.56, 'CameraShake', 1.0],
+        [5.4, 'Splash', { At: 'VFX_Head', Scale: 1.0 }],
+      ],
+    },
+  },
+};

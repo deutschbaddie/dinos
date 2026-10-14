@@ -1,0 +1,5 @@
+tools/preview/out/
+*.rbxl
+*.rbxlx
+sourcemap.json
+_codex_backup/
