@@ -41,7 +41,8 @@ Dinos.Start(deps)
 Quests.Start(deps)
 require(script.WaterSetup).Start() -- Terrain water for Spine River (before the sites read the ground)
 require(script.Shore).Start() -- Base Camp's invisible shore walls (after Vehicles registered its collision group)
-require(script.Carpool).Start({ Net = Net, Vehicles = Vehicles, Expedition = Expedition }) -- riding in other players' rovers
+local Carpool = require(script.Carpool)
+Carpool.Start({ Net = Net, Vehicles = Vehicles, Expedition = Expedition }) -- riding in other players' rovers
 Encounter.Start(deps)
 Expedition.Start(deps)
 require(script.Hotbar).Start(deps) -- dinos pinned to the hotbar (drag from the Bag)
@@ -186,6 +187,8 @@ end)
 -- the garage prompt / DRIVE button: the client picks a vehicle (if it owns several), then asks for the roll-out
 Net.On("TakeVehicle", function(player, args)
 	if Expedition.Get(player) then return { Ok = false, Err = "YOU'RE ON AN EXPEDITION" } end
+	-- (riding in someone's rover: out of their seat first - seating you in yours dragged theirs along)
+	if Carpool.IsPassenger(player) then Carpool.Release(player) end
 	local v, mode = Vehicles.TakeVehicle(player, typeof(args.Name) == "string" and args.Name or nil)
 	return { Ok = v ~= nil, Mode = mode, Err = v == nil and "CAN'T TAKE THAT VEHICLE" or nil }
 end)
@@ -225,9 +228,14 @@ Net.On("ExitVehicle", function(player)
 end)
 Net.On("Home", function(player)
 	if Expedition.Get(player) then return { Ok = false } end
+	local cf = Plots.SpawnCFrame(player)
+	-- (a passenger: out of the seat and home through Carpool - moving a body welded into a seat moved the driver's rover)
+	if Carpool.IsPassenger(player) then
+		Carpool.Release(player, cf and cf + Vector3.new(0, 2.5, 0))
+		return { Ok = true }
+	end
 	Vehicles.Despawn(player)
 	local char = player.Character
-	local cf = Plots.SpawnCFrame(player)
 	if char and cf then char:PivotTo(cf + Vector3.new(0, 2.5, 0)) end
 	return { Ok = true }
 end)

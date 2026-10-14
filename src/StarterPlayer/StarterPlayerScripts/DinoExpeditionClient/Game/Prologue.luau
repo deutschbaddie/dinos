@@ -668,6 +668,12 @@ function Prologue.Play(_opts)
 		Audio.AmbienceLevel(1)
 		Zone.Apply("BaseCamp", true)
 		Audio.SetMusic("Camp")
+		-- (the run held the driving camera: hand it back too, or the rover can't be driven until the next roll-out)
+		pcall(function()
+			local D = require(script.Parent.Drive) :: any
+			D.HoldCamera(false)
+			D.SetCameraOverride(false)
+		end)
 	end
 	if activeCine then Cinema.End(activeCine) activeCine = nil end
 	Prologue.Playing = false

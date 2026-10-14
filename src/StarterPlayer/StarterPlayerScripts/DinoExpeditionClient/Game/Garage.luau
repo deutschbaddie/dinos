@@ -451,9 +451,17 @@ function Garage.Start(panels, hud)
 	end
 	for _, d in ipairs(Workspace:GetDescendants()) do track(d) end
 	Workspace.DescendantAdded:Connect(track)
+	-- (a rover parked at camp keeps your Vehicle attribute: that's not driving - the RIDE SHOP is where you go next)
+	local function ownRoverParked(): boolean
+		local av = Workspace:FindFirstChild("ActiveVehicles")
+		for _, m in ipairs(av and av:GetChildren() or {}) do
+			if m:GetAttribute("Owner") == player.UserId then return m:GetAttribute("Parked") == true end
+		end
+		return false
+	end
 	task.spawn(function()
 		while true do
-			local driving = Drive.State.Mode ~= "None" or player:GetAttribute("Vehicle") ~= nil
+			local driving = Drive.State.Mode ~= "None" or (player:GetAttribute("Vehicle") ~= nil and not ownRoverParked())
 			for pr in pairs(garagePrompts) do
 				if pr.Parent and pr.Enabled == driving then pr.Enabled = not driving end
 			end

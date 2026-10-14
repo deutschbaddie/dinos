@@ -41,7 +41,9 @@ end
 -- respawn the rover in place so a new build shows up on the one you're driving around camp
 local function restyle(player: Player, body: string)
 	local v = Vehicles.Get(player)
-	if not v or Vehicles.Locked[player] or v:GetAttribute("VehicleName") ~= body then return end
+	-- (a rover parked at camp stays as it is - respawning it seated you in it from inside the shop; the next DRIVE
+	-- brings out the new build)
+	if not v or Vehicles.Locked[player] or Vehicles.CampParked[player] or v:GetAttribute("VehicleName") ~= body then return end
 	local root = v.PrimaryPart
 	if not root then return end
 	local oldRH = v:GetAttribute("RootHeight") or 2.6

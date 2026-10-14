@@ -98,7 +98,7 @@ local function craft(player: Player, what: string, id: string)
 		end
 	end
 	if Quests and info.Craft then Quests.Progress(player, "Craft", { Count = 1 }) end
-	if what == "Rover" and Vehicles.Get(player) and not Expedition.Get(player) then Vehicles.Spawn(player) end
+	if what == "Rover" and Vehicles.Get(player) and not Vehicles.CampParked[player] and not Expedition.Get(player) then Vehicles.Spawn(player) end
 	Net.FireAll("Announce", { Text = string.format("%s BUILT THE %s!", string.upper(player.DisplayName), info.Name), Color = "Orange" })
 	return done(player, { Ok = true, Kind = "Craft", What = what, Id = id, Name = info.Name, Perk = info.Perk })
 end
@@ -111,7 +111,7 @@ local function equip(player: Player, what: string, id: string, slot: number?)
 	elseif what == "Armor" and g.Armors[id] then g.Armor = id
 	elseif what == "Rover" and g.Vehicles[id] then
 		g.Vehicle = id
-		if Vehicles.Get(player) and not Expedition.Get(player) then Vehicles.Spawn(player) end
+		if Vehicles.Get(player) and not Vehicles.CampParked[player] and not Expedition.Get(player) then Vehicles.Spawn(player) end
 	elseif what == "Gadget" and (id == "" or g.GadgetsOwned[id]) then
 		-- whole slots only (a client sending 1.5 used to write a non-array key into the saved gadget list)
 		local s = math.clamp(math.floor(tonumber(slot) or 1), 1, Config.GadgetSlots)
