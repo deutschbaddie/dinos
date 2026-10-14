@@ -64,6 +64,7 @@ local function default()
 		Index = {}, -- "Species:Rarity" -> true
 		IndexRewards = { Claimed = {}, Title = "" }, -- the Index's claimed rewards ("Species/10", "Era/FernValley", "Secrets/<era>") + the title you wear (IndexDefs)
 		Discover = {}, -- era -> secret id -> true (the Index's SECRETS page, Discover.luau)
+		Showcase = "", -- the dino id on your SHOWCASE pedestal ("" = empty; Showcase.luau)
 		Unlocked = { FernValley = true },
 		Quests = { Story = 1, Active = {}, Progress = {}, Side = {} },
 		Daily = { Last = 0, Streak = 0 },

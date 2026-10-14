@@ -165,8 +165,12 @@ function RarityFx.Tag(host: BasePart, d, height: number): BillboardGui
 		local main = rt:FindFirstChild("Main")
 		if main then RarityFx.Rainbow(main) end
 	end
-	Kit.Text(bb, sp and sp.Name or d.Species, { Size = UDim2.new(1, 0, 0, 22), Position = UDim2.fromOffset(0, 22), Stroke = 3, Shadow = 2, MaxSize = 22 })
-	Kit.Text(bb, Config.FormatKG(d.KG or 0) .. "  •  $" .. Config.FormatNumber(Config.DinoIncome(d)) .. "/s", { Size = UDim2.new(1, 0, 0, 16), Position = UDim2.fromOffset(0, 48), Stroke = 2.5, Shadow = 1, MaxSize = 16, Color = Color3.fromRGB(200, 255, 140) })
+	-- (a named dino goes by its name - DINO NAMES, Showcase.luau - and its species joins the small line)
+	local named = typeof(d.Name) == "string" and d.Name ~= ""
+	Kit.Text(bb, Config.DinoName(d), { Name = "DinoName", Size = UDim2.new(1, 0, 0, 22), Position = UDim2.fromOffset(0, 22), Stroke = 3, Shadow = 2, MaxSize = 22, Color = named and Color3.fromRGB(255, 233, 138) or nil })
+	local stats = Config.FormatKG(d.KG or 0) .. "  •  $" .. Config.FormatNumber(Config.DinoIncome(d)) .. "/s"
+	if named then stats = (sp and sp.Name or tostring(d.Species)) .. "  •  " .. stats end
+	Kit.Text(bb, stats, { Size = UDim2.new(1, 0, 0, 16), Position = UDim2.fromOffset(0, 48), Stroke = 2.5, Shadow = 1, MaxSize = 16, Color = Color3.fromRGB(200, 255, 140) })
 	bb.Parent = host
 	return bb
 end

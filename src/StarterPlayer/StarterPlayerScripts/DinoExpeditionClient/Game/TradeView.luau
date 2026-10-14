@@ -68,6 +68,7 @@ end
 -- "LEGENDARY T-REX EGG  2,340 KG  BOND 2"
 local function itemLine(it): string
 	local s = rarityOf(it.Rarity).Name .. " " .. speciesName(it.Species) .. (it.Kind == "Egg" and " EGG" or "") .. "  " .. kg(it.KG)
+	if typeof(it.Name) == "string" and it.Name ~= "" then s = string.upper(it.Name) .. " - " .. s end
 	if it.Bond and it.Bond > 0 then s ..= "  BOND " .. it.Bond end
 	return s
 end

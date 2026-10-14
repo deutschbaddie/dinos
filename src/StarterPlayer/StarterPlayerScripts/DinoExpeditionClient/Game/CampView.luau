@@ -145,7 +145,7 @@ local function newDino(st, d, penArea: BasePart?)
 	RarityFx.Apply(m, d.Rarity, math.max(size.X, size.Z))
 	RarityFx.Tag(root, d, size.Y * 0.6 + 2.5)
 	local anim = DinosaurAnimations.get(m)
-	return { Model = m, Root = root, Anim = anim, Id = d.Id, Species = d.Species, KG = d.KG, Target = nil, Wait = math.random() * 3, Lift = lift, FloorY = floorY, Random = randomPoint, Speed = math.clamp(size.Z * 0.22, 2.4, 7) }
+	return { Model = m, Root = root, Anim = anim, Id = d.Id, Species = d.Species, KG = d.KG, Name = d.Name, TagY = size.Y * 0.6 + 2.5, Target = nil, Wait = math.random() * 3, Lift = lift, FloorY = floorY, Random = randomPoint, Speed = math.clamp(size.Z * 0.22, 2.4, 7) }
 end
 
 local function stepDino(b, dt: number)
@@ -232,6 +232,14 @@ local function statue(spot: BasePart, bossId: string, tier: number): Model?
 	return m
 end
 
+-- a dino was named (or its name cleared): swap its floating tag
+local function retag(b, d)
+	b.Name = d.Name
+	local old = b.Root and b.Root:FindFirstChild("DinoTag")
+	if old then old:Destroy() end
+	if b.Root and b.Root.Parent then RarityFx.Tag(b.Root, d, b.TagY or 4) end
+end
+
 local function refreshPlot(st)
 	local plot = st.Plot
 	local own = plot:GetAttribute("Owner") == player.UserId
@@ -278,9 +286,10 @@ local function refreshPlot(st)
 	-- the yard
 	local yard = decode(plot:GetAttribute("Yard"))
 	local want = {}
-	for _, row in ipairs(yard) do want[row[1]] = { Id = row[1], Species = row[2], Rarity = row[3], KG = row[4] } end
+	for _, row in ipairs(yard) do want[row[1]] = { Id = row[1], Species = row[2], Rarity = row[3], KG = row[4], Name = row[5] } end
 	for id, b in pairs(st.Dinos) do
-		if not want[id] or Camp.HiddenBabies[id] then b.Model:Destroy() st.Dinos[id] = nil end
+		if not want[id] or Camp.HiddenBabies[id] then b.Model:Destroy() st.Dinos[id] = nil
+		elseif b.Name ~= want[id].Name then retag(b, want[id]) end
 	end
 	for id, d in pairs(want) do
 		if not st.Dinos[id] and not Camp.HiddenBabies[id] then st.Dinos[id] = newDino(st, d) end
@@ -292,12 +301,13 @@ local function refreshPlot(st)
 	local penWant = {}
 	for lot, pen in pairs(type(island) == "table" and island.Pens or {}) do
 		local row = type(pen) == "table" and pen.Dino
-		if type(row) == "table" and row[1] then penWant[lot] = { Id = row[1], Species = row[2], Rarity = row[3], KG = row[4], Pen = pen.Species } end
+		if type(row) == "table" and row[1] then penWant[lot] = { Id = row[1], Species = row[2], Rarity = row[3], KG = row[4], Name = row[5], Pen = pen.Species } end
 	end
 	st.PenStars = st.PenStars or {}
 	for lot, b in pairs(st.PenStars) do
 		local w = penWant[lot]
-		if not w or w.Id ~= b.Id or not b.Model.Parent then b.Model:Destroy() st.PenStars[lot] = nil end
+		if not w or w.Id ~= b.Id or not b.Model.Parent then b.Model:Destroy() st.PenStars[lot] = nil
+		elseif b.Name ~= w.Name then retag(b, w) end
 	end
 	for lot, d in pairs(penWant) do
 		if not st.PenStars[lot] and not (own and Camp.HoldPenStars) then

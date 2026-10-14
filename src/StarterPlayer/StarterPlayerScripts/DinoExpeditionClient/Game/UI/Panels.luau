@@ -390,7 +390,8 @@ local function buildBag(content: Frame, header: Frame)
 			local picked = bag.Picked[d.Id] == true
 			local card, cc = rarityCard(grid, i, d.Rarity, bag.Sel == d.Id or picked)
 			Kit.Icon(cc, "Dino", { Species = d.Species, Size = UDim2.fromOffset(96, 96), Position = UDim2.new(0.5, 0, 0, 50), AnchorPoint = Vector2.new(0.5, 0.5), ZIndex = 27 })
-			text(cc, Config.Species[d.Species].Name, { Size = UDim2.new(1, -10, 0, 14), Position = UDim2.new(0.5, 0, 0, 98), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 14 })
+			text(cc, Config.DinoName(d), { Size = UDim2.new(1, -10, 0, 14), Position = UDim2.new(0.5, 0, 0, 98), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 14, Color = (d.Name and d.Name ~= "") and C.YellowHi or nil })
+			if p.Showcase == d.Id then Kit.Icon(cc, "Trophy", { Size = UDim2.fromOffset(30, 30), Position = UDim2.new(0, 4, 0, 46), ZIndex = 33 }) end
 			pixel(cc, Config.FormatKG(d.KG or 0) .. "  $" .. Config.FormatNumber(Config.DinoIncome(d)) .. "/S", { Size = UDim2.new(1, -10, 0, 9), Position = UDim2.new(0.5, 0, 0, 118), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 9, Color = C.LimeHi })
 			-- equipped or not, at a glance: a big COMPANION / YARD badge; stored dinos are dimmed with IN BAG
 			local function badge(label: string, color: Color3, y: number)
@@ -454,15 +455,28 @@ local function buildBag(content: Frame, header: Frame)
 			if d then
 				local r = Config.Rarity[d.Rarity]
 				local placed, buddy = idIn(p.Placed, d.Id), idIn(p.Buddies, d.Id)
-				text(detail, r.Name .. " " .. Config.Species[d.Species].Name, { Size = UDim2.new(0.4, 0, 0, 22), Position = UDim2.new(0, 4, 0.5, -8), AnchorPoint = Vector2.new(0, 0.5), Align = Enum.TextXAlignment.Left, ZIndex = 26, MaxSize = 22, Color = r.Color:Lerp(Color3.new(1, 1, 1), 0.3) })
-				pixel(detail, Config.FormatKG(d.KG or 0) .. "  -  POWER " .. Config.BuddyPower(d) .. "  -  " .. Config.BuddyRoleOf(d.Species).Name, { Size = UDim2.new(0.4, 0, 0, 9), Position = UDim2.new(0, 4, 0.5, 14), AnchorPoint = Vector2.new(0, 0.5), Align = Enum.TextXAlignment.Left, ZIndex = 26, MaxSize = 9, Color = C.Muted })
+				local named = typeof(d.Name) == "string" and d.Name ~= ""
+				text(detail, named and Config.DinoName(d) or (r.Name .. " " .. Config.Species[d.Species].Name), { Size = UDim2.new(0, 226, 0, 22), Position = UDim2.new(0, 4, 0.5, -8), AnchorPoint = Vector2.new(0, 0.5), Align = Enum.TextXAlignment.Left, ZIndex = 26, MaxSize = 22, Color = named and C.YellowHi or r.Color:Lerp(Color3.new(1, 1, 1), 0.3) })
+				pixel(detail, (named and (r.Name .. " " .. Config.Species[d.Species].Name .. "  -  ") or "") .. Config.FormatKG(d.KG or 0) .. "  -  POWER " .. Config.BuddyPower(d) .. "  -  " .. Config.BuddyRoleOf(d.Species).Name, { Size = UDim2.new(0, 226, 0, 9), Position = UDim2.new(0, 4, 0.5, 14), AnchorPoint = Vector2.new(0, 0.5), Align = Enum.TextXAlignment.Left, ZIndex = 26, MaxSize = 9, Color = C.Muted })
+				-- NAME it, and put it on your island's SHOWCASE pedestal (Showcase.luau)
+				Kit.Button(detail, { Text = named and "RENAME" or "NAME", Color = "Yellow", Size = UDim2.fromOffset(118, 29), Position = UDim2.new(0, 236, 0, 1), ZIndex = 26, Lip = 3, Radius = 10, MaxText = 14, OnClick = function()
+					require(script.Parent.Parent.NameDialog).Open(d)
+				end })
+				local shown = p.Showcase == d.Id
+				Kit.Button(detail, { Text = shown and "ON SHOW" or "SHOWCASE", Color = shown and "Grey" or "Orange", Size = UDim2.fromOffset(118, 29), Position = UDim2.new(0, 236, 1, -30), ZIndex = 26, Lip = 3, Radius = 10, MaxText = 14, OnClick = function()
+					if shown then
+						ask("SetShowcase", { Id = "" }, "YOUR SHOWCASE IS EMPTY", "Grey", "Trophy")
+					else
+						ask("SetShowcase", { Id = d.Id }, Config.DinoName(d) .. " IS ON SHOW AT YOUR ISLAND!", "Gold", "Trophy")
+					end
+				end })
 				-- hurt (it bled out on a run): resting, can't fight. heal it now for coins, or wait it out
 				local hurt = Config.Hurt(d, math.floor(workspace:GetServerTimeNow()))
 				if hurt > 0 then
 					local price = Config.HealPrice(d, hurt)
 					local can = (p.Coins or 0) >= price
 					Kit.Button(detail, { Text = "HEAL " .. Config.FormatNumber(price), Icon = "Coin", IconSize = 0.85, TextLeft = 0.3, Color = can and "Red" or "Grey", Disabled = not can, Size = UDim2.fromOffset(124, 50), Position = UDim2.new(1, -500, 0.5, 0), AnchorPoint = Vector2.new(0, 0.5), ZIndex = 26, MaxText = 16, OnClick = function()
-						ask("HealDino", { Id = d.Id }, Config.Species[d.Species].Name .. " IS ALL BETTER!", "Green", "Buddy")
+						ask("HealDino", { Id = d.Id }, Config.DinoName(d) .. " IS ALL BETTER!", "Green", "Buddy")
 					end })
 				-- hold it in your arms (like an egg)
 				elseif d.Species ~= "Mosasaurus" then
@@ -514,7 +528,7 @@ local function buildCompanions(content: Frame, header: Frame)
 			local card, cc = Kit.Card(content, { Size = UDim2.fromOffset(W, 196), Position = UDim2.fromOffset(x, 0), Border = picked and C.YellowHi or r.Color, Color = "Card", ZIndex = 24 })
 			local _ = card
 			Kit.Icon(cc, "Dino", { Species = d.Species, Size = UDim2.fromOffset(104, 104), Position = UDim2.fromOffset(6, 4), ZIndex = 27 })
-			text(cc, Config.Species[d.Species].Name, { Size = UDim2.new(1, -120, 0, 20), Position = UDim2.fromOffset(112, 10), Align = Enum.TextXAlignment.Left, ZIndex = 27, MaxSize = 20 })
+			text(cc, Config.DinoName(d), { Size = UDim2.new(1, -120, 0, 20), Position = UDim2.fromOffset(112, 10), Align = Enum.TextXAlignment.Left, ZIndex = 27, MaxSize = 20, Color = (d.Name and d.Name ~= "") and C.YellowHi or nil })
 			pixel(cc, r.Name .. "  " .. Config.FormatKG(d.KG or 0), { Size = UDim2.new(1, -120, 0, 9), Position = UDim2.fromOffset(112, 36), Align = Enum.TextXAlignment.Left, ZIndex = 27, MaxSize = 9, Color = r.Color:Lerp(Color3.new(1, 1, 1), 0.3) })
 			local role = Config.BuddyRoleOf(d.Species)
 			pixel(cc, role.Name, { Size = UDim2.new(1, -120, 0, 9), Position = UDim2.fromOffset(112, 54), Align = Enum.TextXAlignment.Left, ZIndex = 27, MaxSize = 9, Color = C.OrangeHi })
@@ -588,13 +602,13 @@ local function buildCompanions(content: Frame, header: Frame)
 	for i, d in ipairs(list) do
 		local card, cc = rarityCard(grid, i, d.Rarity, false)
 		Kit.Icon(cc, "Dino", { Species = d.Species, Size = UDim2.fromOffset(84, 84), Position = UDim2.new(0.5, 0, 0, 44), AnchorPoint = Vector2.new(0.5, 0.5), ZIndex = 27 })
-		text(cc, Config.Species[d.Species].Name, { Size = UDim2.new(1, -10, 0, 13), Position = UDim2.new(0.5, 0, 0, 86), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 13 })
+		text(cc, Config.DinoName(d), { Size = UDim2.new(1, -10, 0, 13), Position = UDim2.new(0.5, 0, 0, 86), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 13, Color = (d.Name and d.Name ~= "") and C.YellowHi or nil })
 		pixel(cc, "POWER " .. Config.BuddyPower(d), { Size = UDim2.new(1, -10, 0, 9), Position = UDim2.new(0.5, 0, 0, 104), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 9, Color = C.OrangeHi })
 		if not idIn(p.Placed, d.Id) then pixel(cc, "STORED", { Size = UDim2.new(1, -10, 0, 9), Position = UDim2.new(0.5, 0, 0, 6), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 28, MaxSize = 9, Color = C.Muted }) end
 		local hit = hitArea(card, function()
 			local slot = comp.Slot
 			comp.Slot = nil
-			ask("EquipCompanion", { Id = d.Id, Slot = slot }, string.upper(Config.Species[d.Species].Name) .. " IS COMING WITH YOU!", "Teal", "Buddy")
+			ask("EquipCompanion", { Id = d.Id, Slot = slot }, Config.DinoName(d) .. " IS COMING WITH YOU!", "Teal", "Buddy")
 		end)
 		first = first or hit
 		table.insert(cards, card)

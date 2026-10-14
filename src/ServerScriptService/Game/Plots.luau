@@ -75,7 +75,7 @@ function Plots.Sync(player: Player)
 	plot:SetAttribute("IncubatorCount", profile.IncubatorCount)
 	local yard = {}
 	for _, d in ipairs(Dinos.PlacedList(profile)) do
-		table.insert(yard, { d.Id, d.Species, d.Rarity, d.KG })
+		table.insert(yard, { d.Id, d.Species, d.Rarity, d.KG, d.Name })
 	end
 	plot:SetAttribute("Yard", HttpService:JSONEncode(yard))
 	-- your companions follow you round camp (only yard dinos; the lead one first)
@@ -97,9 +97,11 @@ function Plots.Sync(player: Player)
 	local pens = {}
 	for lot, pen in pairs(Dinos.PenList(profile)) do
 		local d = pen.Dino
-		pens[lot] = { Species = pen.Species, Dino = d and { d.Id, d.Species, d.Rarity, d.KG } or nil }
+		pens[lot] = { Species = pen.Species, Dino = d and { d.Id, d.Species, d.Rarity, d.KG, d.Name } or nil }
 	end
 	plot:SetAttribute("Island", HttpService:JSONEncode({ Hatchery = Config.IslandTier(profile, "Hatchery"), Garage = Config.IslandTier(profile, "Garage"), Pens = pens }))
+	-- the SHOWCASE pedestal: your star (or nothing), checked again every sync
+	require(script.Parent.Showcase).Publish(player, profile, plot)
 end
 
 function Plots.Assign(player: Player): Model?
@@ -133,6 +135,7 @@ function Plots.Release(player: Player)
 	plot:SetAttribute("Pending", 0)
 	plot:SetAttribute("Rate", 0)
 	plot:SetAttribute("Island", "")
+	plot:SetAttribute("Showcase", "")
 	setSign(plot, "FREE ISLAND")
 end
 

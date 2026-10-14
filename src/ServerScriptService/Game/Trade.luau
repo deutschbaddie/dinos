@@ -119,7 +119,7 @@ local function itemView(profile, it)
 	local rec = findIn(it.Kind == "Dino" and profile.Dinos or profile.Eggs, it.Id)
 	if not rec then return nil end
 	return {
-		Kind = it.Kind, Id = it.Id, Species = rec.Species, Rarity = rec.Rarity, KG = rec.KG,
+		Kind = it.Kind, Id = it.Id, Species = rec.Species, Rarity = rec.Rarity, KG = rec.KG, Name = rec.Name, -- (Name: a named dino's filtered name)
 		Bond = it.Kind == "Dino" and Dinos.BondLevel(profile, it.Id) or nil,
 	}
 end
@@ -302,7 +302,7 @@ end
 local function views(moved)
 	local out = {}
 	for _, m in ipairs(moved) do
-		table.insert(out, { Kind = m.Kind, Id = m.Rec.Id, Species = m.Rec.Species, Rarity = m.Rec.Rarity, KG = m.Rec.KG })
+		table.insert(out, { Kind = m.Kind, Id = m.Rec.Id, Species = m.Rec.Species, Rarity = m.Rec.Rarity, KG = m.Rec.KG, Name = m.Rec.Name })
 	end
 	return out
 end
