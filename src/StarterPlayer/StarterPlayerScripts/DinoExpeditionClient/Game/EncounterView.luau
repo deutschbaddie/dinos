@@ -1599,7 +1599,8 @@ local function reviveHold(p: ProximityPrompt, target: () -> Vector3?)
 end
 local function stepRevivePrompts()
 	-- (nothing to do away from a site with no prompts up: this used to scan every actor every frame anywhere)
-	if not active and next(buddyPrompts) == nil then return end
+	-- (a friend's revive prompt is still up after you left the site: keep going until it's taken down)
+	if not active and next(buddyPrompts) == nil and next(downedPrompts) == nil then return end
 	-- downed buddies (yours or a friend's): hold E to get them back up
 	for _, cfg in ipairs(Chasers:GetChildren()) do
 		local down = active and cfg:GetAttribute("Buddy") and cfg:GetAttribute("State") == "Downed" and cfg:GetAttribute("Site") == siteKey
@@ -1635,6 +1636,11 @@ local function stepRevivePrompts()
 	for _, plr in ipairs(Players:GetPlayers()) do
 		local isDown = plr ~= player and plr:GetAttribute("Downed") == true and plr:GetAttribute("Site") == siteKey and active
 		local pr = downedPrompts[plr]
+		-- (their character respawned: the old prompt went with it - make a new one if they're down again)
+		if pr and not pr.Parent then
+			downedPrompts[plr] = nil
+			pr = nil
+		end
 		if isDown and not pr then
 			local root = plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")
 			if root then
@@ -1660,6 +1666,9 @@ local function stepRevivePrompts()
 			pr:Destroy()
 			downedPrompts[plr] = nil
 		end
+	end
+	for plr, pr in pairs(downedPrompts) do
+		if not plr.Parent then pr:Destroy() downedPrompts[plr] = nil end
 	end
 end
 

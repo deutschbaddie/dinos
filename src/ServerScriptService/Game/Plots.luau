@@ -168,7 +168,7 @@ function Plots.Start(deps)
 		plot:SetAttribute("Owner", 0)
 		local pad = plot:FindFirstChild("CashPad", true)
 		if pad and pad:IsA("BasePart") then
-			local last = {}
+			local last = setmetatable({}, { __mode = "k" }) -- (players who left drop out)
 			pad.Touched:Connect(function(hit)
 				local plr = characterOf(hit)
 				if not plr or owners[plot] ~= plr then return end

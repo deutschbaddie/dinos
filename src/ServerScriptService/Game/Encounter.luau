@@ -455,7 +455,7 @@ function Encounter.Join(player: Player, site)
 			for _, e in pairs(site.Eggs) do e.Cfg:Destroy() end
 			table.clear(site.Eggs)
 			site.EggsMade = 0
-			site.Takedown, site.Enraged = nil, nil
+			site.Takedown, site.Enraged, site.Paid = nil, nil, nil
 		end
 		site.State = "Active"
 		site.Started = os.clock()
@@ -2272,6 +2272,7 @@ function Encounter.PickEgg(player: Player, id: number)
 		st.RiderTook = true
 		player:SetAttribute("RiderTook", site.Key)
 		bagEgg(player, rec, false)
+		Quests.Progress(player, "Eggs", { Count = 1 }) -- (straight to the bag: it's home already)
 	elseif carrier then
 		carrier.CarryEgg = rec
 		carrier.Cfg:SetAttribute("CarryEgg", rec.Species)
@@ -2315,7 +2316,6 @@ local function loadCompanionEggs(site, player: Player): number
 			b.CarryEgg = nil
 			b.Cfg:SetAttribute("CarryEgg", nil)
 			Expedition.LoadEgg(player, { Species = rec.Species, Rarity = rec.Rarity, KG = rec.KG }, rec.FromRack == true)
-			if not rec.FromRack then Quests.Progress(player, "Eggs", { Count = 1 }) end
 			n += 1
 		end
 	end
@@ -2341,8 +2341,8 @@ function Encounter.LoadEgg(player: Player)
 	st.Holding = nil
 	player:SetAttribute("Holding", nil)
 	Dinos.ClearHeld(player)
+	-- (the Eggs quest counts eggs that make it home: Expedition.Extract)
 	Expedition.LoadEgg(player, { Species = rec.Species, Rarity = rec.Rarity, KG = rec.KG }, rec.FromRack == true)
-	if not rec.FromRack then Quests.Progress(player, "Eggs", { Count = 1 }) end -- (your own rack egg going back on isn't a new egg)
 	loadCompanionEggs(site, player)
 	return { Ok = true, Egg = rec, Loaded = Expedition.CarriedCount(player), Capacity = Expedition.RackCapacity(player) }
 end
@@ -2381,7 +2381,10 @@ function Encounter.DriveOff(player: Player)
 	local profile = Data.Peek(player)
 	-- (eggs from an earlier nest ride along now - a chase you shake off sends you roaming on with them: driving off
 	-- from a nest you took nothing from is still a chase, but no escape pay or quest step for it. 2026-10-14)
-	if profile and not site.Boss and (takedown or Expedition.TakenHere(player) > 0) then
+	-- (once per player per nest cycle: walking back into a still-scrambling nest and driving off again paid again)
+	site.Paid = site.Paid or {}
+	if profile and not site.Boss and not site.Paid[player.UserId] and (takedown or Expedition.TakenHere(player) > 0) then
+		site.Paid[player.UserId] = true
 		Expedition.AddRunCoins(player, (takedown and E.TakedownCoins or E.EscapeCoins) * Config.EraTier(site.Era))
 		if takedown then
 			profile.Stats.Takedowns += 1
@@ -3318,7 +3321,7 @@ function Encounter.Start(deps)
 					if site.OnRearm then site.OnRearm(site) end -- (a wild dino turns up somewhere else)
 					rollMood(site)
 					spawnResidents(site)
-					site.Takedown, site.Alarm, site.Enraged = nil, nil, nil
+					site.Takedown, site.Alarm, site.Enraged, site.Paid = nil, nil, nil, nil
 					publishSite(site)
 				elseif site.State == "Idle" and #site.Actors == 0 and site.Def.Kind ~= "Boss" then
 					spawnResidents(site)

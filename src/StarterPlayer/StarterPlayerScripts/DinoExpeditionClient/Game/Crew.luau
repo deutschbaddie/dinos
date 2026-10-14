@@ -197,6 +197,13 @@ local function stepMounts()
 			cur.Anim:SetLocomotion(v > 14 and "Run" or (v > 1 and "Walk" or "Idle"), 0.2)
 		end
 	end
+	-- (someone left mid-ride: their mount goes with them)
+	for plr, cur in pairs(mounts) do
+		if not plr.Parent then
+			cur.Model:Destroy()
+			mounts[plr] = nil
+		end
+	end
 end
 
 local trail = {} :: { [Model]: number } -- (how many are already running behind each rover this frame)

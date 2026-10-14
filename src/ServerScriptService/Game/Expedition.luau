@@ -1074,6 +1074,8 @@ function Expedition.Extract(run)
 		profile.Earned += coins
 		profile.Stats.Runs += 1
 		Quests.Progress(player, "Expedition", { Count = 1 })
+		-- (eggs count for the Eggs quest once they're home, as it says - not when they went on the rack)
+		if #banked > 0 then Quests.Progress(player, "Eggs", { Count = #banked }) end
 		Data.Changed(player)
 	end
 	publish(run)
@@ -1488,9 +1490,14 @@ local function tickRun(run, dt: number)
 		local char = run.Player.Character
 		local hrp = char and char:FindFirstChild("HumanoidRootPart") :: BasePart?
 		if hrp then
-			local s, x = run.Route:Project(run.Variant, hrp.Position, run.S)
-			run.V = math.max(0, (s - run.S) / math.max(dt, 1e-3))
-			run.S, run.X = s, x
+			-- (the client owns its character: cap how far down the road a tick can move you - walking, sprinting or on
+			-- your companion's back - and ignore you while you're far off the road. Unchecked, a teleport ran you home)
+			local s, x, d = run.Route:Project(run.Variant, hrp.Position, run.S)
+			if d < 60 then
+				s = math.min(s, run.S + ((run.Mount and 45 or 34) * 1.25 + 4) * dt)
+				run.V = math.max(0, (s - run.S) / math.max(dt, 1e-3))
+				run.S, run.X = s, x
+			end
 		end
 		Chase.Update(run, dt, onChaserEvent(run))
 		if run.S >= run.Route:Length(run.Variant) - 8 then Expedition.Extract(run) end
@@ -1843,6 +1850,7 @@ function Expedition.Start(deps)
 		local rr = riderOf[p]
 		if rr and rr.Riders then rr.Riders[p] = nil end
 		riderOf[p] = nil
+		for _, b in pairs(slotBook) do b[p] = nil end
 		Expedition.Abort(p)
 	end)
 	Carpool.Locked = function(plr: Player) return Expedition.RiderRun(plr) ~= nil end
