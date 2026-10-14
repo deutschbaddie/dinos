@@ -2002,7 +2002,7 @@ local function keepEgg(player: Player, rec)
 	-- (2026-10-14, "my friend can't take the egg - the car's not theirs": a boss egg never depends on whose rover is
 	-- parked where. Rack eggs go on your rack if you have a run; otherwise - a rider, or a ride just ended - the bag)
 	if not rec.BossEgg and not isRider(player) and Expedition and Expedition.Get and Expedition.Get(player) then
-		Expedition.LoadEgg(player, { Species = rec.Species, Rarity = rec.Rarity, KG = rec.KG })
+		Expedition.LoadEgg(player, { Species = rec.Species, Rarity = rec.Rarity, KG = rec.KG }, rec.FromRack == true)
 	else
 		bagEgg(player, rec, rec.BossEgg == true)
 	end
@@ -2314,8 +2314,8 @@ local function loadCompanionEggs(site, player: Player): number
 			local rec = b.CarryEgg
 			b.CarryEgg = nil
 			b.Cfg:SetAttribute("CarryEgg", nil)
-			Expedition.LoadEgg(player, { Species = rec.Species, Rarity = rec.Rarity, KG = rec.KG })
-			Quests.Progress(player, "Eggs", { Count = 1 })
+			Expedition.LoadEgg(player, { Species = rec.Species, Rarity = rec.Rarity, KG = rec.KG }, rec.FromRack == true)
+			if not rec.FromRack then Quests.Progress(player, "Eggs", { Count = 1 }) end
 			n += 1
 		end
 	end
@@ -2341,7 +2341,7 @@ function Encounter.LoadEgg(player: Player)
 	st.Holding = nil
 	player:SetAttribute("Holding", nil)
 	Dinos.ClearHeld(player)
-	Expedition.LoadEgg(player, { Species = rec.Species, Rarity = rec.Rarity, KG = rec.KG })
+	Expedition.LoadEgg(player, { Species = rec.Species, Rarity = rec.Rarity, KG = rec.KG }, rec.FromRack == true)
 	if not rec.FromRack then Quests.Progress(player, "Eggs", { Count = 1 }) end -- (your own rack egg going back on isn't a new egg)
 	loadCompanionEggs(site, player)
 	return { Ok = true, Egg = rec, Loaded = Expedition.CarriedCount(player), Capacity = Expedition.RackCapacity(player) }

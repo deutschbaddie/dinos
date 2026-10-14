@@ -200,11 +200,15 @@ local function publish(run)
 	f:SetAttribute("Era", run.Zone)
 end
 
--- an egg goes onto the roof rack (loaded by hand at a site)
-function Expedition.LoadEgg(player: Player, egg)
+-- an egg goes onto the roof rack (loaded by hand at a site). fromRack: one that came off this rack here, going back
+-- (JoinEggs counts the rack eggs that aren't "taken here": every egg off the rack takes one away, every rack egg put
+-- back gives one back - otherwise swapping your own egg for a nest egg left the count untouched, MAP / GO HOME let
+-- you leave with no chase, and your own egg went back on the rack as you left: a free egg)
+function Expedition.LoadEgg(player: Player, egg, fromRack: boolean?)
 	local run = runs[player]
 	if not run then return end
 	table.insert(run.Eggs, egg)
+	if fromRack then run.JoinEggs = (run.JoinEggs or 0) + 1 end
 	publish(run)
 end
 
@@ -220,6 +224,8 @@ function Expedition.SwapRackEgg(player: Player, index: number, put: any?): any?
 	else
 		table.remove(run.Eggs, index)
 	end
+	-- (one off the rack; a rack egg swapped back into its slot evens it out - see LoadEgg)
+	if not (put and put.FromRack) then run.JoinEggs = math.max(0, (run.JoinEggs or 0) - 1) end
 	publish(run)
 	return old
 end
@@ -487,6 +493,8 @@ function Expedition.ChooseSite(player: Player, key: string)
 	if not run or run.Phase ~= "Map" then return { Ok = false } end
 	local site = Encounter.SiteByKey(key) or (Bosses and Bosses.SiteByKey(key))
 	if not site or site.Era ~= run.Zone then return { Ok = false, Err = "UNKNOWN SITE" } end
+	-- (a WILD dino has no pin: it's found by exploring, never driven to - its key is guessable)
+	if site.Def and site.Def.Wild then return { Ok = false, Err = "UNKNOWN SITE" } end
 	if site.Boss then
 		local ok, err = Bosses.CanJoin(player, site)
 		if not ok then return { Ok = false, Err = err } end

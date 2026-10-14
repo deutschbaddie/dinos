@@ -265,10 +265,11 @@ local function spawnStash(era, pool: { string })
 		if not run or run.Zone ~= era.Id then return end
 		local profile = Data.Peek(plr)
 		if not profile then return end
-		-- an ordinary egg: a normal roll, no takedown luck
-		local rarity = Dinos.RollRarity(profile, 0)
-		local e = Dinos.AddEgg(plr, species, rarity, 0, Dinos.RollKG(species))
+		-- an ordinary egg: a normal roll, no takedown luck. AddEgg rolls it, after its bag check: rolling first moved
+		-- the pity counter on every press with a full bag (39 presses = a guaranteed EPIC next, or a due EPIC lost)
+		local e = Dinos.AddEgg(plr, species, nil, 0, Dinos.RollKG(species))
 		if not e then return end -- (bag full: AddEgg said so; it stays for later)
+		local rarity = e.Rarity
 		gone = true
 		Data.Changed(plr)
 		Net.Fire(plr, "StashFound", { Species = species, Rarity = rarity, At = p })
