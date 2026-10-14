@@ -122,6 +122,11 @@ require(Game:WaitForChild("FusionView")).Start(Panels) -- EGG FUSION: the nest's
 require(Game:WaitForChild("ShowcaseView")).Start(Panels) -- the SHOWCASE pedestal on every island + your PICK A STAR window
 require(Game:WaitForChild("DiscoverView")).Start() -- SECRET FOUND! banners + the ALL SECRETS! moment
 require(Game:WaitForChild("BoostsView")).Start() -- your active boosts (top-left) + the 2x LUCK event banner
+do -- the DAILY SPIN: the window, the HUD button, the wheel at camp
+	local SpinView = require(Game:WaitForChild("SpinView"))
+	SpinView.Start(Panels)
+	HUD.OnSpin = SpinView.Open
+end
 Onboarding.Start(HUD)
 require(Game:WaitForChild("AwayCard")).Start(HUD) -- WHILE YOU WERE AWAY: the offline coins, once the menu / cold open is done
 require(Game:WaitForChild("BossHype")).Start() -- boss build-up: red Time Gate, countdown, the SUMMON prompt

@@ -37,6 +37,7 @@ local dripFeed: (seated: boolean) -> ()
 local BossHype = require(script.Parent.Parent.BossHype)
 HUD.OnFire = nil :: (() -> ())? -- set by Darts
 HUD.OnDrive = nil :: (() -> ())? -- set by Garage
+HUD.OnSpin = nil :: (() -> ())? -- set by init (SpinView.Open)
 HUD.FlushSummary = nil :: (() -> ())? -- shows a waiting run summary (after the warp home lands)
 HUD.CurrentTarget = nil :: BasePart?
 HUD.Hidden = false
@@ -599,6 +600,10 @@ local function buildCamp()
 	-- right column: settings, index, quest tracker
 	camp.Settings = Kit.Tile(root, { Name = "Settings", Icon = "Gear", Color = "Purple", Size = UDim2.fromOffset(62, 62), Position = UDim2.new(1, -16, 0, 16), AnchorPoint = Vector2.new(1, 0), IconSize = 0.8, OnClick = function() Panels.Open("Settings") end })
 	camp.Index = Kit.Tile(root, { Name = "Index", Icon = "Index", Color = "Blue", Size = UDim2.fromOffset(62, 62), Position = UDim2.new(1, -88, 0, 16), AnchorPoint = Vector2.new(1, 0), IconSize = 0.8, OnClick = function() Panels.Open("Index") end })
+	-- the DAILY SPIN (SpinView), with a "!" when the free spin is ready
+	camp.Spin = Kit.Tile(root, { Name = "Spin", Icon = "Star", Color = "Orange", Size = UDim2.fromOffset(62, 62), Position = UDim2.new(1, -160, 0, 16), AnchorPoint = Vector2.new(1, 0), IconSize = 0.8, OnClick = function()
+		if HUD.OnSpin then HUD.OnSpin() end
+	end })
 	local tracker = frame(root, { Name = "Tracker", Size = UDim2.fromOffset(250, 230), Position = UDim2.new(1, -16, 0, 96), AnchorPoint = Vector2.new(1, 0), Visible = false })
 	camp.Tracker = tracker
 	local toggle = Kit.Brick(tracker, { Name = "Toggle", Size = UDim2.fromOffset(150, 28), Position = UDim2.new(1, 0, 0, 0), AnchorPoint = Vector2.new(1, 0), Color = "Forest", Lip = 3, Radius = 10, ZIndex = 4 })
@@ -660,6 +665,8 @@ local function refreshCamp()
 	-- the Index has a reward ready to claim (IndexDefs: species track, era pages)
 	local okR, claimable = pcall(require(DinoShared.Game:WaitForChild("IndexDefs")).ClaimableCount, p)
 	Kit.Badge(camp.Index, (okR and (claimable :: number) > 0) and claimable or nil)
+	local okS, spins, freeNow = pcall(require(DinoShared.Game:WaitForChild("SpinWheel")).State, p, Net.ServerTime())
+	Kit.Badge(camp.Spin, (okS and freeNow) and "!" or ((okS and (spins :: number) > 0) and spins or nil))
 	refreshHotbar()
 	refreshTracker()
 	local _ = ready
@@ -689,6 +696,7 @@ local HUD_UNLOCK = {
 	Hotbar = function(p) return #(p.Eggs or {}) > 0 or (p.Stats and (p.Stats.Hatched or 0) >= 1) or player:GetAttribute("HeldEgg") ~= nil end,
 	Home = function(_, runs) return runs >= 1 end,
 	Index = function(p) return p.Stats and (p.Stats.Hatched or 0) >= 1 end,
+	Spin = function(_, runs) return runs >= 1 end, -- (the DAILY SPIN: once you've been out once)
 	-- (the HUNTER POWER counter: your first upgrade, or the first second on your power trainer's pad)
 	Power = function(p) return (p.Flags and p.Flags.FreeUpgradeUsed) or (tonumber(p.TrainPower) or 0) > 0 or (p.Flags and p.Flags.Tips and p.Flags.Tips.Trained) end,
 	Eras = function(p) return p.Bosses and p.Bosses.TyrantKing and (p.Bosses.TyrantKing.Best or 0) >= 1 end,
@@ -730,6 +738,7 @@ dripFeed = function(seated: boolean)
 	gate("Coins", camp.CoinPill, true)
 	gate("Hotbar", camp.Hotbar, not seated)
 	gate("Index", camp.Index, true)
+	gate("Spin", camp.Spin, true)
 	gate("Power", camp.PowerPanel, not seated)
 	gate("Rovers", camp.MyRovers, not seated)
 	gate("Home", camp.Tabs.HOME, true)

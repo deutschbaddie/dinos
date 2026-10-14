@@ -604,6 +604,9 @@ function buildGrounds(H) {
     E.palm(H, [side * 52, Y.ground, -108], 13, 1520 + side);
     E.rock(H, [side * 46, 0.2, -122], 2.2, 1530 + side);
   }
+  // the DAILY SPIN wheel (2026-10-14): on the north lawn, east of the gate walk, turned to face it (clear ground:
+  // checked against the lawn's palms, lamps and flowerbeds)
+  require('./spinWheel.js').buildSpinWheel(H, [31, Y.lawn, -63.5], 98);
   // south back lawn behind the HQ: picnic/crates corner
   E.crate(H, [-14, Y.lawn, 64], 1.2, { yaw: 20, stencil: '#2f6b3a' });
   E.crate(H, [-11, Y.lawn, 66], 1, { yaw: -10 });

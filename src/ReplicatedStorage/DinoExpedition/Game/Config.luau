@@ -1073,11 +1073,16 @@ Config.Products = {
 	-- the trainer's next level for Robux (the R$ button in the TRAINER window, shown on the board). Create the developer
 	-- product on Roblox and paste its id here; 0 = COMING SOON
 	TrainerLevel = { Id = 0, Name = "TRAINER LEVEL UP", Price = 99 },
+	-- DAILY SPIN extra spins (the SPIN window's buttons)
+	Spin1 = { Id = 0, Name = "1 SPIN", Price = 25 },
+	Spin3 = { Id = 0, Name = "3 SPINS", Price = 59 },
+	Spin10 = { Id = 0, Name = "10 SPINS", Price = 169 },
 }
 -- what each product gives: { Kind = "Egg", Egg = <Config.ShopEggs key>, Count } | { Kind = "Coins", Amount } |
 -- { Kind = "Luck", Minutes } | { Kind = "Hatch", Count } | { Kind = "Slot" }
 Config.ProductGrants = {
 	TrainerLevel = { { Kind = "TrainerLevel" } }, -- (maxed or boss-gated: that level's coin price instead, never nothing)
+	Spin1 = { { Kind = "Spins", Count = 1 } }, Spin3 = { { Kind = "Spins", Count = 3 } }, Spin10 = { { Kind = "Spins", Count = 10 } },
 	StarterPack1 = { { Kind = "Egg", Egg = "Rare", Count = 1 }, { Kind = "Coins", Amount = 5000 }, { Kind = "Luck", Minutes = 15 } },
 	StarterPack2 = { { Kind = "Egg", Egg = "Epic", Count = 1 }, { Kind = "Egg", Egg = "Premium", Count = 3 }, { Kind = "Coins", Amount = 25000 }, { Kind = "Hatch", Count = 2 } },
 	StarterPack3 = { { Kind = "Egg", Egg = "Legendary", Count = 1 }, { Kind = "Egg", Egg = "Premium", Count = 5 }, { Kind = "Coins", Amount = 100000 }, { Kind = "Slot" } },

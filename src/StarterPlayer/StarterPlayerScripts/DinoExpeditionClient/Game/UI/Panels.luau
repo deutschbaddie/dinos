@@ -2199,6 +2199,7 @@ function Panels.Start()
 		if (got.Coins or 0) > 0 then toast("+" .. Config.FormatNumber(got.Coins) .. " COINS", "Yellow", "Coin") end
 		if (got.Luck or 0) > 0 then toast("LUCK BOOST: " .. got.Luck .. " MIN", "Orange", "Star") end
 		if typeof(got.Trainer) == "string" then toast("TRAINER " .. got.Trainer, "Lime", "Power") end
+		if (got.Spins or 0) > 0 then toast("+" .. got.Spins .. (got.Spins > 1 and " SPINS!" or " SPIN!"), "Orange", "Star") end
 		if (got.Hatch or 0) > 0 then toast(got.Hatch .. (got.Hatch > 1 and " INSTANT HATCHES" or " INSTANT HATCH"), "Blue", "Clock") end
 		if (got.Slot or 0) > 0 then toast("NEW COMPANION SLOT!", "Teal", "Buddy") end
 	end)

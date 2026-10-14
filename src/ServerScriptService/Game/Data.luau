@@ -65,6 +65,7 @@ local function default()
 		IndexRewards = { Claimed = {}, Title = "", EntriesMigrated = true }, -- the Index's claimed rewards ("Species/10", "Era/FernValley", "Secrets/<era>") + the title you wear (IndexDefs)
 		Discover = {}, -- era -> secret id -> true (the Index's SECRETS page, Discover.luau)
 		Showcase = "", -- the dino id on your SHOWCASE pedestal ("" = empty; Showcase.luau)
+		Spin = { NextFree = 0, Extra = 0 }, -- the DAILY SPIN: when the next free spin is ready, bought spins (Spin.luau)
 		Unlocked = { FernValley = true },
 		Quests = { Story = 1, Active = {}, Progress = {}, Side = {} },
 		Daily = { Last = 0, Streak = 0 },

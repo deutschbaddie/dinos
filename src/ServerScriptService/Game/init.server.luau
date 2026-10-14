@@ -66,6 +66,7 @@ require(script.Quiz).Start(deps) -- GUESS THE DINO, the minigame on your trainer
 require(script.IndexRewards).Start(deps) -- the Index pays: species milestones, era pages (gold trophies), titles
 require(script.Discover).Start(deps) -- every era's SECRETS (landmarks, nests, stashes, wilds, the boss) for the Index
 require(script.Showcase).Start(deps) -- DINO NAMES + the SHOWCASE pedestal by your bridge (Plots.Sync publishes it)
+require(script.Spin).Start(deps) -- the DAILY SPIN: a free spin every day + bought spins (prizes in Game/SpinWheel)
 Bosses.OnClear = function(player) Leaderboards.Push(player) end
 
 -- snapshot sent to the owning client whenever the profile changes
@@ -77,7 +78,7 @@ local function snapshot(player: Player, profile)
 		Incubators = profile.Incubators, IncubatorCount = profile.IncubatorCount, PenSlots = profile.PenSlots,
 		Island = profile.Island or { Hatchery = 1, Garage = 1, Pens = {} },
 		Gear = profile.Gear, Rides = profile.Rides or {}, RideOwned = profile.RideOwned or {}, Materials = profile.Materials, Keys = profile.Keys, Bosses = profile.Bosses, Stars = profile.Stars,
-		Index = profile.Index, IndexRewards = profile.IndexRewards, Showcase = profile.Showcase or "", Discover = profile.Discover, Unlocked = profile.Unlocked, Quests = profile.Quests, Daily = profile.Daily,
+		Index = profile.Index, IndexRewards = profile.IndexRewards, Showcase = profile.Showcase or "", Spin = profile.Spin, Discover = profile.Discover, Unlocked = profile.Unlocked, Quests = profile.Quests, Daily = profile.Daily,
 		Stats = profile.Stats, Flags = profile.Flags, Settings = profile.Settings, Era = profile.Era,
 		Rate = Dinos.Rate(profile, player), Power = Config.PowerOf(profile, Dinos.BuddyList(profile)),
 		Trainer = profile.Trainer or { Level = 1 }, TrainPower = profile.TrainPower or 0, -- (the power trainer, Trainer.luau)
