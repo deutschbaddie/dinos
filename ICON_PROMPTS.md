@@ -92,6 +92,7 @@ Same style block. Until you paste an id, each of these shows the existing icon i
 | Gadget_Bait | a big cartoon steak on a bone tied to a rope (Bolt) | MEAT BAIT gadget |
 | Gadget_Flare | a red emergency flare stick burning with a bright white-pink spark at the tip (Bolt) | FLASH FLARE gadget |
 | Gadget_Earthshaker | a stubby yellow-and-black thumper device with a spring piston and a shockwave ring under it (Bolt) | EARTHSHAKER gadget |
+| Gadget_Net | a chunky orange net launcher with a wide flared barrel and a coiled rope net bursting out of it, weighted corners (Bolt) | NET GUN gadget |
 | Mat_QueenClaw | a single curved orange raptor claw with a gold band, glowing faintly (Trophy) | QUEEN'S CLAW material |
 | Mat_MatriarchScale | a big teal-green shield-shaped dinosaur scale with a pearly shine (Trophy) | MATRIARCH SCALE material |
 | Era_FernValley | a round badge: green ferns and a volcano behind a teal portal, a raptor silhouette (Gate) | Time Gate list |

@@ -46,7 +46,7 @@ Icons.IDS = IDS
 local ALIAS = { Cart = "Shop", Heart = "Shield", Plus = "Wrench", Car = "Jeep", Vehicle = "Jeep", Book = "Index" }
 local FALLBACK = {
 	Bag = "Egg", Sell = "Coin", Quest = "Star", Power = "Shield", Key = "Lock", Hammer = "Wrench", Crown = "Trophy", Film = "Eye", Chest = "Gift",
-	Launcher = "Dart", Armor = "Shield", Rack = "Egg", Buddy = "Dino", Gadget_Bait = "Bolt", Gadget_Flare = "Bolt", Gadget_Earthshaker = "Bolt",
+	Launcher = "Dart", Armor = "Shield", Rack = "Egg", Buddy = "Dino", Gadget_Bait = "Bolt", Gadget_Flare = "Bolt", Gadget_Earthshaker = "Bolt", Gadget_Net = "Bolt",
 	Mat_QueenClaw = "Trophy", Mat_MatriarchScale = "Trophy", Mat_TideScale = "Trophy", Mat_ScytheClaw = "Trophy", Mat_FrostPlume = "Trophy", Mat_DawnScute = "Trophy", Era_FernValley = "Gate", Era_GiantPlains = "Gate", Era_SpineRiver = "Gate", Era_RedCliffs = "Gate", Era_FrostForest = "Gate", Era_DawnDesert = "Gate",
 }
 

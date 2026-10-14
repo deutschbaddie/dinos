@@ -515,8 +515,12 @@ Config.Gadgets = {
 	Bait = { Name = "MEAT BAIT", Cooldown = 18, Price = 1200, Desc = "DINOS CHASE IT FOR 4S" },
 	Flare = { Name = "FLASH FLARE", Cooldown = 22, Craft = { Coins = 4500, Mats = { QueenClaw = 1 } }, Desc = "STUNS ALL NEARBY 2.5S" },
 	Earthshaker = { Name = "EARTHSHAKER", Cooldown = 30, Craft = { Coins = 220000, Mats = { MatriarchScale = 1 } }, Desc = "3S STUN + BIG CALM HIT" },
+	-- (2026-10-14, user idea) one dino under your crosshair, pinned in a net: Stun seconds (BossStun for a ruler) and
+	-- every hit on it calms HitMult more while it's caught. Dodge = the chance it slips the net (a ruler: BossDodge)
+	Net = { Name = "NET GUN", Cooldown = 20, Price = 15000, Desc = "NETS ONE DINO 3S: +35% CALM", Range = 55,
+		Stun = 3, BossStun = 1.8, HitMult = 1.35, Dodge = 0.1, BossDodge = 0.45 },
 }
-Config.GadgetOrder = { "Bait", "Flare", "Earthshaker" }
+Config.GadgetOrder = { "Bait", "Net", "Flare", "Earthshaker" }
 Config.GadgetSlots = 2
 Config.MaxLevel = 10
 -- cost of the next stat level (from level L to L+1) for an item of a tier order
@@ -596,7 +600,7 @@ Config.GearPower = {
 	Launchers = { Rookie = 250, QueensFang = 1500, MatriarchMortar = 7000, TideHarpoon = 35000, ScytheRepeater = 170000, FrostCannon = 850000, DawnBreaker = 4200000 },
 	Armors = { None = 150, RaptorHide = 900, MatriarchPlate = 4500, TideShell = 22000, ScytheMail = 110000, FrostCoat = 550000, DawnScutes = 2700000 },
 	Vehicles = { RookieRanger = 50, RaptorRunner = 300, TitanTransport = 2000 },
-	Gadgets = { Bait = 50, Flare = 300, Earthshaker = 2000 },
+	Gadgets = { Bait = 50, Net = 150, Flare = 300, Earthshaker = 2000 },
 }
 -- POWER without training (gear + companions)
 function Config.GearPowerOf(gear, buddies: { any }?): number

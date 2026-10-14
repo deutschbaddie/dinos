@@ -1554,10 +1554,161 @@ local function build()
 	ui.Sneak = sn
 end
 
+--------------------------------------------------------------------------------
+-- the NET GUN: a net flies out, spinning open, and wraps the dino (or it slips aside and the net hits the dirt)
+--------------------------------------------------------------------------------
+local ROPE = Color3.fromRGB(196, 168, 112)
+local function ropePart(parent: Instance, a: Vector3, b: Vector3, w: number): Part
+	local p = Instance.new("Part")
+	p.Anchored, p.CanCollide, p.CanQuery, p.CanTouch, p.CastShadow = true, false, false, false, false
+	p.Material = Enum.Material.Fabric
+	p.Color = ROPE
+	p.Size = Vector3.new(w, w, math.max(0.05, (b - a).Magnitude))
+	p.CFrame = CFrame.lookAt((a + b) / 2, b)
+	p.Parent = parent
+	return p
+end
+
+-- a square net, `size` across, in a model you can pivot (centre at the origin, lying flat)
+local function netModel(size: number): Model
+	local m = Instance.new("Model")
+	m.Name = "DinoNet"
+	local n = 5
+	local h = size / 2
+	for i = 0, n do
+		local u = -h + size * i / n
+		ropePart(m, Vector3.new(u, 0, -h), Vector3.new(u, 0, h), 0.12)
+		ropePart(m, Vector3.new(-h, 0, u), Vector3.new(h, 0, u), 0.12)
+	end
+	-- weights on the corners
+	for _, c in ipairs({ Vector3.new(-h, 0, -h), Vector3.new(h, 0, -h), Vector3.new(-h, 0, h), Vector3.new(h, 0, h) }) do
+		local b = Instance.new("Part")
+		b.Shape = Enum.PartType.Ball
+		b.Anchored, b.CanCollide, b.CanQuery, b.CanTouch = true, false, false, false
+		b.Material = Enum.Material.Metal
+		b.Color = Color3.fromRGB(90, 92, 98)
+		b.Size = Vector3.new(0.6, 0.6, 0.6)
+		b.CFrame = CFrame.new(c)
+		b.Parent = m
+	end
+	local core = Instance.new("Part")
+	core.Name = "Core"
+	core.Anchored, core.CanCollide, core.CanQuery, core.CanTouch, core.Transparency = true, false, false, false, 1
+	core.Size = Vector3.new(0.2, 0.2, 0.2)
+	core.Parent = m
+	m.PrimaryPart = core
+	return m
+end
+
+-- the net draped over a caught dino: a tent of ropes from its back down to the ground all round, held for `time`
+local function drape(c, time: number)
+	local model, root = c.Model, c.Root
+	if not (model and root) then return end
+	local cf, size = model:GetBoundingBox()
+	local folder = Instance.new("Model")
+	folder.Name = "DinoNetDrape"
+	folder.Parent = DinosaurVFX.Folder()
+	local top = cf.Position + Vector3.new(0, size.Y / 2 + 0.3, 0)
+	local rx, rz = size.X / 2 + 0.6, size.Z / 2 + 0.6
+	local groundY = cf.Position.Y - size.Y / 2 + 0.2
+	local n = 12
+	local rim = {}
+	for i = 1, n do
+		local ang = i / n * math.pi * 2
+		local p = Vector3.new(cf.Position.X + math.cos(ang) * rx, groundY, cf.Position.Z + math.sin(ang) * rz)
+		rim[i] = p
+		-- a rope from the ridge to the ground, sagging through a mid point
+		local mid = top:Lerp(p, 0.5) + Vector3.new(0, size.Y * 0.12, 0)
+		ropePart(folder, top, mid, 0.14)
+		ropePart(folder, mid, p, 0.14)
+	end
+	for i = 1, n do
+		ropePart(folder, rim[i], rim[i % n + 1], 0.12)
+		-- a ring half way up, so it reads as a mesh, not spokes
+		local a1 = top:Lerp(rim[i], 0.5) + Vector3.new(0, size.Y * 0.12, 0)
+		local a2 = top:Lerp(rim[i % n + 1], 0.5) + Vector3.new(0, size.Y * 0.12, 0)
+		ropePart(folder, a1, a2, 0.1)
+	end
+	-- it struggles: the net twitches with it
+	local t0 = os.clock()
+	local base = {}
+	for _, d in ipairs(folder:GetChildren()) do
+		if d:IsA("BasePart") then base[d] = d.CFrame end
+	end
+	local conn
+	conn = RunService.Heartbeat:Connect(function()
+		local t = os.clock() - t0
+		if t >= time or not folder.Parent then
+			conn:Disconnect()
+			for d in pairs(base) do
+				TweenService:Create(d, TweenInfo.new(0.35), { Transparency = 1 }):Play()
+			end
+			task.delay(0.4, function() folder:Destroy() end)
+			return
+		end
+		local jig = Vector3.new(math.sin(t * 23) * 0.12, 0, math.cos(t * 19) * 0.12)
+		for d, b in pairs(base) do d.CFrame = b + jig end
+	end)
+end
+
+local function netShot(info)
+	local from = typeof(info.P) == "Vector3" and info.P + Vector3.new(0, 2, 0) or nil
+	local c = nil
+	for cfg, cr in pairs(Exp and Exp.Creatures() or {}) do
+		if cfg:GetAttribute("Id") == info.Actor then c = cr break end
+	end
+	local to = (c and c.Root and c.Root.Position + Vector3.new(0, 2, 0)) or (typeof(info.To) == "Vector3" and info.To + Vector3.new(0, 2, 0)) or nil
+	if not (from and to) then return end
+	local hit = info.Hit == true
+	-- a miss: it lands a few studs to the side, where the dino was a moment ago
+	local land = hit and to or (to + Vector3.new(math.random(-1, 1) * 4 + 2, -1.8, math.random(-1, 1) * 3))
+	local net = netModel(6)
+	net.Parent = DinosaurVFX.Folder()
+	require(script.Parent.Audio).Play("DartFire", { At = from, Pitch = 0.6, Exact = true })
+	local t0, dur = os.clock(), 0.3
+	local conn
+	conn = RunService.Heartbeat:Connect(function()
+		local u = math.clamp((os.clock() - t0) / dur, 0, 1)
+		local p = from:Lerp(land, u) + Vector3.new(0, math.sin(u * math.pi) * 3, 0)
+		-- spinning open as it flies
+		local open = 0.15 + u * 0.85
+		net:ScaleTo(open)
+		net:PivotTo(CFrame.new(p) * CFrame.Angles(0, u * 9, 0))
+		if u >= 1 then
+			conn:Disconnect()
+			net:Destroy()
+			if hit and c then
+				drape(c, tonumber(info.Time) or 3)
+				require(script.Parent.Audio).Play("Glance", { At = to, Pitch = 0.7 })
+				floater(to + Vector3.new(0, 3, 0), "NETTED!", C.YellowHi, 1.2)
+				if c.Model then flashModel(c.Model, C.YellowHi) end
+			else
+				-- the net in the dirt, then gone
+				local dirt = netModel(5)
+				dirt.Parent = DinosaurVFX.Folder()
+				dirt:PivotTo(CFrame.new(land.X, land.Y - 0.8, land.Z) * CFrame.Angles(0, math.random() * 6, 0))
+				task.delay(2.2, function() dirt:Destroy() end)
+				floater(to + Vector3.new(0, 3, 0), "DODGED!", C.Cream, 1)
+			end
+		end
+	end)
+end
+
 function View.Gadget(slot: number)
 	if not active or Cinema.Playing() then return end
+	-- the NET GUN fires at whatever's under your crosshair
+	local g = profileGear()
+	local target = nil
+	if g.Gadgets and g.Gadgets[slot] == "Net" then
+		local t = bestTarget(nil)
+		target = t and t:GetAttribute("Id") or nil
+		if not target then
+			Kit.Toast("AIM AT A DINO FIRST", "Grey", "Gadget_Net")
+			return
+		end
+	end
 	task.spawn(function()
-		local res = Net.Ask("Gadget", { Slot = slot })
+		local res = Net.Ask("Gadget", { Slot = slot, Target = target })
 		if res.Ok then
 			Kit.Punch(ui.Gadget[slot], 0.3)
 			ui.GadgetReady = ui.GadgetReady or {}
@@ -2596,7 +2747,9 @@ function View.Start(exp)
 	Net.On("Revived", function(info) if info.UserId == player.UserId then Kit.Toast("BACK ON YOUR FEET!", "Green", "Shield") end end)
 	Net.On("GadgetFx", function(info)
 		local p = info.P
-		if info.Id == "Flare" then
+		if info.Id == "Net" then
+			netShot(info)
+		elseif info.Id == "Flare" then
 			DinosaurVFX.Burst(CFrame.new(p + Vector3.new(0, 2, 0)), 30, { Lifetime = NumberRange.new(0.3, 0.6), Speed = NumberRange.new(10, 20), Color = Color3.new(1, 1, 1), LightEmission = 1, Size = NumberSequence.new(1, 0) })
 		elseif info.Id == "Earthshaker" then
 			DinosaurVFX.BlockRing(CFrame.new(p) * CFrame.Angles(math.pi / 2, 0, 0), { Count = 26, R0 = 1, R1 = 20, Color = Color3.fromRGB(150, 230, 200), Duration = 0.7, Block = 1 })

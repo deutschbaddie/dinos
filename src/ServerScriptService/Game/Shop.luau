@@ -149,12 +149,16 @@ local function buyBase(player: Player, what: string)
 		if not c then return { Ok = false, Err = "ALL COMPANION SLOTS OPEN" } end
 		cost = c
 		apply = function() g.BuddySlots = n + 1 end
-	elseif what == "GadgetBait" then
-		if g.GadgetsOwned.Bait then return { Ok = false, Err = "ALREADY OWNED" } end
-		cost = { Coins = Config.Gadgets.Bait.Price }
+	elseif what:match("^Gadget") and Config.Gadgets[what:sub(7)] and Config.Gadgets[what:sub(7)].Price and not Config.Gadgets[what:sub(7)].Craft then
+		-- a gadget bought for coins (the MEAT BAIT, the NET GUN): into the first empty slot
+		local id = what:sub(7)
+		if g.GadgetsOwned[id] then return { Ok = false, Err = "ALREADY OWNED" } end
+		cost = { Coins = Config.Gadgets[id].Price }
 		apply = function()
-			g.GadgetsOwned.Bait = true
-			if (g.Gadgets[1] or "") == "" then g.Gadgets[1] = "Bait" end
+			g.GadgetsOwned[id] = true
+			for i = 1, Config.GadgetSlots do
+				if (g.Gadgets[i] or "") == "" then g.Gadgets[i] = id break end
+			end
 		end
 	else
 		return { Ok = false }

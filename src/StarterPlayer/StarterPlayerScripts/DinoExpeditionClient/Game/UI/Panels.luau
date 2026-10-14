@@ -1148,7 +1148,7 @@ local function gadgetsTab(content: Frame)
 		local can = canAfford(cost)
 		local r, rc, hit = drawerRow(list, owned and ("Gadget_" .. id) or "Lock", d.Name, d.Desc .. "  (" .. d.Cooldown .. "S)", not owned and cost or nil, not owned and {
 			Text = d.Craft and "CRAFT" or "BUY", Icon = "Wrench", Color = can and "Orange" or "Grey", Disabled = not can, Shine = can, OnClick = function()
-				if d.Craft then craftThen("Gadget", id) else ask("BuyBase", { What = "GadgetBait" }, d.Name .. " READY!", "Orange", "Bolt") end
+				if d.Craft then craftThen("Gadget", id) else ask("BuyBase", { What = "Gadget" .. id }, d.Name .. " READY!", "Orange", "Bolt") end
 			end,
 		} or nil)
 		r.LayoutOrder = i

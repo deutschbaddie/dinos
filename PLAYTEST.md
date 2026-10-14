@@ -405,3 +405,16 @@ Settings → ADMIN has two new buttons: **WEATHER** (rolls in the next weather n
 3. One per shower is a bigger cyan **STAR METEORITE** at the hub: it gives an egg from your eras (coins instead if your egg bag is full).
 4. Rocks never land on roofs, in water, in your paddock or jammed against walls / trees.
 5. About 75 s after the last one lands they all disappear and a "THE METEOR SHOWER IS OVER" toast shows. Someone on an expedition gets a toast instead of the banner and sees no fireballs.
+
+## 16. Net gun + the carpool rover fix (2026-10-14, untested in Studio)
+
+**A. Your own rover after riding along**
+1. Ride in a friend's rover on their expedition and hop out to fight at a nest. Ride home with them (or get sent home on foot).
+2. Get in your own rover at camp: it drives normally (before, it sat still with the drive buttons up).
+
+**B. Net gun** (Quartermaster → GADGETS: NET GUN, 15,000 coins, BUY)
+1. It goes into an empty gadget slot. In a fight, aim at a dino and press its slot key (1 / 2, or tap the tile).
+2. A net flies out, spinning open, and wraps the dino. "NETTED!" pops over it, it stands stunned for 3 s, and every dart on it calms 35% more while it's caught.
+3. Now and then a normal dino slips it (about 1 in 10): "DODGED!" and the net drops in the dirt. Bosses dodge it a lot more (almost half the time), only stay caught for about 2 s, and always slip it during a leap, a dive or their reveal.
+4. With nothing under your crosshair: "AIM AT A DINO FIRST", and no recharge is used up.
+5. Recharge is 20 s.

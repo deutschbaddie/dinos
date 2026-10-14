@@ -1820,6 +1820,7 @@ function Encounter.Calm(site, a, amount: number, by: Player?, source: string?)
 	if site.Boss and os.clock() < (site.FreezeUntil or 0) then return "None" end -- mid-reveal: untouchable
 	if site.Shield and a.Boss then amount *= 0.25 end -- e.g. the Queen while her pack is up
 	if a.ShredUntil and os.clock() < a.ShredUntil then amount *= a.ShredMult or 1.4 end -- a buddy slashed its armour
+	if a.NetUntil and os.clock() < a.NetUntil then amount *= Config.Gadgets.Net.HitMult end -- caught in a NET GUN's net
 	a.Calm = math.min(a.CalmMax, a.Calm + amount)
 	if site.CapCalm then a.Calm = math.min(a.Calm, site.CapCalm(site, a)) end
 	if a.Carry and amount > 0 then dropCarry(site, a) end
@@ -2562,7 +2563,7 @@ function Encounter.Dodge(player: Player)
 	return { Ok = true }
 end
 
-function Encounter.Gadget(player: Player, slot: number)
+function Encounter.Gadget(player: Player, slot: number, targetId: number?)
 	local site = playerSite[player]
 	local st = site and site.Players[player]
 	local profile = Data.Peek(player)
@@ -2573,6 +2574,17 @@ function Encounter.Gadget(player: Player, slot: number)
 	if not info then return { Ok = false } end
 	local now = os.clock()
 	if now < (st.Gadgets[id] or 0) then return { Ok = false, Err = "RECHARGING" } end
+	-- the NET GUN needs something to aim at: the dino under your crosshair (no target = no shot, no cooldown)
+	local netted = nil
+	if id == "Net" then
+		for _, a in ipairs(site.Actors) do
+			if a.Id == targetId then netted = a break end
+		end
+		local a = netted
+		if not a or a.State == "KO" or a.State == "Rodeo" or a.State == "Exhausted" or a.Herd or flat(a.Pos - hrp.Position).Magnitude > (info.Range or 55) then
+			return { Ok = false, Err = "AIM AT A DINO FIRST" }
+		end
+	end
 	st.Gadgets[id] = now + info.Cooldown
 	fireSite(site, "PlayerAct", { UserId = player.UserId, Act = "Throw" })
 	local p = hrp.Position
@@ -2607,6 +2619,17 @@ function Encounter.Gadget(player: Player, slot: number)
 			end
 		end
 		fireSite(site, "GadgetFx", { Id = id, P = p, UserId = player.UserId })
+	elseif id == "Net" and netted then
+		local a = netted
+		-- a ruler is quick (and nothing pins one mid-move: a leap, a dive, its reveal) - it often slips the net
+		local busy = a.Custom or (site.Boss and now < (site.FreezeUntil or 0))
+		local dodged = busy or rng:NextNumber() < (a.Boss and info.BossDodge or info.Dodge)
+		local stun = a.Boss and info.BossStun or info.Stun
+		if not dodged then
+			a.StunUntil = math.max(a.StunUntil or 0, now + stun)
+			a.NetUntil = now + stun
+		end
+		fireSite(site, "GadgetFx", { Id = id, P = p, To = a.Pos, Actor = a.Id, Hit = not dodged, Time = stun, UserId = player.UserId })
 	end
 	return { Ok = true, Cooldown = info.Cooldown }
 end
@@ -3261,7 +3284,7 @@ function Encounter.Start(deps)
 	buildSites()
 	Net.On("FireAt", function(player, args) return Encounter.FireAt(player, tonumber(args.Id) or 0, tonumber(args.Charge)) end)
 	Net.On("Dodge", function(player) return Encounter.Dodge(player) end)
-	Net.On("Gadget", function(player, args) return Encounter.Gadget(player, math.clamp(tonumber(args.Slot) or 1, 1, Config.GadgetSlots)) end)
+	Net.On("Gadget", function(player, args) return Encounter.Gadget(player, math.clamp(tonumber(args.Slot) or 1, 1, Config.GadgetSlots), tonumber(args.Target)) end)
 	Net.On("Revive", function(player, args) return Encounter.Revive(player, tonumber(args.UserId) or 0) end)
 	-- down and nobody's coming: GIVE UP skips the wait (the same faint the timer would bring - 2026-10-14)
 	Net.On("GiveUp", function(player)
