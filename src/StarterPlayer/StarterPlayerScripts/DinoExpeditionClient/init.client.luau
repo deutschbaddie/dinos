@@ -85,8 +85,13 @@ Zone.Apply("BaseCamp", true)
 CampView.OnNestBuilt = function(slot) Scenes.NewNest(slot) end
 task.spawn(CampView.Start)
 Ambience.Start()
-require(Game:WaitForChild("WeatherView")).Start() -- the server's weather: rain, storms + lightning, fog, wind, hail
+local WeatherView = require(Game:WaitForChild("WeatherView"))
+WeatherView.Start() -- the server's weather: rain, storms + lightning, fog, wind, hail
+-- (listening before the menu: Net holds unheard messages until it's done, and a held-back shower would land all at once)
+local MeteorView = require(Game:WaitForChild("MeteorView"))
+MeteorView.Start() -- METEOR SHOWERS: fireballs over camp, meteorites to collect
 local fromMenu = require(Game:WaitForChild("MainMenu")).Run()
+WeatherView.Ready, MeteorView.Ready = true, true
 Drive.Start()
 Prompt.Start()
 Panels.Start()
@@ -123,7 +128,6 @@ require(Game:WaitForChild("FusionView")).Start(Panels) -- EGG FUSION: the nest's
 require(Game:WaitForChild("ShowcaseView")).Start(Panels) -- the SHOWCASE pedestal on every island + your PICK A STAR window
 require(Game:WaitForChild("DiscoverView")).Start() -- SECRET FOUND! banners + the ALL SECRETS! moment
 require(Game:WaitForChild("BoostsView")).Start() -- your active boosts (top-left) + the 2x LUCK event banner
-require(Game:WaitForChild("MeteorView")).Start() -- METEOR SHOWERS: fireballs over camp, meteorites to collect
 do -- the DAILY SPIN: the window, the HUD button, the wheel at camp
 	local SpinView = require(Game:WaitForChild("SpinView"))
 	SpinView.Start(Panels)

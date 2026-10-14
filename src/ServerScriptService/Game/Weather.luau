@@ -51,7 +51,9 @@ end
 -- id: a WorldEvents.Weathers key. fresh: start the clock now (fades in); otherwise it's already here
 local function set(id: string, fresh: boolean)
 	local now = os.time()
-	state.Prev = fresh and state.Id or id
+	-- (mid-fade: from whichever weather is mostly on screen, so the sky doesn't jump)
+	local from = (now - state.At) * 2 < WorldEvents.Fade and state.Prev or state.Id
+	state.Prev = fresh and from or id
 	state.Id = id
 	state.At = fresh and now or (now - WorldEvents.Fade)
 	state.Next = now + rng:NextInteger(WorldEvents.Switch[1], WorldEvents.Switch[2])

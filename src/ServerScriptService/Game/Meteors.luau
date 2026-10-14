@@ -222,10 +222,16 @@ local function collect(player: Player, id: string)
 	local r = rocks[id]
 	local profile = Data.Peek(player)
 	if not (r and r.Model.Parent and profile) then return end
-	if r.Got[player.UserId] then return end
+	if r.Owner and r.Owner ~= player.UserId then return end
+	if r.Got[player.UserId] then
+		Net.Fire(player, "MeteorGot", { Id = id, Already = true })
+		return
+	end
 	local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart") :: BasePart?
 	if not hrp or (hrp.Position - r.Pos).Magnitude > M.Reach then return end
 	r.Got[player.UserId] = true
+	-- (who has had it, on the rock: a client that rejoins mid-shower greys out its own ones)
+	r.Model:SetAttribute("Got", (r.Model:GetAttribute("Got") or ",") .. player.UserId .. ",")
 	local rate = yardRate(player, profile)
 	local out = { Id = id, Star = r.Star, Coins = 0 }
 	if r.Star then
@@ -282,15 +288,20 @@ local function shower(by: string?)
 		local taken = {} :: { Vector3 }
 		local spots = {} :: { any }
 		for _, p in ipairs(hubSpots(M.Hub, taken, rp)) do table.insert(spots, { Pos = p }) end
+		local hubCount = #spots
+		-- (the ones on an island are its owner's: a full server doesn't pay everyone for every island)
 		for _, plr in ipairs(atCamp()) do
 			local plot = Plots.Get(plr)
 			if plot then
-				for _, p in ipairs(islandSpots(plot, M.PerIsland, taken, rp)) do table.insert(spots, { Pos = p }) end
+				for _, p in ipairs(islandSpots(plot, M.PerIsland, taken, rp)) do table.insert(spots, { Pos = p, Owner = plr.UserId }) end
 			end
 		end
 		if #spots == 0 then warn("[Meteors] found nowhere to land") end
-		-- one STAR METEORITE, at the hub (everyone passes through it)
-		if #spots > 0 then spots[rng:NextInteger(1, math.min(#spots, M.Hub))].Star = true end
+		-- one STAR METEORITE, at the hub (everyone passes through it); only if the hub had no room, on an island
+		if #spots > 0 then
+			local s = spots[rng:NextInteger(1, hubCount > 0 and hubCount or #spots)]
+			s.Star, s.Owner = true, nil
+		end
 		-- spread over the shower, a little bunched (showers come in bursts)
 		for _, s in ipairs(spots) do s.Land = rng:NextNumber() ^ 0.85 * (M.Duration - FALL - 2) + FALL end
 		table.sort(spots, function(a, b) return a.Land < b.Land end)
@@ -308,11 +319,12 @@ local function shower(by: string?)
 			-- from high in the sky, off to one side (they all come in from roughly the same direction, like a real shower)
 			local a = math.rad(35) + rng:NextNumber(-0.25, 0.25)
 			local from = s.Pos + Vector3.new(math.cos(a) * 340, 420 + rng:NextNumber(-40, 40), math.sin(a) * 340)
-			Net.FireAll("Meteor", { Id = id, From = from, To = s.Pos, Fall = FALL, Star = s.Star == true })
+			Net.FireAll("Meteor", { Id = id, From = from, To = s.Pos, Fall = FALL, Star = s.Star == true, T = os.time() })
 			task.delay(FALL, function()
 				if not running then return end
 				local m = buildRock(id, s.Pos, s.Star == true)
-				rocks[id] = { Model = m, Pos = s.Pos, Star = s.Star == true, Got = {} }
+				if s.Owner then m:SetAttribute("Owner", s.Owner) end
+				rocks[id] = { Model = m, Pos = s.Pos, Star = s.Star == true, Got = {}, Owner = s.Owner }
 				local pr = m:FindFirstChild("Collect", true) :: ProximityPrompt?
 				if pr then pr.Triggered:Connect(function(plr) collect(plr, id) end) end
 				m.Parent = f

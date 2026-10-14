@@ -32,6 +32,7 @@ local Cinema = require(script.Parent.UI.Cinema)
 
 local player = Players.LocalPlayer
 local WeatherView = {}
+WeatherView.Ready = false -- (init.client: the main menu is done - no toasts over it)
 
 -- what each weather does: the light (Dark / Fog / Wet, for Zone) and what falls (0..1 each)
 local LOOK = {
@@ -440,7 +441,7 @@ function WeatherView.Start()
 		if typeof(info) ~= "table" then return end
 		local w = WorldEvents.Weathers[info.Id]
 		-- (never over a cutscene or a fight: the sky changing says it anyway)
-		if not w or Cinema.Playing() or player:GetAttribute("Site") then return end
+		if not w or not WeatherView.Ready or Cinema.Playing() or player:GetAttribute("Site") then return end
 		local line = w.Line
 		if SNOW_ZONES[Zone.Current] and (info.Id == "Rain" or info.Id == "Storm") then line = info.Id == "Storm" and "A BLIZZARD BLOWS IN" or "IT'S STARTING TO SNOW" end
 		if w.Luck then line ..= "  -  STORM LUCK +" .. math.floor((w.Luck - 1) * 100 + 0.5) .. "%!" end

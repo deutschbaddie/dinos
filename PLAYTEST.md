@@ -401,7 +401,7 @@ Settings → ADMIN has two new buttons: **WEATHER** (rolls in the next weather n
 
 **B. Meteor showers** (at camp: press METEORS, or wait 12-25 min into a server)
 1. A **METEOR SHOWER!** banner. 20 s later fireballs streak in from the sky (all from the same side) for about 90 s and slam into the hub ring and onto the islands of players at camp: a flash, a shockwave ring, dirt and cracks, a shake if you're close.
-2. Each one leaves a glowing **METEORITE** with a star marker over it you can see from across camp. Hold E: "+N COINS - METEORITE" and that rock goes dark for you (still glowing for others, who can collect it too).
+2. Each one leaves a glowing **METEORITE** with a star marker over it you can see from across camp. Hold E: "+N COINS - METEORITE" and that rock goes dark for you (still glowing for others, who can collect it too). The ones on an island are only its owner's (no prompt or marker for anyone else). Rejoin mid-shower: the rocks you already had stay dark.
 3. One per shower is a bigger cyan **STAR METEORITE** at the hub: it gives an egg from your eras (coins instead if your egg bag is full).
 4. Rocks never land on roofs, in water, in your paddock or jammed against walls / trees.
 5. About 75 s after the last one lands they all disappear and a "THE METEOR SHOWER IS OVER" toast shows. Someone on an expedition gets a toast instead of the banner and sees no fireballs.

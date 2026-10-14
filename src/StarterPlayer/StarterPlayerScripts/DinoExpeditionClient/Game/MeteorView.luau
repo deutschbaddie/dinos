@@ -27,6 +27,7 @@ local Cinema = require(script.Parent.UI.Cinema)
 local player = Players.LocalPlayer
 local C = Theme.C
 local MeteorView = {}
+MeteorView.Ready = false -- (init.client: the main menu is done - no banners or fireballs over it)
 
 local ORANGE = Color3.fromRGB(255, 132, 40)
 local CYAN = Color3.fromRGB(110, 232, 255)
@@ -70,7 +71,7 @@ local function impact(at: Vector3, star: boolean)
 	task.delay(0.7, function() ring:Destroy() end)
 	pcall(DinosaurVFX.Debris, at, star and 2.2 or 1.6, Color3.fromRGB(70, 58, 50))
 	pcall(DinosaurVFX.GroundCracks, at, star and 3 or 2.2)
-	DinosaurVFX.Shake(star and 0.55 or 0.4, 0.5, at, 110)
+	if not Cinema.Playing() then DinosaurVFX.Shake(star and 0.55 or 0.4, 0.5, at, 110) end
 	if Audio.Has("MeteorHit") then
 		Audio.Play("MeteorHit", { At = at })
 	else
@@ -84,6 +85,9 @@ local function fly(info)
 	local cam = Workspace.CurrentCamera
 	-- (only people at camp see them come down; an expedition is a long way off)
 	if away() or not cam or (cam.CFrame.Position - to).Magnitude > 1600 then return end
+	-- (not over the menu or a cutscene, and never late: one held back would land long after its rock)
+	if not MeteorView.Ready or Cinema.Playing() then return end
+	if typeof(info.T) == "number" and Net.ServerTime() - info.T > (tonumber(info.Fall) or 2.6) + 1 then return end
 	local star = info.Star == true
 	local col = star and CYAN or ORANGE
 	local fall = math.clamp(tonumber(info.Fall) or 2.6, 0.5, 6)
@@ -91,7 +95,7 @@ local function fly(info)
 	local head = part({ Shape = Enum.PartType.Ball, Material = Enum.Material.Neon, Color = Color3.new(1, 0.95, 0.85):Lerp(col, 0.35), Size = Vector3.new(size, size, size), CFrame = CFrame.new(from) })
 	local shell = part({ Shape = Enum.PartType.Ball, Material = Enum.Material.Neon, Color = col, Size = Vector3.new(size, size, size) * 1.7, CFrame = CFrame.new(from), Transparency = 0.55 })
 	-- the tail: a long fading trail plus fire shedding off it (its two edges either side of the head, across the
-	-- way it's flying - the head's Y points along its path)
+	-- way it's flying - the head's Y lies along its path)
 	local a0 = Instance.new("Attachment")
 	a0.Position = Vector3.new(size * 0.45, 0, 0)
 	a0.Parent = head
@@ -199,10 +203,17 @@ local function watchRock(m: Instance)
 	if not m:IsA("Model") then return end
 	local id = m:GetAttribute("MeteorId")
 	if typeof(id) ~= "string" then return end
+	local owner = m:GetAttribute("Owner")
+	local mine = owner == nil or owner == player.UserId
+	if string.find(tostring(m:GetAttribute("Got") or ""), "," .. player.UserId .. ",", 1, true) then got[id] = true end
 	-- (the whole rock arrives together, but give its core a moment in case it's still coming in)
 	if not m:FindFirstChild("Core") and not m:WaitForChild("Core", 5) then return end
 	if not m.Parent then return end
-	if got[id] then
+	if not mine then
+		-- (someone else's island: theirs to collect - no prompt, no marker for you)
+		local pr = m:FindFirstChild("Collect", true)
+		if pr and pr:IsA("ProximityPrompt") then pr.Enabled = false end
+	elseif got[id] then
 		goCold(m)
 	else
 		marker(m)
@@ -226,6 +237,7 @@ local function onGot(info)
 	got[info.Id] = true
 	local m = findRock(info.Id)
 	if m then goCold(m) end
+	if info.Already then return end
 	local coins = tonumber(info.Coins) or 0
 	if info.Star and typeof(info.Egg) == "table" then
 		local r = Config.Rarity[info.Egg.Rarity]
@@ -249,6 +261,7 @@ function MeteorView.Start()
 		if typeof(info) ~= "table" then return end
 		if info.Phase == "Warn" then
 			table.clear(got)
+			if not MeteorView.Ready then return end
 			if away() or Cinema.Playing() then
 				Kit.Toast("A METEOR SHOWER IS HITTING BASE CAMP!", "Orange", "Star")
 				return
@@ -257,7 +270,7 @@ function MeteorView.Start()
 			banner.Show("METEOR SHOWER!", "METEORS ARE ABOUT TO HIT CAMP - GRAB THE GLOWING ROCKS", "Star", C.OrangeHi, 3.6)
 		elseif info.Phase == "Over" then
 			table.clear(got)
-			if not away() then Kit.Toast("THE METEOR SHOWER IS OVER", "Grey", "Star") end
+			if MeteorView.Ready and not away() then Kit.Toast("THE METEOR SHOWER IS OVER", "Grey", "Star") end
 		end
 	end)
 	Net.On("Meteor", fly)
