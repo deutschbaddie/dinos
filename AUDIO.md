@@ -146,6 +146,21 @@ The game no longer uses any built-in Roblox sounds; these four cover the last mo
 | Clunk | [Factory metal hard hit #2980](https://assets.mixkit.co/active_storage/sfx/2980/2980.wav) | fitting a part |
 | Purchase | [Gold coin prize #1999](https://assets.mixkit.co/active_storage/sfx/1999/1999.wav) | buying a part |
 
+## Weather + meteors (8 sounds, 2026-10-14)
+
+Until these are in, the weather is silent and the thunder and meteors borrow StompBig / Earthshaker. Mixkit blocks direct links, so these name the exact Mixkit title: search it on the category page linked, click **Download**, and upload as usual. The loops need to loop cleanly, so trim any fade-in or fade-out before uploading.
+
+| Slot | Mixkit title (category page) | Length | When it plays |
+| --- | --- | --- | --- |
+| RainLoop | "Rain long loop" ([rain](https://mixkit.co/free-sound-effects/rain/)) | 0:57 | rain, and the edge of a thunderstorm |
+| StormLoop | "Heavy storm rain loop" ([rain](https://mixkit.co/free-sound-effects/rain/)) | 0:18 | a thunderstorm's downpour (the dark heavy-rain one) |
+| WindLoop | "Wind blowing ambience" ([wind](https://mixkit.co/free-sound-effects/wind/)) | 1:01 | strong winds, and gusts in storms and hail |
+| HailLoop | "Heavy rain over metal roof" ([rain](https://mixkit.co/free-sound-effects/rain/)) | 1:53 | a hailstorm (it's played a little higher, so it rattles) |
+| ThunderNear | "Strong close thunder explosion" ([thunder](https://mixkit.co/free-sound-effects/thunder/)) | 0:08 | a lightning strike close by |
+| ThunderFar | "Big thunder rumble" ([thunder](https://mixkit.co/free-sound-effects/thunder/)) | 0:22 | a strike far off |
+| MeteorFall | "Fast thunder whoosh" ([thunder](https://mixkit.co/free-sound-effects/thunder/)) | 0:04 | a meteor streaking down |
+| MeteorHit | "Close explosion thunder" ([thunder](https://mixkit.co/free-sound-effects/thunder/)) | 0:17 | a meteor slamming into camp |
+
 ---
 
 ## Music (Roblox Creator Store, not Mixkit)

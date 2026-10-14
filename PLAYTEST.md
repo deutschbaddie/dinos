@@ -383,3 +383,25 @@ Fern Valley's three teases (footprints, the throne roar, the road crossing) now 
 1. Upgrade the trainer: the window updates straight away to the next level and price (it used to keep the old one).
 2. While the quiz is open on your pad, the trainer's Upgrade prompt doesn't open a window underneath it.
 3. The quiz now pays about 4-10 seconds of training per right answer, so quizzing on the pad earns up to ~3x standing there (it was ~7x).
+
+## 15. Weather + meteor showers (2026-10-14, untested in Studio)
+
+Settings → ADMIN has two new buttons: **WEATHER** (rolls in the next weather now) and **METEORS** (starts a meteor shower). They're quicker than waiting 10-15 minutes. The weather sounds are silent until the 8 files in AUDIO.md ("Weather + meteors") are uploaded. Until then thunder and meteor impacts use the stomp and earthshaker sounds.
+
+**A. Weather** (press WEATHER to step through: clear → rain → thunderstorm → fog → wind → hail)
+1. Each change shows a toast ("IT'S STARTING TO RAIN"). The sky fades into it over about 25 s: no snapping.
+2. **Rain**: grey and darker, streaks falling and slanting a little, splashes at your feet. Walk under a roof (HQ, a shop awning, the garage): the rain stops around you. Step out: it comes back. Driving a rover keeps the rain on.
+3. **Thunderstorm**: much darker, heavy rain, strong slant. Every 5-13 s a bolt hits somewhere in the distance, the screen flashes, and thunder comes a beat later. A **STORM LUCK +20%** chip appears top-left once it has fully rolled in.
+4. **Fog**: thick haze, and a low mist drifting along the ground.
+5. **Strong winds**: faint streaks racing past, leaves blowing sideways. In Dawn Desert / Red Cliffs the streaks and haze are dusty orange.
+6. **Hail**: white pellets falling and bouncing off the ground.
+7. Go to Frost Forest during rain or a storm: it snows hard instead, with no lightning and the toast says snow/blizzard.
+8. Hatch an egg or warp during a storm: no rain or bolts inside the cutscene, and the storm is back when it ends. Fight the Frost Forest or Spine River boss: its own whiteout/storm takes over, then the weather comes back afterwards.
+9. Leave it alone: a new weather every 10-15 minutes, never the same twice in a row. Two players should see the same weather.
+
+**B. Meteor showers** (at camp: press METEORS, or wait 12-25 min into a server)
+1. A **METEOR SHOWER!** banner. 20 s later fireballs streak in from the sky (all from the same side) for about 90 s and slam into the hub ring and onto the islands of players at camp: a flash, a shockwave ring, dirt and cracks, a shake if you're close.
+2. Each one leaves a glowing **METEORITE** with a star marker over it you can see from across camp. Hold E: "+N COINS - METEORITE" and that rock goes dark for you (still glowing for others, who can collect it too).
+3. One per shower is a bigger cyan **STAR METEORITE** at the hub: it gives an egg from your eras (coins instead if your egg bag is full).
+4. Rocks never land on roofs, in water, in your paddock or jammed against walls / trees.
+5. About 75 s after the last one lands they all disappear and a "THE METEOR SHOWER IS OVER" toast shows. Someone on an expedition gets a toast instead of the banner and sees no fireballs.

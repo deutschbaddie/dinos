@@ -1,7 +1,7 @@
 --[[
 	Admin — the Settings > ADMIN panel's server side. Every request is checked here against Admins.luau
 	(the client only decides whether to show the tab). Roles:
-	  Admin  GoTo / Bring / SendHome / Freeze / Unfreeze / Respawn, Kick, Announce (this server), WakeBoss, LuckEvent
+	  Admin  GoTo / Bring / SendHome / Freeze / Unfreeze / Respawn, Kick, Announce (this server), WakeBoss, LuckEvent, Weather, Meteors
 	         + Ban (any length) / Ban by username / Unban - only the admins marked CanBan in Admins.luau (NotTufferson)
 	  Owner  all of that, plus MakeAdmin / RemoveAdmin (saved, every server), GiveCoins / GiveEgg, Announce to every
 	         server, Shutdown
@@ -309,6 +309,19 @@ ON_SERVER.LuckEvent = { Role = "Admin", Fn = function(actor)
 	local ok, res, msg = pcall(function() return (require(script.Parent.Boosts) :: any).StartLuckEvent({ By = actor.DisplayName, Source = "Admin" }) end)
 	if not ok then return false, "LUCK EVENTS AREN'T READY" end
 	if res then record(`{actor.Name} started 2x LUCK: {msg}`) end
+	return res == true, tostring(msg)
+end }
+-- the sky: the next weather in line (Weather.luau), or a METEOR SHOWER now (Meteors.luau)
+ON_SERVER.Weather = { Role = "Admin", Fn = function(actor)
+	local ok, res, msg = pcall(function() return (require(script.Parent.Weather) :: any).Set(nil) end)
+	if not ok then return false, "WEATHER ISN'T READY" end
+	if res then record(`{actor.Name} changed the weather: {msg}`) end
+	return res == true, tostring(msg)
+end }
+ON_SERVER.Meteors = { Role = "Admin", Fn = function(actor)
+	local ok, res, msg = pcall(function() return (require(script.Parent.Meteors) :: any).Begin(actor.DisplayName) end)
+	if not ok then return false, "METEOR SHOWERS AREN'T READY" end
+	if res then record(`{actor.Name} started a meteor shower`) end
 	return res == true, tostring(msg)
 end }
 ON_SERVER.BanName = { Role = "Admin", Fn = function(actor, args)

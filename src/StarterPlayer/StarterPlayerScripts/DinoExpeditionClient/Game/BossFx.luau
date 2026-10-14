@@ -131,7 +131,10 @@ local function whiteOff()
 	task.delay(0.75, function() w.Grade:Destroy() end)
 	-- (only put the air back if we're still in the same era: a warp home has already set camp's own)
 	if w.Atm and w.Was and Zone.Current == w.Zone then
-		TweenService:Create(w.Atm, TweenInfo.new(0.9), { Density = w.Was[1], Haze = w.Was[2], Color = w.Was[3], Glare = w.Was[4], Decay = w.Was[5] }):Play()
+		-- (the zone's air as it is now - the weather may have changed under the whiteout)
+		local look = Zone.Look()
+		local a = look and look.Atmosphere or { Density = w.Was[1], Haze = w.Was[2], Color = w.Was[3], Glare = w.Was[4], Decay = w.Was[5] }
+		TweenService:Create(w.Atm, TweenInfo.new(0.9), { Density = a.Density, Haze = a.Haze, Color = a.Color, Glare = a.Glare, Decay = a.Decay }):Play()
 	end
 end
 
@@ -220,7 +223,9 @@ local function stormOff()
 	TweenService:Create(s.Grade, TweenInfo.new(1.5), { Saturation = 0, Brightness = 0, Contrast = 0, TintColor = Color3.new(1, 1, 1) }):Play()
 	task.delay(1.6, function() s.Grade:Destroy() end)
 	if s.Atm and s.Was and Zone.Current == s.Zone then
-		TweenService:Create(s.Atm, TweenInfo.new(1.6), { Density = s.Was[1], Haze = s.Was[2], Color = s.Was[3], Glare = s.Was[4], Decay = s.Was[5] }):Play()
+		local look = Zone.Look()
+		local a = look and look.Atmosphere or { Density = s.Was[1], Haze = s.Was[2], Color = s.Was[3], Glare = s.Was[4], Decay = s.Was[5] }
+		TweenService:Create(s.Atm, TweenInfo.new(1.6), { Density = a.Density, Haze = a.Haze, Color = a.Color, Glare = a.Glare, Decay = a.Decay }):Play()
 	end
 end
 

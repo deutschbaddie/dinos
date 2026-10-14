@@ -13,7 +13,8 @@
 	  CONFIRM x2          executes. READY and CONFIRM carry the Version the client was looking at, and a stale one is
 	                      refused: nobody can confirm an offer that changed under them.
 	  execute             checks every item again (still owned, not a companion / star pen / nest / rack, both bags have
-	                      room, no id clash), then moves it all in one step with no yields: all or nothing. Records keep
+	                      room, no id clash), journals both sides (TradeLedger: crash-safe), checks it all once more,
+	                      then moves it all in one step with no yields: all or nothing. Records keep
 	                      their id, rarity, KG and bond. Both profiles save straight away, each keeps a TradeLog (last
 	                      Config.Trade.LogSize) and the server prints a log line.
 
@@ -29,6 +30,7 @@ local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 
 local Config = require(ReplicatedStorage.DinoExpedition.Game.Config)
+local Ledger = require(script.Parent.TradeLedger)
 
 local Trade = {}
 local Data, Net, Dinos, Plots, Expedition
@@ -319,29 +321,23 @@ local function writeLog(profile, id: string, other: Player, gave, got)
 	while #profile.TradeLog > T.LogSize do table.remove(profile.TradeLog) end
 end
 
-local function execute(s)
-	s.Executing = true
+-- everything that must hold for the trade to go ahead: nil, or (what the players are told, the log reason)
+local function validate(s): (string?, string?)
 	local a, b = s.A, s.B
-	local function fail(text: string, log: string)
-		warn(`[Trade] {s.Id} FAILED ({log}): {a.Name} <-> {b.Name} - nothing moved`)
-		s.Executing = false
-		close(s, function() return text end)
-		return { Ok = false, Err = text }
-	end
 	local pa, pb = Data.Peek(a), Data.Peek(b)
-	if not (a.Parent and b.Parent and pa and pb) then return fail("SOMEONE LEFT - NOTHING WAS TRADED", "left") end
-	if busyReason(a) or busyReason(b) then return fail("SOMEONE GOT BUSY - NOTHING WAS TRADED", "busy") end
+	if not (a.Parent and b.Parent and pa and pb) then return "SOMEONE LEFT - NOTHING WAS TRADED", "left" end
+	if busyReason(a) or busyReason(b) then return "SOMEONE GOT BUSY - NOTHING WAS TRADED", "busy" end
 	local giveA, giveB = s.Offer[a], s.Offer[b]
-	if #giveA + #giveB == 0 then return fail("NOTHING TO TRADE", "empty") end
+	if #giveA + #giveB == 0 then return "NOTHING TO TRADE", "empty" end
 	-- every item: still theirs, still tradable, listed once
 	for _, side in ipairs({ { a, pa, giveA }, { b, pb, giveB } }) do
 		local seen = {}
-		if #side[3] > T.MaxItems then return fail("TOO MANY ITEMS - NOTHING WAS TRADED", "cap") end
+		if #side[3] > T.MaxItems then return "TOO MANY ITEMS - NOTHING WAS TRADED", "cap" end
 		for _, it in ipairs(side[3]) do
-			if seen[it.Id] then return fail("TRADE ERROR - NOTHING WAS TRADED", "double " .. it.Id) end
+			if seen[it.Id] then return "TRADE ERROR - NOTHING WAS TRADED", "double " .. it.Id end
 			seen[it.Id] = true
 			local why = Dinos.TradeBlock(side[2], it.Kind, it.Id)
-			if why then return fail(`{upper(side[1])}: {why} - NOTHING WAS TRADED`, "blocked " .. it.Id) end
+			if why then return `{upper(side[1])}: {why} - NOTHING WAS TRADED`, "blocked " .. it.Id end
 		end
 	end
 	-- room in both bags (a bag already over the cap - bought eggs always fit - may shrink but never grow)
@@ -353,17 +349,70 @@ local function execute(s)
 	for _, side in ipairs({ { a, pa, giveA, giveB }, { b, pb, giveB, giveA } }) do
 		local p, prof, gives, gets = side[1], side[2], side[3], side[4]
 		if not fits(#prof.Dinos, count(gives, "Dino"), count(gets, "Dino"), inv.MaxDinos) then
-			return fail(`{upper(p)}'S DINO BAG IS FULL - NOTHING WAS TRADED`, "dino bag")
+			return `{upper(p)}'S DINO BAG IS FULL - NOTHING WAS TRADED`, "dino bag"
 		end
 		if not fits(#prof.Eggs, count(gives, "Egg"), count(gets, "Egg"), inv.MaxEggs) then
-			return fail(`{upper(p)}'S EGG BAG IS FULL - NOTHING WAS TRADED`, "egg bag")
+			return `{upper(p)}'S EGG BAG IS FULL - NOTHING WAS TRADED`, "egg bag"
 		end
 	end
 	-- an id belongs to one record in the whole game: a clash means something's wrong, so never merge
 	for _, side in ipairs({ { giveA, pb }, { giveB, pa } }) do
 		for _, it in ipairs(side[1]) do
-			if findIn(side[2].Dinos, it.Id) or findIn(side[2].Eggs, it.Id) then return fail("TRADE ERROR - NOTHING WAS TRADED", "id clash " .. it.Id) end
+			if findIn(side[2].Dinos, it.Id) or findIn(side[2].Eggs, it.Id) then return "TRADE ERROR - NOTHING WAS TRADED", "id clash " .. it.Id end
 		end
+	end
+	return nil, nil
+end
+
+-- the full records an offer moves (with their bond): what the journal keeps
+local function records(profile, items)
+	local out = {}
+	for _, it in ipairs(items) do
+		local rec = findIn(it.Kind == "Dino" and profile.Dinos or profile.Eggs, it.Id)
+		local bond = it.Kind == "Dino" and typeof(profile.Bond) == "table" and profile.Bond[it.Id] or nil
+		table.insert(out, { Kind = it.Kind, Rec = copy(rec), Bond = bond })
+	end
+	return out
+end
+
+local function execute(s)
+	s.Executing = true
+	local a, b = s.A, s.B
+	local function fail(text: string, log: string)
+		warn(`[Trade] {s.Id} FAILED ({log}): {a.Name} <-> {b.Name} - nothing moved`)
+		s.Executing = false
+		close(s, function() return text end)
+		return { Ok = false, Err = text }
+	end
+	local err, why = validate(s)
+	if err then return fail(err, why :: string) end
+	local pa, pb = Data.Peek(a), Data.Peek(b)
+	local giveA, giveB = s.Offer[a], s.Offer[b]
+
+	-- the journal first (TradeLedger: a crash between the two saves can't dupe or lose anything). It yields, so
+	-- afterwards everything is checked again and the records must be exactly the ones journaled
+	local recA, recB = records(pa, giveA), records(pb, giveB)
+	local snap = HttpService:JSONEncode({ recA, recB })
+	local entries = {
+		[a.UserId] = { With = b.UserId, Gave = recA, Got = recB },
+		[b.UserId] = { With = a.UserId, Gave = recB, Got = recA },
+	}
+	if not Ledger.Write(s.Id, entries) then return fail("TRADING HIT A SNAG - NOTHING WAS TRADED, TRY AGAIN", "ledger") end
+	if s.Closed then
+		-- (someone left or it was closed while the journal wrote: they've been told)
+		Ledger.Clear(s.Id, entries)
+		s.Executing = false
+		warn(`[Trade] {s.Id} FAILED (closed while journaling): nothing moved`)
+		return { Ok = false, Err = "THE TRADE WAS CANCELLED" }
+	end
+	err, why = validate(s)
+	pa, pb = Data.Peek(a), Data.Peek(b)
+	if not err and HttpService:JSONEncode({ records(pa, giveA), records(pb, giveB) }) ~= snap then
+		err, why = "SOMETHING CHANGED - NOTHING WAS TRADED", "changed"
+	end
+	if err then
+		Ledger.Clear(s.Id, entries)
+		return fail(err, why :: string)
 	end
 
 	-- the move. NO YIELDS from here to the end of the commit: both profiles change together or not at all
@@ -374,6 +423,8 @@ local function execute(s)
 	local gaveA, gaveB = summary(toB), summary(toA)
 	writeLog(pa, s.Id, b, gaveA, gaveB)
 	writeLog(pb, s.Id, a, gaveB, gaveA)
+	Ledger.MarkApplied(pa, s.Id)
+	Ledger.MarkApplied(pb, s.Id)
 	s.Executing = false
 	s.Closed = true
 	sessions[a], sessions[b] = nil, nil
@@ -386,9 +437,22 @@ local function execute(s)
 		Plots.Sync(p) -- the yard: the dinos that left walk off, the new ones walk in
 		Data.Changed(p)
 	end
-	-- saved right away, both at once, so a crash can't leave one side traded and the other not
-	task.spawn(Data.Save, a)
-	task.spawn(Data.Save, b)
+	-- saved right away, both at once; once both have landed the journal entries go (until then a crash is repaired
+	-- from them at the next load)
+	task.spawn(function()
+		local res = {} :: { [Player]: boolean }
+		local left = 2
+		for _, p in ipairs({ a, b }) do
+			task.spawn(function()
+				local ok, saved = pcall(Data.Save, p)
+				res[p] = ok and saved == true
+				left -= 1
+			end)
+		end
+		local t0 = os.clock()
+		while left > 0 and os.clock() - t0 < 60 do task.wait(0.2) end
+		if res[a] and res[b] then Ledger.Clear(s.Id, entries) end
+	end)
 	Net.Fire(a, "TradeDone", { Id = s.Id, Name = b.DisplayName, Got = views(toA), Gave = views(toB) })
 	Net.Fire(b, "TradeDone", { Id = s.Id, Name = a.DisplayName, Got = views(toB), Gave = views(toA) })
 	return { Ok = true, Done = true }
@@ -504,7 +568,8 @@ end
 
 local function onCancel(player: Player)
 	local s = sessions[player]
-	if s and not s.Executing then
+	if s and s.Executing then return { Ok = false, Err = "TOO LATE - THE TRADE IS GOING THROUGH" } end
+	if s then
 		close(s, function(p) return p == player and "TRADE CANCELLED" or `{upper(player)} CANCELLED THE TRADE` end)
 		return { Ok = true }
 	end

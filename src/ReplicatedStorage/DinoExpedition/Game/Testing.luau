@@ -32,6 +32,7 @@ Testing.WhatsNew = {
 	{ Icon = "Coin", Title = "WHILE YOU WERE AWAY", Line = "YOUR YARD EARNS WHILE YOU'RE GONE" },
 	{ Icon = "Buddy", Title = "TRADING", Line = "TRADE DINOS + EGGS FROM ANY PROFILE" },
 	{ Icon = "Star", Title = "SPIN, LUCK + EVENTS", Line = "DAILY SPIN, LUCK RUSHES, METEOR SHOWERS" },
+	{ Icon = "Bolt", Title = "WEATHER", Line = "RAIN, THUNDERSTORMS, FOG, WIND + HAIL" },
 }
 Testing.NextUp = "NEXT: MUTATIONS + HYBRIDS" -- a teaser line under the list (nil hides it)
 Testing.GroupId = 902411651 -- testers must be members (the access check offers a JOIN button)

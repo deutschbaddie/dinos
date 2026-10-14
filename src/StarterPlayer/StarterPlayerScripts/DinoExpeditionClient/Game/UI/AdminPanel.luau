@@ -345,6 +345,8 @@ function AdminPanel.Build(body: Frame, ui)
 	if owner then s("ALL SERVERS", "Alert", "Orange", function() send(true) end) end
 	s("WAKE BOSS", "Trophy", "Teal", function() act("WakeBoss") end)
 	s("2X LUCK", "Star", "Yellow", function() act("LuckEvent") end) -- (15 min for this server; again = +15 min)
+	s("WEATHER", "Bolt", "Purple", function() act("Weather") end) -- (the next weather in line, rolling in now)
+	s("METEORS", "Star", "Orange", function() act("Meteors") end) -- (a meteor shower over Base Camp)
 	if owner then s("SHUTDOWN", "Door", "Red", function() act("Shutdown", {}, "Shutdown") end, "Shutdown") end
 
 	if canBan then

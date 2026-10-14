@@ -2014,7 +2014,11 @@ function View.HideMap()
 	if map.Atmo then
 		local a = map.Atmo
 		map.Atmo = nil
-		if a[1].Parent then TweenService:Create(a[1], TweenInfo.new(0.6), { Density = a[2], Haze = a[3] }):Play() end
+		-- (the zone's air as it is now, weather and all; the snapshot only if there's no look)
+		local look = Zone.Look()
+		local den, haze = a[2], a[3]
+		if look and look.Atmosphere then den, haze = look.Atmosphere.Density, look.Atmosphere.Haze end
+		if a[1].Parent then TweenService:Create(a[1], TweenInfo.new(0.6), { Density = den, Haze = haze }):Play() end
 	end
 	if map.Token then
 		Cinema.End(map.Token)

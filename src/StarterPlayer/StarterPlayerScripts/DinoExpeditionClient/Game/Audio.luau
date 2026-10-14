@@ -51,6 +51,9 @@ local IDS = {
 	Spray = "rbxassetid://107158966284157", Clunk = "rbxassetid://118942286185428", Purchase = "rbxassetid://120261282337874",
 	-- pickups
 	ItemDrop = "rbxassetid://124994810895688", ItemGet = "rbxassetid://92608346024892",
+	-- weather + meteor showers (2026-10-14: AUDIO.md "Weather + meteors" lists the files; empty = silent, and the
+	-- thunder / meteors fall back on StompBig / Earthshaker until they're in)
+	RainLoop = "", StormLoop = "", WindLoop = "", HailLoop = "", ThunderNear = "", ThunderFar = "", MeteorFall = "", MeteorHit = "",
 }
 Audio.IDS = IDS
 -------------------------------------------------------------------------------------------------------------------
@@ -71,11 +74,12 @@ local LEVEL = {
 	-- ambience beds (some files are recorded very quietly)
 	AmbCamp = 1.4, AmbFernValley = 3, AmbGiantPlains = 0.8, AmbSpineRiver = 4, AmbRedCliffs = 1.2, AmbFrostForest = 0.7, AmbDawnDesert = 0.8,
 	SwimLoop = 0.5, Underwater = 0.6, Whirlpool = 0.9, EngineLoop = 0.35,
+	RainLoop = 0.6, StormLoop = 0.7, WindLoop = 0.5, HailLoop = 0.55, ThunderNear = 1, ThunderFar = 0.8, MeteorFall = 0.6, MeteorHit = 0.9,
 }
 -- variations: a slot plays one of these at random
 local VARIANTS = { RoarBig = { "RoarBig", "RoarBig2" }, Screech = { "Screech", "Screech2" } }
 -- how far a 3D sound carries
-local RANGE = { RoarBig = 320, RoarBig2 = 320, RoarBoss = 500, SeaRoar = 400, Bellow = 260, Screech = 220, Screech2 = 220, StompBig = 200, BossRising = 1000, Breach = 400 }
+local RANGE = { RoarBig = 320, RoarBig2 = 320, RoarBoss = 500, SeaRoar = 400, Bellow = 260, Screech = 220, Screech2 = 220, StompBig = 200, BossRising = 1000, Breach = 400, ThunderNear = 1400, ThunderFar = 2000, MeteorFall = 500, MeteorHit = 600 }
 
 local tracks = {} :: { [string]: Sound }
 local playing: Sound? = nil

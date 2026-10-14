@@ -28,6 +28,9 @@ do
 	local ok, result = pcall(function() return DataStoreService:GetDataStore(STORE_NAME) end)
 	if ok then store = result else warn("[Data] DataStore unavailable, progress will not save:", result) end
 end
+-- trades' write-ahead journal (TradeLedger.luau): a crash between a trade's two saves is repaired as they load
+local Ledger = require(script.Parent.TradeLedger)
+Ledger.Init(STORE_NAME)
 
 local function default()
 	return {
@@ -41,6 +44,7 @@ local function default()
 		Buddies = {}, -- your companions (Gear.BuddySlots of them): yard dinos that follow you, ride along and fight
 		Companion = "", -- (old single-companion field, folded into Buddies on load)
 		Bond = {}, -- dino id -> bond xp (Config.Bond)
+		TradesApplied = {}, -- trade id -> os.time(): trades in this save (TradeLedger repairs a half-saved one)
 		Balls = 0, -- toy balls in your pocket (Config.Balls)
 		Incubators = {}, -- { Slot, EggId, Species, Rarity, Start, Duration }
 		IncubatorCount = Config.Incubator.Base, PenSlots = Config.Pen.Base,
@@ -69,7 +73,7 @@ local function default()
 		Unlocked = { FernValley = true },
 		Quests = { Story = 1, Active = {}, Progress = {}, Side = {} },
 		Daily = { Last = 0, Streak = 0 },
-		Stats = { Runs = 0, Eggs = 0, Wrecks = 0, Takedowns = 0, Escapes = 0, Bosses = 0, Hatched = 0, Playtime = 0 }, -- Playtime: seconds online (trading needs Config.Trade.MinPlaytime)
+		Stats = { Runs = 0, Eggs = 0, Wrecks = 0, Takedowns = 0, Escapes = 0, Bosses = 0, Hatched = 0, Playtime = 0, Meteors = 0 }, -- Playtime: seconds online (trading needs Config.Trade.MinPlaytime)
 		Flags = { SeenWarp = false, Tutorial = 0, Tips = {}, Seen = {}, ColdOpenSeen = false }, -- ColdOpenSeen: watched the first cutscene (a reset wipes it)
 		Settings = { Shake = true, SkipWarp = false, Hints = true, Music = true },
 		Era = "FernValley",
@@ -218,6 +222,11 @@ function Data.Load(player: Player)
 				for _, q in ipairs((profile.Quests and profile.Quests.Active) or {}) do
 					if typeof(q) == "table" and typeof(q.Goal) == "table" and q.Goal.Boss == old then q.Goal.Boss = new end
 				end
+			end
+			-- a trade whose save never landed (the server went down between its two saves): settled now
+			if not fresh and store and not Data.NoAccess then
+				local okL, errL = pcall(Ledger.Resolve, player.UserId, profile, store :: DataStore, lockedByOther, Data.Peek)
+				if not okL then warn("[Data] trade journal check failed: " .. tostring(errL)) end
 			end
 			if not fresh then away = payAway(player, profile) end
 			-- the Index's entry milestones became claimable rewards (2026-10-14): ones already paid count as claimed

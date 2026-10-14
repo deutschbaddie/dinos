@@ -12,6 +12,7 @@ local Zone = require(script.Parent.Zone)
 local Cinema = require(script.Parent.UI.Cinema)
 
 local Ambience = {}
+Ambience.Wind = Vector3.zero -- (WeatherView: a strong wind blows the leaves along, studs/s)
 
 -- per zone: motes (colour), leaves (colours, rate), butterflies (count, colours), birds (count)
 local LOOK = {
@@ -158,7 +159,7 @@ function Ambience.Start()
 				l.Pos = cp + Vector3.new(math.cos(a) * r, 16 + math.random() * 14, math.sin(a) * r)
 			end
 			local s = l.Seed
-			l.Pos += Vector3.new(math.sin(t * 1.3 + s) * 1.6 + 0.6, -l.Fall, math.cos(t * 1.1 + s) * 1.2) * dt
+			l.Pos += (Vector3.new(math.sin(t * 1.3 + s) * 1.6 + 0.6, -l.Fall, math.cos(t * 1.1 + s) * 1.2) + Ambience.Wind) * dt
 			l.Part.CFrame = CFrame.new(l.Pos) * CFrame.Angles(t * 2.1 + s, t * 1.4 + s, math.sin(t * 3 + s) * 0.8)
 		end
 		for _, c in ipairs(critters) do

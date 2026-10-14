@@ -77,6 +77,7 @@ local LOOKS = {
 	},
 	-- Triassic sunrise: a low orange sun, pink-violet haze over red dunes and painted hills, gentle bloom
 	DawnDesert = {
+		Dry = true, -- (weather: dust, not grey cloud)
 		Lighting = {
 			ClockTime = 6.75, GeographicLatitude = 22, Brightness = 2.3, ExposureCompensation = -0.02,
 			OutdoorAmbient = Color3.fromRGB(150, 116, 132), Ambient = Color3.fromRGB(66, 50, 64),
@@ -90,6 +91,7 @@ local LOOKS = {
 	},
 	-- the Gobi at golden dusk: a warm low sun, long shadows on striped red cliffs, red-ochre haze
 	RedCliffs = {
+		Dry = true, -- (weather: dust, not grey cloud)
 		Lighting = {
 			ClockTime = 17.45, GeographicLatitude = 28, Brightness = 2.35, ExposureCompensation = -0.08,
 			OutdoorAmbient = Color3.fromRGB(150, 112, 100), Ambient = Color3.fromRGB(72, 50, 46),
@@ -106,9 +108,10 @@ local LOOKS = {
 local function effect(class: string, name: string): Instance
 	local e = Lighting:FindFirstChild(name)
 	if not e then
-		-- retire the place's stock effect of this kind so ours is the only one
+		-- retire the place's stock effect of this kind so ours is the only one (never one of the game's own: the
+		-- weather's grade sits on top of the zone's)
 		for _, other in ipairs(Lighting:GetChildren()) do
-			if other.ClassName == class and other.Name ~= name then (other :: any).Enabled = false end
+			if other.ClassName == class and other.Name ~= name and other.Name:sub(1, 4) ~= "Dino" then (other :: any).Enabled = false end
 		end
 		e = Instance.new(class)
 		e.Name = name
@@ -117,16 +120,65 @@ local function effect(class: string, name: string): Instance
 	return e :: Instance
 end
 
--- the look the current zone is heading to (a cutscene that dressed the light up puts it back to THIS, never to a
--- snapshot taken mid-tween)
+--------------------------------------------------------------------------------
+-- the weather on top (WeatherView sets it): Dark (overcast 0..1), Fog (0..1), Wet (0..1), Dry (a desert zone's dust
+-- instead of grey). Every zone's look is blended with it, so whatever puts the light back puts the weather back too.
+--------------------------------------------------------------------------------
+local weather = { Dark = 0, Fog = 0, Wet = 0 }
+local GREY = Color3.fromRGB(150, 158, 170)
+local DUST = Color3.fromRGB(214, 176, 132)
+
+local function lerp(a: number, b: number, t: number): number
+	return a + (b - a) * t
+end
+
+local function blend(look: any): any
+	local d, f, w = weather.Dark, weather.Fog, weather.Wet
+	if d < 0.001 and f < 0.001 and w < 0.001 then return look end
+	local dry = look.Dry == true
+	local out = table.clone(look)
+	local L = table.clone(look.Lighting)
+	L.Brightness = look.Lighting.Brightness * (1 - 0.42 * d)
+	L.OutdoorAmbient = look.Lighting.OutdoorAmbient:Lerp(Color3.fromRGB(104, 110, 122), 0.55 * d)
+	L.ShadowSoftness = lerp(look.Lighting.ShadowSoftness, 0.85, d)
+	L.EnvironmentSpecularScale = lerp(look.Lighting.EnvironmentSpecularScale, 0.85, 0.6 * w) -- (wet things shine)
+	L.ColorShift_Top = look.Lighting.ColorShift_Top:Lerp(Color3.fromRGB(176, 186, 204), d)
+	out.Lighting = L
+	local A = table.clone(look.Atmosphere)
+	local haze = dry and DUST or GREY
+	A.Density = math.max(lerp(look.Atmosphere.Density, 0.42, d), lerp(look.Atmosphere.Density, 0.6, f))
+	A.Haze = math.max(lerp(look.Atmosphere.Haze, 2.2, d), lerp(look.Atmosphere.Haze, 2.6, f))
+	A.Color = look.Atmosphere.Color:Lerp(haze, math.max(d, f) * 0.75)
+	A.Decay = look.Atmosphere.Decay:Lerp(haze:Lerp(Color3.new(), 0.35), math.max(d, f) * 0.7)
+	A.Glare = look.Atmosphere.Glare * (1 - math.max(d, f))
+	out.Atmosphere = A
+	out.SunRays = { Intensity = look.SunRays.Intensity * (1 - d), Spread = look.SunRays.Spread }
+	return out
+end
+
+-- the overcast grade, on its own effect over the zone's
+local function weatherGrade(): any
+	local d = weather.Dark
+	return { Brightness = -0.05 * d, Saturation = -0.28 * d, Contrast = 0.07 * d, TintColor = Color3.new(1, 1, 1):Lerp(Color3.fromRGB(206, 216, 236), d) }
+end
+
+-- the look the current zone is heading to, weather and all (a cutscene that dressed the light up puts it back to
+-- THIS, never to a snapshot taken mid-tween)
 function Zone.Look(): any
-	return Zone.Current and LOOKS[Zone.Current] or nil
+	local look = Zone.Current and LOOKS[Zone.Current] or nil
+	return look and blend(look) or nil
+end
+
+-- the zone's own look, no weather (is it a desert, what does a clear day look like)
+function Zone.BaseLook(zone: string?): any
+	return LOOKS[zone or Zone.Current]
 end
 
 local stockCleared = false
 function Zone.Apply(zone: string, instant: boolean?)
 	local look = LOOKS[zone]
 	if not look then return end
+	look = blend(look)
 	Zone.Current = zone
 	local info = TweenInfo.new(instant and 0 or 1.2, Enum.EasingStyle.Sine)
 	local lp = table.clone(look.Lighting)
@@ -143,6 +195,7 @@ function Zone.Apply(zone: string, instant: boolean?)
 	TweenService:Create(effect("ColorCorrectionEffect", "DinoColorGrade"), info, look.Grade):Play()
 	TweenService:Create(effect("BloomEffect", "DinoBloom"), info, look.Bloom):Play()
 	TweenService:Create(effect("SunRaysEffect", "DinoSunRays"), info, look.SunRays):Play()
+	TweenService:Create(effect("ColorCorrectionEffect", "DinoWeatherGrade"), info, weatherGrade()):Play()
 	-- the place's stock depth-of-field blurs normal play; cinematics add their own when they want it
 	if not stockCleared then
 		stockCleared = true
@@ -150,6 +203,26 @@ function Zone.Apply(zone: string, instant: boolean?)
 			if d:IsA("DepthOfFieldEffect") then d.Enabled = false end
 		end
 	end
+end
+
+-- WeatherView: the weather now. apply: put it on the light now, over `time` seconds (WeatherView holds off while a
+-- cutscene owns the light; the scene puts Zone.Look() back when it's done, weather included)
+function Zone.SetWeather(mix: { Dark: number, Fog: number, Wet: number }, apply: boolean, time: number?)
+	weather.Dark = math.clamp(tonumber(mix.Dark) or 0, 0, 1)
+	weather.Fog = math.clamp(tonumber(mix.Fog) or 0, 0, 1)
+	weather.Wet = math.clamp(tonumber(mix.Wet) or 0, 0, 1)
+	if not apply then return end
+	local base = Zone.Current and LOOKS[Zone.Current]
+	if not base then return end
+	local look = blend(base)
+	local info = TweenInfo.new(time or 1, Enum.EasingStyle.Sine)
+	local lp = table.clone(look.Lighting)
+	lp.GlobalShadows = nil
+	TweenService:Create(Lighting, info, lp):Play()
+	local atm = Lighting:FindFirstChildOfClass("Atmosphere")
+	if atm then TweenService:Create(atm, info, look.Atmosphere):Play() end
+	TweenService:Create(effect("SunRaysEffect", "DinoSunRays"), info, look.SunRays):Play()
+	TweenService:Create(effect("ColorCorrectionEffect", "DinoWeatherGrade"), info, weatherGrade()):Play()
 end
 
 return Zone

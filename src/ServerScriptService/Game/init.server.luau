@@ -67,6 +67,8 @@ require(script.IndexRewards).Start(deps) -- the Index pays: species milestones, 
 require(script.Discover).Start(deps) -- every era's SECRETS (landmarks, nests, stashes, wilds, the boss) for the Index
 require(script.Showcase).Start(deps) -- DINO NAMES + the SHOWCASE pedestal by your bridge (Plots.Sync publishes it)
 require(script.Spin).Start(deps) -- the DAILY SPIN: a free spin every day + bought spins (prizes in Game/SpinWheel)
+require(script.Weather).Start(deps) -- the server's sky: rain, storms, fog, wind, hail (STORM LUCK in a thunderstorm)
+require(script.Meteors).Start(deps) -- METEOR SHOWERS over Base Camp: meteorites to collect (Game/WorldEvents)
 Bosses.OnClear = function(player) Leaderboards.Push(player) end
 
 -- snapshot sent to the owning client whenever the profile changes
