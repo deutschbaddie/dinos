@@ -423,3 +423,10 @@ Settings → ADMIN has two new buttons: **WEATHER** (rolls in the next weather n
 1. Step onto the glowing pad: your launcher appears in your hand, you turn to face the target and raise it, and every shot kicks back as the beam leaves the barrel (+N POWER pops as before).
 2. Walk around on the pad: you can still move and turn freely. Stand still: you turn back to the target.
 3. Step off: the launcher disappears and your arms come down. Other players see you training the same way.
+
+**D. The Sightseer** (one in every era, optional: no quest list, no goal line, no onboarding)
+1. Out exploring an era on foot, look around its landmarks: a tourist in a sun hat and flowery teal shirt, with a camera and a map, stands a few steps off one of them under a THE SIGHTSEER tag (never near a nest).
+2. Talk: they ask you to spot a few sights. SURE! gives up to 3 leads you haven't found yet, each with a hint, a direction and a distance ("a waterfall (north-east, about 300 steps)").
+3. Find one: SECRET FOUND! as usual, plus a "SIGHTSEER: 1 / 3 SPOTTED" toast. All of them: "ALL SPOTTED! GO TELL THEM".
+4. Talk again: CLAIM REWARD pays coins (a few minutes of your yard's income) and some trainer POWER, then they offer another hunt. With every landmark found: "You've shown me every sight".
+5. The Rangers at each era's start can be talked to while you're on foot now too (before, Talk did nothing out in an era).

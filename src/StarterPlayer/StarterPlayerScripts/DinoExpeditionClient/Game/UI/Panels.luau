@@ -810,12 +810,7 @@ end
 
 -- a secret's icon
 local SECRET_ICON = { Nest = "Egg", Boss = "Dino", Stash = "Gift", Wild = "Dino", Shiny = "Star" }
-local KIND_WORD = {
-	Falls = "A WATERFALL", Arch = "AN ARCH", Tree = "A GIANT TREE", Lookout = "A LOOKOUT", Ruins = "SOME RUINS", Fossil = "A FOSSIL",
-	Cave = "A CAVE", Log = "A FALLEN LOG", Island = "AN ISLAND", Spring = "A SPRING", Wreck = "A WRECK", Rock = "A ROCK", Grove = "A GROVE",
-	Pond = "A POND", Totem = "A TOTEM", Bridge = "A BRIDGE", Dune = "A DUNE", Nest = "A NEST", Boss = "THE RULER", Stash = "HIDDEN EGGS",
-	Wild = "CALM A WILD DINO", Shiny = "CALM A SHINY ONE",
-}
+local KIND_WORD = IndexDefs.KindWord
 
 -- the SECRETS page: each era's landmarks, nests, stash, wilds and boss
 local function indexSecrets(content: Frame, header: Frame)

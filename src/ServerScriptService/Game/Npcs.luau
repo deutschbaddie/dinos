@@ -20,12 +20,14 @@ local SKIN = {
 	Mechanic = Color3.fromRGB(201, 140, 94),
 	EggKeeper = Color3.fromRGB(246, 215, 184),
 	Ranger = Color3.fromRGB(141, 90, 59),
+	Sightseer = Color3.fromRGB(234, 192, 150),
 }
 local OUTFIT = {
 	Professor = { Torso = Color3.fromRGB(245, 245, 240), Legs = Color3.fromRGB(138, 122, 90) },
 	Mechanic = { Torso = Color3.fromRGB(255, 138, 36), Legs = Color3.fromRGB(240, 120, 28) },
 	EggKeeper = { Torso = Color3.fromRGB(242, 230, 200), Legs = Color3.fromRGB(90, 122, 58) },
 	Ranger = { Torso = Color3.fromRGB(201, 179, 122), Legs = Color3.fromRGB(110, 90, 54) },
+	Sightseer = { Torso = Color3.fromRGB(46, 196, 182), Legs = Color3.fromRGB(214, 190, 140) }, -- a loud tourist shirt, khaki shorts
 }
 
 -- weld a little block to a body part (offset in that part's space)
@@ -89,6 +91,26 @@ local function dress(char: Model, kind: string)
 		piece(char, "Torso", Vector3.new(0.9, 0.5, 0.4), CFrame.new(0.15, -0.35, -0.78), dark) -- binoculars
 		piece(char, "Torso", Vector3.new(1.6, 1.8, 0.8), CFrame.new(0, -0.1, 0.92), Color3.fromRGB(138, 90, 51)) -- backpack
 		piece(char, "Torso", Vector3.new(1.8, 0.5, 0.5), CFrame.new(0, 0.9, 0.95), Color3.fromRGB(63, 122, 46)) -- bedroll
+	elseif kind == "Sightseer" then
+		-- a tourist out sightseeing in the age of the dinosaurs: sun hat, sunglasses, a camera round the neck, a map
+		piece(char, "Head", Vector3.new(0.15, 2.4, 2.4), CFrame.new(0, 0.62, 0) * CFrame.Angles(0, 0, math.pi / 2), Color3.fromRGB(246, 226, 160), nil, Enum.PartType.Cylinder)
+		piece(char, "Head", Vector3.new(1.2, 0.5, 1.2), CFrame.new(0, 0.9, 0), Color3.fromRGB(246, 226, 160))
+		piece(char, "Head", Vector3.new(1.23, 0.14, 1.23), CFrame.new(0, 0.7, 0), Color3.fromRGB(232, 84, 120)) -- hat band
+		for _, s in ipairs({ -1, 1 }) do
+			piece(char, "Head", Vector3.new(0.34, 0.22, 0.05), CFrame.new(s * 0.22, 0.12, -0.6), Color3.fromRGB(30, 30, 36), Enum.Material.Glass)
+		end
+		piece(char, "Head", Vector3.new(0.14, 0.06, 0.05), CFrame.new(0, 0.15, -0.6), Color3.fromRGB(30, 30, 36))
+		-- the shirt's flowers
+		for i, o in ipairs({ Vector3.new(-0.5, 0.45, -0.52), Vector3.new(0.45, -0.2, -0.52), Vector3.new(-0.3, -0.6, -0.52), Vector3.new(0.55, 0.6, -0.52) }) do
+			piece(char, "Torso", Vector3.new(0.32, 0.32, 0.06), CFrame.new(o) * CFrame.Angles(0, 0, i), i % 2 == 0 and Color3.fromRGB(255, 214, 72) or Color3.fromRGB(255, 120, 160))
+		end
+		piece(char, "Torso", Vector3.new(0.08, 1.1, 0.08), CFrame.new(-0.35, 0.45, -0.55) * CFrame.Angles(0, 0, 0.55), dark) -- camera strap
+		piece(char, "Torso", Vector3.new(0.08, 1.1, 0.08), CFrame.new(0.35, 0.45, -0.55) * CFrame.Angles(0, 0, -0.55), dark)
+		piece(char, "Torso", Vector3.new(0.75, 0.5, 0.35), CFrame.new(0, -0.05, -0.72), dark) -- the camera
+		piece(char, "Torso", Vector3.new(0.3, 0.3, 0.2), CFrame.new(0, -0.05, -0.95), Color3.fromRGB(120, 200, 255), Enum.Material.Glass)
+		piece(char, "Left Arm", Vector3.new(1.4, 1.1, 0.06), CFrame.new(0.1, -1.2, -0.68) * CFrame.Angles(-0.4, 0.2, 0), Color3.fromRGB(240, 228, 196)) -- the map
+		piece(char, "Left Arm", Vector3.new(0.5, 0.35, 0.07), CFrame.new(0.2, -1.1, -0.7) * CFrame.Angles(-0.4, 0.2, 0), Color3.fromRGB(110, 190, 90))
+		piece(char, "Torso", Vector3.new(1.4, 1.4, 0.6), CFrame.new(0, -0.05, 0.82), Color3.fromRGB(232, 84, 120)) -- a little backpack
 	end
 end
 
@@ -168,6 +190,9 @@ local function renameMechanic(root: Instance)
 		end
 	end
 end
+
+-- an NPC at a spot made at runtime (the Sightseer: Sightseer.luau places one per era)
+Npcs.SpawnAt = spawnAt
 
 function Npcs.Start()
 	task.spawn(function() renameMechanic(Workspace:WaitForChild("BaseCamp")) end)

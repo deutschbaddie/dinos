@@ -256,6 +256,13 @@ Defs.SecretCoinsPerTier = 6000
 -- how close counts as "there": a nest (from its centre), and a landmark's own Radius if its marker has none
 Defs.NestRadius = 55
 Defs.SpotRadius = 26
+-- the hint for a secret you haven't found (the SECRETS page, the Sightseer's leads)
+Defs.KindWord = {
+	Falls = "A WATERFALL", Arch = "AN ARCH", Tree = "A GIANT TREE", Lookout = "A LOOKOUT", Ruins = "SOME RUINS", Fossil = "A FOSSIL",
+	Cave = "A CAVE", Log = "A FALLEN LOG", Island = "AN ISLAND", Spring = "A SPRING", Wreck = "A WRECK", Rock = "A ROCK", Grove = "A GROVE",
+	Pond = "A POND", Totem = "A TOTEM", Bridge = "A BRIDGE", Dune = "A DUNE", Nest = "A NEST", Boss = "THE RULER", Stash = "HIDDEN EGGS",
+	Wild = "CALM A WILD DINO", Shiny = "CALM A SHINY ONE",
+} :: { [string]: string }
 
 -- landmark list from the era's generated route data (Routes/<era>.luau: Secrets = { { Id, Name, Kind, Pos, R, Up } })
 local routeCache = {} :: { [string]: any }

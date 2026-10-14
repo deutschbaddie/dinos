@@ -22,6 +22,7 @@ local Defs = require(ReplicatedStorage.DinoExpedition.Game.IndexDefs)
 local Rides = require(ReplicatedStorage.DinoExpedition.Game.Rides)
 
 local Discover = {}
+Discover.OnMark = nil :: ((Player, string, string) -> ())?
 local Net, Data, Encounter, Expedition
 
 local TICK = 0.4
@@ -92,6 +93,8 @@ local function mark(player: Player, eraId: string, id: string, at: Vector3?, qui
 	local d = bag(profile, eraId)
 	if d[id] then return end
 	d[id] = true
+	-- (others listen: the Sightseer's leads)
+	if Discover.OnMark then task.spawn(pcall, Discover.OnMark, player, eraId, id) end
 	local n, total = Defs.SecretProgress(profile, eraId)
 	if not quiet then
 		Net.Fire(player, "SecretFound", { Era = eraId, Id = id, Name = s.Name, Kind = s.Kind, Species = s.Species, Found = n, Total = total, At = at })

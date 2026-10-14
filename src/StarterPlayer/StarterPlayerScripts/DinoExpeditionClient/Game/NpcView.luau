@@ -31,13 +31,14 @@ local C = Kit.Colors
 local View = {}
 local Panels
 
-local TITLE = { Professor = "THE PROFESSOR", Mechanic = "THE ARMORER", EggKeeper = "EGG KEEPER", Ranger = "RANGER" }
-local COLOR = { Professor = "Blue", Mechanic = "Orange", EggKeeper = "Lime", Ranger = "Teal" }
+local TITLE = { Professor = "THE PROFESSOR", Mechanic = "THE ARMORER", EggKeeper = "EGG KEEPER", Ranger = "RANGER", Sightseer = "THE SIGHTSEER" }
+local COLOR = { Professor = "Blue", Mechanic = "Orange", EggKeeper = "Lime", Ranger = "Teal", Sightseer = "Purple" }
 local ROLE = {
 	Professor = "I study the Time Gate. Every era has a boss - beat one and the next dial opens.",
 	Mechanic = "Armor and gadgets. Bring me boss parts and I'll make you tough enough to bite back. Power? That's your trainer.",
 	EggKeeper = "Bigger eggs hatch bigger dinos. Bigger dinos make more money. I'll also buy any you don't need.",
 	Ranger = "Out here, red on the ground means MOVE. Roll through it, then dart the weak spot while it's dazed.",
+	Sightseer = "I came to see the sights! Waterfalls, old ruins, giant trees... everyone says they're out here somewhere.",
 }
 local TIPS = {
 	Professor = { "Bosses wake up for everyone every ten minutes. Knockouts can drop a Boss Key to wake one yourself.", "Beat a boss on a harder tier for a mastery star - every star makes you stronger for good." },
@@ -241,7 +242,88 @@ local function roleOptions(kind: string): { { any } }
 	return list
 end
 
+--------------------------------------------------------------------------------
+-- the Sightseer (Sightseer.luau): an optional hunt for an era's sights you haven't found
+--------------------------------------------------------------------------------
+local function leadsText(leads): string
+	local parts, done = {}, 0
+	for _, l in ipairs(leads or {}) do
+		if l.Found then
+			done += 1
+		else
+			table.insert(parts, string.format("%s (%s, about %d steps)", string.lower(tostring(l.Hint)), string.lower(tostring(l.Dir)), tonumber(l.Dist) or 0))
+		end
+	end
+	return table.concat(parts, ", "), done
+end
+
+local function sightseer()
+	local era = talking and talking.Era
+	local eraCfg = era and Config.Era(era)
+	local eraName = eraCfg and eraCfg.Name or "here"
+	local res = Net.Ask("SightseerTalk", { Era = era })
+	local bye = { "BYE!", "Red", nil, function() endTalk() end }
+	if not (res and res.Ok) then
+		setLine("Oh! Sorry, I was miles away.")
+		setOptions({ bye })
+		return
+	end
+	local rw = res.Reward or {}
+	local prize = string.format("REWARD: %s COINS + %s POWER", Config.FormatNumber(rw.Coins or 0), Config.FormatNumber(rw.Power or 0))
+	if res.Type == "Offer" then
+		local first = (res.Sets or 0) == 0
+		setLine(first and string.format("Oh, a traveller! I came all the way to %s to see the sights, and I can't find a single one. Will you help me spot a few?", eraName)
+			or "You've got a good eye! There's more out there, I'm sure of it. Spot a few more for me?", prize)
+		Scenes.Gesture(talking and talking.Model, "Point")
+		setOptions({
+			{ "SURE!", "Lime", "Map", function()
+				local r = Net.Ask("SightseerAccept", { Era = era })
+				if r and r.Ok and r.Leads then
+					local list = leadsText(r.Leads)
+					setLine("Wonderful! I heard about " .. list .. ". Get close and I'll know - then come back and tell me!", prize)
+					Scenes.Gesture(talking and talking.Model, "Cheer")
+					setOptions({ { "ON IT!", "Lime", nil, function() endTalk() end } })
+				else
+					sightseer()
+				end
+			end },
+			{ "NOT NOW", "Grey", nil, function()
+				setLine("No rush! I'll be right here, enjoying the view.")
+				setOptions({ bye })
+			end },
+			bye,
+		})
+	elseif res.Type == "Hunt" then
+		local list, done = leadsText(res.Leads)
+		setLine(string.format("%d of %d spotted! Still looking for %s.", done, #(res.Leads or {}), list), prize)
+		Scenes.Gesture(talking and talking.Model, "Point")
+		setOptions({ { "WHAT DO YOU DO?", "Slate", nil, function() setLine(ROLE.Sightseer) end }, bye })
+	elseif res.Type == "TurnIn" then
+		setLine("You found them all! I'd never have seen them without you. Here - for your trouble.", prize)
+		Scenes.Gesture(talking and talking.Model, "Cheer")
+		setOptions({
+			{ "CLAIM REWARD", "Lime", "Gift", function()
+				local r = Net.Ask("SightseerClaim", { Era = era })
+				if r and r.Ok then
+					Kit.Toast(string.format("+%s COINS  +%s POWER - SIGHTSEER", Config.FormatNumber(r.Coins or 0), Config.FormatNumber(r.Power or 0)), "Gold", "Coin")
+					PlayerAnim.Act(player.Character, "Victory")
+					Scenes.Gesture(talking and talking.Model, "Laugh")
+					task.delay(1.2, function() if talking and talking.Kind == "Sightseer" then sightseer() end end)
+				else
+					Kit.Toast((r and r.Err) or "NOT YET", "Red", "Map")
+				end
+			end },
+			bye,
+		})
+	else
+		setLine(string.format("You've shown me every sight in %s. What a trip! Best holiday ever.", eraName))
+		Scenes.Gesture(talking and talking.Model, "Laugh")
+		setOptions({ bye })
+	end
+end
+
 local function converse(kind: string)
+	if kind == "Sightseer" then return sightseer() end
 	local res = Net.Ask("Talk", { Npc = kind })
 	if not (res and res.Ok) then setLine("...") return end
 	local opts = {}
@@ -287,7 +369,10 @@ local function converse(kind: string)
 end
 
 local function startTalk(spot: BasePart, kind: string)
-	if talking or Cinema.Playing() or Drive.State.Mode ~= "None" then return end
+	-- (at camp, or out exploring an era on foot: the Ranger and the Sightseer stand out there)
+	local St = Drive.State
+	local roaming = St.Mode == "Roam" and St.OnFoot and not player:GetAttribute("Site")
+	if talking or Cinema.Playing() or (St.Mode ~= "None" and not roaming) then return end
 	local m = spot:FindFirstChild("Npc") :: Model?
 	local char = player.Character
 	local hrp = char and char:FindFirstChild("HumanoidRootPart") :: BasePart?
@@ -299,7 +384,7 @@ local function startTalk(spot: BasePart, kind: string)
 	-- (a chat lasts as long as you read: Cinema's 40 s safety handed the HUD back over long ones. Our own, longer
 	-- safety still ends a chat that something broke)
 	token.Long = true
-	talking = { Model = m, Kind = kind, Token = token }
+	talking = { Model = m, Kind = kind, Token = token, Era = spot:GetAttribute("Era") }
 	task.delay(300, function() if talking and talking.Token == token and endTalk then endTalk() end end)
 	-- stand in front of them, facing them
 	local front = root.CFrame.LookVector

@@ -69,6 +69,7 @@ require(script.Showcase).Start(deps) -- DINO NAMES + the SHOWCASE pedestal by yo
 require(script.Spin).Start(deps) -- the DAILY SPIN: a free spin every day + bought spins (prizes in Game/SpinWheel)
 require(script.Weather).Start(deps) -- the server's sky: rain, storms, fog, wind, hail (STORM LUCK in a thunderstorm)
 require(script.Meteors).Start(deps) -- METEOR SHOWERS over Base Camp: meteorites to collect (Game/WorldEvents)
+require(script.Sightseer).Start(deps) -- the SIGHTSEER in every era: an optional hunt for its sights (never a quest)
 Bosses.OnClear = function(player) Leaderboards.Push(player) end
 
 -- snapshot sent to the owning client whenever the profile changes
