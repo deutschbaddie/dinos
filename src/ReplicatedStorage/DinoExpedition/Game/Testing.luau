@@ -60,6 +60,9 @@ Testing.Testers = {
 	{ Name = "IREALLYLIKECHEZ12", UserId = 7861330060 },
 	{ Name = "ElBautizador0", UserId = 7354408751 },
 	{ Name = "samil123456789", UserId = 44771916 },
+	{ Name = "Raylanjplays", UserId = 3422094192 }, -- (added 2026-10-14)
+	{ Name = "Solar_eclipse138", UserId = 9519418781 },
+	{ Name = "I_liketimcheese", UserId = 9843820862 },
 }
 
 local byId = {} :: { [number]: boolean }
