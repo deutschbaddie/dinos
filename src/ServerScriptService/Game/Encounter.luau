@@ -3296,7 +3296,10 @@ function Encounter.Start(deps)
 		caughtHit(site, player)
 		return { Ok = true }
 	end)
-	Players.PlayerRemoving:Connect(function(p) Encounter.Leave(p) end)
+	Players.PlayerRemoving:Connect(function(p)
+		Encounter.Leave(p)
+		powerCache[p] = nil
+	end)
 	local acc = 0
 	RunService.Heartbeat:Connect(function(dt)
 		acc += dt

@@ -466,7 +466,9 @@ local function victory(den)
 		local egg = { Species = boss.Species, Rarity = rarity, KG = kg }
 		if rider then
 			-- (a rider's prize goes straight to their bag; a full bag gets it dropped in the arena to make room for)
-			local e = Dinos.AddEgg(plr, egg.Species, egg.Rarity, 0, egg.KG)
+			-- (forced: a boss egg always fits - a rider away from the arena has nowhere else for it, and the loot card
+			-- already showed it)
+			local e = Dinos.AddEgg(plr, egg.Species, egg.Rarity, 0, egg.KG, true)
 			if e then
 				Data.Changed(plr)
 			elseif den.Players[plr] then
@@ -800,6 +802,7 @@ function Bosses.Start(deps)
 		end
 	end)
 	local lastMash = {} :: { [Player]: number }
+	Players.PlayerRemoving:Connect(function(p) lastMash[p] = nil end)
 	Net.On("SeaMash", function(player)
 		-- (a human can't mash faster than this: a script firing it 50 times was an instant escape)
 		local now = os.clock()
