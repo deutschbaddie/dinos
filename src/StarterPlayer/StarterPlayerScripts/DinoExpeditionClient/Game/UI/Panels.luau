@@ -119,7 +119,7 @@ local function tabs(parent: Instance, list: { { string } }, active: string, onPi
 	local w = #list >= 5 and 150 or 170 -- five tabs (an admin's Settings) still fit the 840 window
 	for i, t in ipairs(list) do
 		local on = t[1] == active
-		Kit.Button(row, { Text = t[2], Icon = t[3], IconSize = 0.95, TextLeft = t[3] and 0.34 or 0.06, Color = on and "Yellow" or "Slate", Size = UDim2.fromOffset(w, 42), Position = UDim2.fromOffset((i - 1) * (w + 8), 0), ZIndex = 26, Lip = 4, Radius = 12, MaxText = 22, OnClick = function() onPick(t[1]) end })
+		Kit.Button(row, { Name = t[1], Text = t[2], Icon = t[3], IconSize = 0.95, TextLeft = t[3] and 0.34 or 0.06, Color = on and "Yellow" or "Slate", Size = UDim2.fromOffset(w, 42), Position = UDim2.fromOffset((i - 1) * (w + 8), 0), ZIndex = 26, Lip = 4, Radius = 12, MaxText = 22, OnClick = function() onPick(t[1]) end })
 	end
 	return row
 end
@@ -622,9 +622,13 @@ end
 --------------------------------------------------------------------------------
 -- INDEX
 --------------------------------------------------------------------------------
-local function buildIndex(content: Frame, header: Frame)
+local IndexDefs = require(DinoShared:WaitForChild("Game"):WaitForChild("IndexDefs"))
+local indexTab = "Dinos"
+local secretEra = nil :: string?
+
+-- the DINOS page: every species x every rarity you've hatched (the old Index)
+local function indexDinos(content: Frame, header: Frame)
 	local p = Net.Profile
-	if not p then return end
 	local index = p.Index or {}
 	local found = 0
 	for _ in pairs(index) do found += 1 end
@@ -632,7 +636,7 @@ local function buildIndex(content: Frame, header: Frame)
 	for _, m in ipairs(Config.IndexMilestones) do if found < m.Count then nextM = m break end end
 	local bonus = math.floor(Config.IndexBonus(found) * 100 + 0.5)
 	pixel(header, found .. " / " .. (#Config.SpeciesOrder * #Config.RarityOrder) .. " FOUND  -  +" .. bonus .. "% INCOME" .. (nextM and ("  -  NEXT AT " .. nextM.Count) or ""), { Size = UDim2.fromOffset(520, 13), Position = UDim2.new(1, -90, 0.5, 0), AnchorPoint = Vector2.new(1, 0.5), Align = Enum.TextXAlignment.Right, ZIndex = 40, MaxSize = 13, Color = C.YellowHi })
-	local grid = scroller(content, Vector2.new(172, 190), 10)
+	local grid = scroller(content, Vector2.new(172, 190), 10, UDim2.new(1, 0, 1, -54), UDim2.fromOffset(0, 54))
 	local first, cards = nil, {}
 	for i, sp in ipairs(Config.SpeciesOrder) do
 		local info = Config.Species[sp]
@@ -662,6 +666,209 @@ local function buildIndex(content: Frame, header: Frame)
 	end
 	Kit.Stagger(cards, 0.02, 0.3)
 	return first
+end
+
+-- what a reward gives, in one short line ("+5% POWER  +$2.5K  TITLE")
+local function payLine(pay): string
+	local parts = {}
+	if (pay.Luck or 0) > 0 then table.insert(parts, "+" .. math.floor(pay.Luck * 100 + 0.5) .. "% LUCK") end
+	if (pay.Power or 0) > 0 then table.insert(parts, "+" .. math.floor(pay.Power * 100 + 0.5) .. "% POWER") end
+	if (pay.Coins or 0) > 0 then table.insert(parts, "$" .. Config.FormatNumber(pay.Coins)) end
+	return table.concat(parts, "  ")
+end
+
+local claiming = false
+local function claimReward(key: string)
+	if claiming then return end
+	claiming = true
+	local res = Net.Ask("IndexClaim", { Key = key })
+	claiming = false
+	if not (res and res.Ok) then
+		Kit.Toast(string.upper(tostring(res and res.Err or "CAN'T CLAIM THAT")), "Red", "Alert")
+		return
+	end
+	Kit.Sound("Confirm")
+	local d = 0
+	local function toast(t: string, c: string, icon: string)
+		task.delay(d, function() Kit.Toast(t, c, icon) end)
+		d += 0.5
+	end
+	if res.Gold then
+		local b = Config.Bosses[res.Gold]
+		toast("GOLD " .. (b and b.Name or "BOSS") .. " TROPHY - AT YOUR ISLAND!", "Gold", "Trophy")
+	end
+	if res.Title and IndexDefs.Titles[res.Title] then toast("NEW TITLE: " .. IndexDefs.Titles[res.Title].Name, "Blue", "Crown") end
+	if (res.Power or 0) > 0 then toast("+" .. math.floor(res.Power * 100 + 0.5) .. "% POWER - FOR GOOD!", "Lime", "Power") end
+	if (res.Luck or 0) > 0 then toast("+" .. math.floor(res.Luck * 100 + 0.5) .. "% LUCK - FOR GOOD!", "Orange", "Star") end
+	if (res.Coins or 0) > 0 then toast("+" .. Config.FormatNumber(res.Coins) .. " COINS", "Gold", "Coin") end
+end
+
+-- one reward card: ready ones glow and CLAIM; claimed ones are ticked; the rest show how far along you are
+local function rewardCard(parent: Instance, r, x: number, y: number, w: number, h: number, icon: string, species: string?, title: string, progress: string)
+	local pay = IndexDefs.Payout(r)
+	local ready = r.Ready and not r.Claimed
+	local card, cc = Kit.Card(parent, { Size = UDim2.fromOffset(w, h), Position = UDim2.fromOffset(x, y), ZIndex = 24, Border = ready and C.YellowHi or (r.Claimed and C.Lime or nil), Color = r.Claimed and "Card" or "Forest" })
+	Kit.Icon(cc, icon, { Species = species, Size = UDim2.fromOffset(54, 54), Position = UDim2.new(0.5, 0, 0, 2), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, Silhouette = not (r.Ready or r.Claimed) })
+	text(cc, title, { Size = UDim2.new(1, -10, 0, 15), Position = UDim2.new(0.5, 0, 0, 58), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 15, Color = ready and C.YellowHi or nil })
+	pixel(cc, payLine(pay), { Size = UDim2.new(1, -10, 0, 8), Position = UDim2.new(0.5, 0, 0, 78), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 8, Color = C.LimeHi })
+	local extra = pay.Title and IndexDefs.Titles[pay.Title] and IndexDefs.Titles[pay.Title].Name or (pay.Gold and "GOLD TROPHY" or "")
+	if extra ~= "" then pixel(cc, extra, { Size = UDim2.new(1, -10, 0, 7), Position = UDim2.new(0.5, 0, 0, 92), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 7, Color = C.OrangeHi }) end
+	local first = nil
+	if ready then
+		local _, hit = Kit.Button(cc, { Text = "CLAIM", Color = "Yellow", Size = UDim2.new(1, -16, 0, 34), Position = UDim2.new(0.5, 0, 1, -6), AnchorPoint = Vector2.new(0.5, 1), ZIndex = 28, Lip = 3, Radius = 10, MaxText = 16, Shine = true, OnClick = function() claimReward(r.Key) end })
+		first = hit
+	elseif r.Claimed then
+		Kit.Glyph(cc, "Check", { Size = UDim2.fromOffset(26, 26), Position = UDim2.new(0.5, 0, 1, -24), AnchorPoint = Vector2.new(0.5, 0.5), ZIndex = 28, Color = C.LimeHi })
+	else
+		pixel(cc, progress, { Size = UDim2.new(1, -10, 0, 10), Position = UDim2.new(0.5, 0, 1, -24), AnchorPoint = Vector2.new(0.5, 0.5), ZIndex = 27, MaxSize = 10, Color = C.Muted })
+	end
+	return card, first
+end
+
+-- the REWARDS page: the species track, the era pages, your titles
+local function indexRewards(content: Frame, header: Frame)
+	local p = Net.Profile
+	local luck, power = IndexDefs.Bonus(p)
+	pixel(header, "INDEX BONUS  +" .. math.floor(luck * 100 + 0.5) .. "% LUCK  +" .. math.floor(power * 100 + 0.5) .. "% POWER", { Size = UDim2.fromOffset(420, 13), Position = UDim2.new(1, -90, 0.5, 0), AnchorPoint = Vector2.new(1, 0.5), Align = Enum.TextXAlignment.Right, ZIndex = 40, MaxSize = 13, Color = C.YellowHi })
+	local rewards = IndexDefs.Rewards(p)
+	local first, cards = nil, {}
+	-- the species track
+	local track = IndexDefs.Tracks[1]
+	local count = IndexDefs.Count(p, track.Id)
+	local total = IndexDefs.SpeciesTotal()
+	Kit.TierBar(content, track.Name .. "   " .. count .. " / " .. total, { Size = UDim2.new(1, 0, 0, 28), Position = UDim2.fromOffset(0, 52), ZIndex = 23, Color = C.Blue, Color2 = C.BlueLo, Align = Enum.TextXAlignment.Left })
+	local nodes, eras = {}, {}
+	for _, r in ipairs(rewards) do
+		if r.Kind == "Node" then table.insert(nodes, r) elseif r.Kind == "Era" then table.insert(eras, r) end
+	end
+	local w = math.floor((860 - 8 * (math.max(#nodes, 1) - 1)) / math.max(#nodes, 1))
+	for i, r in ipairs(nodes) do
+		local at = r.At
+		local card, hit = rewardCard(content, r, (i - 1) * (w + 8), 86, w, 150, "Index", nil, (r.Def.At == "All" and "ALL " or "") .. at .. " SPECIES", math.min(count, at) .. " / " .. at)
+		table.insert(cards, card)
+		first = first or hit
+	end
+	-- the era pages: every species of the era (its boss too)
+	Kit.TierBar(content, "ERA PAGES - FIND EVERY DINO OF AN ERA", { Size = UDim2.new(1, 0, 0, 28), Position = UDim2.fromOffset(0, 246), ZIndex = 23, Color = C.Orange, Color2 = C.OrangeLo, Align = Enum.TextXAlignment.Left })
+	local we = math.floor((860 - 8 * (math.max(#eras, 1) - 1)) / math.max(#eras, 1))
+	for i, r in ipairs(eras) do
+		local boss = Config.Bosses[r.Era.Boss]
+		local card, hit = rewardCard(content, r, (i - 1) * (we + 8), 280, we, 150, "Dino", boss and boss.Species or nil, r.Era.Name, r.Found .. " / " .. r.Total)
+		table.insert(cards, card)
+		first = first or hit
+	end
+	-- your titles: wear one (or none)
+	local earned = IndexDefs.EarnedTitles(p)
+	local wearing = (p.IndexRewards and p.IndexRewards.Title) or ""
+	local row = frame(content, { Size = UDim2.new(1, 0, 0, 34), Position = UDim2.new(0, 0, 1, -34), ZIndex = 24 })
+	pixel(row, #earned > 0 and "TITLE:" or "CLAIM A REWARD WITH A TITLE TO WEAR IT OVER YOUR HEAD", { Size = UDim2.new(0, #earned > 0 and 64 or 600, 0, 11), Position = UDim2.new(0, 0, 0.5, 0), AnchorPoint = Vector2.new(0, 0.5), Align = Enum.TextXAlignment.Left, ZIndex = 26, MaxSize = 11, Color = #earned > 0 and C.Cream or C.Muted })
+	if #earned > 0 then
+		local x = 70
+		local list = { "" }
+		for _, t in ipairs(earned) do table.insert(list, t) end
+		for _, id in ipairs(list) do
+			local def = IndexDefs.Titles[id]
+			local label = def and def.Name or "NONE"
+			local bw = #label * 9 + 30
+			if x + bw > 860 then break end
+			local on = id == wearing
+			Kit.Button(row, { Text = label, Color = on and "Yellow" or "Slate", Size = UDim2.fromOffset(bw, 32), Position = UDim2.new(0, x, 0.5, 0), AnchorPoint = Vector2.new(0, 0.5), ZIndex = 26, Lip = 3, Radius = 10, MaxText = 13, TextColor = (def and not on) and def.Color or nil, OnClick = function()
+				if on then return end
+				ask("IndexTitle", { Title = id }, id == "" and "TITLE OFF" or ("NOW WEARING: " .. label), "Blue", "Crown")
+			end })
+			x += bw + 6
+		end
+	end
+	Kit.Stagger(cards, 0.02, 0.3)
+	return first
+end
+
+-- a secret's icon
+local SECRET_ICON = { Nest = "Egg", Boss = "Dino", Stash = "Gift", Wild = "Dino", Shiny = "Star" }
+local KIND_WORD = {
+	Falls = "A WATERFALL", Arch = "AN ARCH", Tree = "A GIANT TREE", Lookout = "A LOOKOUT", Ruins = "SOME RUINS", Fossil = "A FOSSIL",
+	Cave = "A CAVE", Log = "A FALLEN LOG", Island = "AN ISLAND", Spring = "A SPRING", Wreck = "A WRECK", Rock = "A ROCK", Grove = "A GROVE",
+	Pond = "A POND", Totem = "A TOTEM", Bridge = "A BRIDGE", Dune = "A DUNE", Nest = "A NEST", Boss = "THE RULER", Stash = "HIDDEN EGGS",
+	Wild = "CALM A WILD DINO", Shiny = "CALM A SHINY ONE",
+}
+
+-- the SECRETS page: each era's landmarks, nests, stash, wilds and boss
+local function indexSecrets(content: Frame, header: Frame)
+	local p = Net.Profile
+	local eras = IndexDefs.PageEras()
+	if #eras == 0 then return nil end
+	local unlocked = p.Unlocked or {}
+	if not secretEra or not Config.Era(secretEra) then
+		secretEra = (p.Era and Config.Era(p.Era) and p.Era) or eras[1].Id
+	end
+	local allFound, allTotal = 0, 0
+	for _, e in ipairs(eras) do
+		local n, t = IndexDefs.SecretProgress(p, e.Id)
+		allFound += n
+		allTotal += t
+	end
+	pixel(header, "SECRETS " .. allFound .. " / " .. allTotal, { Size = UDim2.fromOffset(300, 13), Position = UDim2.new(1, -90, 0.5, 0), AnchorPoint = Vector2.new(1, 0.5), Align = Enum.TextXAlignment.Right, ZIndex = 40, MaxSize = 13, Color = C.YellowHi })
+	-- left: the eras
+	local first = nil
+	for i, e in ipairs(eras) do
+		local open = unlocked[e.Id] == true
+		local n, t = IndexDefs.SecretProgress(p, e.Id)
+		local on = e.Id == secretEra
+		local done = t > 0 and n >= t
+		local label = open and (e.Name .. "  " .. n .. "/" .. t) or e.Name
+		local _, hit = Kit.Button(content, { Text = label, Icon = done and "Trophy" or (open and "Map" or "Lock"), IconSize = 0.8, TextLeft = 0.2, Color = on and "Yellow" or (done and "Lime" or "Slate"), Size = UDim2.fromOffset(220, 46), Position = UDim2.fromOffset(0, 54 + (i - 1) * 54), ZIndex = 26, Lip = 4, Radius = 12, MaxText = 15, OnClick = function()
+			secretEra = e.Id
+			Panels.Refresh()
+		end })
+		first = first or hit
+	end
+	-- right: the chosen era's secrets
+	local eraId = secretEra :: string
+	local era = Config.Era(eraId)
+	local list = IndexDefs.Secrets(eraId)
+	local n, t = IndexDefs.SecretProgress(p, eraId)
+	local paint = IndexDefs.SecretPaint[eraId]
+	local Rides = require(DinoShared:WaitForChild("Game"):WaitForChild("Rides"))
+	local item = paint and Rides.Item("Paint", paint)
+	local done = t > 0 and n >= t
+	local reward = done and "ALL FOUND! " .. (item and (item.Name .. " PAINT IS YOURS") or "") or ("FIND THEM ALL:  " .. (item and (item.Name .. " ROVER PAINT  +  ") or "") .. "$" .. Config.FormatNumber(IndexDefs.SecretCoinsPerTier * Config.EraTier(eraId)))
+	Kit.TierBar(content, (era and era.Name or eraId) .. "   " .. n .. " / " .. t, { Size = UDim2.new(1, -232, 0, 28), Position = UDim2.fromOffset(232, 52), ZIndex = 23, Color = done and C.Lime or C.Teal, Color2 = done and C.LimeLo or C.TealLo, Align = Enum.TextXAlignment.Left })
+	pixel(content, reward, { Size = UDim2.new(1, -240, 0, 10), Position = UDim2.fromOffset(236, 88), Align = Enum.TextXAlignment.Left, ZIndex = 26, MaxSize = 10, Color = done and C.LimeHi or C.YellowHi })
+	local grid = scroller(content, Vector2.new(146, 112), 8, UDim2.new(1, -232, 1, -108), UDim2.fromOffset(232, 104))
+	local cards = {}
+	local found = (typeof(p.Discover) == "table" and p.Discover[eraId]) or {}
+	for i, s in ipairs(list) do
+		local got = found[s.Id] == true
+		local card, cc = Kit.Card(grid, { Size = UDim2.fromScale(1, 1), ZIndex = 24, Border = got and C.LimeHi or nil, Color = got and "Card" or "Forest" })
+		card.LayoutOrder = i
+		local icon = SECRET_ICON[s.Kind] or "Map"
+		Kit.Icon(cc, icon, { Species = s.Species, Size = UDim2.fromOffset(50, 50), Position = UDim2.new(0.5, 0, 0, 4), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, Silhouette = not got })
+		text(cc, got and s.Name or "???", { Size = UDim2.new(1, -10, 0, 13), Position = UDim2.new(0.5, 0, 0, 58), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 13, Color = got and C.Cream or C.Muted })
+		pixel(cc, got and "FOUND" or (KIND_WORD[s.Kind] or "SOMEWHERE"), { Size = UDim2.new(1, -10, 0, 8), Position = UDim2.new(0.5, 0, 0, 80), AnchorPoint = Vector2.new(0.5, 0), ZIndex = 27, MaxSize = 8, Color = got and C.LimeHi or C.Muted })
+		if got then Kit.Glyph(cc, "Check", { Size = UDim2.fromOffset(22, 22), Position = UDim2.new(1, -6, 0, 6), AnchorPoint = Vector2.new(1, 0), ZIndex = 28, Color = C.LimeHi }) end
+		table.insert(cards, card)
+	end
+	if not unlocked[eraId] then
+		pixel(grid, "OPEN THIS ERA AT THE TIME GATE TO START EXPLORING", { Size = UDim2.new(1, 0, 0, 12), ZIndex = 26, MaxSize = 12, Color = C.Muted })
+	end
+	Kit.Stagger(cards, 0.012, 0.3)
+	return first
+end
+
+local function buildIndex(content: Frame, header: Frame)
+	local p = Net.Profile
+	if not p then return end
+	local ready = IndexDefs.ClaimableCount(p)
+	local row = tabs(content, { { "Dinos", "DINOS", "Dino" }, { "Rewards", "REWARDS", "Trophy" }, { "Secrets", "SECRETS", "Map" } }, indexTab, function(t)
+		indexTab = t
+		Panels.Refresh()
+	end)
+	-- (a red badge on REWARDS while something is ready to claim)
+	local rewardsTab = row:FindFirstChild("Rewards")
+	if rewardsTab and ready > 0 then Kit.Badge(rewardsTab :: GuiObject, ready) end
+	if indexTab == "Rewards" then return indexRewards(content, header) end
+	if indexTab == "Secrets" then return indexSecrets(content, header) end
+	return indexDinos(content, header)
 end
 
 --------------------------------------------------------------------------------

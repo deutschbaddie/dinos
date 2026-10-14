@@ -193,7 +193,9 @@ local TIER_LOOK = {
 	{ Color3.fromRGB(255, 205, 64), Enum.Material.Metal }, -- Nightmare: gold
 }
 local TROPHY_TURN = { TyrantKing = math.pi }
-local function statue(spot: BasePart, bossId: string, tier: number): Model?
+-- gold: the boss's era page is complete in the Index (IndexRewards: plot attribute IndexGold) - polished gold
+-- whatever tier it was beaten on, with a sparkle and a gold outline
+local function statue(spot: BasePart, bossId: string, tier: number, gold: boolean?): Model?
 	local boss = Config.Bosses[bossId]
 	local t = boss and DinoT:FindFirstChild(boss.Species)
 	if not t then return nil end
@@ -201,10 +203,10 @@ local function statue(spot: BasePart, bossId: string, tier: number): Model?
 	local _, size = m:GetBoundingBox()
 	local fit = math.min(5.2 / math.max(size.X, size.Z), 9 / size.Y)
 	m:ScaleTo(fit)
-	local look = TIER_LOOK[math.min(tier, 3)]
+	local look = gold and TIER_LOOK[3] or TIER_LOOK[math.clamp(tier, 1, 3)]
 	for _, d in ipairs(m:GetDescendants()) do
 		if d:IsA("BasePart") and d.Transparency < 0.9 then
-			if tier >= 4 then
+			if tier >= 4 and not gold then
 				d.Color = Color3.fromRGB(120, 230, 255):Lerp(d.Color, 0.2)
 				d.Material = Enum.Material.Neon
 				d.Transparency = 0.15
@@ -222,11 +224,30 @@ local function statue(spot: BasePart, bossId: string, tier: number): Model?
 	-- per-statue facing on its plinth (the Tyrant King stands turned the other way round)
 	local turn = TROPHY_TURN[bossId] or 0
 	m:PivotTo(CFrame.new(spot.Position.X, spot.Position.Y - spot.Size.Y / 2 + lift, spot.Position.Z) * spot.CFrame.Rotation * CFrame.Angles(0, turn, 0) * root.CFrame:ToObjectSpace(m:GetPivot()))
-	if tier >= 4 then
+	if tier >= 4 and not gold then
 		local hl = Instance.new("Highlight")
 		hl.FillTransparency = 1
 		hl.Parent = m
 		RarityFx.Rainbow(hl)
+	end
+	if gold then
+		local hl = Instance.new("Highlight")
+		hl.FillTransparency = 1
+		hl.OutlineColor = Color3.fromRGB(255, 226, 120)
+		hl.DepthMode = Enum.HighlightDepthMode.Occluded
+		hl.Parent = m
+		local a = Instance.new("Attachment")
+		a.Parent = root
+		local e = Instance.new("ParticleEmitter")
+		e.Texture = "rbxasset://textures/particles/sparkles_main.dds"
+		e.Color = ColorSequence.new(Color3.fromRGB(255, 236, 160))
+		e.LightEmission = 0.8
+		e.Size = NumberSequence.new({ NumberSequenceKeypoint.new(0, 0.5), NumberSequenceKeypoint.new(1, 0) })
+		e.Speed = NumberRange.new(0.5, 1.5)
+		e.SpreadAngle = Vector2.new(180, 180)
+		e.Lifetime = NumberRange.new(0.8, 1.6)
+		e.Rate = 5
+		e.Parent = a
 	end
 	m.Parent = lf()
 	return m
@@ -323,14 +344,16 @@ local function refreshPlot(st)
 	end
 	-- trophies
 	local trophies = decode(plot:GetAttribute("Trophies"))
+	local golds = decode(plot:GetAttribute("IndexGold"))
 	for bossId in pairs(Config.Bosses) do
 		local tier = trophies[bossId] or 0
+		local gold = golds[bossId] == true
 		local cur = st.Statues[bossId]
-		if cur and cur.Tier ~= tier then cur.Model:Destroy() st.Statues[bossId] = nil cur = nil end
-		if tier > 0 and not cur then
+		if cur and (cur.Tier ~= tier or cur.Gold ~= gold) then cur.Model:Destroy() st.Statues[bossId] = nil cur = nil end
+		if (tier > 0 or gold) and not cur then
 			local spot = plot:FindFirstChild("TrophySpot_" .. bossId, true) :: BasePart?
-			local m = spot and statue(spot, bossId, tier)
-			if m then st.Statues[bossId] = { Model = m, Tier = tier } end
+			local m = spot and statue(spot, bossId, math.max(tier, 1), gold)
+			if m then st.Statues[bossId] = { Model = m, Tier = tier, Gold = gold } end
 		end
 	end
 	st.Own = own
@@ -424,7 +447,7 @@ local function bindPlot(plot: Model)
 		garage:GetAttributeChangedSignal("DoorOpen"):Connect(animateDoor)
 		if garage:GetAttribute("DoorOpen") then animateDoor() end
 	end
-	for _, a in ipairs({ "Incubators", "IncubatorCount", "Yard", "PenSlots", "Owner", "Trophies", "Island" }) do
+	for _, a in ipairs({ "Incubators", "IncubatorCount", "Yard", "PenSlots", "Owner", "Trophies", "Island", "IndexGold" }) do
 		plot:GetAttributeChangedSignal(a):Connect(function() refreshPlot(st) end)
 	end
 	-- a star pen the server just built: put its star in once the model is here

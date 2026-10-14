@@ -657,7 +657,9 @@ local function refreshCamp()
 	local now = Net.ServerTime()
 	local ready = 0
 	for _, inc in ipairs(p.Incubators or {}) do if inc.Start + inc.Duration <= now then ready += 1 end end
-	Kit.Badge(camp.Index, nil)
+	-- the Index has a reward ready to claim (IndexDefs: species track, era pages)
+	local okR, claimable = pcall(require(DinoShared.Game:WaitForChild("IndexDefs")).ClaimableCount, p)
+	Kit.Badge(camp.Index, (okR and (claimable :: number) > 0) and claimable or nil)
 	refreshHotbar()
 	refreshTracker()
 	local _ = ready

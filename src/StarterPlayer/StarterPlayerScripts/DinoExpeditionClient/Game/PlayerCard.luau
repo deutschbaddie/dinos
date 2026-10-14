@@ -34,6 +34,13 @@ local function speciesName(id: string?): string
 	return s and s.Name or (id and string.upper(id) or "")
 end
 
+local function parseTitle(raw: any): (string?, Color3?, boolean)
+	if typeof(raw) ~= "string" or raw == "" then return nil, nil, false end
+	local name, hex, rest = raw:match("^([^|]+)|(%x%x%x%x%x%x)|?(.*)$")
+	if not name then return nil, nil, false end
+	local ok, col = pcall(Color3.fromHex, hex)
+	return name, ok and col or C.Cream, rest == "rainbow"
+end
 local function clock(sec: number?): string
 	if not sec then return "" end
 	return string.format("%d:%02d", math.floor(sec / 60), sec % 60)
@@ -94,6 +101,15 @@ local function show(target: Player, c)
 		new("UIGradient", { Rotation = 90, Color = ColorSequence.new(C.YellowHi, C.Yellow) }, t)
 		Kit.Text(t, Testing.Phase .. " TESTER", { Pixel = true, Size = UDim2.new(1, -14, 0, 10), Position = UDim2.fromScale(0.5, 0.5), AnchorPoint = Vector2.new(0.5, 0.5), ZIndex = 66, Stroke = 2, Shadow = 2, MaxSize = 10 })
 		tagY += 34
+	end
+	local tName, tCol, tRainbow = parseTitle(target:GetAttribute("IndexTitle"))
+	if tName then
+		local tt = Kit.Text(inner, tName, { Pixel = true, Size = UDim2.fromOffset(170, 11), Position = UDim2.fromOffset(0, tagY + 2), ZIndex = 64, Stroke = 2, Shadow = 2, MaxSize = 11, Color = tCol })
+		if tRainbow then
+			local main = tt:FindFirstChild("Main")
+			if main then require(script.Parent.RarityFx).Rainbow(main) end
+		end
+		tagY += 20
 	end
 	-- power
 	local _, pwContent = Kit.Brick(inner, { Size = UDim2.fromOffset(170, 60), Position = UDim2.fromOffset(0, tagY), Color = "Lime", Radius = 14, Lip = 5, ZIndex = 62, Stripes = 0.85 })
@@ -222,11 +238,31 @@ local function testerTag(head: BasePart)
 	Kit.Text(pill, Testing.Phase .. " TESTER", { Pixel = true, Size = UDim2.new(1, -16, 0, 10), Position = UDim2.fromScale(0.5, 0.5), AnchorPoint = Vector2.new(0.5, 0.5), ZIndex = 3, Stroke = 2, Shadow = 2, MaxSize = 10 })
 end
 
+-- an Index title over the head (IndexRewards.luau: player attribute IndexTitle "NAME|RRGGBB" + "|rainbow"), above the
+-- tester tag when there is one
+local function titleTag(p: Player, head: BasePart)
+	local old = head:FindFirstChild("DinoTitleTag")
+	if old then old:Destroy() end
+	local name, col, rainbow = parseTitle(p:GetAttribute("IndexTitle"))
+	if not name then return end
+	local y = p:GetAttribute("Tester") and SHOW_TAGS and 4.5 or 3.4
+	local bb = new("BillboardGui", {
+		Name = "DinoTitleTag", Adornee = head, Size = UDim2.fromOffset(200, 24), StudsOffsetWorldSpace = Vector3.new(0, y, 0),
+		AlwaysOnTop = false, MaxDistance = 90, LightInfluence = 0, ResetOnSpawn = false,
+	}, head) :: BillboardGui
+	local t = Kit.Text(bb, name, { Pixel = true, Size = UDim2.new(1, 0, 0, 12), Position = UDim2.fromScale(0.5, 0.5), AnchorPoint = Vector2.new(0.5, 0.5), Color = col, Stroke = 2.5, Shadow = 2, MaxSize = 12 })
+	if rainbow then
+		local main = t:FindFirstChild("Main")
+		if main then require(script.Parent.RarityFx).Rainbow(main) end
+	end
+end
+
 local prompts = {} :: { [Player]: ProximityPrompt }
 
 local function bindCharacter(p: Player, char: Model)
 	local head = char:WaitForChild("Head", 10) :: BasePart?
 	if head and p:GetAttribute("Tester") then testerTag(head) end
+	if head then titleTag(p, head) end
 	if p == player then return end
 	local hrp = char:WaitForChild("HumanoidRootPart", 10) :: BasePart?
 	if not hrp or not char.Parent then return end
@@ -249,6 +285,11 @@ local function bindPlayer(p: Player)
 	p:GetAttributeChangedSignal("Tester"):Connect(function()
 		local head = p.Character and p.Character:FindFirstChild("Head")
 		if head and head:IsA("BasePart") and p:GetAttribute("Tester") then testerTag(head) end
+		if head and head:IsA("BasePart") then titleTag(p, head) end
+	end)
+	p:GetAttributeChangedSignal("IndexTitle"):Connect(function()
+		local head = p.Character and p.Character:FindFirstChild("Head")
+		if head and head:IsA("BasePart") then titleTag(p, head) end
 	end)
 end
 
@@ -281,6 +322,8 @@ function PlayerCard.Start()
 			local head = p.Character and p.Character:FindFirstChild("Head")
 			local tagGui = head and head:FindFirstChild("DinoTesterTag")
 			if tagGui then (tagGui :: BillboardGui).Enabled = not cine end
+			local titleGui = head and head:FindFirstChild("DinoTitleTag")
+			if titleGui then (titleGui :: BillboardGui).Enabled = not cine end
 		end
 		if openFor then
 			local a = player.Character and player.Character:FindFirstChild("HumanoidRootPart") :: BasePart?
