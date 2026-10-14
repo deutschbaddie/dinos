@@ -118,6 +118,7 @@ Wardrobe.Start()
 Outfitter.Start()
 NpcView.Start(Panels)
 require(Game:WaitForChild("TrainerView")).Start(Panels) -- the power trainer: boards, the TRAINER window, +N POWER pops, GUESS THE DINO
+require(Game:WaitForChild("FusionView")).Start(Panels) -- EGG FUSION: the nest's glow, the window, the cutscene
 Onboarding.Start(HUD)
 require(Game:WaitForChild("AwayCard")).Start(HUD) -- WHILE YOU WERE AWAY: the offline coins, once the menu / cold open is done
 require(Game:WaitForChild("BossHype")).Start() -- boss build-up: red Time Gate, countdown, the SUMMON prompt
