@@ -22,10 +22,12 @@ local canvas: Frame? = nil
 local dim: TextButton? = nil
 local win: Frame? = nil
 local busy = false
+local closedAt = 0
 
 local function close()
 	local w = win
 	win = nil
+	closedAt = os.clock()
 	if w then Kit.Exit(w, true) end
 	if dim then
 		TweenService:Create(dim, TweenInfo.new(0.2), { BackgroundTransparency = 1 }):Play()
@@ -35,6 +37,10 @@ end
 NameDialog.Close = close
 function NameDialog.IsOpen(): boolean
 	return win ~= nil
+end
+-- open, or closed by this very key press (the Bag's B / Escape handler may run after ours: it mustn't close too)
+function NameDialog.HoldsBack(): boolean
+	return win ~= nil or os.clock() - closedAt < 0.15
 end
 
 local function ensure()

@@ -2131,6 +2131,8 @@ function Panels.Start()
 	_, canvas = Kit.Screen("DinoPanels", 20)
 	UserInputService.InputBegan:Connect(function(input)
 		if not current then return end
+		-- (the NAME YOUR DINO box over the Bag takes this press for itself)
+		if require(script.Parent.Parent.NameDialog).HoldsBack() then return end
 		if input.KeyCode == Enum.KeyCode.ButtonB or input.KeyCode == Enum.KeyCode.Escape then close() end
 	end)
 	Net.On("Profile", function(p)

@@ -343,7 +343,12 @@ local function stepStages(cam: Camera?)
 		if camPos and (spot.Position - camPos).Magnitude > 220 then continue end
 		local a = spinAngle(st)
 		local tt = turnOf(st)
-		if tt and st.Base then tt:PivotTo((st.Base :: CFrame) * CFrame.Angles(0, a, 0)) end
+		-- (about world up: the pivot is TurntableCore, a cylinder turned on its side, so its own Y lies flat - turning
+		-- about that tumbled the disc end over end)
+		if tt and st.Base then
+			local b = st.Base :: CFrame
+			tt:PivotTo(CFrame.new(b.Position) * CFrame.Angles(0, a, 0) * b.Rotation)
+		end
 		local root = st.Root
 		if root and root.Parent then
 			local cf

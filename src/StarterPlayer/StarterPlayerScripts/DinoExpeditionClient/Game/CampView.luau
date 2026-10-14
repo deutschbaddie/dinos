@@ -195,7 +195,7 @@ local TIER_LOOK = {
 local TROPHY_TURN = { TyrantKing = math.pi }
 -- gold: the boss's era page is complete in the Index (IndexRewards: plot attribute IndexGold) - polished gold
 -- whatever tier it was beaten on, with a sparkle and a gold outline
-local function statue(spot: BasePart, bossId: string, tier: number, gold: boolean?): Model?
+local function statue(spot: BasePart, bossId: string, tier: number, gold: boolean?, own: boolean?): Model?
 	local boss = Config.Bosses[bossId]
 	local t = boss and DinoT:FindFirstChild(boss.Species)
 	if not t then return nil end
@@ -231,11 +231,15 @@ local function statue(spot: BasePart, bossId: string, tier: number, gold: boolea
 		RarityFx.Rainbow(hl)
 	end
 	if gold then
-		local hl = Instance.new("Highlight")
-		hl.FillTransparency = 1
-		hl.OutlineColor = Color3.fromRGB(255, 226, 120)
-		hl.DepthMode = Enum.HighlightDepthMode.Occluded
-		hl.Parent = m
+		-- (the outline only at your own island: a client draws at most 31 Highlights, and every island's gold
+		-- statues would crowd out the prompt outlines)
+		if own then
+			local hl = Instance.new("Highlight")
+			hl.FillTransparency = 1
+			hl.OutlineColor = Color3.fromRGB(255, 226, 120)
+			hl.DepthMode = Enum.HighlightDepthMode.Occluded
+			hl.Parent = m
+		end
 		local a = Instance.new("Attachment")
 		a.Parent = root
 		local e = Instance.new("ParticleEmitter")
@@ -349,11 +353,11 @@ local function refreshPlot(st)
 		local tier = trophies[bossId] or 0
 		local gold = golds[bossId] == true
 		local cur = st.Statues[bossId]
-		if cur and (cur.Tier ~= tier or cur.Gold ~= gold) then cur.Model:Destroy() st.Statues[bossId] = nil cur = nil end
+		if cur and (cur.Tier ~= tier or cur.Gold ~= gold or cur.Own ~= own) then cur.Model:Destroy() st.Statues[bossId] = nil cur = nil end
 		if (tier > 0 or gold) and not cur then
 			local spot = plot:FindFirstChild("TrophySpot_" .. bossId, true) :: BasePart?
-			local m = spot and statue(spot, bossId, math.max(tier, 1), gold)
-			if m then st.Statues[bossId] = { Model = m, Tier = tier, Gold = gold } end
+			local m = spot and statue(spot, bossId, math.max(tier, 1), gold, own)
+			if m then st.Statues[bossId] = { Model = m, Tier = tier, Gold = gold, Own = own } end
 		end
 	end
 	st.Own = own

@@ -255,8 +255,9 @@ local function playScene(result, extra: number)
 	-- the shot: a little above the step, the pod and all three cradles in frame
 	local o = origin.CFrame
 	local look = pod.Position + Vector3.new(0, -0.6, 0)
-	local camFrom = (o * CFrame.new(0, 4.6, -10.5)).Position
-	local camTo = (o * CFrame.new(0, 3.2, -7.4)).Position
+	-- (off to one side: you stand on the step right in front, and a straight-on shot filmed through your head)
+	local camFrom = (o * CFrame.new(-4.4, 4.6, -9.6)).Position
+	local camTo = (o * CFrame.new(-3.2, 3.6, -7.2)).Position
 	cam.FieldOfView = 55
 	cam.CFrame = CFrame.lookAt(camFrom, look)
 	-- skip: after the first second, jump to the reveal; once the new egg is out, a press ends it
