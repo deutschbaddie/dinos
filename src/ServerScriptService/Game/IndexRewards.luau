@@ -99,7 +99,10 @@ local function hookBoosts()
 						local profile = Data.Peek(player)
 						if not profile then return {} end
 						local luck, power = Defs.Bonus(profile)
-						return { Luck = luck, Power = power }
+						if luck <= 0 and power <= 0 then return nil end
+						-- (Boosts takes multipliers: 1.05 = +5%. The fractions on their own were clamped up to 1 - the
+						-- claimed bonuses did nothing)
+						return { Luck = 1 + luck, Power = 1 + power, Name = "INDEX BONUS", Icon = "Index", Color = "Blue", Quiet = true }
 					end)
 				end)
 				if not ok then warn("[IndexRewards] Boosts source:", err) end
