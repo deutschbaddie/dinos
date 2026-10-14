@@ -1279,6 +1279,13 @@ end
 --------------------------------------------------------------------------------
 -- seat detection
 --------------------------------------------------------------------------------
+-- a run of your own is on (the server's Runtime/Runs folder has one under your id)
+local function inRun(): boolean
+	local rt = ReplicatedStorage:FindFirstChild("DinoExpedition")
+	local runs = rt and rt:FindFirstChild("Runtime") and rt.Runtime:FindFirstChild("Runs")
+	return runs ~= nil and runs:FindFirstChild(tostring(player.UserId)) ~= nil
+end
+
 local function onSeated(active: boolean, seatPart: Instance?)
 	-- (touch has no raw-key fallback: make sure Roblox's controls are on whenever you sit in your rover)
 	if active and controls then pcall(function() controls:Enable() end) end
@@ -1294,7 +1301,19 @@ local function onSeated(active: boolean, seatPart: Instance?)
 			free.V = 0
 			free.Up = Vector3.yAxis
 			free.VY, free.Air, free.TiltP, free.TiltR = 0, 0, 0, 0
-			if St.Mode ~= "Route" and St.Mode ~= "Roam" then St.Mode = "Camp" end
+			-- (no run of yours going on: whatever an expedition or a ride along left behind - Route / Roam, on foot,
+			-- frozen - is stale. At camp your own rover always drives)
+			if (St.Mode == "Route" or St.Mode == "Roam") and not inRun() then
+				St.Mode, St.Route, St.Zone, St.StopAt = "Camp", nil, nil, nil
+			end
+			if St.Mode ~= "Route" and St.Mode ~= "Roam" then
+				St.Mode = "Camp"
+				St.Frozen = false
+				if St.OnFoot then
+					St.OnFoot = false
+					changed("OnFoot")
+				end
+			end
 			if St.Mode == "Roam" and St.OnFoot then
 				-- back at the wheel out in the era: drive on from right here
 				St.OnFoot = false

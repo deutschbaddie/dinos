@@ -1417,6 +1417,9 @@ local function onRideReturn(info)
 		YearTo = from and from.Data.Year or nil,
 		OnArrive = function()
 			Zone.Apply("BaseCamp")
+			-- (a rider's fights left the drive controller "on foot" - SetOnFoot at every site - and nothing put it back:
+			-- your OWN rover then sat dead under the throttle at camp, its buttons up. Tester video 2026-10-14)
+			Drive.ResetOnFoot()
 			local cam = Workspace.CurrentCamera
 			local h = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
 			cam.CameraType = Enum.CameraType.Custom
