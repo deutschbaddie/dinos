@@ -384,49 +384,61 @@ function Vehicles.TakeVehicle(player: Player, name: string?): (Model?, string?)
 		local lp = cf:PointToObjectSpace(hrp.Position)
 		atBase = math.abs(lp.X) < size.X / 2 + 4 and math.abs(lp.Z) < size.Z / 2 + 4
 	end
+	-- away from your island it appears right where you're standing (2026-10-14, user: "spawn my car exactly where i
+	-- am"). Facing your way if it fits; turned to fit if not (across a bridge: along it); only with no room at all
+	-- there does it shift, by the smallest step that fits. The garage is for your island - or a swim in the lagoon
+	local here: CFrame? = nil
+	local tmpl = Templates:FindFirstChild(name or profile.Gear.Vehicle)
+	local rh0 = tmpl and tmpl:GetAttribute("RootHeight") or 2.6
 	if hrp and not atBase then
-		-- spawn on the ground where you stand, facing the way you face
 		local rp = RaycastParams.new()
 		rp.FilterType = Enum.RaycastFilterType.Exclude
 		rp.FilterDescendantsInstances = { char :: Instance, folder() }
 		rp.RespectCanCollide = true -- trigger volumes and prompt hosts aren't ground
-		local hit = Workspace:Raycast(hrp.Position + Vector3.new(0, 2, 0), Vector3.new(0, -30, 0), rp)
-		local groundY = hit and hit.Position.Y or (hrp.Position.Y - 3)
-		local look = Vector3.new(hrp.CFrame.LookVector.X, 0, hrp.CFrame.LookVector.Z)
-		look = look.Magnitude > 0.01 and look.Unit or Vector3.new(0, 0, -1)
-		local tmpl = Templates:FindFirstChild(name or profile.Gear.Vehicle)
-		local rh0 = tmpl and tmpl:GetAttribute("RootHeight") or 2.6
-		local pos = Vector3.new(hrp.Position.X, groundY + rh0, hrp.Position.Z)
-		local rootCF = CFrame.lookAt(pos, pos + look)
-		-- swimming in the camp lagoon (Terrain water): no rover on the water, it rolls out of your garage
-		if hit and hit.Material == Enum.Material.Water then atBase = true end
-		-- room for it? (walls, fences, trees): if not, it rolls out of the garage as usual
+		rp.IgnoreWater = false
 		local op = OverlapParams.new()
 		op.FilterType = Enum.RaycastFilterType.Exclude
 		op.FilterDescendantsInstances = { char :: Instance, folder() }
 		op.RespectCanCollide = true
 		local w, l = (tmpl and tmpl:GetAttribute("Width")) or 8, (tmpl and tmpl:GetAttribute("Length")) or 16
-		local blocked = #Workspace:GetPartBoundsInBox(rootCF + Vector3.new(0, 2, 0), Vector3.new(w * 0.9, 3.5, l * 0.9), op) > 0
-		if blocked then atBase = true end
-	end
-	if hrp and not atBase then
-		local rp = RaycastParams.new()
-		rp.FilterType = Enum.RaycastFilterType.Exclude
-		rp.FilterDescendantsInstances = { char :: Instance, folder() }
-		rp.RespectCanCollide = true
-		local hit = Workspace:Raycast(hrp.Position + Vector3.new(0, 2, 0), Vector3.new(0, -30, 0), rp)
-		local groundY = hit and hit.Position.Y or (hrp.Position.Y - 3)
 		local look = Vector3.new(hrp.CFrame.LookVector.X, 0, hrp.CFrame.LookVector.Z)
 		look = look.Magnitude > 0.01 and look.Unit or Vector3.new(0, 0, -1)
-		local tmpl = Templates:FindFirstChild(name or profile.Gear.Vehicle)
-		local rh0 = tmpl and tmpl:GetAttribute("RootHeight") or 2.6
-		local pos = Vector3.new(hrp.Position.X, groundY + rh0, hrp.Position.Z)
-		local rootCF = CFrame.lookAt(pos, pos + look)
-		local v = Vehicles.Spawn(player, rootCF, name)
+		local side = Vector3.new(-look.Z, 0, look.X)
+		local hit0 = Workspace:Raycast(hrp.Position + Vector3.new(0, 2, 0), Vector3.new(0, -30, 0), rp)
+		local ground0 = hit0 and hit0.Position.Y or (hrp.Position.Y - 3)
+		local swimming = hit0 ~= nil and hit0.Material == Enum.Material.Water
+		-- a rover-sized box of room on dry ground at p, facing dir
+		local function fits(p: Vector3, dir: Vector3): CFrame?
+			local hit = Workspace:Raycast(p + Vector3.new(0, 2, 0), Vector3.new(0, -30, 0), rp)
+			if not hit or hit.Material == Enum.Material.Water or hit.Normal.Y < 0.75 then return nil end
+			if math.abs(hit.Position.Y - ground0) > 3 then return nil end
+			local pos = Vector3.new(p.X, hit.Position.Y + rh0, p.Z)
+			local cf = CFrame.lookAt(pos, pos + dir)
+			if #Workspace:GetPartBoundsInBox(cf + Vector3.new(0, 2, 0), Vector3.new(w * 0.9, 3.5, l * 0.9), op) > 0 then return nil end
+			return cf
+		end
+		if not swimming then
+			local dirs = { look, side, -side, -look }
+			for _, r in ipairs({ 0, 2, 4, 6, 9, 12 }) do
+				for k = 0, (r == 0 and 0 or 7) do
+					local a = k / 8 * math.pi * 2
+					local off = (look * math.cos(a) + side * math.sin(a)) * r
+					for _, dir in ipairs(dirs) do
+						here = fits(hrp.Position + off, dir)
+						if here then break end
+					end
+					if here then break end
+				end
+				if here then break end
+			end
+		end
+	end
+	if here then
+		local v = Vehicles.Spawn(player, here, name)
 		if not v then return nil end
 		-- a lifted / monster build raises its RootHeight while it's styled: lift it to match
 		local rh1 = v:GetAttribute("RootHeight") or rh0
-		if math.abs(rh1 - rh0) > 0.01 then Vehicles.Teleport(player, rootCF + Vector3.new(0, rh1 - rh0, 0)) end
+		if math.abs(rh1 - rh0) > 0.01 then Vehicles.Teleport(player, here + Vector3.new(0, rh1 - rh0, 0)) end
 		v:SetAttribute("RollOut", true)
 		task.delay(6, function() if v.Parent then v:SetAttribute("RollOut", nil) end end)
 		return v, "Here"

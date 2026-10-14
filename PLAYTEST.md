@@ -430,3 +430,8 @@ Settings → ADMIN has two new buttons: **WEATHER** (rolls in the next weather n
 3. Find one: SECRET FOUND! as usual, plus a "SIGHTSEER: 1 / 3 SPOTTED" toast. All of them: "ALL SPOTTED! GO TELL THEM".
 4. Talk again: CLAIM REWARD pays coins (a few minutes of your yard's income) and some trainer POWER, then they offer another hunt. With every landmark found: "You've shown me every sight".
 5. The Rangers at each era's start can be talked to while you're on foot now too (before, Talk did nothing out in an era).
+
+**E. DRIVE away from your island**
+1. Anywhere that isn't your own island (the hub, the ring road, a bridge, someone else's island), press DRIVE: the rover appears right where you stand (the poof), facing your way.
+2. On a bridge, or squeezed against a wall / rail, it turns to fit (along the bridge) or shifts just far enough to fit. It never sends you back to your garage for that.
+3. On your own island, DRIVE still rolls it out of your garage. Swimming in the lagoon also uses the garage (no rover on water).
