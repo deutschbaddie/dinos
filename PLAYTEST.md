@@ -418,3 +418,8 @@ Settings → ADMIN has two new buttons: **WEATHER** (rolls in the next weather n
 3. Now and then a normal dino slips it (about 1 in 10): "DODGED!" and the net drops in the dirt. Bosses dodge it a lot more (almost half the time), only stay caught for about 2 s, and always slip it during a leap, a dive or their reveal.
 4. With nothing under your crosshair: "AIM AT A DINO FIRST", and no recharge is used up.
 5. Recharge is 20 s.
+
+**C. Trainer pad pose** (your island's trainer)
+1. Step onto the glowing pad: your launcher appears in your hand, you turn to face the target and raise it, and every shot kicks back as the beam leaves the barrel (+N POWER pops as before).
+2. Walk around on the pad: you can still move and turn freely. Stand still: you turn back to the target.
+3. Step off: the launcher disappears and your arms come down. Other players see you training the same way.

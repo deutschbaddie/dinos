@@ -25,6 +25,8 @@ local Net = require(script.Parent.Net)
 local Kit = require(script.Parent.UI.Kit)
 local Theme = require(script.Parent.UI.Theme)
 local Cinema = require(script.Parent.UI.Cinema)
+local PlayerAnim = require(script.Parent.PlayerAnim)
+local Gear = require(ReplicatedStorage:WaitForChild("DinoExpedition"):WaitForChild("Game"):WaitForChild("Gear"))
 
 local player = Players.LocalPlayer
 local C = Theme.C
@@ -495,7 +497,7 @@ end
 --------------------------------------------------------------------------------
 -- training effects (anyone with the Training attribute, on their own island)
 --------------------------------------------------------------------------------
-local fx = {} :: { [Player]: { Aura: ParticleEmitter?, NextDart: number } }
+local fx = {} :: { [Player]: { Aura: ParticleEmitter?, NextDart: number, Char: Model?, Gun: Model?, Turned: boolean? } }
 local function auraFor(plr: Player, color: Color3): ParticleEmitter?
 	local hrp = hrpOf(plr)
 	if not hrp then return nil end
@@ -569,7 +571,9 @@ local function handOf(plr: Player): Vector3?
 	return hrp and (hrp.Position + hrp.CFrame.RightVector * 0.9 + Vector3.new(0, 1.2, 0)) or nil
 end
 local function fireDart(plr: Player, target: BasePart, color: Color3)
-	local from = handOf(plr)
+	-- (out of the launcher's barrel when it's in their hand)
+	local st = fx[plr]
+	local from = (st and st.Gun and st.Gun.Parent and Gear.Muzzle(st.Gun)) or handOf(plr)
 	if not from then return end
 	local to = target.Position + Vector3.new((math.random() - 0.5) * 1.6, (math.random() - 0.5) * 1.4, 0)
 	local dist = (to - from).Magnitude
@@ -618,14 +622,77 @@ local function wobble(machine: Model)
 	end
 end
 
+-- off the pad: the launcher goes away, the arms come down, you turn freely again
+local function stopPose(plr: Player, st)
+	if st.Aura then st.Aura:Destroy() end
+	local char = st.Char
+	if char then
+		if st.Gun then st.Gun:Destroy() end
+		local rig = PlayerAnim.Rig(char)
+		if rig then rig.Combat = plr:GetAttribute("Site") ~= nil end
+	end
+	if plr == player and st.Turned then
+		local hum = char and char:FindFirstChildOfClass("Humanoid")
+		if hum then hum.AutoRotate = true end
+	end
+end
+
+-- on the pad: the launcher in hand, raised at the target (everyone sees it); you face the target while you stand
+-- still, and walking off works as normal
+local function trainPose(plr: Player, st, target: BasePart?, dt: number)
+	local char = plr.Character
+	if not char then return end
+	if st.Char ~= char then
+		if st.Gun then st.Gun:Destroy() end
+		st.Char, st.Gun = char, nil
+	end
+	local id = plr:GetAttribute("Launcher")
+	if not (st.Gun and st.Gun.Parent) then
+		st.Gun = Gear.Hold(char, typeof(id) == "string" and id or "Rookie")
+	end
+	local rig = PlayerAnim.Rig(char)
+	local hrp = char:FindFirstChild("HumanoidRootPart") :: BasePart?
+	if rig and hrp then
+		rig.Combat = true
+		local pitch = 0
+		if target then
+			local d = target.Position - (hrp.Position + Vector3.new(0, 1.5, 0))
+			pitch = math.atan2(d.Y, Vector3.new(d.X, 0, d.Z).Magnitude)
+		end
+		PlayerAnim.SetAim(char, pitch, true)
+	end
+	if plr ~= player or not (hrp and target) then return end
+	local hum = char:FindFirstChildOfClass("Humanoid")
+	if not hum then return end
+	local still = hum.MoveDirection.Magnitude < 0.1
+	hum.AutoRotate = not still
+	st.Turned = true
+	if still then
+		local flat = Vector3.new(target.Position.X - hrp.Position.X, 0, target.Position.Z - hrp.Position.Z)
+		if flat.Magnitude > 0.5 then
+			local want = CFrame.lookAt(hrp.Position, hrp.Position + flat)
+			hrp.CFrame = CFrame.new(hrp.Position) * hrp.CFrame.Rotation:Lerp(want.Rotation, math.min(1, dt * 10))
+		end
+	end
+end
+
+local lastTrain = os.clock()
 local function stepTraining(now: number)
 	local cam = Workspace.CurrentCamera
+	local dt = math.clamp(now - lastTrain, 0, 0.25)
+	lastTrain = now
+	for plr, st in pairs(fx) do
+		if not plr.Parent then
+			pcall(stopPose, plr, st)
+			fx[plr] = nil
+		end
+	end
 	for _, plr in ipairs(Players:GetPlayers()) do
 		local training = plr:GetAttribute("Training") == true
 		local st = fx[plr]
 		if not training then
 			if st then
-				if st.Aura then st.Aura:Destroy() end
+				stopPose(plr, st)
 				fx[plr] = nil
 			end
 			continue
@@ -643,8 +710,10 @@ local function stepTraining(now: number)
 		local s = st :: { Aura: ParticleEmitter?, NextDart: number }
 		if not s.Aura or not s.Aura.Parent then s.Aura = auraFor(plr, color) end
 		local target = partIn(machine, "TargetPoint")
+		trainPose(plr, s, target :: BasePart?, dt)
 		if target and now >= s.NextDart and not Cinema.Playing() then
 			s.NextDart = now + 0.55 + math.random() * 0.25
+			PlayerAnim.Act(plr.Character, "Fire")
 			fireDart(plr, target :: BasePart, color)
 			if machine.Parent then wobble(machine) end
 		end
