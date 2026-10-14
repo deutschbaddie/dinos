@@ -136,6 +136,7 @@ function Plots.Release(player: Player)
 	plot:SetAttribute("Rate", 0)
 	plot:SetAttribute("Island", "")
 	plot:SetAttribute("Showcase", "")
+	plot:SetAttribute("TrainerLevel", nil) -- (a freed island shows the first trainer again)
 	setSign(plot, "FREE ISLAND")
 end
 

@@ -234,7 +234,7 @@ local function cancel()
 	if not win then return end
 	local res = Net.Ask("TradeCancel", {})
 	-- (the server's TradeClosed closes the window; if it can't be reached, close it here)
-	if not (res and res.Ok) then closeWindow() end
+	if not (res and res.Ok) or res.NoTrade then closeWindow() end
 end
 
 -- one board: YOU GIVE / <NAME> GIVES

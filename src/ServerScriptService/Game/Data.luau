@@ -227,7 +227,27 @@ function Data.Load(player: Player)
 		Data.Offline[player] = true
 	end
 	profile = profile or default()
-	if not player.Parent then return nil end
+	if not player.Parent then
+		-- they left while it loaded: nobody will save this profile, so let go of the session lock now (left in place it
+		-- held their next join on another server in the loading wait for ~30 s)
+		local wasOffline = Data.Offline[player] == true -- (a temporary profile never took the lock)
+		Data.Offline[player] = nil
+		if store and not wasOffline then
+			local key2 = "u" .. player.UserId
+			local st = store :: DataStore
+			task.spawn(pcall, function()
+				st:UpdateAsync(key2, function(old)
+					-- (only ours, and only if they haven't rejoined this same server meanwhile: that session owns it now)
+					if typeof(old) == "table" and typeof(old._Lock) == "table" and old._Lock.Id == JOB and not Players:GetPlayerByUserId(player.UserId) then
+						old._Lock = nil
+						return old
+					end
+					return nil
+				end)
+			end)
+		end
+		return nil
+	end
 	Data.Profiles[player] = profile
 	Data.Away[player] = away
 	playMark[player] = playMark[player] or os.clock()
@@ -248,7 +268,8 @@ function Data.Save(player: Player, final: boolean?)
 	local ok, err = retry(function()
 		store:UpdateAsync(key, function(old)
 			if lockedByOther(old) then stolen = true return nil end -- another server owns them now: never overwrite
-			profile._Lock = (not final) and { Id = JOB, T = os.time() } or nil
+			-- (a save that lands after they left - a trade's, an autosave's retry - never locks them again)
+			profile._Lock = (not final and player.Parent ~= nil) and { Id = JOB, T = os.time() } or nil
 			return profile
 		end)
 	end, final and 3 or 2)

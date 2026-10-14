@@ -511,7 +511,8 @@ local function onCancel(player: Player)
 	-- (a request you sent: take it back)
 	local req = outgoing[player]
 	if req then dropRequest(req, "Gone") end
-	return { Ok = true }
+	-- (no trade here: a window the client still shows is stale, it closes itself)
+	return { Ok = true, NoTrade = true }
 end
 
 --------------------------------------------------------------------------------
@@ -560,6 +561,9 @@ function Trade.Start(deps)
 	task.spawn(function()
 		while true do
 			task.wait(0.5)
+			-- (expired cooldowns go, or the table grows for the life of the server)
+			local now = os.clock()
+			for k, t in pairs(pairCool) do if t <= now then pairCool[k] = nil end end
 			local seen = {}
 			for _, s in pairs(sessions) do
 				if seen[s] or s.Closed or s.Executing then continue end

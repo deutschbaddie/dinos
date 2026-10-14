@@ -25,7 +25,6 @@ local Data, Net, Plots, Dinos, Expedition, Shop
 local T = Config.Trainer
 
 local onPad = {} :: { [Player]: number } -- seconds in a row on the pad
-local plotOf = {} :: { [Player]: Model } -- (kept so the island can go back to tier 1 after Plots.Release)
 local PUSH_EVERY = 10 -- while training, a full profile push this often (the popups are live every second)
 
 --------------------------------------------------------------------------------
@@ -104,7 +103,6 @@ end
 local function syncPlot(player: Player, profile)
 	local plot = Plots.Get(player)
 	if not plot then return end
-	plotOf[player] = plot
 	local lvl = levelOf(profile)
 	if plot:GetAttribute("TrainerLevel") ~= lvl then plot:SetAttribute("TrainerLevel", lvl) end
 end
@@ -249,15 +247,10 @@ function Trainer.Start(deps)
 		if typeof(args.Id) ~= "string" or not Config.Launchers[args.Id] then return { Ok = false } end
 		return Shop.Equip(player, "Launcher", args.Id)
 	end)
+	-- (a freed island goes back to the first machine in Plots.Release: a profile push while they leave could put
+	-- the level back after a reset done here)
 	Players.PlayerRemoving:Connect(function(player)
 		onPad[player] = nil
-		local plot = plotOf[player]
-		plotOf[player] = nil
-		-- (Plots.Release ran first or runs next; a freed island shows the first machine again)
-		if plot then
-			local owner = plot:GetAttribute("Owner")
-			if owner == 0 or owner == player.UserId then plot:SetAttribute("TrainerLevel", nil) end
-		end
 	end)
 	task.spawn(function()
 		while true do

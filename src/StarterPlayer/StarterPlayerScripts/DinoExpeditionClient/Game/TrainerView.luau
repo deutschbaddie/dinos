@@ -387,6 +387,10 @@ end
 
 openWindow = function()
 	if Cinema.Playing() then return end
+	-- (the board's prompt reaches the pad: never open the window underneath GUESS THE DINO)
+	local quiz = script.Parent:FindFirstChild("DinoQuiz")
+	local okQ, q = pcall(function() return quiz and require(quiz :: ModuleScript) end)
+	if okQ and q and q.IsOpen and q.IsOpen() then return end
 	ensureScreen()
 	if Panels and Panels.IsOpen and Panels.IsOpen() then Panels.Close() end
 	if win then win:Destroy() win = nil end
@@ -732,7 +736,8 @@ function TrainerView.Start(panels: any?)
 		for board, b in pairs(boards) do
 			if board.Parent then refreshBoard(board, b) end
 		end
-		if win and not busy then refreshWindow() end
+		-- (also mid-upgrade: the new profile lands before the request returns, and nothing refreshes after it)
+		if win then refreshWindow() end
 	end)
 	-- boards appear and change as machines are swapped in by the server
 	local acc = 0

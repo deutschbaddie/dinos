@@ -41,7 +41,10 @@ local Data, Net, Plots
 local MIN_ANSWER = 1.5 -- seconds a question must be open before it can be answered
 local PER_MINUTE = 12 -- paid answers in any 60 s (more still play, they just pay nothing; honest play is ~10-14 a minute)
 local KEEP = 90 -- seconds a closed quiz keeps its streak and its open question
-local REWARD_BASE, REWARD_STEP, REWARD_MAX = 15, 1, 30 -- seconds of training per correct answer (+1 per streak)
+-- seconds of training per correct answer (+0.5 per streak). (2026-10-14 balance pass: it was 15 / 1 / 30 - at the
+-- 12-a-minute cap that paid up to 6x the pad's own rate on top of it, ~7x AFK, and an hour-long era gate fell in a few
+-- minutes. Now a perfect minute pays at most 120 s - quizzing on the pad earns up to 3x standing on it.)
+local REWARD_BASE, REWARD_STEP, REWARD_MAX = 4, 0.5, 10
 -- { from streak, lookalike wrong names, shadow }
 local TIERS = {
 	{ 0, 0, false }, -- WHO'S THAT DINO?
