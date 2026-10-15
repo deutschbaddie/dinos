@@ -466,3 +466,10 @@ Creator Dashboard → your experience → Analytics. They fill in from live serv
 - **Funnels → Purchase** (every Robux prompt): Prompted → Bought, by product / pass id.
 - **Economy → Coins:** sources (Yard, Expedition_<era>, quests, DailySpin, Meteorite, Sightseer) and sinks (Shop items by name, TrainerLevel_N, TimeGate_<era>, Island_*, StarPen).
 - **Progression → Eras:** era opened (start) and boss first beaten (complete).
+
+## 22. Freecam (developers): Settings → TEST TOOLS → FREECAM (F8), or press F8
+All UI hides and your character stays put; F8 / EXIT / B puts everything back exactly as it was.
+- Keyboard + mouse: WASD fly, E / Q (or Space) up / down, hold right-click to look, mouse wheel or 1 / 2 = slower / faster (6 speeds), Shift = 4x boost, Z / X = zoom in / out, R = level, H = hide the help card.
+- Controller: left stick fly, right stick look, RT / LT up / down, RB / LB speed, hold L3 to boost, D-pad up / down zoom, B exit.
+- Phone / tablet: drag on the left half to fly, the right half to look, UP / DOWN buttons, EXIT.
+Moves and turns glide in and out, so a slow pan looks like a real camera move (good for trailers and TikToks).

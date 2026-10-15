@@ -1741,6 +1741,7 @@ local function tools(body: Frame)
 		{ "TP GATE", "Gate", "Blue", function() close() dev("Teleport", { Where = "Gate" }) end },
 		{ "ANIM PANEL", "Dino", "Purple", function() if DevHooks.OpenShowcasePanel then DevHooks.OpenShowcasePanel() end end },
 		{ "REPLAY INTRO", "Star", "Purple", function() close() dev("ReplayTutorial") end },
+		{ "FREECAM (F8)", "Eye", "Purple", function() close() require(script.Parent.Parent.Freecam).On() end },
 		{ confirmReset and "TAP TO CONFIRM" or "RESET SAVE", "Alert", "Red", function()
 			if not confirmReset then confirmReset = true Panels.Refresh() return end
 			confirmReset = false

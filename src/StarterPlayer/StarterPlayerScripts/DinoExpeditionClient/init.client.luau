@@ -90,6 +90,7 @@ WeatherView.Start() -- the server's weather: rain, storms + lightning, fog, wind
 -- (listening before the menu: Net holds unheard messages until it's done, and a held-back shower would land all at once)
 local MeteorView = require(Game:WaitForChild("MeteorView"))
 MeteorView.Start() -- METEOR SHOWERS: fireballs over camp, meteorites to collect
+require(Game:WaitForChild("Freecam")).Start() -- developers: a free-flying camera (TEST TOOLS > FREECAM, or F8)
 local fromMenu = require(Game:WaitForChild("MainMenu")).Run()
 WeatherView.Ready, MeteorView.Ready = true, true
 Drive.Start()
