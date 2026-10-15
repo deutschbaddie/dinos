@@ -188,7 +188,7 @@ end
 -- and the prize card lands.
 --------------------------------------------------------------------------------
 type Big = {
-	Rotor: Model, Slices: { { BasePart } }, Icons: { GuiObject }, Bulbs: { Frame }, Pointer: GuiObject,
+	Rotor: Model, Base: CFrame, Slices: { { BasePart } }, Icons: { GuiObject }, Bulbs: { Frame }, Pointer: GuiObject,
 	Angle: number, Token: any?, Kick: number, Frame: Frame, Glow: Frame, Win: number?,
 }
 local R = 10 -- the wheel's radius (studs, in its own little world)
@@ -378,14 +378,15 @@ local function buildWheel(parent: Frame): Big
 	st.Thickness = 3
 	st.Color = C.Ink
 	st.Parent = arrow
-	local w: Big = { Rotor = rotor, Slices = slices, Icons = icons, Bulbs = bulbs, Pointer = pointer, Angle = 0, Token = nil, Kick = 0, Frame = stage, Glow = glow, Win = nil }
+	-- (turned about the wheel's own axle: the hub is a cylinder lying along Z, so its pivot has a 90° yaw in it)
+	local w: Big = { Rotor = rotor, Base = rotor:GetPivot(), Slices = slices, Icons = icons, Bulbs = bulbs, Pointer = pointer, Angle = 0, Token = nil, Kick = 0, Frame = stage, Glow = glow, Win = nil }
 	return w
 end
 
 -- turn it to `deg` (clockwise as you look at it) and keep the overlay with it
 local function setBig(w: Big, deg: number)
 	w.Angle = deg
-	w.Rotor:PivotTo(CFrame.Angles(0, 0, math.rad(deg)))
+	w.Rotor:PivotTo(CFrame.Angles(0, 0, math.rad(deg)) * w.Base)
 	local r = FRAC * 0.5 * 0.66
 	for i, icon in ipairs(w.Icons) do
 		local a = math.rad((i - 1) * STEP + deg)

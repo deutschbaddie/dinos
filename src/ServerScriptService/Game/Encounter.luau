@@ -178,6 +178,7 @@ local function newActor(site, species: string, pos: Vector3, opts)
 	local a = {
 		-- (a water dino that starts in the water stays in it: moveActor. 2026-10-15)
 		Water = sp ~= nil and sp.Habitat == "Water" and inWater(pos),
+		LastWet = (sp ~= nil and sp.Habitat == "Water" and inWater(pos)) and pos or nil,
 		Id = nextActor, Species = species, Pos = pos, Yaw = opts.Yaw or 0, State = opts.State or "Idle", T = 0, Aware = 0,
 		Calm = 0, CalmMax = calm, Speed = (opts.Speed or stats.Speed), Stats = stats, Home = pos,
 		NextAttack = os.clock() + rng:NextNumber(1.2, 2.4), Minion = opts.Minion, Boss = opts.Boss, Lead = opts.Lead,
@@ -839,11 +840,17 @@ local function moveActor(site, a, toward: Vector3, speed: number, dt: number)
 	if fromC.Magnitude > site.Radius then np = site.Center + fromC.Unit * site.Radius + Vector3.new(0, np.Y - site.Center.Y, 0) end
 	np = keepClear(site, a, np, myR)
 	np = Vector3.new(np.X, groundY(site, np, site.Center.Y), np.Z)
-	-- a water dino keeps to the water: it can lunge a few steps up the bank at you, never wander off over land
-	if a.Water and not inWater(np) and not inWater(np - dir * 6) then
-		a.Vel = 0
-		a.Yaw = yawOf(d)
-		return
+	-- a water dino keeps to the water: it can come a few steps up the bank at you, never wander off over land - and
+	-- any step back toward the water is always allowed (one that only looked behind it got stranded ashore)
+	if a.Water then
+		if inWater(a.Pos) then a.LastWet = a.Pos end
+		local wet = a.LastWet or a.Pos
+		local fromWet = flat(np - wet).Magnitude
+		if not (inWater(np) or fromWet <= 6 or fromWet < flat(a.Pos - wet).Magnitude) then
+			a.Vel = 0
+			a.Yaw = yawOf(d)
+			return
+		end
 	end
 	a.Pos = np
 	a.Yaw = yawOf(d)
@@ -1271,6 +1278,11 @@ tickActor = function(site, a, dt: number, players)
 				local off = flat(a.DashTo - site.Center)
 				local maxR = (site.Radius or 44) - 2
 				if off.Magnitude > maxR then a.DashTo = site.Center + off.Unit * maxR + Vector3.new(0, a.DashTo.Y - site.Center.Y, 0) end
+				-- (a water dino's lunge ends at most a few steps past the water's edge)
+				if a.Water and a.LastWet then
+					local out = flat(a.DashTo - a.LastWet)
+					if out.Magnitude > 6 and not inWater(a.DashTo) then a.DashTo = a.LastWet + out.Unit * 6 + Vector3.new(0, a.DashTo.Y - a.LastWet.Y, 0) end
+				end
 			end
 			-- a lunge or a charge hits you when its body GETS to you (not the moment it sets off): the further down the
 			-- lane you are, the later it lands - and the longer you have to roll out of the lane
@@ -2611,7 +2623,9 @@ function Encounter.Gadget(player: Player, slot: number, targetId: number?)
 			if a.Id == targetId then netted = a break end
 		end
 		local a = netted
-		if not a or a.State == "KO" or a.State == "Rodeo" or a.State == "Exhausted" or a.Herd or flat(a.Pos - hrp.Position).Magnitude > (info.Range or 55) then
+		-- (only what you could dart: never a hidden / burrowed one, a companion, or one mid scripted move)
+		if not a or a.State == "KO" or a.State == "Rodeo" or a.State == "Exhausted" or not targetable(a) or a.Buddy or a.Custom
+			or flat(a.Pos - hrp.Position).Magnitude > (info.Range or 55) then
 			return { Ok = false, Err = "AIM AT A DINO FIRST" }
 		end
 	end
