@@ -578,7 +578,9 @@ local function powerMults(site, player: Player): (number, number)
 	local rec, mine = recommendedPower(site), powerOf(player)
 	if not rec or rec <= 0 or not mine then return 1, 1 end
 	local r = mine / rec
-	if r < 1 then return 1 + (1 - r) * 1.8, math.max(0.25, r ^ 1.4) end
+	-- (under-powered hurts more and hits softer than it did: POWER is the gate between bosses - Config.Pacing - and a
+	-- big skill or co-op edge still gets you there a little early, never an era early. 2026-10-15)
+	if r < 1 then return 1 + (1 - r) * 2.4, math.max(0.12, r ^ 1.8) end
 	return math.max(0.4, 1 - (r - 1) * 0.55), math.min(2.2, 1 + (r - 1) * 0.7)
 end
 Encounter.PowerMults = powerMults

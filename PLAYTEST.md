@@ -439,3 +439,10 @@ Settings → ADMIN has two new buttons: **WEATHER** (rolls in the next weather n
 ## 17. Stuck under the map at a site (2026-10-15, untested in Studio)
 1. Red Cliffs → map → THIEF'S LEDGE (or the Scythe King), picked both in the rover and on foot. When you arrive and hop out, you land on open ground beside the rover, never inside the cliff wall. Riders hop out on their own free spots around it.
 2. If someone still gets under the ground at a site (Output: "was under the ground at a site - lifted out"), within ~3 s they're lifted back out beside the rover.
+
+## 18. Pacing (2026-10-15): fast start, slower later
+Every boss and its sites now need more POWER, more each era (Config.Pacing in Config.luau: one number per era to tune). Being under-powered hurts more than before. The planned first clears, training on the pad between fights:
+Tyrant King ~17 min, Titan ~1.2 h, Tidebreaker ~3.5 h, Scythe King ~7.5 h, Frostfang ~13.5 h, Dawn King ~23 h (was ~4 h for the lot). Quizzing, fighting and co-op go faster.
+1. A fresh save: Fern Valley still flows quickly (the meadow, raptors, herd, then the Tyrant King after a short spell on the pad).
+2. Check the boss card's POWER numbers: Tyrant King 3,000, Titan 35,000, Tidebreaker 275,000, Scythe King 1.75M, Frostfang 10M, Dawn King 50M.
+3. Time Gate dials from Spine River on cost more (Spine River 600K, Red Cliffs 5M, Frost Forest 30M, Dawn Desert 175M), and trainer levels from machine 3 up cost 1.5-2.5x.

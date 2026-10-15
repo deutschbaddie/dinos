@@ -679,8 +679,8 @@ Config.Eras = {
 	{ Id = "FernValley", Name = "FERN VALLEY", Year = "68,000,000 BC", Built = true, Color = Color3.fromRGB(95, 211, 90), Boss = "TyrantKing",
 		Sites = {
 			-- (2026-10-14 power trainer curve, see Config.Trainer: a brand-new hunter is ~450 POWER, so the meadow is a
-			-- soft start; the raptors and the herd want a few minutes on your trainer pad, the Tyrant King ~10 of them.
-			-- Every later era's sites sit at 0.5 / 0.65 / 0.8 of its boss, and each boss is 5x the one before.)
+			-- soft start; the raptors and the herd want a few minutes on your trainer pad. Every later era's sites sit at
+			-- 0.5 / 0.65 / 0.8 of its boss. These are the BASE numbers: Config.Pacing below scales each era's.)
 			{ Id = "RaptorPack", Power = 650, Name = "RAPTOR PACK", Species = "Velociraptor", Kind = "Pack", Nest = 1, Count = 4, Blurb = "FOUR RAPTORS GUARD A NEST IN THE WILDS" },
 			-- Guards: extra non-lead dinos that join the alarm (Encounter spawns them; a baby that charges you)
 			{ Id = "HornNest", Power = 300, Name = "HORN MEADOW", Species = "Triceratops", Kind = "Brute", Nest = 2, Blurb = "A TRICERATOPS AND HER BABY NEST IN THE FLOWER MEADOW",
@@ -757,6 +757,39 @@ Config.Bosses = {
 	DawnKing = { Name = "DAWN KING", Era = "DawnDesert", Species = "Postosuchus", Power = 6250000, Calm = 40000, Scale = 1.1,
 		Material = "DawnScute", Title = "BOSS OF DAWN DESERT", Color = Color3.fromRGB(255, 120, 70) },
 }
+--------------------------------------------------------------------------------
+-- PACING (2026-10-15, tester: "people can beat the game in like 4 hrs"; user: "start fast and then slow down but
+-- still feel great and rewarding"). POWER is the real gate between bosses - your trainer's POWER / s against each
+-- boss's POWER - and the trainer's rate climbs ~3.5x a tier while the bosses only climbed 5x, so every era took about
+-- as long as the last. The curve below multiplies each era's boss AND its sites (they stay at 0.5 / 0.65 / 0.8 of
+-- the boss). Planned first clears for someone training on the pad between fights (quiz, fights and co-op are faster):
+--   Tyrant King ~17 min, Titan ~1.2 h, Tidebreaker ~3.5 h, Scythe King ~7.5 h, Frostfang ~13.5 h, Dawn King ~23 h
+-- (was ~10 min, 25 min, 45 min, 1.3 h, 2 h, 3-4 h). Turn a number down to make that era quicker.
+-- UnlockCoins and TrainerCost scale the Time Gate dials and the trainer's level prices the same way (an era lasts
+-- longer, so it earns more: its coin sinks keep up).
+--------------------------------------------------------------------------------
+Config.Pacing = {
+	Power = { FernValley = 1.5, GiantPlains = 3.5, SpineRiver = 5.5, RedCliffs = 7, FrostForest = 8, DawnDesert = 8 },
+	UnlockCoins = { GiantPlains = 1, SpineRiver = 2, RedCliffs = 2.5, FrostForest = 2.5, DawnDesert = 2.5 },
+	TrainerCost = { 1, 1, 1.5, 2, 2.5, 2.5, 2.5 }, -- by trainer tier (machine 1..7)
+}
+for _, era in ipairs(Config.Eras) do
+	local k = Config.Pacing.Power[era.Id] or 1
+	for _, s in ipairs(era.Sites or {}) do
+		if s.Power then s.Power = math.floor(s.Power * k + 0.5) end
+	end
+	if era.Unlock and era.Unlock.Coins then
+		era.Unlock.Coins = math.floor(era.Unlock.Coins * (Config.Pacing.UnlockCoins[era.Id] or 1) + 0.5)
+	end
+end
+for _, b in pairs(Config.Bosses) do
+	b.Power = math.floor(b.Power * (Config.Pacing.Power[b.Era] or 1) + 0.5)
+end
+for i, lvl in ipairs(Config.Trainer.Levels) do
+	local tier = Config.TrainerTier(i)
+	lvl.Cost = math.floor(lvl.Cost * (Config.Pacing.TrainerCost[tier] or 1) + 0.5)
+end
+
 -- boss tiers: index 1 Normal, 2 Hard, 3 Nightmare, 4+ Apex 1, 2, ...
 function Config.BossTier(i: number)
 	if i <= 1 then return { Name = "NORMAL", Calm = 1, Damage = 1, Power = 1, Mats = 3, Luck = 2.5 } end
