@@ -8,7 +8,12 @@
 	  TikTok.Play(seqId, { FromShot?, FromBeat?, Countdown? })   TikTok.PlayShot(shotName)   TikTok.Stop()
 	  Settings > TIKTOKS lists them. While playing (keyboard):
 	    SPACE pause/resume   LEFT/RIGHT previous/next shot   [ ] back/forward one beat   R restart (with count-in)
-	    H hide this help (clean frame for recording)   G 16:9 safe-area guides   C caption preview   X stop
+	    H hide this help (clean frame for recording)   G safe-area guides   C caption preview   X stop
+	A 9:16 sequence (Aspect) shows the vertical frame instead: G dims what a phone crop cuts (set Studio's device
+	emulator to a 9:16 screen, e.g. 1080 x 1920, and the whole view is the frame). A sequence's Lines (its voice-over
+	script, by beat) show in the caption preview as they come up, so you can read along while you record.
+	A shot baked OnPlot (Plot = the island it was staged on) plays on the island YOU own: the whole shot - actors,
+	camera, effects - is moved by the turn between the two islands (they're the same island, rotated round the hub).
 
 	Timing: every shot is a whole number of beats at Data.Music.BPM (Timeline.luau). Beat 0 is the first frame after
 	the black count-in, so a recording lines up with the music by putting the first kick on that cut.
@@ -110,6 +115,23 @@ local function buildUi()
 	Kit.Stroke(safe, Color3.fromRGB(120, 255, 160), 2)
 	frame(guides, { BackgroundColor3 = Color3.fromRGB(255, 70, 70), BackgroundTransparency = 0.82, Position = UDim2.fromScale(0, 0.85), Size = UDim2.fromScale(1, 0.15), ZIndex = 30 })
 	ui.Guides = guides
+	-- 9:16: the vertical frame, centred and as tall as the screen (the whole screen on a 9:16 one). Its guides dim what
+	-- a phone crop cuts (the pillars run off the column's sides) and tint where TikTok's own UI sits: the caption
+	-- and the bottom bar, and the like / comment / share rail on the right
+	local col = frame(gui, { BackgroundTransparency = 1, AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.5), Size = UDim2.fromScale(1, 1), ZIndex = 30 })
+	local ar = Instance.new("UIAspectRatioConstraint")
+	ar.AspectRatio = 9 / 16
+	ar.Parent = col
+	ui.Col = col
+	local tall = frame(col, { BackgroundTransparency = 1, Size = UDim2.fromScale(1, 1), ZIndex = 30, Visible = false })
+	for _, side in ipairs({ 0, 1 }) do
+		frame(tall, { BackgroundColor3 = Color3.new(0, 0, 0), BackgroundTransparency = 0.35, AnchorPoint = Vector2.new(1 - side, 0), Position = UDim2.fromScale(side, 0), Size = UDim2.new(0, 4000, 1, 0), ZIndex = 30 })
+	end
+	local safe916 = frame(tall, { BackgroundTransparency = 1, Position = UDim2.fromScale(0.06, 0.1), Size = UDim2.fromScale(0.79, 0.7), ZIndex = 30 })
+	Kit.Stroke(safe916, Color3.fromRGB(120, 255, 160), 2)
+	frame(tall, { BackgroundColor3 = Color3.fromRGB(255, 70, 70), BackgroundTransparency = 0.82, Position = UDim2.fromScale(0, 0.8), Size = UDim2.fromScale(1, 0.2), ZIndex = 30 })
+	frame(tall, { BackgroundColor3 = Color3.fromRGB(255, 70, 70), BackgroundTransparency = 0.82, Position = UDim2.fromScale(0.85, 0.35), Size = UDim2.fromScale(0.15, 0.45), ZIndex = 30 })
+	ui.Guides916 = tall
 	-- caption preview: where the editor's text goes (never baked into the footage)
 	ui.Caption = Kit.Text(gui, "", { Size = UDim2.fromScale(0.7, 0.07), Position = UDim2.fromScale(0.5, 0.9), AnchorPoint = Vector2.new(0.5, 0.5), Color = Color3.new(1, 1, 1), Stroke = 4, Shadow = 0, ZIndex = 31, MaxSize = 44 })
 	ui.Caption.Visible = false
@@ -122,6 +144,28 @@ local function buildUi()
 	ui.SkipText = Kit.Text(skip, "HOLD TO SKIP", { Pixel = true, Size = UDim2.new(1, -16, 0, 11), Position = UDim2.fromScale(0.5, 0.5), AnchorPoint = Vector2.new(0.5, 0.5), ZIndex = 54, Stroke = 2, Shadow = 1, MaxSize = 11 })
 	ui.Skip = skip
 	gui.Parent = player:WaitForChild("PlayerGui")
+end
+
+-- the take's frame: "9:16" (a vertical sequence) or 16:9. G shows that frame's guides; the caption preview sits where
+-- that frame's caption goes
+local function showGuides()
+	local on = ui.GuidesOn == true
+	ui.Guides.Visible = on and not ui.Tall
+	ui.Guides916.Visible = on and ui.Tall
+end
+local function setAspect(aspect: string?)
+	ui.Tall = aspect == "9:16"
+	if ui.Tall then
+		ui.Caption.Parent = ui.Col
+		ui.Caption.Size = UDim2.fromScale(0.86, 0.07)
+		ui.Caption.Position = UDim2.fromScale(0.46, 0.84)
+	else
+		ui.Caption.Parent = ui.Gui
+		ui.Caption.Size = UDim2.fromScale(0.7, 0.07)
+		ui.Caption.Position = UDim2.fromScale(0.5, 0.9)
+	end
+	ui.Line3.Text = (ui.Tall and "9:16  " or "") .. "SPACE pause  ←/→ shot  [ ] beat  R restart  H hide  G guides  C captions  X stop"
+	showGuides()
 end
 
 local function flash(a: number)
@@ -252,13 +296,32 @@ local function lerpAngle(a: number, b: number, u: number): number
 	return a + d * u
 end
 
+-- a shot staged on island `from` (its Plot) plays on the island you own: this is the turn + shift between the two
+-- (every island is the same island turned round the hub; each one's PlotCenter marker carries its frame). No move when
+-- it's your island already, you haven't got one yet, or the markers can't be found (it plays where it was staged).
+local function plotXf(from: number?): (CFrame?, number)
+	if not from then return nil, 0 end
+	local mine = tonumber(player:GetAttribute("Plot"))
+	if not mine or mine == from then return nil, 0 end
+	local camp = Workspace:FindFirstChild("BaseCamp")
+	local a = camp and camp:FindFirstChild("Plot" .. from, true)
+	local b = camp and camp:FindFirstChild("Plot" .. mine, true)
+	local ca = a and a:FindFirstChild("PlotCenter", true)
+	local cb = b and b:FindFirstChild("PlotCenter", true)
+	if not (ca and cb and ca:IsA("BasePart") and cb:IsA("BasePart")) then return nil, 0 end
+	local xf = cb.CFrame * ca.CFrame:Inverse()
+	local _, yaw = xf:ToEulerAnglesYXZ()
+	return xf, yaw
+end
+
 local function buildShot(name: string)
 	local d = Data.Shots[name]
 	if not d then return nil end
 	local set = Stage.new("TT_" .. name)
 	local rt = { Name = name, D = d, Set = set, Actors = {}, ById = {} } :: any
+	rt.Xf, rt.XfYaw = plotXf(d.Plot)
 	for _, a in ipairs(d.Actors) do
-		local o = { D = a, Kind = a.Kind, Stride = STRIDE[a.Kind] or 4, ActIdx = 0 } :: any
+		local o = { D = a, Kind = a.Kind, Stride = STRIDE[a.Kind] or 4, ActIdx = 0, Xf = rt.Xf, XfYaw = rt.XfYaw } :: any
 		if a.Kind == "Dino" then o.A = set:Dino(a.Species, { Scale = a.Scale, Rarity = a.Rarity })
 		elseif a.Kind == "Baby" then o.A = set:Dino(a.Species, { Baby = true, Scale = 1, Rarity = a.Rarity })
 		elseif a.Kind == "Rover" then o.A = set:Rover(a.Name)
@@ -313,6 +376,11 @@ local function trackAt(o, f: number, n: number): { number }
 	for k = 1, s do
 		local a, b = tr[i * s + k], tr[j * s + k]
 		out[k] = (k == 4) and lerpAngle(a, b, u) or a + (b - a) * u
+	end
+	if o.Xf then
+		local p = o.Xf * Vector3.new(out[1], out[2], out[3])
+		out[1], out[2], out[3] = p.X, p.Y, p.Z
+		out[4] += o.XfYaw
 	end
 	return out
 end
@@ -534,6 +602,11 @@ local fx = { FovKick = 0, Shake = Cam.Shake.new() } :: any
 local function cueFn(rt, cue): () -> ()
 	local kind = cue[2]
 	local a1, a2, a3 = cue[3], cue[4], cue[5]
+	if rt.Xf then
+		-- (a shot moved onto your island: its effects' world points move with it)
+		local function mv(v) return typeof(v) == "Vector3" and rt.Xf * v or v end
+		a1, a2, a3 = mv(a1), mv(a2), mv(a3)
+	end
 	return function()
 		if Fx.Cue(rt, kind, a1, a2, a3, look.Grade) then return end
 		if kind == "Unblack" then ui.Black.Visible = false return end
@@ -622,6 +695,20 @@ end
 -- the player
 --------------------------------------------------------------------------------
 local st = nil :: any
+
+-- the voice-over script (a sequence's Lines, by beat) in the caption preview: each line as the take reaches it (the
+-- first one through the count-in, so you can read ahead)
+local function updateLine()
+	local lines = st and st.Seq.Lines
+	if not lines or #lines == 0 then return end
+	local beat = st.Clock < 0 and -math.huge or Timeline.SecondsToBeat(st.Clock, st.Layout.BPM)
+	local idx = 1
+	for i, l in ipairs(lines) do if beat >= l[1] then idx = i end end
+	if st.Line ~= idx then
+		st.Line = idx
+		Kit.SetText(ui.Caption, string.upper(tostring(lines[idx][2])))
+	end
+end
 
 local function exitShot()
 	if st and st.Cur then
@@ -744,6 +831,7 @@ local function stepFrame(dt: number)
 	local function ch(k: number): number return c[i * 8 + k] + (c[j * 8 + k] - c[i * 8 + k]) * u end
 	local pos = Vector3.new(ch(1), ch(2), ch(3))
 	local lookAt = Vector3.new(ch(4), ch(5), ch(6))
+	if cur.Xf then pos, lookAt = cur.Xf * pos, cur.Xf * lookAt end
 	local cf = CFrame.lookAt(pos, lookAt) * CFrame.Angles(0, 0, math.rad(ch(8)))
 	cf = Cam.handheld(cf, st.Clock, d.Hand or 0)
 	cf = fx.Shake:Apply(cf, t)
@@ -761,8 +849,10 @@ local function stepFrame(dt: number)
 		st.Rehide = 0
 		hideWorld()
 		hideTree(Workspace:FindFirstChild("DinoAmbience"))
+		if st.HideCamp then hideTree(Workspace:FindFirstChild("DinoCampLocal")) end
 		for _, m in ipairs(st.HideExtra or {}) do hideTree(m) end
 	end
+	updateLine()
 	-- keep the cutscene token alive past Cinema's 40 s safety release
 	if os.clock() - st.TokenAt > 25 then
 		local fresh = Cinema.Begin("DinoTikTokUI")
@@ -809,7 +899,8 @@ local function onKey(_, state, input)
 		st.HudOn = not st.HudOn
 		ui.Hud.Visible = st.HudOn
 	elseif k == Enum.KeyCode.G then
-		ui.Guides.Visible = not ui.Guides.Visible
+		ui.GuidesOn = not ui.GuidesOn
+		showGuides()
 	elseif k == Enum.KeyCode.C then
 		ui.Caption.Visible = not ui.Caption.Visible
 	elseif k == Enum.KeyCode.X or k == Enum.KeyCode.Backspace then
@@ -877,6 +968,26 @@ function TikTok.PlaySequence(seq, opts)
 	Workspace.CurrentCamera.CameraType = Enum.CameraType.Scriptable
 	hideWorld()
 	hideTree(Workspace:FindFirstChild("DinoAmbience"))
+	-- a take on your island stages its own dinos in your paddock: your real ones (and the nest eggs) step out of it
+	local stagedOn = nil
+	for _, sh in ipairs(layout.Shots) do
+		local d = Data.Shots[sh.Name]
+		if d and d.Plot then st.HideCamp, stagedOn = true, stagedOn or d.Plot end
+	end
+	if st.HideCamp then
+		hideTree(Workspace:FindFirstChild("DinoCampLocal"))
+		-- ...and so do the loose boulders scattered in it (every island throws its own, where a staged dino may stand;
+		-- the take was baked on bare ground, clear of the staging island's)
+		local camp = Workspace:FindFirstChild("BaseCamp")
+		local plot = camp and camp:FindFirstChild("Plot" .. tostring(tonumber(player:GetAttribute("Plot")) or stagedOn), true)
+		local paddock = plot and plot:FindFirstChild("Paddock", true)
+		for _, d in ipairs(paddock and paddock:GetDescendants() or {}) do
+			if d:IsA("BasePart") and d.Name == "Rock" and hidden[d] == nil then
+				hidden[d] = d.LocalTransparencyModifier
+				d.LocalTransparencyModifier = 1
+			end
+		end
+	end
 	for _, m in ipairs(opts.Hide or {}) do hideTree(m) end
 	st.HideExtra = opts.Hide
 	-- (2026-10-14: an in-game reveal keeps the prompt service off throughout, so it skips the whole-workspace sweep -
@@ -889,7 +1000,10 @@ function TikTok.PlaySequence(seq, opts)
 	st.HudOn = not st.Cutscene
 	Fx.Letterbox(st.Cutscene)
 	ui.Skip.Visible = false
+	st.Line = nil
 	Kit.SetText(ui.Caption, string.upper(seq.Hook ~= "" and seq.Hook or "your caption here"))
+	setAspect(seq.Aspect)
+	updateLine()
 	if st.Cutscene then
 		skipConn = RunService.RenderStepped:Connect(skipStep)
 	else

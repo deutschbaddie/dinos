@@ -212,6 +212,19 @@ const Shots = {
     Cues: [[0.3, 'Stun', 'rex', 4], [0.5, 'RayTitle', 'DEFEATED!', 'TYRANT KING'], [0.5, 'Shake', 0.8]],
     Score: score(8, 8, 7, 9, 8, 9),
   },
+  // the vertical (9:16) take on DEFEATED: you and a friend celebrate in front of the knocked-out King, both in frame
+  RexDefeatedV: {
+    Zone: 'FernValley', At: { Marker: 'FinalArena' }, Beats: B4, Subject: ['p1', 'p2', 'rex'],
+    Note: '9:16: two players fist-pump at the lens, the dizzy Tyrant King slumped behind them, the game\'s DEFEATED title slams in.',
+    Actors: [
+      dino('rex', 'TyrannosaurusRex', { Spot: [0, 0] }, { Acts: [[0, 'Stunned']], Scale: 1.15 }),
+      crew('p1', 1, { Move: { Spot: [-1.9, -13], Face: [-0.6, -29] }, Acts: [[0.35, 'Victory'], [2.6, 'Victory']] }),
+      crew('p2', 2, { Move: { Spot: [1.9, -13.6], Face: [0.6, -29] }, Acts: [[0.55, 'Victory'], [2.8, 'Victory']] }),
+    ],
+    Cam: { From: [0.6, 4.2, -30], To: [0.3, 4.0, -28.5], Look: [0, 8, -8], Fov: [60, 57], Ease: 'out', Hand: 0.5 },
+    Cues: [[0.2, 'Stun', 'rex', 4], [0.45, 'RayTitle', 'DEFEATED!', 'TYRANT KING'], [0.45, 'Shake', 0.6]],
+    Score: score(8, 8, 7, 9, 8, 9),
+  },
   // the Plains Titan breaks into the Bone Yard
   GigaBreakthrough: {
     Zone: 'GiantPlains', At: { Marker: 'DenCenter', Away: 'Throne' }, Beats: B4, Subject: ['giga'],
@@ -456,6 +469,51 @@ const Shots = {
     Cues: [[1.75, 'Flash', 0.9], [1.6, 'Speed', 0.5]],
     Score: score(7, 3, 9, 8, 8, 8),
   },
+
+  // ============================================================== YOUR ISLAND (OnPlot: baked on plot 1's paddock; the
+  // player moves the whole shot onto the island the viewer owns - their rock, their fences, their name on the sign)
+  // the paddock frame: x across, z toward the back. The rock hill (4 stepped slabs, top ~8.9 up, footprint x 28..48,
+  // z 29..45) is at [38, 37]; the camera stands behind it at [43, 51.5] (inside the back palisade at z 55, clear of the
+  // corner tree's canopy; the side palisade is at x 60) and looks down the yard, 15 studs from you and a little above
+  // your head (you're up on the rock: from your own height the yard's dinos would all hide behind you). The dinos are
+  // spotted by where they sit in a 9:16 frame (depth from the camera, x across the frame), each in its own lane, off
+  // your silhouette (0.28..0.72 across) and clear of the feed troughs ([42, 14] / [42, -8], 12 x 3) and the pond:
+  //   raptor runs in from off the left to 28 deep at 0.08 | T. rex walks up 33 -> 29 deep at 0.8 | Triceratops 44 deep
+  //   at 0.15 | Brachiosaurus 58 deep crossing 0.2 -> 0.5 (-> 0.68 in the ending) | Parasaurolophus 70 deep 0.6 -> 0.7
+  BaseRockIntro: {
+    Zone: 'BaseCamp', At: { Marker: 'PaddockBounds' }, OnPlot: true, Beats: 8, Subject: ['p1'],
+    Note: '9:16 HOOK. You stand on the rock in your own paddock facing the lens; behind you a Brachiosaurus walks across, the T. rex walks up and roars, a raptor runs in and screeches.',
+    Actors: [
+      crew('p1', 1, { Move: { Spot: [38, 37], Face: [43, 51.5] } }),
+      dino('br', 'Brachiosaurus', { Path: [[13.4, 0.4], [24.1, -3.3]], Beats: 8 }, { Loco: 'Walk' }),
+      dino('rex', 'TyrannosaurusRex', { Path: [[38.1, 18.3], [38.9, 22.3]], Beats: 2.2, Ease: 'out', Face: [43, 51.5] }, { Loco: 'Walk', LocoKeys: [[2.2, 'Idle']], Acts: [[2.6, 'Roar', 1.1]] }),
+      dino('tri', 'Triceratops', { Spot: [18.6, 13.4], Face: [0, 24] }),
+      dino('para', 'Parasaurolophus', { Path: [[24.5, -16.2], [28.8, -17.6]], Beats: 8 }, { Loco: 'Walk' }),
+      dino('r1', 'Velociraptor', { Path: [[21, 29.5], [26.7, 27.5]], Beats: 2.4, Ease: 'out', Face: [43, 51.5] }, { Loco: 'Run', LocoKeys: [[2.4, 'Idle']], Acts: [[3.4, 'RaptorScreech', 1.2]] }),
+    ],
+    Cam: { From: [43.6, 17.4, 52.6], To: [42.8, 17.0, 50.4], Look: [38, 14, 37], Fov: [60, 56], Ease: 'out', Hand: 0.5 },
+    Cues: [[2.75, 'Shake', 0.45], [3.45, 'Shake', 0.25]],
+    Score: score(9, 9, 7, 9, 9, 9),
+  },
+  // the bookend: the same rock, you wave at the lens and the camera cranes up and back over your paddock
+  BaseRockOutro: {
+    Zone: 'BaseCamp', At: { Marker: 'PaddockBounds' }, OnPlot: true, Beats: 8, Subject: ['p1'],
+    Note: '9:16 ENDING. You wave at the lens from the rock, then a slow crane up and back over the palisade: the dinos roam the paddock below you.',
+    Actors: [
+      crew('p1', 1, { Move: { Spot: [38, 37], Face: [43, 51.5] }, Acts: [[0.3, 'Wave'], [4.4, 'Wave']] }),
+      dino('br', 'Brachiosaurus', { Path: [[24.1, -3.3], [30.5, -5.5]], Beats: 8 }, { Loco: 'Walk' }),
+      dino('rex', 'TyrannosaurusRex', { Path: [[38.9, 22.3], [28.3, 16.4]], Beats: 7, Start: 1 }, { Loco: 'Walk' }),
+      dino('tri', 'Triceratops', { Spot: [18.6, 13.4], Face: [0, 24] }),
+      dino('para', 'Parasaurolophus', { Path: [[28.8, -17.6], [31.8, -18.6]], Beats: 8 }, { Loco: 'Walk' }),
+      dino('r1', 'Velociraptor', { Path: [[26.7, 27.5], [22, 21]], Beats: 4, Start: 2 }, { Loco: 'Walk' }),
+    ],
+    Cam: { Keys: [
+      { B: 0, P: [42.6, 14.2, 50.2], L: [38, 12.4, 37], F: 52 },
+      { B: 2.2, P: [42.7, 14.3, 50.5], L: [38, 12.4, 37], F: 52, E: 'linear' },
+      { B: 8, P: [44, 32, 64], L: [30, 6, 20], F: 56, E: 'inout' },
+    ], Hand: 0.4 },
+    Score: score(7, 8, 7, 9, 8, 9),
+  },
 };
 
 // ---------------------------------------------------------------- sequences (shot, beats)
@@ -522,6 +580,36 @@ const Sequences = [
   {
     Id: 'TIKTOK_09_GAMEPLAY', Name: 'GAMEPLAY CLIPS', Category: 'GAMEPLAY', Hook: 'the gameplay is even better',
     Shots: [['PV_ChaseRun', 4], ['PV_LookBackPerfect', 2], ['PV_EggPickup', 4], ['PV_RodeoPrompt', 2], ['RexRodeo', 2], ['PV_HatchPrompt', 2], ['HatchSecret', 4]],
+  },
+  // a vertical (9:16) voice-over cut: the player shows their game from the rock in their own paddock. Lines are the
+  // script, beat by beat: the C caption preview reads them out in time (they're never baked into the footage)
+  {
+    Id: 'TIKTOK_10_GONNA_SAVE_ROBLOX', Name: 'GONNA SAVE ROBLOX (9:16)', Category: 'MASTER', Aspect: '9:16',
+    Hook: 'this is my upcoming game that\'s gonna save roblox',
+    Lines: [
+      [0, 'this is my upcoming game that\'s gonna save roblox'],
+      [6, 'it\'s called Dino Expedition'],
+      [10, 'before you say Prehistoric Farm... ours isn\'t an RPG'],
+      [16, 'it\'s an action adventure + simulator'],
+      [20, 'steal dinosaur eggs,'], [23, 'survive chases,'], [25, 'and fight massive bosses with your friends'],
+      [30, 'we\'re in beta right now'],
+      [34, 'claim your OG ticket - join the Discord and apply to test'],
+    ],
+    Shots: [
+      ['BaseRockIntro', 6],         // this is my upcoming game that's gonna save roblox
+      ['ValleyCrane', 2],           // it's called Dino Expedition
+      ['GateDriveIn', 2],
+      ['RexBumperBite', 4],         // before you say Prehistoric Farm... ours isn't an RPG
+      ['RaptorPackFlank', 2],
+      ['CarnoAmbush', 2],           // it's an action adventure
+      ['HatchSecret', 2, 2],        // + simulator
+      ['EggGrabWake', 3, 1],        // steal dinosaur eggs
+      ['DartPerfect', 2],           // survive chases
+      ['RexRodeo', 2],              // and fight massive bosses
+      ['RexDefeatedV', 3],          // with your friends
+      ['BrachioCrossing', 4],       // we're in beta right now
+      ['BaseRockOutro', 8],         // claim your OG ticket - join the Discord and apply to test
+    ],
   },
   { Id: 'HOOK_3S_REX_BITE', Name: '3s: REX BITES THE BUMPER', Category: 'SHORT HOOKS', Shots: [['RexBumperBite', 4], ['GigaLensBite', 2]] },
   { Id: 'HOOK_3S_BRACHIO_CROSSING', Name: '3s: BRACHIOSAURUS CROSSING', Category: 'SHORT HOOKS', Shots: [['BrachioCrossing', 4], ['BrachioFootfall', 2]] },

@@ -18,8 +18,9 @@
 <body>
 <div id="hud"></div>
 <script type="module">
-// tiktok.html?file=out/tt_<SEQ>.json&from=0&count=12&cols=6&guides=1
-// Renders baked TikTok frames as 16:9 frames. Red = caption band; green = centre safe box.
+// tiktok.html?file=out/tt_<SEQ>.json&from=0&count=12&cols=6&guides=1&aspect=9:16
+// Renders baked TikTok frames as 16:9 frames (aspect=9:16: vertical, the same vertical FOV - what a phone-shaped
+// viewport sees). Red = caption band; green = centre safe box.
 import * as THREE from 'three';
 const q = new URLSearchParams(location.search);
 const data = await (await fetch(q.get('file') + '?v=' + Date.now())).json();
@@ -27,6 +28,7 @@ const from = +(q.get('from') || 0), count = +(q.get('count') || data.frames.leng
 const pick = data.frames.map((_, i) => i).slice(from, from + count);
 const cols = +(q.get('cols') || 6);
 const guides = q.get('guides') !== '0';
+const AR = q.get('aspect') === '9:16' ? 9 / 16 : 16 / 9;
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(innerWidth, innerHeight);
@@ -73,7 +75,7 @@ const groups = pick.map((fi) => {
 });
 const cams = pick.map((fi) => {
   const fr = data.frames[fi];
-  const cam = new THREE.PerspectiveCamera(fr.cam.fov, 16 / 9, 0.2, 3000);
+  const cam = new THREE.PerspectiveCamera(fr.cam.fov, AR, 0.2, 3000);
   cam.position.set(...fr.cam.pos); cam.lookAt(...fr.cam.look); cam.rotateZ((fr.cam.roll || 0) * Math.PI / 180);
   return cam;
 });
@@ -81,16 +83,23 @@ while (innerWidth < 10) await new Promise((r) => setTimeout(r, 100));
 renderer.setSize(innerWidth, innerHeight);
 const rows = Math.ceil(pick.length / cols);
 const W = innerWidth, H = innerHeight;
-const cw = W / cols, ch = Math.min(H / rows, cw * 9 / 16), vw = ch * 16 / 9;
+const cw = W / cols, ch = Math.min(H / rows, cw / AR), vw = ch * AR;
 const hud = document.getElementById('hud');
 let html = '';
 pick.forEach((fi, k) => {
   const x = (k % cols) * cw + (cw - vw) / 2, y = Math.floor(k / cols) * ch;
   const fr = data.frames[fi];
   if (guides) {
-    // 16:9: caption band along the bottom, centre 80% safe box
-    html += `<div class="zone" style="left:${x}px;top:${y + ch * 0.85}px;width:${vw}px;height:${ch * 0.15}px"></div>`;
-    html += `<div class="safe" style="left:${x + vw * 0.1}px;top:${y + ch * 0.06}px;width:${vw * 0.8}px;height:${ch * 0.79}px"></div>`;
+    if (AR < 1) {
+      // 9:16: TikTok's caption + buttons cover the bottom ~20% and the right ~15% (the like / share rail)
+      html += `<div class="zone" style="left:${x}px;top:${y + ch * 0.8}px;width:${vw}px;height:${ch * 0.2}px"></div>`;
+      html += `<div class="zone" style="left:${x + vw * 0.85}px;top:${y + ch * 0.35}px;width:${vw * 0.15}px;height:${ch * 0.45}px"></div>`;
+      html += `<div class="safe" style="left:${x + vw * 0.06}px;top:${y + ch * 0.1}px;width:${vw * 0.79}px;height:${ch * 0.7}px"></div>`;
+    } else {
+      // 16:9: caption band along the bottom, centre 80% safe box
+      html += `<div class="zone" style="left:${x}px;top:${y + ch * 0.85}px;width:${vw}px;height:${ch * 0.15}px"></div>`;
+      html += `<div class="safe" style="left:${x + vw * 0.1}px;top:${y + ch * 0.06}px;width:${vw * 0.8}px;height:${ch * 0.79}px"></div>`;
+    }
   }
   html += `<div class="lab" style="left:${x + 3}px;top:${y + 3}px">#${fi} ${fr.shot}<br>t ${fr.seqT ?? fr.t}s b${fr.seqBeat ?? fr.beat} fov ${fr.cam.fov.toFixed(0)}</div>`;
 });
