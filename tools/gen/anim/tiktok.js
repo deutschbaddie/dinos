@@ -661,6 +661,34 @@ const Sequences = [
       ['MT_IslandHigh', 2], ['MT_Paddock', 4], ['MT_HubAerialEnd', 7],
     ],
   },
+  // 9:16 voice-over: the comment challenge - you on your rock, the Tidebreaker reveal as "what we already have", the
+  // other bosses for "something crazier", the Tyrant King's eyes in the dark for the mystery boss you'll design
+  {
+    Id: 'TIKTOK_12_DESIGN_THE_BOSS', Name: 'YOU DESIGN THE NEXT BOSS (9:16)', Category: 'MASTER', Aspect: '9:16',
+    Hook: 'i\'m letting YOU design the next boss in my roblox game',
+    Lines: [
+      [0, 'i\'m letting YOU design the next boss in my roblox game'],
+      [6, 'we already have THIS...'],
+      [9, '[ the Mosasaurus reveal ]'],
+      [28, 'but i think you can come up with something crazier'],
+      [34, 'comment a dinosaur + its special attack'],
+      [39, 'top comment gets added to Dino Expedition'],
+      [44, 'i\'ll post the result and credit whoever came up with it'],
+    ],
+    Shots: [
+      ['BaseRockIntro', 6],         // i'm letting YOU design the next boss in my roblox game
+      ['TB_Dock', 3, 3],            // we already have THIS...
+      ['TB_Under', 3, 2],           // the Mosasaurus reveal
+      ['TB_Wake', 3, 1],
+      ['TB_Breach', 9],
+      ['TB_Roar', 4, 1],
+      ['SK_Slash', 3, 2],           // but i think you can come up with something crazier
+      ['FF_Roar', 3, 3],
+      ['TK_Behind', 5, 3],          // comment a dinosaur + its special attack (who's in the dark?)
+      ['TK_Roar', 5, 3],            // top comment gets added to Dino Expedition
+      ['BaseRockOutro', 8],         // i'll post the result and credit whoever came up with it
+    ],
+  },
   { Id: 'HOOK_3S_REX_BITE', Name: '3s: REX BITES THE BUMPER', Category: 'SHORT HOOKS', Shots: [['RexBumperBite', 4], ['GigaLensBite', 2]] },
   { Id: 'HOOK_3S_BRACHIO_CROSSING', Name: '3s: BRACHIOSAURUS CROSSING', Category: 'SHORT HOOKS', Shots: [['BrachioCrossing', 4], ['BrachioFootfall', 2]] },
   { Id: 'HOOK_5S_DONT_STEAL', Name: '5s: DON\'T STEAL THE EGG', Category: 'SHORT HOOKS', Shots: [['EggGrabWake', 4], ['RaptorScreechCU', 1], ['RaptorPounceRack', 2], ['DartPerfect', 2]] },
