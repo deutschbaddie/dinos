@@ -446,3 +446,10 @@ Tyrant King ~17 min, Titan ~1.2 h, Tidebreaker ~3.5 h, Scythe King ~7.5 h, Frost
 1. A fresh save: Fern Valley still flows quickly (the meadow, raptors, herd, then the Tyrant King after a short spell on the pad).
 2. Check the boss card's POWER numbers: Tyrant King 3,000, Titan 35,000, Tidebreaker 275,000, Scythe King 1.75M, Frostfang 10M, Dawn King 50M.
 3. Time Gate dials from Spine River on cost more (Spine River 600K, Red Cliffs 5M, Frost Forest 30M, Dawn Desert 175M), and trainer levels from machine 3 up cost 1.5-2.5x.
+
+## 19. The DAILY SPIN window's wheel (2026-10-15)
+Open it from the HUD's SPIN button anywhere (it no longer needs the camp wheel nearby) and from the wheel at camp. Check on a phone, a tablet, a PC and a controller.
+1. A big round wheel: 8 coloured slices with white spokes and pegs, an icon on every slice, a gold rim with 24 lights slowly chasing, a red pointer at the top.
+2. SPIN: the wheel winds back a little, whips round ~6 times with the lights racing and the pointer clicking over every peg, slows into a tense creep past the last few, overshoots a hair and rocks back onto the prize.
+3. The win: that slice flashes, the glow behind the wheel flares in its colour, sparks burst from the pointer, the lights flash, and the prize card lands with the sting.
+4. With a controller the SPIN button is already selected (A spins). Everything scales with the window, so it looks the same on a small phone and a big monitor.
