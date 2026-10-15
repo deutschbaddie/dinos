@@ -1773,7 +1773,11 @@ local function tickBuddies(site, dt: number)
 		if target and td < reach + 4 and now >= b.Next then
 			b.Next = now + role.Every
 			cfg:SetAttribute("State", "Bite")
-			task.delay(0.5, function() if cfg.Parent then cfg:SetAttribute("State", "Follow") end end)
+			-- (back to following only if it's still mid-bite: knocked down in that half second, it stays down - this
+			-- used to stand a downed buddy back up on every screen, with no revive prompt, while it bled out. 2026-10-15)
+			task.delay(0.5, function()
+				if cfg.Parent and cfg:GetAttribute("State") == "Bite" and not b.Downed and not b.Fallen then cfg:SetAttribute("State", "Follow") end
+			end)
 			-- a share of its owner's own launcher damage (see Config.Buddy): a help, never the whole fight
 			local amount = Config.BuddyHit(b.Dino, role, b.Dps, b.Bond)
 			local hit = { target }
