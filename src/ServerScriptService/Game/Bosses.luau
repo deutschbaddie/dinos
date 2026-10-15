@@ -656,7 +656,11 @@ local function denTick(den, dt: number)
 	end
 	if den.Phase == 1 then
 		if not den.Started then
-			if den.StartAt and now >= den.StartAt then den.StartAt = nil beginFight(den)
+			-- (only with someone still in it: a hunter who left in those 4 s used to start it for nobody - a boss frozen
+			-- in its intro for 40 s, the join window cut short. Empty, it waits out its window as usual)
+			if den.StartAt and now >= den.StartAt then
+				den.StartAt = nil
+				if hunters(den) > 0 then beginFight(den) end
 			elseif not den.StartAt and now > (den.Until or 0) then Bosses.Reset(den) end
 			return
 		end
@@ -817,7 +821,8 @@ function Bosses.Start(deps)
 		local profile = Data.Peek(player)
 		if not den or not profile then return { Ok = false } end
 		if (profile.Keys[id] or 0) <= 0 then return { Ok = false, Err = "YOU NEED A BOSS KEY (TAKEDOWNS DROP THEM)" } end
-		if den.Phase ~= 0 then return { Ok = false, Err = "THE BOSS IS ALREADY AWAKE - JOIN IN!" } end
+		-- (not while a camp summon is counting it down either: that one is someone else's)
+		if den.Phase ~= 0 or summoning[id] then return { Ok = false, Err = "THE BOSS IS ALREADY AWAKE - JOIN IN!" } end
 		local best = profile.Bosses[id] and profile.Bosses[id].Best or 0
 		local tier = math.clamp(math.floor(tonumber(args.Tier) or 1), 1, best + 1)
 		profile.Keys[id] -= 1

@@ -215,6 +215,7 @@ end
 
 -- a teammate is in its jaws: the boss throbs red (dart it!) until it lets go
 local heldGlow: Highlight? = nil
+local glowUntil = 0 -- (the grab's own time + a little: a release you were too far to hear never leaves it on)
 local function glowHolder(actor: number?)
 	if heldGlow then heldGlow:Destroy() heldGlow = nil end
 	local c = actor and creatureById(actor)
@@ -236,6 +237,7 @@ local function onGrab(info)
 	end
 	if info.UserId ~= player.UserId then
 		glowHolder(info.Actor)
+		glowUntil = os.clock() + (tonumber(info.Time) or 5.5) + 2
 		return
 	end
 	local char = player.Character
@@ -398,6 +400,7 @@ function SeaFight.Start(expeditionView)
 				struggle.Scale.Scale = 1 + math.abs(math.sin(os.clock() * 9)) * 0.08 + struggle.Kick * 0.18
 			end
 		end
+		if heldGlow and (os.clock() > glowUntil or player:GetAttribute("Site") == nil) then glowHolder(nil) end
 		if heldGlow then
 			if not heldGlow.Parent then heldGlow = nil else heldGlow.FillTransparency = 0.35 + math.abs(math.sin(os.clock() * 8)) * 0.4 end
 		end
