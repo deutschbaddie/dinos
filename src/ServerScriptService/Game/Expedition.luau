@@ -534,9 +534,17 @@ local function joinSite(player: Player, run, site)
 		if riderOf[plr] == run then
 			k += 1
 			-- (beside the rover you drove in with; walked in, beside you - the rover may be parked far off)
-			local root = drove and Vehicles.Root(player) or (player.Character and player.Character:FindFirstChild("HumanoidRootPart") :: BasePart?)
-			local base = root and root.CFrame or CFrame.new(site.Center)
-			Carpool.StepOut(plr, base * CFrame.new((k % 2 == 1 and -1 or 1) * (6 + math.floor((k - 1) / 2) * 3), 2, 4))
+			-- (a checked spot by the rover, never inside a wall: each rider the next free one along)
+			local v = Vehicles.Get(player)
+			local at
+			if drove and v and v.PrimaryPart then
+				at = Vehicles.SafeStand(v, site.Center, nil, k + 1)
+			else
+				local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart") :: BasePart?
+				local base = hrp and hrp.CFrame or CFrame.new(site.Center)
+				at = base * CFrame.new((k % 2 == 1 and -1 or 1) * (4 + math.floor((k - 1) / 2) * 3), 0, 3)
+			end
+			Carpool.StepOut(plr, at)
 			task.delay(0.2, function()
 				if riderOf[plr] ~= run or run.Phase ~= "Site" then return end
 				if site.Boss then Bosses.Join(plr, site) else Encounter.Join(plr, site) end
@@ -1725,7 +1733,83 @@ local function portalTick(run)
 end
 
 --------------------------------------------------------------------------------
+-- the safety net under every site: someone who ended up below the ground there (pushed into a cliff, through a
+-- seam) for a few seconds in a row is lifted back out beside the rover (2026-10-15, tester: stuck underground at
+-- the Scythe King). "Below": well under both the site's ground and the rover's wheels, with something solid
+-- right over their head - so a cave or an overhang at road level never counts.
+local buried = {} :: { [Player]: number }
+local function underground(plr: Player, driver: Player): boolean
+	local char = plr.Character
+	local hrp = char and char:FindFirstChild("HumanoidRootPart") :: BasePart?
+	local hum = char and char:FindFirstChildOfClass("Humanoid")
+	if not (hrp and hum) or hum.SeatPart or hum.Health <= 0 then return false end
+	local site = Encounter.SiteOf(plr) or (Bosses and Bosses.SiteOf and Bosses.SiteOf(plr))
+	local ref = site and site.Center and site.Center.Y or nil
+	local v = Vehicles.Get(driver)
+	if v and v.PrimaryPart then
+		local g = v.PrimaryPart.Position.Y - (v:GetAttribute("RootHeight") or 2.6)
+		ref = ref and math.min(ref, g) or g
+	end
+	if not ref or hrp.Position.Y > ref - 10 then return false end
+	local skip = {} :: { Instance }
+	for _, p in ipairs(Players:GetPlayers()) do if p.Character then table.insert(skip, p.Character) end end
+	local f = Workspace:FindFirstChild("ActiveVehicles")
+	if f then table.insert(skip, f) end
+	local rp = RaycastParams.new()
+	rp.FilterType = Enum.RaycastFilterType.Exclude
+	rp.FilterDescendantsInstances = skip
+	rp.RespectCanCollide = true
+	return Workspace:Raycast(hrp.Position, Vector3.new(0, 120, 0), rp) ~= nil
+end
+local function unbury(plr: Player, driver: Player)
+	local char = plr.Character
+	if not char then return end
+	local v = Vehicles.Get(driver)
+	local site = Encounter.SiteOf(plr) or (Bosses and Bosses.SiteOf and Bosses.SiteOf(plr))
+	local toward = site and site.Center or nil
+	local at
+	if v and v.PrimaryPart then
+		at = Vehicles.SafeStand(v, toward)
+	elseif toward then
+		at = CFrame.new(toward + Vector3.new(0, 5, 0))
+	end
+	if not at then return end
+	warn(`[Expedition] {plr.Name} was under the ground at a site - lifted out`)
+	char:PivotTo(at)
+	local hrp = char:FindFirstChild("HumanoidRootPart") :: BasePart?
+	if hrp then hrp.AssemblyLinearVelocity = Vector3.zero end
+end
+local function checkBuried()
+	local seen = {} :: { [Player]: boolean }
+	local function check(plr: Player, driver: Player)
+		seen[plr] = true
+		if plr:GetAttribute("Site") == nil or not underground(plr, driver) then
+			buried[plr] = nil
+			return
+		end
+		buried[plr] = (buried[plr] or 0) + 1
+		if buried[plr] >= 3 then
+			buried[plr] = nil
+			unbury(plr, driver)
+		end
+	end
+	for plr, run in pairs(runs) do
+		if plr.Parent and run.Phase == "Site" then check(plr, plr) end
+	end
+	for plr, run in pairs(riderOf) do
+		if plr.Parent and runs[run.Player] == run then check(plr, run.Player) end
+	end
+	for plr in pairs(buried) do if not seen[plr] then buried[plr] = nil end end
+end
+
 function Expedition.Start(deps)
+	task.spawn(function()
+		while true do
+			task.wait(1)
+			local ok, err = pcall(checkBuried)
+			if not ok then warn("[Expedition] buried check: " .. tostring(err)) end
+		end
+	end)
 	Data, Net, Vehicles, Plots, Dinos, Quests, Encounter, Bosses = deps.Data, deps.Net, deps.Vehicles, deps.Plots, deps.Dinos, deps.Quests, deps.Encounter, deps.Bosses
 	Net.OnDrive(onDrive)
 	Net.On("Arrived", function(player) return Expedition.Arrived(player) end)

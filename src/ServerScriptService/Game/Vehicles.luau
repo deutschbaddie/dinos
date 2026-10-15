@@ -529,6 +529,65 @@ end
 -- hold: it stays exactly where you got out until you get back in (sites, the boss arena). 2026-10-13: an empty
 -- rover was left unanchored under its driver's physics and drifted / got dragged off while you fought on foot
 -- settle: it was being driven freely right up to now (free roam) - hold it once the server has caught up (holdSoon)
+-- somewhere safe to stand by a rover: open ground about level with its wheels, nothing solid between it and the
+-- rover, room for a person. Preference order: the side toward `toward`, the other side, behind, in front, then the
+-- same a few studs further out. Never inside a cliff (2026-10-15: a rover parked against Thief's Ledge put its
+-- driver out on the wall side - into the rock, and under the map). Last resort: on the roof.
+-- skip: extra things the checks ignore (other characters, the rover itself is always ignored)
+function Vehicles.SafeStand(v: Model, toward: Vector3?, skip: { Instance }?, nth: number?): CFrame
+	local root = v.PrimaryPart :: BasePart
+	local cf = root.CFrame
+	local ignore = { v } :: { Instance }
+	for _, p in ipairs(Players:GetPlayers()) do if p.Character then table.insert(ignore, p.Character) end end
+	for _, x in ipairs(skip or {}) do table.insert(ignore, x) end
+	local f = Workspace:FindFirstChild("ActiveVehicles")
+	if f then table.insert(ignore, f) end
+	local rp = RaycastParams.new()
+	rp.FilterType = Enum.RaycastFilterType.Exclude
+	rp.FilterDescendantsInstances = ignore
+	rp.RespectCanCollide = true
+	rp.IgnoreWater = false
+	local op = OverlapParams.new()
+	op.FilterType = Enum.RaycastFilterType.Exclude
+	op.FilterDescendantsInstances = ignore
+	op.RespectCanCollide = true
+	local groundY = root.Position.Y - (v:GetAttribute("RootHeight") or 2.6)
+	local w = (tonumber(v:GetAttribute("Width")) or 7) / 2 + 3
+	local l = (tonumber(v:GetAttribute("Length")) or 14) / 2 + 3
+	local right, back = cf.RightVector, -cf.LookVector
+	right = Vector3.new(right.X, 0, right.Z).Unit
+	back = Vector3.new(back.X, 0, back.Z).Unit
+	local side = 1
+	if toward and (toward - root.Position):Dot(right) < 0 then side = -1 end
+	local offs = {
+		right * side * w, right * -side * w, back * l, -back * l,
+		right * side * w + back * 4, right * -side * w + back * 4, right * side * w - back * 4, right * -side * w - back * 4,
+	}
+	local found = 0
+	for _, scale in ipairs({ 1, 1.6, 2.4 }) do
+		for _, o in ipairs(offs) do
+			local p = root.Position + o * scale
+			-- (no wall between the rover and the spot, at waist height)
+			local from = Vector3.new(root.Position.X, groundY + 2.5, root.Position.Z)
+			local to = Vector3.new(p.X, groundY + 2.5, p.Z)
+			if Workspace:Raycast(from, to - from, rp) then continue end
+			-- ground under it, about level with the wheels (not a drop, not a ledge)
+			local hit = Workspace:Raycast(Vector3.new(p.X, groundY + 6, p.Z), Vector3.new(0, -14, 0), rp)
+			if not hit or hit.Material == Enum.Material.Water or math.abs(hit.Position.Y - groundY) > 4 then continue end
+			-- room for a person
+			local stand = Vector3.new(p.X, hit.Position.Y + 3, p.Z)
+			if #Workspace:GetPartBoundsInBox(CFrame.new(stand + Vector3.new(0, 0.3, 0)), Vector3.new(2, 4.6, 2), op) > 0 then continue end
+			found += 1
+			if found >= (nth or 1) then
+				local look = toward and Vector3.new(toward.X, stand.Y, toward.Z) or (stand + (stand - root.Position))
+				if (look - stand).Magnitude < 0.1 then look = stand + back end
+				return CFrame.lookAt(stand, look)
+			end
+		end
+	end
+	return CFrame.new(root.Position + Vector3.new(0, (tonumber(v:GetAttribute("Height")) or 6) + 3, 0))
+end
+
 function Vehicles.GetOut(player: Player, toward: Vector3?, hold: boolean?, settle: boolean?): boolean
 	local v = Vehicles.Get(player)
 	local char = player.Character
@@ -553,16 +612,10 @@ function Vehicles.GetOut(player: Player, toward: Vector3?, hold: boolean?, settl
 		settleWheels(v)
 	end
 	if not inSeat then return true end
-	local right = root.CFrame.RightVector
-	local side = 1
-	if toward and (toward - root.Position):Dot(right) < 0 then side = -1 end
-	local w = (v:GetAttribute("Width") or 7) / 2 + 3
-	local p = root.Position + right * side * w
-	local look = toward and Vector3.new(toward.X, p.Y, toward.Z) or (p + right * side)
-	if (look - p).Magnitude < 0.1 then look = p + right * side end
+	local at = Vehicles.SafeStand(v, toward)
 	task.defer(function()
 		setGroup(char, Shore.WALKERS)
-		char:PivotTo(CFrame.lookAt(p, look))
+		char:PivotTo(at)
 	end)
 	return true
 end

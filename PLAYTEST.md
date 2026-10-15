@@ -435,3 +435,7 @@ Settings → ADMIN has two new buttons: **WEATHER** (rolls in the next weather n
 1. Anywhere that isn't your own island (the hub, the ring road, a bridge, someone else's island), press DRIVE: the rover appears right where you stand (the poof), facing your way.
 2. On a bridge, or squeezed against a wall / rail, it turns to fit (along the bridge) or shifts just far enough to fit. It never sends you back to your garage for that.
 3. On your own island, DRIVE still rolls it out of your garage. Swimming in the lagoon also uses the garage (no rover on water).
+
+## 17. Stuck under the map at a site (2026-10-15, untested in Studio)
+1. Red Cliffs → map → THIEF'S LEDGE (or the Scythe King), picked both in the rover and on foot. When you arrive and hop out, you land on open ground beside the rover, never inside the cliff wall. Riders hop out on their own free spots around it.
+2. If someone still gets under the ground at a site (Output: "was under the ground at a site - lifted out"), within ~3 s they're lifted back out beside the rover.
