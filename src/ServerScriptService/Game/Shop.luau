@@ -99,7 +99,7 @@ local function craft(player: Player, what: string, id: string)
 			for i = 1, Config.GadgetSlots do if (g.Gadgets[i] or "") == "" then g.Gadgets[i] = id break end end
 		end
 	end
-	if Quests and info.Craft then Quests.Progress(player, "Craft", { Count = 1 }) end
+	if Quests and info.Craft then Quests.Progress(player, "Craft", { Count = 1, Mats = cost.Mats }) end -- (a story craft quest wants a certain boss part)
 	if what == "Rover" and Vehicles.Get(player) and not Vehicles.CampParked[player] and not Expedition.Get(player) then Vehicles.Spawn(player) end
 	Net.FireAll("Announce", { Text = string.format("%s BUILT THE %s!", string.upper(player.DisplayName), info.Name), Color = "Orange" })
 	return done(player, { Ok = true, Kind = "Craft", What = what, Id = id, Name = info.Name, Perk = info.Perk })

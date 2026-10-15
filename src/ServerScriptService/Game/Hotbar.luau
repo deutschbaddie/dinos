@@ -37,7 +37,7 @@ function Hotbar.Pin(player: Player, id: string, slot: number?)
 	return { Ok = true, Slot = slot }
 end
 
--- a new dino with nowhere else to go: the first free slot (or the last slot if all are taken)
+-- a new dino with nowhere else to go: the first free slot (nil when all six hold dinos: it waits in the bag)
 function Hotbar.AutoPin(profile, id: string): number?
 	local p = pins(profile)
 	for i = 1, Hotbar.SLOTS do

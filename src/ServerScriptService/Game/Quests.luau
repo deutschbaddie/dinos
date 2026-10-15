@@ -27,6 +27,8 @@ local function goalMatches(goal, kind: string, data): boolean
 	if goal.Kind ~= kind then return false end
 	if goal.Site and goal.Site ~= data.Site then return false end
 	if goal.Boss and goal.Boss ~= data.Boss then return false end
+	-- (TITAN FORGED wants Titan scales in the craft: a flare made of Rex claws doesn't count)
+	if goal.Mat and not (typeof(data.Mats) == "table" and (tonumber(data.Mats[goal.Mat]) or 0) > 0) then return false end
 	if goal.Rarity then
 		local need = Config.Rarity[goal.Rarity].Order
 		local got = data.Rarity and Config.Rarity[data.Rarity] and Config.Rarity[data.Rarity].Order or 0

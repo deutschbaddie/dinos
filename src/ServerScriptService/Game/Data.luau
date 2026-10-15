@@ -66,7 +66,9 @@ local function default()
 		Stars = 0,
 		Pity = 0,
 		Index = {}, -- "Species:Rarity" -> true
-		IndexRewards = { Claimed = {}, Title = "", EntriesMigrated = true }, -- the Index's claimed rewards ("Species/10", "Era/FernValley", "Secrets/<era>") + the title you wear (IndexDefs)
+		IndexRewards = { Claimed = {}, Title = "" }, -- the Index's claimed rewards ("Species/10", "Era/FernValley", "Secrets/<era>") + the title you wear (IndexDefs). (No
+		-- EntriesMigrated here: reconcile copied it into old saves before IndexDefs.MigrateEntries could run, so their
+		-- already-paid milestones stayed claimable - 2026-10-15. A new save gets it from MigrateEntries, with 0 entries.)
 		Discover = {}, -- era -> secret id -> true (the Index's SECRETS page, Discover.luau)
 		Showcase = "", -- the dino id on your SHOWCASE pedestal ("" = empty; Showcase.luau)
 		Spin = { NextFree = 0, Extra = 0 }, -- the DAILY SPIN: when the next free spin is ready, bought spins (Spin.luau)

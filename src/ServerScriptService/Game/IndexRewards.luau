@@ -72,7 +72,7 @@ local function claim(player: Player, args)
 		local t = pay.Title and Defs.Titles[pay.Title]
 		Net.FireOthers(player, "Announce", { Text = string.format("%s IS NOW A %s!", string.upper(player.DisplayName), t and t.Name or "DINO EXPERT"), Color = "Blue" })
 	end
-	return { Ok = true, Key = key, Kind = r.Kind, Era = r.Era and r.Era.Id or nil, Luck = pay.Luck, Power = pay.Power, Coins = coins, Title = pay.Title, Gold = pay.Gold }
+	return { Ok = true, Key = key, Kind = r.Kind, Era = r.Era and r.Era.Id or nil, Luck = pay.Luck, Power = pay.Power, Coins = coins, Income = pay.Income, Title = pay.Title, Gold = pay.Gold }
 end
 
 local function wear(player: Player, args)
