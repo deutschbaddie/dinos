@@ -18,6 +18,7 @@ local Config = require(ReplicatedStorage.DinoExpedition.Game.Config)
 local SpinWheel = require(ReplicatedStorage.DinoExpedition.Game.SpinWheel)
 
 local Spin = {}
+local Analytics = require(script.Parent.Analytics)
 local Data, Net, Dinos
 local rng = Random.new()
 local busyUntil = {} :: { [Player]: number }
@@ -65,6 +66,7 @@ local function pay(player: Player, profile, seg): { Text: string, Icon: string, 
 		local c = coinsFor(player, profile, seg)
 		profile.Coins += c
 		profile.Earned += c
+		Analytics.Coins(player, "Source", c, "TimedReward", "DailySpin")
 		text = "+" .. Config.FormatNumber(c) .. " COINS"
 	elseif seg.Kind == "Power" then
 		local got = 0
@@ -85,6 +87,7 @@ local function pay(player: Player, profile, seg): { Text: string, Icon: string, 
 		local c = coinsFor(player, profile, seg)
 		profile.Coins += c
 		profile.Earned += c
+		Analytics.Coins(player, "Source", c, "TimedReward", "DailySpinJackpot")
 		local e = shopEgg(player, profile, seg.Shop or "Epic")
 		local r = e and Config.Rarity[e.Rarity]
 		text = "JACKPOT!  +" .. Config.FormatNumber(c) .. " COINS + " .. (r and r.Name or "EPIC") .. " EGG"

@@ -458,3 +458,11 @@ Open it from the HUD's SPIN button anywhere (it no longer needs the camp wheel n
 1. Spine River, free roam: one of its two wild dinos now turns up in the shallows by a bank (water up to your waist, never deep enough to swim). A wild Sarcosuchus only ever appears there, never on dry land. The other wild one (Spinosaurus / Carnotaurus) stays on land.
 2. Fight it from the bank or wade in: it lunges a few steps up the bank at you but always slides back into the water, and never wanders off over land.
 3. Croc Creek's Sarcosuchus is unchanged: it guards its nest on the bank between the creek and the road (crocs nest on land).
+
+## 21. Analytics funnels (2026-10-15): where to look
+Creator Dashboard → your experience → Analytics. They fill in from live servers (give it a day after publishing).
+- **Funnels → Onboarding:** 1 Joined → 2 FirstDrive → 3 FirstTrip → 4 ArrivedInEra → 5 FirstFight → 6 FirstEgg → 7 FirstTripHome → 8 FirstHatch → 9 FirstTraining → 10 FirstBoss → 11 SecondEra. The biggest drop between two steps is the first thing to fix.
+- **Funnels → Expedition** (every run): Start → Arrived → Fight → Egg → Home, split by era (custom field 1).
+- **Funnels → Purchase** (every Robux prompt): Prompted → Bought, by product / pass id.
+- **Economy → Coins:** sources (Yard, Expedition_<era>, quests, DailySpin, Meteorite, Sightseer) and sinks (Shop items by name, TrainerLevel_N, TimeGate_<era>, Island_*, StarPen).
+- **Progression → Eras:** era opened (start) and boss first beaten (complete).

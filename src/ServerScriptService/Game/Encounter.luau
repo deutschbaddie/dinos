@@ -26,6 +26,7 @@ local Runtime = ReplicatedStorage.DinoExpedition.Runtime
 local ChaserFolder = Runtime:WaitForChild("Chasers")
 
 local Encounter = {}
+local Analytics = require(script.Parent.Analytics)
 local Data, Net, Vehicles, Dinos, Quests, Expedition
 local rng = Random.new()
 local E = Config.Encounter
@@ -459,6 +460,9 @@ function Encounter.Join(player: Player, site)
 	if site.Def and site.Def.Id == "HornNest" and (profile.Stats.Runs or 0) == 0 then site.Players[player].FirstFight = true end
 	site.Count += 1
 	playerSite[player] = site
+	Analytics.Onboard(player, "FirstFight")
+	local okR, run = pcall(function() return expedition().Get(player) end)
+	if okR and run then Analytics.RunStep(player, run, "Fight") end
 	player:SetAttribute("Site", site.Key)
 	player:SetAttribute("Launcher", profile.Gear.Launcher) -- other clients build the right launcher in your hand
 	setHP(site.Players[player], player)

@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.DinoExpedition.Game.Config)
 
 local Shop = {}
+local Analytics = require(script.Parent.Analytics)
 local Data, Net, Plots, Vehicles, Expedition, Quests
 
 local function canPay(profile, cost): (boolean, string?)
@@ -18,8 +19,9 @@ local function canPay(profile, cost): (boolean, string?)
 	return true, nil
 end
 
-local function pay(profile, cost)
+local function pay(profile, cost, sku: string?)
 	profile.Coins -= cost.Coins or 0
+	Analytics.Coins(profile, "Sink", cost.Coins or 0, "Shop", sku)
 	for mat, n in pairs(cost.Mats or {}) do profile.Materials[mat] -= n end
 end
 
@@ -49,7 +51,7 @@ local function levelUp(player: Player, what: string)
 	if free then cost = { Coins = 0 } end
 	local ok, err = canPay(profile, cost)
 	if not ok then return { Ok = false, Err = err } end
-	pay(profile, cost)
+	pay(profile, cost, what .. "Level")
 	g[key] = lvl + 1
 	if free then profile.Flags.FreeUpgradeUsed = true end
 	return done(player, { Ok = true, Kind = "Level", What = what, Level = lvl + 1, Free = free })
@@ -84,7 +86,7 @@ local function craft(player: Player, what: string, id: string)
 	local cost = info.Craft or { Coins = info.Price or 0, Mats = info.Mats }
 	local ok, err = canPay(profile, cost)
 	if not ok then return { Ok = false, Err = err } end
-	pay(profile, cost)
+	pay(profile, cost, what .. "_" .. id)
 	if what == "Plating" then
 		g.Plating = true
 	else
@@ -165,7 +167,7 @@ local function buyBase(player: Player, what: string)
 	end
 	local ok, err = canPay(profile, cost)
 	if not ok then return { Ok = false, Err = err } end
-	pay(profile, cost)
+	pay(profile, cost, what)
 	apply()
 	return done(player, { Ok = true, Kind = "Base", What = what })
 end
@@ -187,7 +189,7 @@ local function islandBuild(player: Player, args)
 		if not nxt then return { Ok = false, Err = "FULLY UPGRADED" } end
 		local ok, err = canPay(profile, nxt.Cost)
 		if not ok then return { Ok = false, Err = err } end
-		pay(profile, nxt.Cost)
+		pay(profile, nxt.Cost, "Island_" .. what)
 		isl[what] = cur + 1
 		-- a faster hatchery speeds up the eggs already in it, too (you see the timers drop right away)
 		if what == "Hatchery" then
@@ -234,7 +236,7 @@ local function islandBuild(player: Player, args)
 			pen = nil
 		end
 		if not pen then
-			pay(profile, penDef.Cost)
+			pay(profile, penDef.Cost, "StarPen")
 			pen = { Species = dino.Species, Dino = "" }
 			isl.Pens[lot] = pen
 			built = true

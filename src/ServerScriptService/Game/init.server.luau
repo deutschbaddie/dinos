@@ -69,6 +69,7 @@ require(script.Showcase).Start(deps) -- DINO NAMES + the SHOWCASE pedestal by yo
 require(script.Spin).Start(deps) -- the DAILY SPIN: a free spin every day + bought spins (prizes in Game/SpinWheel)
 require(script.Weather).Start(deps) -- the server's sky: rain, storms, fog, wind, hail (STORM LUCK in a thunderstorm)
 require(script.Meteors).Start(deps) -- METEOR SHOWERS over Base Camp: meteorites to collect (Game/WorldEvents)
+require(script.Analytics).Start(deps) -- funnels (onboarding, every expedition, purchases), the coin economy, era progression
 require(script.Sightseer).Start(deps) -- the SIGHTSEER in every era: an optional hunt for its sights (never a quest)
 Bosses.OnClear = function(player) Leaderboards.Push(player) end
 
@@ -194,6 +195,7 @@ Net.On("TakeVehicle", function(player, args)
 	-- (riding in someone's rover: out of their seat first - seating you in yours dragged theirs along)
 	if Carpool.IsPassenger(player) then Carpool.Release(player) end
 	local v, mode = Vehicles.TakeVehicle(player, typeof(args.Name) == "string" and args.Name or nil)
+	if v then require(script.Analytics).Onboard(player, "FirstDrive") end
 	return { Ok = v ~= nil, Mode = mode, Err = v == nil and "CAN'T TAKE THAT VEHICLE" or nil }
 end)
 -- the driving client noticed it doesn't own its vehicle's physics: fix it and report what was wrong

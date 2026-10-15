@@ -25,6 +25,7 @@ local Config = require(ReplicatedStorage.DinoExpedition.Game.Config)
 local Defs = require(ReplicatedStorage.DinoExpedition.Game.IndexDefs)
 
 local Sightseer = {}
+local Analytics = require(script.Parent.Analytics)
 local Data, Net, Dinos, Encounter
 
 local PICK = 3 -- leads per hunt
@@ -314,6 +315,7 @@ function Sightseer.Start(deps)
 		r.Sets += 1
 		profile.Coins += coins
 		profile.Earned += coins
+		Analytics.Coins(player, "Source", coins, "Gameplay", "Sightseer")
 		local gained = 0
 		pcall(function()
 			local T = require(script.Parent.Trainer) :: any

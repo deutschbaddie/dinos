@@ -21,6 +21,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.DinoExpedition.Game.Config)
 
 local Trainer = {}
+local Analytics = require(script.Parent.Analytics)
 local Data, Net, Plots, Dinos, Expedition, Shop
 local T = Config.Trainer
 
@@ -162,6 +163,7 @@ local function upgrade(player: Player, paid: boolean?)
 	if free or paid then cost = 0 end
 	if profile.Coins < cost then return { Ok = false, Err = "NOT ENOUGH COINS" } end
 	profile.Coins -= cost
+	Analytics.Coins(player, "Sink", cost, "Shop", "TrainerLevel_" .. nxt)
 	profile.Trainer.Level = nxt
 	if free then profile.Flags.FreeUpgradeUsed = true end
 	local newTier = Config.TrainerTier(nxt) ~= Config.TrainerTier(lvl)
@@ -232,7 +234,10 @@ local function tick()
 			profile.TrainPower += gain
 			local n = (onPad[player] or 0) + 1
 			onPad[player] = n
-			if not player:GetAttribute("Training") then player:SetAttribute("Training", true) end
+			if not player:GetAttribute("Training") then
+				player:SetAttribute("Training", true)
+				Analytics.Onboard(player, "FirstTraining")
+			end
 			Net.Fire(player, "TrainTick", { Gain = gain, TrainPower = profile.TrainPower, Power = powerOf(profile) })
 			setLeaderstat(player, profile)
 			if n % PUSH_EVERY == 0 then Data.Changed(player) end

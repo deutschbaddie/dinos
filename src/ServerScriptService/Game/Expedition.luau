@@ -25,6 +25,7 @@ local Chase = require(script.Parent.Chase)
 local RunsFolder = ReplicatedStorage.DinoExpedition.Runtime.Runs
 
 local Expedition = {}
+local Analytics = require(script.Parent.Analytics)
 local runs = {} :: { [Player]: any }
 local Data, Net, Vehicles, Plots, Dinos, Quests, Encounter, Bosses
 local rng = Random.new()
@@ -438,6 +439,8 @@ function Expedition.Begin(player: Player, zone: string, opts): { Ok: boolean, Er
 		Vehicles.Teleport(player, arrival)
 		Expedition.Arrived(player)
 	end)
+	Analytics.Onboard(player, "FirstTrip")
+	Analytics.RunStep(player, run, "Start")
 	return { Ok = true }
 end
 
@@ -448,6 +451,8 @@ function Expedition.Arrived(player: Player)
 	run.Phase = "Map" -- (free roam: "Map" is you out exploring the era, at the wheel or on foot)
 	Vehicles.Locked[player] = nil -- (hop out anywhere: Vehicles.Roaming holds the rover where you left it)
 	publish(run)
+	Analytics.Onboard(player, "ArrivedInEra")
+	Analytics.RunStep(player, run, "Arrived")
 	return { Ok = true, Site = run.Pending }
 end
 
@@ -1080,6 +1085,8 @@ function Expedition.Extract(run)
 		task.defer(Dinos.AddBond, player, came, Config.Bond.Gain.Home)
 		profile.Coins += coins
 		profile.Earned += coins
+		Analytics.Coins(player, "Source", coins, "Gameplay", "Expedition_" .. tostring(run.Zone))
+		Analytics.RunStep(player, run, "Home")
 		profile.Stats.Runs += 1
 		Quests.Progress(player, "Expedition", { Count = 1 })
 		-- (eggs count for the Eggs quest once they're home, as it says - not when they went on the rack)
@@ -1898,6 +1905,8 @@ function Expedition.Start(deps)
 		profile.Coins -= era.Unlock.Coins
 		profile.Unlocked[era.Id] = true
 		profile.Era = era.Id -- the Time Gate dials straight to the era you just opened
+		Analytics.Coins(player, "Sink", era.Unlock.Coins, "Shop", "TimeGate_" .. era.Id)
+		Analytics.EraOpened(player, era.Id)
 		Data.Changed(player)
 		Net.FireAll("Announce", { Text = string.upper(player.DisplayName) .. " OPENED " .. era.Name .. "!", Color = "Gold" })
 		return { Ok = true }

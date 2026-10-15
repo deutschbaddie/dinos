@@ -20,6 +20,7 @@ local Config = require(ReplicatedStorage.DinoExpedition.Game.Config)
 local WorldEvents = require(ReplicatedStorage.DinoExpedition.Game.WorldEvents)
 
 local Meteors = {}
+local Analytics = require(script.Parent.Analytics)
 local M = WorldEvents.Meteor
 local Data, Net, Dinos, Plots, Expedition
 local Shared = ReplicatedStorage:WaitForChild("DinoExpedition")
@@ -248,6 +249,7 @@ local function collect(player: Player, id: string)
 	if out.Coins > 0 then
 		profile.Coins += out.Coins
 		profile.Earned += out.Coins
+		Analytics.Coins(player, "Source", out.Coins, "Gameplay", r.Star and "StarMeteorite" or "Meteorite")
 	end
 	profile.Stats.Meteors = (tonumber(profile.Stats.Meteors) or 0) + 1
 	Data.Changed(player)

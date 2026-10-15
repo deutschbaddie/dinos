@@ -12,6 +12,7 @@ local Workspace = game:GetService("Workspace")
 local Config = require(ReplicatedStorage.DinoExpedition.Game.Config)
 
 local Plots = {}
+local Analytics = require(script.Parent.Analytics)
 local Data, Net, Dinos
 local plotOf = {} :: { [Player]: Model }
 local owners = {} :: { [Model]: Player }
@@ -148,6 +149,7 @@ function Plots.Collect(player: Player)
 	profile.Pending -= amount
 	profile.Coins += amount
 	profile.Earned += amount
+	Analytics.Coins(player, "Source", amount, "Gameplay", "Yard")
 	Net.Fire(player, "Collected", { Amount = amount })
 	Plots.Sync(player)
 	Data.Changed(player)

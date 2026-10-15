@@ -13,6 +13,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.DinoExpedition.Game.Config)
 
 local Quests = {}
+local Analytics = require(script.Parent.Analytics)
 local Data, Net, Dinos
 
 local CHAT = {
@@ -178,6 +179,7 @@ function Quests.TurnIn(player: Player, npc: string)
 			end
 			profile.Coins += coins
 			profile.Earned += coins
+			Analytics.Coins(player, "Source", coins, q.Story and "Onboarding" or "Gameplay", q.Story and "StoryQuest" or "SideQuest")
 			if q.Story then
 				profile.Quests.Story += 1
 			elseif q.Index then
@@ -193,6 +195,7 @@ end
 function Quests.Progress(player: Player, kind: string, data)
 	local profile = Data.Peek(player)
 	if not profile then return end
+	Analytics.OnProgress(player, kind, data) -- (the funnels read hatches, eggs, trips home and bosses from here)
 	local changed = false
 	for _, q in ipairs(profile.Quests.Active) do
 		if (q.Progress or 0) < q.Goal.Count and goalMatches(q.Goal, kind, data or {}) then
