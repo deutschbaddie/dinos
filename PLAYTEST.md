@@ -453,3 +453,8 @@ Open it from the HUD's SPIN button anywhere (it no longer needs the camp wheel n
 2. SPIN: the wheel winds back a little, whips round ~6 times with the lights racing and the pointer clicking over every peg, slows into a tense creep past the last few, overshoots a hair and rocks back onto the prize.
 3. The win: that slice flashes, the glow behind the wheel flares in its colour, sparks burst from the pointer, the lights flash, and the prize card lands with the sting.
 4. With a controller the SPIN button is already selected (A spins). Everything scales with the window, so it looks the same on a small phone and a big monitor.
+
+## 20. Water dinos stay in water (2026-10-15)
+1. Spine River, free roam: one of its two wild dinos now turns up in the shallows by a bank (water up to your waist, never deep enough to swim). A wild Sarcosuchus only ever appears there, never on dry land. The other wild one (Spinosaurus / Carnotaurus) stays on land.
+2. Fight it from the bank or wade in: it lunges a few steps up the bank at you but always slides back into the water, and never wanders off over land.
+3. Croc Creek's Sarcosuchus is unchanged: it guards its nest on the bank between the creek and the road (crocs nest on land).

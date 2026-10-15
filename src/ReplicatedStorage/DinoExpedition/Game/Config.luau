@@ -109,10 +109,11 @@ Config.Species = {
 	Spinosaurus = { Name = "SPINOSAURUS", Era = "SpineRiver", Income = 40, KG = { 150, 800 }, Color = Color3.fromRGB(31, 111, 115) },
 	TyrannosaurusRex = { Name = "T. REX", Era = "FernValley", Income = 12, Boss = true, KG = { 200, 1100 }, Color = Color3.fromRGB(74, 138, 60) },
 	Giganotosaurus = { Name = "GIGANOTOSAURUS", Era = "GiantPlains", Income = 45, Boss = true, KG = { 220, 1200 }, Color = Color3.fromRGB(58, 58, 68) },
-	Mosasaurus = { Name = "MOSASAURUS", Era = "SpineRiver", Income = 130, Boss = true, KG = { 150, 900 }, Color = Color3.fromRGB(42, 90, 168) },
+	Mosasaurus = { Name = "MOSASAURUS", Era = "SpineRiver", Income = 130, Boss = true, KG = { 150, 900 }, Color = Color3.fromRGB(42, 90, 168), Habitat = "Water" },
 	PrimalRex = { Name = "PRIMAL REX", Era = "TheLab", Income = 500, KG = { 500, 3000 }, Color = Color3.fromRGB(232, 226, 212) },
 	-- 2026-10-12 roster expansion
-	Sarcosuchus = { Name = "SARCOSUCHUS", Era = "SpineRiver", Income = 55, KG = { 180, 950 }, Color = Color3.fromRGB(94, 111, 46) },
+	-- (Habitat = "Water": a wild one turns up in the shallows and never leaves the water - just a lunge onto the bank)
+	Sarcosuchus = { Name = "SARCOSUCHUS", Era = "SpineRiver", Income = 55, KG = { 180, 950 }, Color = Color3.fromRGB(94, 111, 46), Habitat = "Water" },
 	Oviraptor = { Name = "OVIRAPTOR", Era = "RedCliffs", Income = 70, KG = { 15, 70 }, Color = Color3.fromRGB(42, 143, 163) },
 	Protoceratops = { Name = "PROTOCERATOPS", Era = "RedCliffs", Income = 60, KG = { 90, 420 }, Color = Color3.fromRGB(217, 173, 114) },
 	Gallimimus = { Name = "GALLIMIMUS", Era = "RedCliffs", Income = 90, KG = { 120, 480 }, Color = Color3.fromRGB(112, 146, 196) },

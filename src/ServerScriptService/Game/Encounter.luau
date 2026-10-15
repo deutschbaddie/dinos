@@ -81,6 +81,17 @@ local function groundY(site, p: Vector3, fallback: number): number
 	return fallback
 end
 
+-- is there water over this spot (the terrain's water: rivers, lakes, the sea)
+local waterParams = RaycastParams.new()
+waterParams.FilterType = Enum.RaycastFilterType.Include
+waterParams.FilterDescendantsInstances = { Workspace.Terrain }
+waterParams.IgnoreWater = false
+local function inWater(p: Vector3): boolean
+	local hit = Workspace:Raycast(Vector3.new(p.X, p.Y + 25, p.Z), Vector3.new(0, -32, 0), waterParams)
+	return hit ~= nil and hit.Material == Enum.Material.Water
+end
+Encounter.InWater = inWater
+
 local function hrpOf(player: Player): BasePart?
 	local c = player.Character
 	return c and c:FindFirstChild("HumanoidRootPart") :: BasePart?
@@ -162,7 +173,10 @@ local function newActor(site, species: string, pos: Vector3, opts)
 	nextActor += 1
 	local stats = Config.Combat[species]
 	local calm = (opts.Calm or stats.Calm) * (site.CalmMult or 1)
+	local sp = Config.Species[species]
 	local a = {
+		-- (a water dino that starts in the water stays in it: moveActor. 2026-10-15)
+		Water = sp ~= nil and sp.Habitat == "Water" and inWater(pos),
 		Id = nextActor, Species = species, Pos = pos, Yaw = opts.Yaw or 0, State = opts.State or "Idle", T = 0, Aware = 0,
 		Calm = 0, CalmMax = calm, Speed = (opts.Speed or stats.Speed), Stats = stats, Home = pos,
 		NextAttack = os.clock() + rng:NextNumber(1.2, 2.4), Minion = opts.Minion, Boss = opts.Boss, Lead = opts.Lead,
@@ -821,6 +835,12 @@ local function moveActor(site, a, toward: Vector3, speed: number, dt: number)
 	if fromC.Magnitude > site.Radius then np = site.Center + fromC.Unit * site.Radius + Vector3.new(0, np.Y - site.Center.Y, 0) end
 	np = keepClear(site, a, np, myR)
 	np = Vector3.new(np.X, groundY(site, np, site.Center.Y), np.Z)
+	-- a water dino keeps to the water: it can lunge a few steps up the bank at you, never wander off over land
+	if a.Water and not inWater(np) and not inWater(np - dir * 6) then
+		a.Vel = 0
+		a.Yaw = yawOf(d)
+		return
+	end
 	a.Pos = np
 	a.Yaw = yawOf(d)
 end

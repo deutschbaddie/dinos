@@ -45,11 +45,17 @@ local function rollGlow(): (string?, string)
 	return nil, "WILD"
 end
 
-local function speciesPool(era): { string }
+-- the era's species a wild one can be. water = the ones that live in the water (Config.Species Habitat), else the
+-- land ones (2026-10-15, user: "a wild sarcosuchus spawned but it wasn't in water")
+local function isWater(species: string): boolean
+	local sp = Config.Species[species]
+	return sp ~= nil and sp.Habitat == "Water"
+end
+local function speciesPool(era, water: boolean?): { string }
 	local seen, out = {}, {}
 	for _, def in ipairs(era.Sites or {}) do
 		local c = Config.Combat[def.Species]
-		if c and (c.Calm or 0) >= 100 and def.Kind ~= "Swarm" and def.Kind ~= "Flyer" and not seen[def.Species] then
+		if c and (c.Calm or 0) >= 100 and def.Kind ~= "Swarm" and def.Kind ~= "Flyer" and not seen[def.Species] and isWater(def.Species) == (water == true) then
 			seen[def.Species] = true
 			table.insert(out, def.Species)
 		end
@@ -106,6 +112,58 @@ local function pickSpot(eraId: string, minRoad: number): Vector3?
 	end
 	return nil
 end
+-- shallows: water 1.2-3 studs deep (you wade in up to your waist, never swim), a dry bank within reach to fight from,
+-- well away from the road, the nests and everything else placed
+local function pickWaterSpot(eraId: string): Vector3?
+	local zm = Workspace:FindFirstChild(eraId)
+	local route = RouteMath.get(eraId)
+	if not (zm and zm:IsA("Model") and route) then return nil end
+	local floors = {}
+	for _, c in ipairs(zm:GetChildren()) do if FLOOR_NAMES[c.Name] then table.insert(floors, c) end end
+	if #floors == 0 then return nil end
+	local groundRay = RaycastParams.new()
+	groundRay.FilterType = Enum.RaycastFilterType.Include
+	groundRay.FilterDescendantsInstances = floors
+	local cf, size = zm:GetBoundingBox()
+	local top = cf.Y + size.Y / 2 + 40
+	local function depthAt(x: number, z: number): (number?, Vector3?)
+		local g = Workspace:Raycast(Vector3.new(x, top, z), Vector3.new(0, -(size.Y + 120), 0), groundRay)
+		if not g then return nil, nil end
+		local wet = Encounter.InWater(g.Position)
+		if not wet then return 0, g.Position end
+		-- (how deep: the water's surface over the ground)
+		local wp = RaycastParams.new()
+		wp.FilterType = Enum.RaycastFilterType.Include
+		wp.FilterDescendantsInstances = { Workspace.Terrain }
+		wp.IgnoreWater = false
+		local s = Workspace:Raycast(g.Position + Vector3.new(0, 25, 0), Vector3.new(0, -26, 0), wp)
+		return s and math.max(0, s.Position.Y - g.Position.Y) or 0, g.Position
+	end
+	for _ = 1, 160 do
+		local x = cf.X + rng:NextNumber(-0.45, 0.45) * size.X
+		local z = cf.Z + rng:NextNumber(-0.45, 0.45) * size.Z
+		local dep, p = depthAt(x, z)
+		if not (dep and p) or dep < 1.2 or dep > 3 then continue end
+		-- a dry bank close by (somewhere to stand and dart it from)
+		local bank = false
+		for k = 0, 7 do
+			local a = k / 8 * math.pi * 2
+			local d2 = depthAt(x + math.cos(a) * 14, z + math.sin(a) * 14)
+			if d2 == 0 then bank = true break end
+		end
+		if not bank then continue end
+		local _, _, dRoad = route:Project(1, p)
+		if dRoad < 35 then continue end
+		local ok = true
+		for _, s in ipairs(Encounter.Sites(eraId)) do
+			if s.Center and not (s.Def and s.Def.Wild) and flat(p, s.Center) < 90 then ok = false break end
+		end
+		for _, q in ipairs(taken[eraId] or {}) do if flat(p, q) < 80 then ok = false end end
+		if ok then return p end
+	end
+	return nil
+end
+
 -- a marked hiding place (RoamSpots/<kind> in the era map) that's free: not in use, and for a wild dino well clear
 -- of the era's own sites. Tried in a random order, so it turns up somewhere different each time.
 local function pickMarked(eraId: string, kind: string, clearOfSites: boolean): Vector3?
@@ -158,6 +216,35 @@ local function dressWild(site, pool: { string })
 end
 
 local function spawnWild(era, i: number, pool: { string })
+	-- (the second wild one in an era with water dinos lives in the shallows, if it can find some)
+	local waterPool = speciesPool(era, true)
+	if i == WILD_PER_ERA and #waterPool > 0 then
+		local wp = pickWaterSpot(era.Id)
+		if wp then
+			pool = waterPool
+			claim(era.Id, wp)
+			local def = { Id = "Wild" .. i, Name = "WILD", Species = pool[1], Kind = "Brute", Count = 1, Wild = true }
+			local site = Encounter.MakeSite(era.Id, def, wp)
+			dressWild(site, pool)
+			site.OnKO = function(s)
+				if WildLife.OnWildCalm then
+					local ok, err = pcall(WildLife.OnWildCalm, s)
+					if not ok then warn("[WildLife] OnWildCalm:", err) end
+				end
+			end
+			site.OnRearm = function(s)
+				local was = s.Center
+				local q = pickWaterSpot(era.Id)
+				if q then
+					release(era.Id, was)
+					claim(era.Id, q)
+					Encounter.MoveSite(s, q)
+				end
+				dressWild(s, pool)
+			end
+			return
+		end
+	end
 	local p = pickMarked(era.Id, "WildSpot", true) or pickSpot(era.Id, 45)
 	if not p then
 		task.delay(120, function() -- (same as a stash: try again rather than lose it)
