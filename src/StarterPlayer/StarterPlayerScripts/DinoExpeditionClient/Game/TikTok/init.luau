@@ -12,6 +12,8 @@
 	A 9:16 sequence (Aspect) shows the vertical frame instead: G dims what a phone crop cuts (set Studio's device
 	emulator to a 9:16 screen, e.g. 1080 x 1920, and the whole view is the frame). A sequence's Lines (its voice-over
 	script, by beat) show in the caption preview as they come up, so you can read along while you record.
+	A sequence's Overlay (a word, e.g. the map tour's "SOON.") is held big in the middle of the whole take, its fill a
+	shifting holographic gradient that changes look on every cut; T hides it (record clean and add your own in the edit).
 	A shot baked OnPlot (Plot = the island it was staged on) plays on the island YOU own: the whole shot - actors,
 	camera, effects - is moved by the turn between the two islands (they're the same island, rotated round the hub).
 
@@ -135,6 +137,32 @@ local function buildUi()
 	-- caption preview: where the editor's text goes (never baked into the footage)
 	ui.Caption = Kit.Text(gui, "", { Size = UDim2.fromScale(0.7, 0.07), Position = UDim2.fromScale(0.5, 0.9), AnchorPoint = Vector2.new(0.5, 0.5), Color = Color3.new(1, 1, 1), Stroke = 4, Shadow = 0, ZIndex = 31, MaxSize = 44 })
 	ui.Caption.Visible = false
+	-- the sequence's Overlay word (the map tour's "SOON."): a drop shadow and the word, filled with a moving gradient
+	local ov = Instance.new("TextLabel")
+	ov.Name = "Overlay"
+	ov.BackgroundTransparency = 1
+	ov.AnchorPoint = Vector2.new(0.5, 0.5)
+	ov.Font = Enum.Font.GothamBlack
+	ov.TextScaled = true
+	ov.TextColor3 = Color3.new(1, 1, 1)
+	ov.Text = ""
+	ov.ZIndex = 36
+	ov.Visible = false
+	local shade = ov:Clone()
+	shade.Name = "OverlayShade"
+	shade.TextColor3 = Color3.new(0, 0, 0)
+	shade.TextTransparency = 0.7
+	shade.ZIndex = 35
+	shade.Parent = gui
+	ov.Parent = gui
+	local stroke = Instance.new("UIStroke")
+	stroke.Color = Color3.fromRGB(20, 16, 60)
+	stroke.Transparency = 0.65
+	stroke.Thickness = 1.5
+	stroke.Parent = ov
+	local grad = Instance.new("UIGradient")
+	grad.Parent = ov
+	ui.Overlay, ui.OverlayShade, ui.OverlayGrad = ov, shade, grad
 	Fx.Init(gui)
 	-- in-game cutscenes (boss reveals): hold to skip
 	local skip = frame(gui, { Name = "Skip", BackgroundColor3 = Color3.fromRGB(10, 12, 18), BackgroundTransparency = 0.35, AnchorPoint = Vector2.new(1, 0), Position = UDim2.new(1, -16, 0.075, 12), Size = UDim2.fromOffset(190, 40), ZIndex = 52, Visible = false })
@@ -153,8 +181,18 @@ local function showGuides()
 	ui.Guides.Visible = on and not ui.Tall
 	ui.Guides916.Visible = on and ui.Tall
 end
+local function placeOverlay()
+	local host = ui.Tall and ui.Col or ui.Gui
+	local size = ui.Tall and UDim2.fromScale(0.9, 0.16) or UDim2.fromScale(0.6, 0.27)
+	for i, l in ipairs({ ui.Overlay, ui.OverlayShade }) do
+		l.Parent = host
+		l.Size = size
+		l.Position = i == 1 and UDim2.fromScale(0.5, 0.5) or UDim2.new(0.5, 4, 0.5, 5)
+	end
+end
 local function setAspect(aspect: string?)
 	ui.Tall = aspect == "9:16"
+	placeOverlay()
 	if ui.Tall then
 		ui.Caption.Parent = ui.Col
 		ui.Caption.Size = UDim2.fromScale(0.86, 0.07)
@@ -164,8 +202,30 @@ local function setAspect(aspect: string?)
 		ui.Caption.Size = UDim2.fromScale(0.7, 0.07)
 		ui.Caption.Position = UDim2.fromScale(0.5, 0.9)
 	end
-	ui.Line3.Text = (ui.Tall and "9:16  " or "") .. "SPACE pause  ←/→ shot  [ ] beat  R restart  H hide  G guides  C captions  X stop"
+	ui.Line3.Text = (ui.Tall and "9:16  " or "") .. "SPACE pause  ←/→ shot  [ ] beat  R restart  H hide  G guides  C captions  T title  X stop"
 	showGuides()
+end
+
+-- the Overlay word's holographic fills: one per cut, in turn (the "footage in the letters" look: blue / violet /
+-- pink / cyan / white), each drifting across the letters while it's up
+local HOLO = {
+	{ Color3.fromRGB(60, 120, 255), Color3.fromRGB(150, 90, 255), Color3.fromRGB(255, 150, 230), Color3.fromRGB(110, 200, 255) },
+	{ Color3.fromRGB(120, 230, 255), Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 170, 255), Color3.fromRGB(150, 210, 255) },
+	{ Color3.fromRGB(40, 70, 200), Color3.fromRGB(110, 190, 255), Color3.fromRGB(255, 255, 255), Color3.fromRGB(80, 120, 240) },
+	{ Color3.fromRGB(255, 120, 200), Color3.fromRGB(255, 255, 255), Color3.fromRGB(140, 220, 255), Color3.fromRGB(230, 160, 255) },
+	{ Color3.fromRGB(120, 60, 220), Color3.fromRGB(70, 140, 255), Color3.fromRGB(150, 255, 220), Color3.fromRGB(160, 110, 255) },
+}
+local function overlayLook(i: number)
+	local cols = HOLO[(i - 1) % #HOLO + 1]
+	local keys = {}
+	for k, c in ipairs(cols) do table.insert(keys, ColorSequenceKeypoint.new((k - 1) / (#cols - 1), c)) end
+	ui.OverlayGrad.Color = ColorSequence.new(keys)
+	ui.OverlayRot = (i * 67) % 360
+end
+local function overlayStep(clock: number)
+	if not ui.Overlay.Visible then return end
+	ui.OverlayGrad.Rotation = (ui.OverlayRot or 0) + math.sin(clock * 0.9) * 20
+	ui.OverlayGrad.Offset = Vector2.new(math.sin(clock * 2.3) * 0.35, math.cos(clock * 1.7) * 0.2)
 end
 
 local function flash(a: number)
@@ -749,6 +809,7 @@ local function enterShot(idx: number, localT: number)
 		end
 	end
 	uiOn(rt)
+	if st.OverlayOn then overlayLook(idx) end
 	st.Cur = { Destroy = function() destroyShot(rt) end, Rt = rt, Index = idx }
 	st.Shot = idx
 	-- build the next shot now, off the cut, so the next cut doesn't hitch
@@ -853,6 +914,7 @@ local function stepFrame(dt: number)
 		for _, m in ipairs(st.HideExtra or {}) do hideTree(m) end
 	end
 	updateLine()
+	overlayStep(st.Clock)
 	-- keep the cutscene token alive past Cinema's 40 s safety release
 	if os.clock() - st.TokenAt > 25 then
 		local fresh = Cinema.Begin("DinoTikTokUI")
@@ -873,7 +935,7 @@ end
 
 local KEYS = {
 	Enum.KeyCode.Space, Enum.KeyCode.Left, Enum.KeyCode.Right, Enum.KeyCode.LeftBracket, Enum.KeyCode.RightBracket,
-	Enum.KeyCode.R, Enum.KeyCode.H, Enum.KeyCode.G, Enum.KeyCode.C, Enum.KeyCode.X, Enum.KeyCode.Backspace,
+	Enum.KeyCode.R, Enum.KeyCode.H, Enum.KeyCode.G, Enum.KeyCode.C, Enum.KeyCode.T, Enum.KeyCode.X, Enum.KeyCode.Backspace,
 	Enum.KeyCode.W, Enum.KeyCode.A, Enum.KeyCode.S, Enum.KeyCode.D,
 }
 local function onKey(_, state, input)
@@ -903,6 +965,11 @@ local function onKey(_, state, input)
 		showGuides()
 	elseif k == Enum.KeyCode.C then
 		ui.Caption.Visible = not ui.Caption.Visible
+	elseif k == Enum.KeyCode.T then
+		-- the Overlay word on / off (only a sequence with one has it)
+		local on = st.OverlayOn == true and not ui.Overlay.Visible
+		ui.Overlay.Visible = on
+		ui.OverlayShade.Visible = on
 	elseif k == Enum.KeyCode.X or k == Enum.KeyCode.Backspace then
 		TikTok.Stop()
 	end
@@ -1004,6 +1071,12 @@ function TikTok.PlaySequence(seq, opts)
 	Kit.SetText(ui.Caption, string.upper(seq.Hook ~= "" and seq.Hook or "your caption here"))
 	setAspect(seq.Aspect)
 	updateLine()
+	st.OverlayOn = typeof(seq.Overlay) == "string" and seq.Overlay ~= ""
+	ui.Overlay.Text = st.OverlayOn and seq.Overlay or ""
+	ui.OverlayShade.Text = ui.Overlay.Text
+	ui.Overlay.Visible = st.OverlayOn
+	ui.OverlayShade.Visible = st.OverlayOn
+	overlayLook(1)
 	if st.Cutscene then
 		skipConn = RunService.RenderStepped:Connect(skipStep)
 	else
@@ -1086,6 +1159,8 @@ function TikTok.Stop()
 	try("overlay", function()
 		ui.Gui.Enabled = false
 		ui.Black.Visible = false
+		ui.Overlay.Visible = false
+		ui.OverlayShade.Visible = false
 	end)
 	try("grade", gradeOff)
 	try("world", function()

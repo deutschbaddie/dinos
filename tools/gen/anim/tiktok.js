@@ -25,6 +25,13 @@ const rackEgg = (id, sp, rarity, rv, slot) => ({ Id: id, Egg: sp, Rarity: rarity
 const of = (Of, At) => ({ Of, At });
 const part = (Of, Part, Off) => ({ Of, Part, Off });
 const score = (Stop, Wow, Motion, Read, Novel, Phone) => ({ Stop, Wow, Motion, Read, Novel, Phone });
+// map tour beauty shots: a slow drift (From -> To, looking at Look) past one place, no cast unless extra.Actors
+const tour = (At, From, To, Look, Fov, Note, extra = {}) => {
+  const { Ease = 'linear', ...rest } = extra;
+  return Object.assign({ Zone: 'BaseCamp', At, Beats: B4, Subject: [], Note, Actors: [], Cam: { From, To, Look, Fov, Ease, Hand: 0.25 }, Score: score(6, 3, 6, 9, 8, 8) }, rest);
+};
+const HUB = { Point: [600, 1.25, 0], Air: true, Face: [0, 0, -1] };
+const ISLE = { Marker: 'PlotCenter', Air: true };
 
 const Shots = {
   // ============================================================== CHASES (the rover autopilots, you're the gunner)
@@ -514,6 +521,38 @@ const Shots = {
     ], Hand: 0.4 },
     Score: score(7, 8, 7, 9, 8, 9),
   },
+
+  // ============================================================== MAP TOUR (TIKTOK_11): the empty map, landmark by landmark
+  // a slow drift past each place, cut fast. HUB: plaza-centred frame, coordinates = world offset from (600, 1.25, 0).
+  // ISLE: your island (OnPlot), PlotCenter's frame: x across (+x is the left seen from the bridge), z from the island's
+  // centre (-120 = the front shore where the bridge lands, +120 the back shore); the island plan is
+  // tools/gen/islandLayout.js PLAN with 120 off its z.
+  MT_HubAerial: tour(HUB, [40, 229, -330], [10, 219, -300], [0, -1, 60], [50, 48], 'Opening: high over the Time Gate, the whole hub and the islands round it, letterboxed.',
+    { Cues: [[0, 'Bars', 0.3, 0]] }),
+  MT_HubAerialEnd: tour(HUB, [10, 219, -300], [40, 244, -345], [0, -1, 60], [48, 50], 'Ending: back over the whole map, pulling away, letterboxed.',
+    { Beats: 6, Ease: 'out', Cues: [[0, 'Bars', 0.3, 0]] }),
+  MT_Fountain: tour(HUB, [20, 4, -16], [14, 4, -20], [0, 8, 0], [58, 56], 'The plaza fountain and the hologram egg.'),
+  MT_HQTower: tour(HUB, [-28, 3, 10], [-24, 3.5, 4], [0, 22, 35], [64, 62], 'Low, looking up the HQ tower.'),
+  MT_HatchStage: tour(HUB, [-8, 6, -16], [-12, 6, -20], [-35, 6, 5], [58, 56], 'The hatch stage.'),
+  MT_MotorPool: tour(HUB, [20, 4, 30], [24, 4.5, 34], [45, 8, 10], [60, 58], 'The motor pool.'),
+  MT_TimeGate: tour(HUB, [-10, 6, -92], [-4, 7, -104], [0, 22, -149], [66, 62], 'Pushing in on the Time Gate.'),
+  MT_Bridge: tour(ISLE, [6, 12, -215], [4, 12, -190], [0, 10, -100], [60, 58], 'Down the bridge toward your island and its gate.', { OnPlot: true }),
+  MT_NameGate: tour(ISLE, [-10, 6, -142], [-6, 6.5, -134], [0, 11, -100], [58, 56], 'Your island\'s name gate.', { OnPlot: true }),
+  MT_Garage: tour(ISLE, [8, 5, -88], [10, 5.5, -68], [44, 8, -77], [60, 58], 'Your garage, from the drive.', { OnPlot: true }),
+  MT_Lodge: tour(ISLE, [-10, 5, -92], [-14, 5.5, -66], [-49, 7, -77], [60, 58], 'Your lodge.', { OnPlot: true }),
+  MT_Hatchery: tour(ISLE, [-22, 5, -66], [-14, 6, -69], [0, 7, -31], [62, 60], 'The hatchery shed from the front corner.', { OnPlot: true }),
+  MT_HatcheryInside: tour(ISLE, [-20, 7, -38], [-8, 7, -40], [10, 2, -24], [66, 64], 'Inside the hatchery, along the nests.', { OnPlot: true }),
+  MT_IslandHigh: tour(ISLE, [74, 48, -66], [64, 50, -52], [-40, 0, -30], [56, 54], 'High over the hatchery roof toward the trophy hall and the lodge.', { OnPlot: true }),
+  // the paddock (paddock-local + 53 on z): your dinos roaming, the rock hill behind them
+  MT_Paddock: tour(ISLE, [-20, 22, -8], [-10, 20, 2], [10, 2, 60], [58, 56], 'Over the hatchery roof into the paddock: dinos roaming, the rock hill behind.', {
+    OnPlot: true, Subject: ['br'],
+    Actors: [
+      dino('br', 'Brachiosaurus', { Path: [[-5, 53], [10, 47]], Beats: 4 }, { Loco: 'Walk' }),
+      dino('rex', 'TyrannosaurusRex', { Path: [[20, 63], [28, 69]], Beats: 4 }, { Loco: 'Walk' }),
+      dino('tri', 'Triceratops', { Spot: [-30, 43], Face: [-10, 30] }),
+      dino('para', 'Parasaurolophus', { Path: [[5, 73], [12, 79]], Beats: 4 }, { Loco: 'Walk' }),
+      dino('r1', 'Velociraptor', { Path: [[-10, 68], [5, 61]], Beats: 4 }, { Loco: 'Run' }),
+    ] }),
 };
 
 // ---------------------------------------------------------------- sequences (shot, beats)
@@ -609,6 +648,17 @@ const Sequences = [
       ['RexDefeatedV', 3],          // with your friends
       ['BrachioCrossing', 4],       // we're in beta right now
       ['BaseRockOutro', 8],         // claim your OG ticket - join the Discord and apply to test
+    ],
+  },
+  // the map tour, cut like the "SOON." teasers: a beauty shot of every landmark at 160 BPM (a cut every 0.375 s), the
+  // overlay word held over the whole thing, letterboxed aerials at either end
+  {
+    Id: 'TIKTOK_11_MAP_TOUR', Name: 'MAP TOUR: SOON.', Category: 'MASTER', BPM: 160, Overlay: 'SOON.',
+    Hook: 'the map is almost ready',
+    Shots: [
+      ['MT_HubAerial', 2], ['MT_Fountain', 2], ['MT_HQTower', 1], ['MT_HatchStage', 1], ['MT_MotorPool', 1], ['MT_TimeGate', 3],
+      ['MT_Bridge', 1], ['MT_NameGate', 1], ['MT_Garage', 2], ['MT_Lodge', 1], ['MT_Hatchery', 2], ['MT_HatcheryInside', 2],
+      ['MT_IslandHigh', 2], ['MT_Paddock', 4], ['MT_HubAerialEnd', 7],
     ],
   },
   { Id: 'HOOK_3S_REX_BITE', Name: '3s: REX BITES THE BUMPER', Category: 'SHORT HOOKS', Shots: [['RexBumperBite', 4], ['GigaLensBite', 2]] },

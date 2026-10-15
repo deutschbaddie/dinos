@@ -6,6 +6,8 @@
 	  Sfx slot vol pitch | Sting slot vol | Fx actorId event arg | Ripple pt scale | Leaves pt radius count
 	  RoarWave actorId scale | Splash pt scale | LensDrops a | Snow density | White a dur | TreeFall basePt towardPt dur | TimeScale k
 	  Title text sub color | Slash color | Grade preset dur | Splinter pt scale | Bubbles pt scale | Unblack
+	  Bars height dur (2026-10-15: a film letterbox, each bar `height` of the screen, sliding in over `dur`; 0 opens it.
+		A cut clears it - the map tour's aerials are the only letterboxed shots)
 	  Birds pt count towardPt (a flock bursting out of the trees and flying off)
 	  (2026-10-14) DustWave pt towardPt scale | Cracks pt scale | Glint pt scale | LensDrops a color | White a dur color
 		(a coloured haze: "Dust" for the Titan) | actor Rim (the silhouette's rim light) | grades Deep, Storm, Ember
@@ -83,6 +85,27 @@ function Fx.Init(gui: ScreenGui)
 	ui.Bars = {}
 	for i, a in ipairs({ 0, 1 }) do
 		ui.Bars[i] = frame(gui, { Name = "Bar", BackgroundColor3 = Color3.new(0, 0, 0), AnchorPoint = Vector2.new(0, a), Position = UDim2.fromScale(0, a), Size = UDim2.fromScale(1, 0.075), ZIndex = 38, Visible = false })
+	end
+	ui.Film = {}
+	for i, a in ipairs({ 0, 1 }) do
+		ui.Film[i] = frame(gui, { Name = "FilmBar", BackgroundColor3 = Color3.new(0, 0, 0), AnchorPoint = Vector2.new(0, a), Position = UDim2.fromScale(0, a), Size = UDim2.fromScale(1, 0), ZIndex = 37 })
+	end
+end
+
+-- the film letterbox (the Bars cue)
+local filmTweens = {} :: { Tween }
+local function film(h: number, dur: number)
+	for _, tw in ipairs(filmTweens) do tw:Cancel() end
+	table.clear(filmTweens)
+	for _, b in ipairs(ui.Film or {}) do
+		local goal = UDim2.fromScale(1, h)
+		if dur <= 0.02 then
+			b.Size = goal
+		else
+			local tw = TweenService:Create(b, TweenInfo.new(dur, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), { Size = goal })
+			tw:Play()
+			table.insert(filmTweens, tw)
+		end
 	end
 end
 
@@ -386,7 +409,9 @@ function Fx.Cue(rt, kind: string, a1, a2, a3, grade: ColorCorrectionEffect?): bo
 		local o = rt and rt.ById and rt.ById[id]
 		return o and o.Model or nil
 	end
-	if kind == "Sfx" then
+	if kind == "Bars" then
+		film(math.clamp(tonumber(a1) or 0, 0, 0.45), tonumber(a2) or 0)
+	elseif kind == "Sfx" then
 		Audio.Play(a1, { Volume = a2 or 1, Pitch = a3 or 1, Exact = true, Gap = 0 })
 	elseif kind == "Sting" then
 		Audio.Sting(a1, a2)
@@ -461,6 +486,7 @@ function Fx.Reset(hard: boolean?)
 		ui.White.BackgroundColor3 = Color3.fromRGB(240, 246, 255)
 	end
 	if ui.Lens then ui.Lens:ClearAllChildren() end
+	film(0, 0)
 end
 
 -- end of the take: the felled trees stand back up
